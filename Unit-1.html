@@ -1,0 +1,2741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strength of Materials — Unit 1: Stress and Strain | D. Mandal</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Bitter', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace']
+      },
+      colors: {
+        brand: { 50:'#f0f9ff', 100:'#e0f2fe', 200:'#bae6fd', 500:'#0ea5e9', 600:'#0284c7', 700:'#0369a1', 900:'#0c4a6e' },
+        lab:   { 50:'#fffbeb', 500:'#f59e0b', 600:'#d97706', 900:'#78350f' }
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  body { transition: background-color .3s, color .3s; }
+  .module-content { display: none; }
+  .module-content.active { display: block; animation: fadeIn .35s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+
+  h1,h2,h3,h4 { font-family: 'Bitter', Georgia, serif; }
+  .num { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+  .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+  .slider-custom { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #e2e8f0; outline: none; }
+  .dark .slider-custom { background: #334155; }
+  .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #0ea5e9; cursor: pointer; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+  .slider-custom::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #0ea5e9; cursor: pointer; border: 2px solid #fff; }
+
+  :focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; border-radius: 4px; }
+
+  /* Card system */
+  .card { background:#fff; border-radius:.75rem; box-shadow:0 1px 3px rgba(0,0,0,.08); padding:1.5rem 1.75rem; border:1px solid #e5e7eb; }
+  .dark .card { background:#1f2937; border-color:#374151; }
+  .eyebrow { font-family:'Inter',sans-serif; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#0284c7; }
+  .dark .eyebrow { color:#38bdf8; }
+  .mtitle { font-size:1.9rem; line-height:1.15; font-weight:800; margin:.15rem 0 1.25rem; }
+
+  .formula-box { background:#f0f9ff; border:1px solid #bae6fd; border-radius:.6rem; padding:1rem; text-align:center; overflow-x:auto; }
+  .dark .formula-box { background:rgba(12,74,110,.35); border-color:#0369a1; }
+
+  table.data { width:100%; border-collapse:collapse; font-size:.9rem; }
+  table.data th, table.data td { border:1px solid #e5e7eb; padding:.5rem .7rem; text-align:left; }
+  .dark table.data th, .dark table.data td { border-color:#374151; }
+  table.data th { background:#f1f5f9; font-weight:600; }
+  .dark table.data th { background:#111827; }
+
+  .quiz-opt { display:block; width:100%; text-align:left; padding:.65rem .9rem; border:1px solid #d1d5db; border-radius:.5rem; margin-bottom:.5rem; transition:all .15s; background:#fff; }
+  .dark .quiz-opt { background:#111827; border-color:#374151; }
+  .quiz-opt:hover:not(:disabled) { border-color:#0ea5e9; background:#f0f9ff; }
+  .dark .quiz-opt:hover:not(:disabled) { background:rgba(12,74,110,.4); }
+  .quiz-opt.correct { background:#dcfce7 !important; border-color:#16a34a !important; color:#14532d; }
+  .quiz-opt.wrong { background:#fee2e2 !important; border-color:#dc2626 !important; color:#7f1d1d; }
+
+  .chip { display:inline-block; font-size:.7rem; font-weight:600; padding:.15rem .55rem; border-radius:999px; }
+
+  .flip { perspective: 800px; height: 96px; cursor: pointer; }
+  .flip-inner { position:relative; width:100%; height:100%; transition:transform .45s; transform-style:preserve-3d; }
+  .flip.open .flip-inner { transform: rotateY(180deg); }
+  .flip-face { position:absolute; inset:0; backface-visibility:hidden; display:flex; align-items:center; justify-content:center; border-radius:.6rem; padding:.4rem; text-align:center; font-size:.8rem; }
+  .flip-back { transform: rotateY(180deg); }
+
+  @media print {
+    aside, header, footer, #ai-tutor-wrap, .no-print { display:none !important; }
+    main { overflow:visible !important; padding:0 !important; }
+    .module-content { display:none !important; }
+    .module-content.active { display:block !important; }
+    body { background:#fff !important; color:#000 !important; height:auto !important; overflow:visible !important; }
+  }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 h-screen flex flex-col font-sans overflow-hidden">
+
+<!-- ============ TOP BAR ============ -->
+<header class="bg-white dark:bg-gray-800 shadow-sm z-30 flex-shrink-0">
+  <div class="px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2">
+        <i class="fas fa-bars text-lg"></i>
+      </button>
+      <div>
+        <p class="eyebrow leading-none">Interactive Learning Module</p>
+        <h1 class="text-lg font-bold leading-tight text-brand-900 dark:text-brand-200">Strength of Materials &middot; Unit 1</h1>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3 sm:gap-5">
+      <div class="hidden sm:flex flex-col items-end">
+        <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400">Modules visited <span id="progress-label" class="num">0/26</span></span>
+        <div class="w-36 h-1.5 bg-gray-200 rounded-full mt-1 dark:bg-gray-700">
+          <div id="progress-bar" class="h-1.5 bg-brand-500 rounded-full transition-all" style="width:0%"></div>
+        </div>
+      </div>
+      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="flex-1 flex overflow-hidden">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full">
+    <nav class="p-3 space-y-0.5" id="nav-menu" aria-label="Module list"></nav>
+  </aside>
+
+  <!-- ============ CONTENT ============ -->
+  <main class="flex-1 overflow-y-auto p-5 sm:p-8 lg:p-10 bg-gray-50 dark:bg-gray-900 scroll-smooth" id="main-content">
+
+<!-- ============ M1 COVER ============ -->
+<div id="module-1" class="module-content active max-w-4xl mx-auto">
+  <div class="card border-t-4 border-brand-500 text-center py-12 px-6">
+    <p class="eyebrow">Interactive Learning Module</p>
+    <h1 class="text-4xl sm:text-5xl font-extrabold mt-3 mb-4">Strength of Materials</h1>
+    <div class="w-16 h-[3px] bg-lab-500 mx-auto mb-5"></div>
+    <h2 class="text-2xl font-light">Unit 1 &mdash; Stress and Strain</h2>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10 max-w-2xl mx-auto text-center">
+      <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg py-3"><p class="text-2xl font-bold num text-brand-600">26</p><p class="text-xs text-gray-500 dark:text-gray-400">Modules</p></div>
+      <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg py-3"><p class="text-2xl font-bold num text-brand-600">4</p><p class="text-xs text-gray-500 dark:text-gray-400">Virtual labs</p></div>
+      <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg py-3"><p class="text-2xl font-bold num text-brand-600">22</p><p class="text-xs text-gray-500 dark:text-gray-400">Solved problems</p></div>
+      <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg py-3"><p class="text-2xl font-bold num text-brand-600">7</p><p class="text-xs text-gray-500 dark:text-gray-400">Test levels</p></div>
+    </div>
+
+    <div class="mt-10 inline-block text-left bg-gray-50 dark:bg-gray-700/60 px-7 py-5 rounded-lg border border-gray-200 dark:border-gray-600">
+      <p class="eyebrow mb-1">Prepared by</p>
+      <p class="text-xl font-bold">D. Mandal</p>
+      <p class="text-sm text-gray-600 dark:text-gray-300">Assistant Professor</p>
+      <p class="text-sm text-gray-600 dark:text-gray-300">Department of Civil Engineering</p>
+    </div>
+
+    <div class="mt-9">
+      <button onclick="switchModule(2)" class="bg-brand-500 text-white px-8 py-3 rounded-full font-bold hover:bg-brand-700 transition shadow-lg">Start learning <i class="fas fa-arrow-right ml-2"></i></button>
+    </div>
+    <p class="text-xs text-gray-400 mt-6">Works offline after first load. Progress is stored on this device only.</p>
+  </div>
+</div>
+
+<!-- ============ M2 OUTCOMES ============ -->
+<div id="module-2" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 2</p><h2 class="mtitle">Learning outcomes</h2>
+  <div class="card">
+    <p class="text-lg mb-5">After completing this unit you should be able to:</p>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO1</b> — Define stress and strain and state their units.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO2</b> — Calculate normal, shear and bearing stresses in members.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO3</b> — Explain elastic behaviour and the limits of Hooke's law.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO4</b> — Draw and interpret stress–strain diagrams for common materials.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO5</b> — Solve composite (compound) bar problems.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO6</b> — Solve temperature (thermal) stress problems, with and without a gap.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO7</b> — Calculate the four elastic constants and use the relations between them.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO8</b> — Apply factor of safety to size a member in a design problem.</span></li>
+    </ul>
+    <div class="mt-6 pt-5 border-t dark:border-gray-700 grid sm:grid-cols-3 gap-4 text-sm">
+      <div><p class="eyebrow mb-1">Prerequisites</p><p class="text-gray-600 dark:text-gray-300">Statics, free body diagrams, equilibrium equations, area properties.</p></div>
+      <div><p class="eyebrow mb-1">Follows into</p><p class="text-gray-600 dark:text-gray-300">Unit 2 — shear force and bending moment; Unit 3 — bending stress.</p></div>
+      <div><p class="eyebrow mb-1">Suggested hours</p><p class="text-gray-600 dark:text-gray-300">8 lecture hours + 2 tutorial hours.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M3 WHY ============ -->
+<div id="module-3" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 3</p><h2 class="mtitle">Why study stress?</h2>
+
+  <div class="card mb-5">
+    <p class="text-lg leading-relaxed">A structure does not fail because the load is "large". It fails because the load, divided by the area carrying it, exceeds what the material can bear. That ratio is <b>stress</b>. Every design code — IS 800, IS 456, IS 883 — is at bottom a set of limits on stress.</p>
+    <div class="formula-box mt-5"><p class="text-sm text-gray-500 dark:text-gray-400 mb-1">The whole subject in one line</p>$$ \text{Safe design} \iff \sigma_{\text{induced}} \le \sigma_{\text{permissible}} $$</div>
+  </div>
+
+  <h3 class="text-xl font-bold mb-3">Where it shows up</h3>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <div class="card !p-4"><i class="fas fa-bridge text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Bridge members</h4><p class="text-sm text-gray-600 dark:text-gray-300">Truss ties carry pure tension; a single under-sized gusset plate can unzip the whole span.</p></div>
+    <div class="card !p-4"><i class="fas fa-building-columns text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Building cracks</h4><p class="text-sm text-gray-600 dark:text-gray-300">Concrete is weak in tension. Cracks map out exactly where tensile stress ran ahead of capacity.</p></div>
+    <div class="card !p-4"><i class="fas fa-gears text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Machine shafts</h4><p class="text-sm text-gray-600 dark:text-gray-300">Torsional shear stress peaks at the surface, so shafts fail from the outside in.</p></div>
+    <div class="card !p-4"><i class="fas fa-plane text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Aircraft skin</h4><p class="text-sm text-gray-600 dark:text-gray-300">Pressurisation cycles a fuselage like a balloon. Stress concentration at a window corner started the Comet failures.</p></div>
+    <div class="card !p-4"><i class="fas fa-train text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Railway track</h4><p class="text-sm text-gray-600 dark:text-gray-300">Welded rail cannot expand. Summer heat converts free expansion into compressive stress and buckling.</p></div>
+    <div class="card !p-4"><i class="fas fa-fire-extinguisher text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Pressure vessels</h4><p class="text-sm text-gray-600 dark:text-gray-300">Hoop stress is twice the longitudinal stress, which is why cylinders split along their length.</p></div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">Two case studies worth knowing</h3>
+    <div class="space-y-4 text-sm">
+      <div class="border-l-4 border-lab-500 pl-4">
+        <h4 class="font-bold">Hyatt Regency walkway, 1981</h4>
+        <p class="text-gray-600 dark:text-gray-300">A change from a single continuous hanger rod to two shorter rods doubled the load on the upper box beam connection. The <b>bearing area at the nut stayed the same while the force doubled</b> — the stress doubled and the connection tore through. A drafting-level change, not a loading change.</p>
+      </div>
+      <div class="border-l-4 border-lab-500 pl-4">
+        <h4 class="font-bold">Continuous welded rail buckling</h4>
+        <p class="text-gray-600 dark:text-gray-300">Rail restrained end to end develops \(\sigma = \alpha\,\Delta T\,E\). For steel with \(\Delta T = 40^\circ\)C that is about <span class="num">96 MPa</span> of compression with no external load at all. Module 14 derives this.</p>
+      </div>
+    </div>
+    <div class="mt-5 p-3 rounded bg-gray-50 dark:bg-gray-700/50 text-xs text-gray-500 dark:text-gray-400 no-print">
+      <i class="fas fa-image mr-1"></i> To add your own site photographs, drop image files beside this HTML file and replace any card icon with <code class="num">&lt;img src="photo.jpg" class="rounded w-full h-32 object-cover"&gt;</code>.
+    </div>
+  </div>
+</div>
+
+<!-- ============ M4 FORCES ============ -->
+<div id="module-4" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 4</p><h2 class="mtitle">Internal and external forces</h2>
+
+  <div class="card mb-5">
+    <div class="grid md:grid-cols-2 gap-5">
+      <div>
+        <h3 class="font-bold text-lg mb-2">External force</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Applied from outside the body — dead load, live load, wind, reactions at supports. Visible on the free body diagram.</p>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-2">Internal resisting force</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Developed inside the material to hold the body together. Revealed only when you cut a section. Equal and opposite to the external force on that side of the cut.</p>
+      </div>
+    </div>
+    <div class="mt-5 p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+      <p class="text-sm"><b>Method of sections, in one sentence:</b> cut the member, throw away one side, and the internal force at the cut must equal whatever is needed to keep the remaining piece in equilibrium — \(\sum F = 0\).</p>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Sign convention used throughout this unit</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="p-4 rounded-lg bg-green-50 dark:bg-green-900/25 border border-green-200 dark:border-green-800">
+        <p class="font-bold text-green-800 dark:text-green-300"><i class="fas fa-arrows-left-right-to-line"></i> Tension is positive</p>
+        <p class="text-sm mt-1 text-green-900 dark:text-green-200">The force pulls away from the cut face. The member gets longer, \(\delta L\) positive.</p>
+      </div>
+      <div class="p-4 rounded-lg bg-red-50 dark:bg-red-900/25 border border-red-200 dark:border-red-800">
+        <p class="font-bold text-red-800 dark:text-red-300"><i class="fas fa-arrows-to-circle"></i> Compression is negative</p>
+        <p class="text-sm mt-1 text-red-900 dark:text-red-200">The force pushes into the cut face. The member shortens, \(\delta L\) negative.</p>
+      </div>
+    </div>
+    <p class="text-sm mt-4 text-gray-600 dark:text-gray-300">A sign convention is a bookkeeping choice, not a law of nature. Any consistent convention gives the same physical answer. What causes errors is switching convention mid-problem — so fix one at the start and write it on your answer sheet.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-4">Types of load</h3>
+    <div class="grid sm:grid-cols-2 gap-3 text-sm">
+      <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">Point</span><p>Concentrated at one location, units of N or kN.</p></div>
+      <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">UDL</span><p>Spread evenly along a length, units of N/m or kN/m.</p></div>
+      <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">Axial</span><p>Acts along the centroidal axis — the only case where \(\sigma = P/A\) is uniform.</p></div>
+      <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">Eccentric</span><p>Parallel to the axis but offset, so it adds bending to the direct stress.</p></div>
+      <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">Shear</span><p>Transverse, tending to slide one face past the adjacent face.</p></div>
+      <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">Torsion</span><p>A twisting couple about the longitudinal axis.</p></div>
+      <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">Bending</span><p>A couple in the plane of the member, producing tension on one face and compression on the other.</p></div>
+      <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">Impact</span><p>Applied suddenly; the instantaneous stress can be twice the static value.</p></div>
+    </div>
+
+    <h4 class="font-bold mt-6 mb-2">Try it — cut the bar</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">A bar carries 60 kN at the free end. Drag the section to see that the internal force is the same everywhere along a uniform axially loaded bar.</p>
+    <input type="range" id="cut-pos" class="slider-custom" min="5" max="95" value="50" aria-label="Section position">
+    <div class="relative h-24 mt-3 bg-gray-100 dark:bg-gray-700/50 rounded-lg overflow-hidden">
+      <div class="absolute left-0 top-0 h-full w-3 bg-gray-500"></div>
+      <div class="absolute left-3 right-8 top-1/2 -translate-y-1/2 h-9 bg-brand-500/70 rounded-r"></div>
+      <div id="cut-line" class="absolute top-2 bottom-2 w-[3px] bg-lab-500" style="left:50%"></div>
+      <div id="cut-label" class="absolute top-1 text-xs font-bold num text-lab-600" style="left:50%">N = 60 kN (T)</div>
+      <div class="absolute right-2 top-1/2 -translate-y-1/2 text-sm font-bold">60 kN &rarr;</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M5 STRESS ============ -->
+<div id="module-5" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 5</p><h2 class="mtitle">Stress — formula and units</h2>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-2">Definition</h3>
+    <p class="mb-4">Stress is the internal resisting force developed per unit of cross-sectional area.</p>
+
+    <h4 class="font-bold mb-2">Derivation from first principles</h4>
+    <ol class="list-decimal pl-6 space-y-1 text-sm text-gray-700 dark:text-gray-300 mb-4">
+      <li>Take a prismatic bar carrying an axial pull \(P\).</li>
+      <li>Cut it by a plane normal to the axis; area of the cut face is \(A\).</li>
+      <li>For the free body to remain in equilibrium, the cut face must transmit a resultant \(R = P\).</li>
+      <li>Assume the resistance is shared uniformly over the face — true for an axial load applied at the centroid, far from the ends (Saint-Venant's principle). Then intensity \(= R/A\).</li>
+    </ol>
+    <div class="formula-box">$$ \sigma \;=\; \lim_{\Delta A \to 0}\frac{\Delta R}{\Delta A} \;=\; \frac{P}{A} $$</div>
+
+    <div class="mt-5 grid sm:grid-cols-3 gap-3 text-sm">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>\(\sigma\)</b> — normal stress, N/mm² = MPa</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>\(P\)</b> — axial force, N</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>\(A\)</b> — area normal to \(P\), mm²</div>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Units — the single biggest source of lost marks</h3>
+    <table class="data">
+      <tr><th>Quantity</th><th>SI base</th><th>Practical</th><th>Conversion</th></tr>
+      <tr><td>Stress</td><td class="num">Pa = N/m²</td><td class="num">MPa = N/mm²</td><td class="num">1 MPa = 10⁶ Pa</td></tr>
+      <tr><td>Stress (large)</td><td class="num">Pa</td><td class="num">GPa = kN/mm²</td><td class="num">1 GPa = 1000 MPa</td></tr>
+      <tr><td>Force</td><td class="num">N</td><td class="num">kN</td><td class="num">1 kN = 10³ N</td></tr>
+      <tr><td>Area</td><td class="num">m²</td><td class="num">mm²</td><td class="num">1 m² = 10⁶ mm²</td></tr>
+      <tr><td>Modulus E (steel)</td><td class="num">2×10¹¹ Pa</td><td class="num">2×10⁵ N/mm²</td><td class="num">= 200 GPa</td></tr>
+    </table>
+    <p class="text-sm mt-3 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500"><b>Work in N and mm.</b> Then stress comes out directly in MPa and deformation directly in mm, with no conversion anywhere. Mixing kN with mm² is what produces answers off by 1000.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-4">Stress calculator</h3>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div><label class="text-sm font-medium block mb-1" for="c5-p">Load P (kN)</label><input id="c5-p" type="number" value="40" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-sm font-medium block mb-1" for="c5-shape">Section</label>
+        <select id="c5-shape" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+          <option value="circle">Solid circular</option><option value="square">Square</option><option value="rect">Rectangular</option><option value="tube">Hollow circular</option>
+        </select></div>
+      <div><label class="text-sm font-medium block mb-1" for="c5-d1"><span id="c5-l1">Diameter (mm)</span></label><input id="c5-d1" type="number" value="20" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div id="c5-wrap2" class="hidden"><label class="text-sm font-medium block mb-1" for="c5-d2"><span id="c5-l2">Width (mm)</span></label><input id="c5-d2" type="number" value="10" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4 mt-5">
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-center"><p class="text-xs text-gray-500 dark:text-gray-400">Area A</p><p class="text-2xl font-bold num text-brand-600" id="c5-area">—</p></div>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-center"><p class="text-xs text-gray-500 dark:text-gray-400">Stress &sigma;</p><p class="text-2xl font-bold num text-red-500" id="c5-stress">—</p></div>
+    </div>
+    <p class="text-sm mt-3 text-gray-600 dark:text-gray-300" id="c5-work"></p>
+  </div>
+</div>
+
+<!-- ============ M6 TYPES OF STRESS ============ -->
+<div id="module-6" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 6</p><h2 class="mtitle">Types of stress</h2>
+
+  <div class="card mb-5">
+    <table class="data">
+      <tr><th>Type</th><th>Acts</th><th>Formula</th><th>Typical case</th></tr>
+      <tr><td><b>Tensile</b></td><td>Normal, pulling</td><td class="num">σ = P/A</td><td>Truss tie, hanger rod</td></tr>
+      <tr><td><b>Compressive</b></td><td>Normal, pushing</td><td class="num">σ = P/A</td><td>Column, strut, footing</td></tr>
+      <tr><td><b>Shear</b></td><td>Tangential to the face</td><td class="num">τ = P/A<sub>s</sub></td><td>Bolt in a lap joint</td></tr>
+      <tr><td><b>Bearing</b></td><td>Contact pressure</td><td class="num">σ<sub>b</sub> = P/(d·t)</td><td>Bolt pressing on plate hole</td></tr>
+      <tr><td><b>Thermal</b></td><td>Normal, no external load</td><td class="num">σ = α·ΔT·E</td><td>Restrained rail, pipe</td></tr>
+      <tr><td><b>Hydrostatic</b></td><td>Equal on all faces</td><td class="num">σ = p</td><td>Body submerged in fluid</td></tr>
+      <tr><td><b>Crushing</b></td><td>Local compression</td><td class="num">σ<sub>c</sub> = P/A<sub>c</sub></td><td>Rivet against plate edge</td></tr>
+    </table>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Single shear versus double shear</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+        <p class="font-bold mb-1">Single shear — lap joint</p>
+        <p class="text-sm">One failure plane through the bolt.</p>
+        <div class="formula-box mt-3 !p-2">$$ \tau = \frac{P}{\tfrac{\pi}{4}d^2} $$</div>
+      </div>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+        <p class="font-bold mb-1">Double shear — butt joint</p>
+        <p class="text-sm">Two failure planes, so each carries half the load.</p>
+        <div class="formula-box mt-3 !p-2">$$ \tau = \frac{P}{2 \times \tfrac{\pi}{4}d^2} $$</div>
+      </div>
+    </div>
+    <p class="text-sm mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500">Forgetting the factor of 2 in double shear is the most common bolt-design error in university papers. Count the planes on the sketch before you write the formula.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-2">Identify the stress</h3>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Read the situation and choose the dominant stress type.</p>
+    <div id="m6-quiz"></div>
+    <p class="text-sm mt-3 num" id="m6-score"></p>
+  </div>
+</div>
+
+<!-- ============ M7 STRAIN ============ -->
+<div id="module-7" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 7</p><h2 class="mtitle">Strain and deformation</h2>
+
+  <div class="card mb-5">
+    <p class="mb-4">Strain is the deformation per unit original dimension. It is a <b>ratio</b>, so it has no unit — never write MPa or mm against a strain value.</p>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div>
+        <h4 class="font-bold mb-1">Linear (longitudinal) strain</h4>
+        <div class="formula-box !p-3">$$ \varepsilon = \frac{\delta L}{L} $$</div>
+        <p class="text-sm mt-2 text-gray-600 dark:text-gray-300">Along the direction of the load.</p>
+      </div>
+      <div>
+        <h4 class="font-bold mb-1">Lateral strain</h4>
+        <div class="formula-box !p-3">$$ \varepsilon_{lat} = \frac{\delta d}{d} = -\mu\,\varepsilon $$</div>
+        <p class="text-sm mt-2 text-gray-600 dark:text-gray-300">Across the load. Opposite in sign to linear strain.</p>
+      </div>
+      <div>
+        <h4 class="font-bold mb-1">Volumetric strain</h4>
+        <div class="formula-box !p-3">$$ \varepsilon_v = \frac{\delta V}{V} = \varepsilon_x + \varepsilon_y + \varepsilon_z $$</div>
+        <p class="text-sm mt-2 text-gray-600 dark:text-gray-300">For a bar under one-directional stress this reduces to \(\varepsilon_v = \varepsilon(1-2\mu)\).</p>
+      </div>
+      <div>
+        <h4 class="font-bold mb-1">Shear strain</h4>
+        <div class="formula-box !p-3">$$ \phi = \frac{\delta_s}{h} \approx \tan\phi $$</div>
+        <p class="text-sm mt-2 text-gray-600 dark:text-gray-300">Angular distortion in radians, measured as sideways movement over height.</p>
+      </div>
+    </div>
+    <div class="mt-5">
+      <h4 class="font-bold mb-1">Thermal strain</h4>
+      <div class="formula-box !p-3">$$ \varepsilon_t = \alpha\,\Delta T $$</div>
+      <p class="text-sm mt-2 text-gray-600 dark:text-gray-300">Occurs with no load at all. If the member is free, this strain produces deformation but <b>no stress</b>. Stress appears only when expansion is restrained — Module 14.</p>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Deformation of an axially loaded bar</h3>
+    <div class="formula-box">$$ \delta L = \frac{PL}{AE} $$</div>
+    <p class="text-sm mt-3">Derived by substituting \(\sigma = P/A\) and \(\varepsilon = \delta L/L\) into \(E = \sigma/\varepsilon\). The group \(AE\) is the <b>axial rigidity</b> of the member — the axial equivalent of stiffness.</p>
+    <p class="text-sm mt-3"><b>Stepped bar:</b> stress changes at each change of area, so add the segments:</p>
+    <div class="formula-box mt-2">$$ \delta L_{total} = \sum_{i} \frac{P_i L_i}{A_i E_i} $$</div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">Strain magnitudes — build intuition</h3>
+    <p class="text-sm mb-3">Steel at working stress strains by roughly 0.0006. That is 0.6 mm in a metre. Structural strains are invisible to the eye, which is exactly why they must be calculated.</p>
+    <table class="data">
+      <tr><th>Situation</th><th>Strain</th><th>As %</th><th>In micro-strain</th></tr>
+      <tr><td>Steel at 120 MPa working stress</td><td class="num">0.0006</td><td class="num">0.06 %</td><td class="num">600 µε</td></tr>
+      <tr><td>Steel at 250 MPa yield</td><td class="num">0.00125</td><td class="num">0.125 %</td><td class="num">1250 µε</td></tr>
+      <tr><td>Mild steel at fracture</td><td class="num">0.25</td><td class="num">25 %</td><td class="num">250 000 µε</td></tr>
+      <tr><td>Rubber band, stretched</td><td class="num">3.0</td><td class="num">300 %</td><td>—</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ M8 HOOKE ============ -->
+<div id="module-8" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 8</p><h2 class="mtitle">Hooke's law</h2>
+
+  <div class="card mb-5">
+    <p class="text-lg italic mb-3">"Within the elastic limit, stress is directly proportional to strain."</p>
+    <div class="formula-box">$$ \sigma \propto \varepsilon \quad\Longrightarrow\quad \sigma = E\,\varepsilon \quad\Longrightarrow\quad E = \frac{\sigma}{\varepsilon} $$</div>
+    <p class="text-sm mt-4">The constant of proportionality \(E\) is <b>Young's modulus</b>. Because strain is dimensionless, \(E\) carries the units of stress. It measures stiffness, not strength — a stiff material resists deformation; a strong material resists failure. Steel and high-strength steel have nearly the same \(E\) but very different yield stress.</p>
+    <div class="grid sm:grid-cols-4 gap-3 mt-4 text-center text-sm">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50">Steel<br><span class="num font-bold">200 GPa</span></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50">Aluminium<br><span class="num font-bold">70 GPa</span></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50">Concrete M25<br><span class="num font-bold">25 GPa</span></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50">Timber<br><span class="num font-bold">10–15 GPa</span></div>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Limitations — where the law stops working</h3>
+    <ul class="list-disc pl-6 space-y-2 text-sm">
+      <li>Valid <b>only up to the proportional limit</b>, not up to fracture.</li>
+      <li>Does not apply to materials with no straight initial portion — cast iron, concrete in compression, rubber.</li>
+      <li>Assumes the material is homogeneous, isotropic and continuous. Timber and FRP are not isotropic.</li>
+      <li>Ignores time effects. Under sustained load, concrete creeps and steel at high temperature relaxes; strain keeps growing at constant stress.</li>
+      <li>Applies to small strains. Beyond that, cross-sectional area changes appreciably and engineering stress is no longer the real stress.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-2">Virtual experiment — find E from readings</h3>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">A specimen of length <span class="num">1000 mm</span> and area <span class="num">200 mm²</span> is loaded in steps. Plot the points and read the slope.</p>
+    <div class="flex flex-wrap gap-3 items-end mb-4">
+      <div><label class="text-sm block mb-1" for="m8-load">Add a reading at load (kN)</label><input id="m8-load" type="number" value="10" step="5" class="p-2 border rounded num w-32 dark:bg-gray-700 dark:border-gray-600"></div>
+      <button onclick="m8AddPoint()" class="bg-brand-500 text-white px-4 py-2 rounded font-semibold hover:bg-brand-700">Record reading</button>
+      <button onclick="m8Reset()" class="px-4 py-2 rounded border dark:border-gray-600">Clear</button>
+    </div>
+    <div class="h-64"><canvas id="m8-chart"></canvas></div>
+    <p class="mt-3 text-sm num" id="m8-result">Record at least two readings to compute the slope.</p>
+    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">The specimen is simulated as mild steel with E = 200 GPa and a proportional limit of 210 MPa. Load it past that point and watch the plot bend away from the line.</p>
+  </div>
+</div>
+
+<!-- ============ M9 CURVE MILD STEEL ============ -->
+<div id="module-9" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 9</p><h2 class="mtitle">Stress–strain curve for mild steel</h2>
+
+  <div class="grid lg:grid-cols-3 gap-5">
+    <div class="card lg:col-span-2">
+      <div class="h-80"><canvas id="m9-chart"></canvas></div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Strain axis is compressed in the elastic region for legibility. Click a stage below to highlight it.</p>
+    </div>
+    <div class="card lg:col-span-1">
+      <h3 class="font-bold text-lg mb-3">Stages</h3>
+      <div id="m9-buttons" class="space-y-1.5"></div>
+      <div id="m9-detail" class="mt-4 p-4 rounded-lg bg-brand-50 dark:bg-brand-900/30 text-sm min-h-[150px]">
+        Select a stage to read what happens in the material.
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-5">
+    <h3 class="text-xl font-bold mb-3">Points you must be able to mark on the sketch</h3>
+    <table class="data">
+      <tr><th>Point</th><th>Meaning</th><th>Typical value, Fe250</th></tr>
+      <tr><td>A — Proportional limit</td><td>Last point where \(\sigma \propto \varepsilon\); Hooke's law valid up to here</td><td class="num">≈ 210 MPa</td></tr>
+      <tr><td>B — Elastic limit</td><td>Last point from which the specimen returns to original length on unloading</td><td class="num">≈ 230 MPa</td></tr>
+      <tr><td>C — Upper yield point</td><td>Stress at which yielding starts; dislocations break free</td><td class="num">≈ 250 MPa</td></tr>
+      <tr><td>D — Lower yield point</td><td>Stress sustained during plastic flow; <b>this is the design yield value</b></td><td class="num">≈ 240 MPa</td></tr>
+      <tr><td>E — Ultimate stress</td><td>Maximum stress the specimen carries; strain hardening peaks</td><td class="num">≈ 410 MPa</td></tr>
+      <tr><td>F — Breaking stress</td><td>Nominal stress at fracture, lower than E because of necking</td><td class="num">≈ 330 MPa</td></tr>
+    </table>
+    <div class="mt-4 grid sm:grid-cols-2 gap-4 text-sm">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Why does the curve drop after E?</b> The area is shrinking fast at the neck, but engineering stress still divides by the <i>original</i> area. True stress, using the actual area, keeps rising to fracture.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Percentage elongation</b> \(= \dfrac{L_f - L_o}{L_o}\times 100\). IS 432 requires a minimum of 23 % for Fe250 — this is the ductility check that lets a structure warn before it collapses.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M10 OTHER MATERIALS ============ -->
+<div id="module-10" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 10</p><h2 class="mtitle">Curves for other materials</h2>
+
+  <div class="card mb-5">
+    <div class="flex flex-wrap gap-2 mb-4" id="m10-toggles"></div>
+    <div class="h-80"><canvas id="m10-chart"></canvas></div>
+    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Toggle materials to compare. Curves are schematic and drawn to a common strain axis.</p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="card !p-5"><h4 class="font-bold">Cast iron</h4><p class="text-sm mt-1 text-gray-600 dark:text-gray-300">No straight portion, no yield point, fractures at about 1 % strain. <b>Brittle</b> — strong in compression, weak in tension, fails without warning. Hooke's law is used only as an approximation over a small range.</p></div>
+    <div class="card !p-5"><h4 class="font-bold">TOR / HYSD steel (Fe415, Fe500)</h4><p class="text-sm mt-1 text-gray-600 dark:text-gray-300">Cold-worked, so there is <b>no distinct yield point</b>. The design yield is taken as the 0.2 % proof stress — draw a line parallel to the elastic slope from ε = 0.002 and take where it cuts the curve.</p></div>
+    <div class="card !p-5"><h4 class="font-bold">Aluminium</h4><p class="text-sm mt-1 text-gray-600 dark:text-gray-300">Smooth curve, no sharp yield, E ≈ 70 GPa — one third of steel, so an aluminium member deflects three times as much for the same stress. Proof stress is again used.</p></div>
+    <div class="card !p-5"><h4 class="font-bold">Rubber</h4><p class="text-sm mt-1 text-gray-600 dark:text-gray-300">Non-linear from the start and elastic to enormous strains (300 % or more). Elastic does not mean linear — rubber returns to shape but never obeys Hooke's law.</p></div>
+  </div>
+
+  <div class="card mt-5">
+    <h3 class="text-lg font-bold mb-2">The distinction that gets examined</h3>
+    <table class="data">
+      <tr><th></th><th>Ductile (mild steel, aluminium)</th><th>Brittle (cast iron, concrete, glass)</th></tr>
+      <tr><td>Warning before failure</td><td>Large visible deformation</td><td>Almost none</td></tr>
+      <tr><td>Strain at fracture</td><td class="num">20–30 %</td><td class="num">&lt; 1 %</td></tr>
+      <tr><td>Necking</td><td>Pronounced</td><td>Absent</td></tr>
+      <tr><td>Fracture surface</td><td>Cup and cone, 45° shear lip</td><td>Flat, normal to the load</td></tr>
+      <tr><td>Design philosophy</td><td>Plastic / limit state design possible</td><td>Elastic design with a large factor of safety</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ M11 ELASTIC CONSTANTS ============ -->
+<div id="module-11" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 11</p><h2 class="mtitle">Elastic constants</h2>
+
+  <div class="grid sm:grid-cols-2 gap-4 mb-5">
+    <div class="card !p-5"><h4 class="font-bold">Young's modulus, E</h4><div class="formula-box mt-2 !p-2">$$ E = \frac{\sigma}{\varepsilon} $$</div><p class="text-sm mt-2">Direct stress over direct strain. Steel: 200 GPa.</p></div>
+    <div class="card !p-5"><h4 class="font-bold">Modulus of rigidity, G (or C, N)</h4><div class="formula-box mt-2 !p-2">$$ G = \frac{\tau}{\phi} $$</div><p class="text-sm mt-2">Shear stress over shear strain. Steel: about 80 GPa.</p></div>
+    <div class="card !p-5"><h4 class="font-bold">Bulk modulus, K</h4><div class="formula-box mt-2 !p-2">$$ K = \frac{\sigma_v}{\varepsilon_v} $$</div><p class="text-sm mt-2">Hydrostatic stress over volumetric strain. Steel: about 167 GPa.</p></div>
+    <div class="card !p-5"><h4 class="font-bold">Poisson's ratio, μ (or 1/m)</h4><div class="formula-box mt-2 !p-2">$$ \mu = -\frac{\varepsilon_{lat}}{\varepsilon_{long}} $$</div><p class="text-sm mt-2">Dimensionless, between 0 and 0.5. Steel 0.3, concrete 0.15, cork ≈ 0.</p></div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Relations between the constants</h3>
+    <div class="grid md:grid-cols-3 gap-3">
+      <div class="formula-box">$$ E = 2G(1+\mu) $$</div>
+      <div class="formula-box">$$ E = 3K(1-2\mu) $$</div>
+      <div class="formula-box">$$ E = \frac{9KG}{3K+G} $$</div>
+    </div>
+    <p class="text-sm mt-4">Only <b>two</b> of the four are independent for an isotropic material. Give any two and the other two follow.</p>
+
+    <div class="mt-5 p-4 rounded-lg bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500">
+      <p class="font-bold mb-2">Memory aids</p>
+      <ul class="text-sm space-y-1.5">
+        <li><b>"2G before 3K"</b> — the 2 goes with G, the 3 goes with K, in alphabetical order G then K.</li>
+        <li><b>Signs follow the physics</b> — shear does not change volume, so \(\mu\) is <i>added</i>: \((1+\mu)\). Bulk compression is resisted by lateral effects, so \(\mu\) is <i>subtracted</i>: \((1-2\mu)\).</li>
+        <li><b>Check \(\mu = 0.5\)</b> — then \(E = 3K(0) = 0\), meaning \(K \to \infty\): an incompressible material. That is the physical upper bound on \(\mu\).</li>
+        <li><b>Order of size</b> for steel: \(K > E > G\) — <span class="num">167 &gt; 200</span>? No: for μ = 0.3, \(E = 200\), \(K = 167\), \(G = 77\). So \(E > K > G\). Check your answer against this ranking.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-4">Elastic constants calculator</h3>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Enter any two values; the remaining two are computed.</p>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div><label class="text-sm block mb-1" for="ec-pair">Known pair</label>
+        <select id="ec-pair" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+          <option value="Emu">E and μ</option><option value="EG">E and G</option><option value="EK">E and K</option><option value="KG">K and G</option>
+        </select></div>
+      <div></div>
+      <div><label class="text-sm block mb-1" id="ec-l1" for="ec-v1">E (GPa)</label><input id="ec-v1" type="number" value="200" step="1" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-sm block mb-1" id="ec-l2" for="ec-v2">μ</label><input id="ec-v2" type="number" value="0.3" step="0.01" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 text-center">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">E</p><p class="num font-bold text-lg" id="ec-E">—</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">G</p><p class="num font-bold text-lg" id="ec-G">—</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">K</p><p class="num font-bold text-lg" id="ec-K">—</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">μ</p><p class="num font-bold text-lg" id="ec-mu">—</p></div>
+    </div>
+    <p class="text-sm mt-3 text-gray-600 dark:text-gray-300" id="ec-note"></p>
+  </div>
+</div>
+
+<!-- ============ M12 POISSON ============ -->
+<div id="module-12" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 12</p><h2 class="mtitle">The Poisson effect</h2>
+
+  <div class="card mb-5">
+    <p>Pull a bar and it gets longer — and thinner. The lateral contraction accompanying axial extension is the Poisson effect, and the ratio of the two strains is a material constant.</p>
+    <div class="formula-box mt-4">$$ \varepsilon_{lat} = -\mu\,\varepsilon_{long} \qquad \varepsilon_v = \varepsilon(1-2\mu) $$</div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-4">Deformation of a unit cube</h3>
+    <div class="grid md:grid-cols-2 gap-6 items-center">
+      <div>
+        <label class="flex justify-between text-sm mb-1"><span>Axial strain ε (×10⁻³)</span><span class="num font-bold text-brand-600" id="p12-eps-lbl">2.0</span></label>
+        <input id="p12-eps" type="range" min="0" max="50" value="20" class="slider-custom mb-4">
+        <label class="flex justify-between text-sm mb-1"><span>Poisson's ratio μ</span><span class="num font-bold text-brand-600" id="p12-mu-lbl">0.30</span></label>
+        <input id="p12-mu" type="range" min="0" max="50" value="30" class="slider-custom">
+        <div class="mt-5 space-y-2 text-sm">
+          <div class="flex justify-between p-2 rounded bg-gray-50 dark:bg-gray-700/50"><span>Lateral strain</span><span class="num font-bold" id="p12-lat">—</span></div>
+          <div class="flex justify-between p-2 rounded bg-gray-50 dark:bg-gray-700/50"><span>Volumetric strain</span><span class="num font-bold" id="p12-vol">—</span></div>
+          <div class="flex justify-between p-2 rounded bg-gray-50 dark:bg-gray-700/50"><span>Volume change of a 1 m cube</span><span class="num font-bold" id="p12-dv">—</span></div>
+        </div>
+      </div>
+      <div class="flex items-center justify-center">
+        <svg viewBox="0 0 240 220" class="w-full max-w-[260px]" aria-label="Cube deformation diagram">
+          <g fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3">
+            <rect x="60" y="60" width="110" height="110"/>
+            <polygon points="60,60 90,35 200,35 170,60"/>
+            <polygon points="170,60 200,35 200,145 170,170"/>
+          </g>
+          <g id="p12-solid" fill="rgba(14,165,233,.28)" stroke="#0ea5e9" stroke-width="2">
+            <rect id="p12-face" x="60" y="60" width="110" height="110"/>
+            <polygon id="p12-top" points="60,60 90,35 200,35 170,60"/>
+            <polygon id="p12-side" points="170,60 200,35 200,145 170,170"/>
+          </g>
+          <text x="115" y="196" text-anchor="middle" font-size="11" fill="#64748b">width b</text>
+          <text x="40" y="118" text-anchor="middle" font-size="11" fill="#64748b" transform="rotate(-90 40 118)">length L</text>
+        </svg>
+      </div>
+    </div>
+    <p class="text-xs text-gray-500 dark:text-gray-400 mt-3">Dashed outline is the original shape; strains are exaggerated about 40× so the change is visible.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Why μ cannot exceed 0.5</h3>
+    <p class="text-sm">From \(\varepsilon_v = \varepsilon(1-2\mu)\): at \(\mu = 0.5\) the volumetric strain is zero, so the material deforms at constant volume — rubber and water behave close to this. If \(\mu\) were greater than 0.5, a bar under <i>tension</i> would have to <i>lose</i> volume, which no ordinary material does. The lower bound for isotropic materials is \(-1\), and a few engineered auxetic foams do have negative μ: stretch them and they get fatter.</p>
+  </div>
+</div>
+
+<!-- ============ M13 COMPOSITE BARS ============ -->
+<div id="module-13" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 13</p><h2 class="mtitle">Composite (compound) bars</h2>
+
+  <div class="card mb-5">
+    <p class="mb-4">Two or more materials rigidly connected and sharing one load — a steel rod inside a copper tube, an RCC column, a bimetallic strip. The load division is not known from statics alone, so the problem is <b>statically indeterminate</b>. You need a second equation, and it comes from geometry.</p>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="p-4 rounded-lg bg-brand-50 dark:bg-brand-900/25">
+        <p class="font-bold mb-1">1. Equilibrium</p>
+        <div class="formula-box !bg-transparent !border-0 !p-1">$$ P = P_1 + P_2 = \sigma_1 A_1 + \sigma_2 A_2 $$</div>
+      </div>
+      <div class="p-4 rounded-lg bg-lab-50 dark:bg-lab-900/25">
+        <p class="font-bold mb-1">2. Compatibility</p>
+        <div class="formula-box !bg-transparent !border-0 !p-1">$$ \delta_1 = \delta_2 \;\Rightarrow\; \frac{\sigma_1 L}{E_1} = \frac{\sigma_2 L}{E_2} $$</div>
+      </div>
+    </div>
+    <p class="text-sm mt-4">Equal length means equal strain, so with the same \(L\):</p>
+    <div class="formula-box mt-2">$$ \frac{\sigma_1}{E_1} = \frac{\sigma_2}{E_2} \quad\Longrightarrow\quad \sigma_1 = \sigma_2\,\frac{E_1}{E_2} = m\,\sigma_2 $$</div>
+    <p class="text-sm mt-3"><b>Modular ratio</b> \(m = E_1/E_2\). The stiffer material attracts stress in proportion to its modulus — this is the single idea the whole topic rests on.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-4">Composite bar solver</h3>
+    <div class="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+      <div class="sm:col-span-2"><label class="text-sm block mb-1" for="cb-P">Total load P (kN)</label><input id="cb-P" type="number" value="250" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><p class="eyebrow mb-2">Material 1</p>
+        <label class="text-xs block">Area A₁ (mm²)</label><input id="cb-A1" type="number" value="1000" class="w-full p-2 border rounded num mb-2 dark:bg-gray-700 dark:border-gray-600">
+        <label class="text-xs block">E₁ (GPa)</label><input id="cb-E1" type="number" value="200" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><p class="eyebrow mb-2">Material 2</p>
+        <label class="text-xs block">Area A₂ (mm²)</label><input id="cb-A2" type="number" value="2000" class="w-full p-2 border rounded num mb-2 dark:bg-gray-700 dark:border-gray-600">
+        <label class="text-xs block">E₂ (GPa)</label><input id="cb-E2" type="number" value="100" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div class="sm:col-span-2"><label class="text-sm block mb-1" for="cb-L">Length L (mm)</label><input id="cb-L" type="number" value="500" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+    </div>
+    <div id="cb-out" class="mt-5"></div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Worked example</h3>
+    <p class="text-sm mb-2">A steel rod of 1000 mm² is encased in a copper tube of 2000 mm². The composite column, 500 mm long, carries 250 kN. Take \(E_s = 200\) GPa, \(E_c = 100\) GPa.</p>
+    <div class="text-sm space-y-1.5 p-4 rounded bg-gray-50 dark:bg-gray-700/50 num">
+      <p>Strain is common: ε = P / (A<sub>s</sub>E<sub>s</sub> + A<sub>c</sub>E<sub>c</sub>)</p>
+      <p>ε = 250 000 / (1000×200 000 + 2000×100 000) = 250 000 / 400 000 000 = 6.25×10⁻⁴</p>
+      <p>σ<sub>s</sub> = Eε = 200 000 × 6.25×10⁻⁴ = <b>125 MPa</b></p>
+      <p>σ<sub>c</sub> = 100 000 × 6.25×10⁻⁴ = <b>62.5 MPa</b></p>
+      <p>P<sub>s</sub> = 125 × 1000 = 125 kN &nbsp;&nbsp; P<sub>c</sub> = 62.5 × 2000 = 125 kN &nbsp; (sum = 250 kN ✓)</p>
+      <p>δ = εL = 6.25×10⁻⁴ × 500 = <b>0.3125 mm</b></p>
+    </div>
+    <p class="text-sm mt-3">Note the result: the copper has twice the area but half the modulus, so the two carry exactly the same force. Area and stiffness both matter, and the product \(AE\) is what does the sharing.</p>
+  </div>
+</div>
+
+<!-- ============ M14 TEMPERATURE ============ -->
+<div id="module-14" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 14</p><h2 class="mtitle">Temperature stress</h2>
+
+  <div class="card mb-5">
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="p-4 rounded-lg bg-green-50 dark:bg-green-900/20">
+        <h4 class="font-bold text-green-800 dark:text-green-300">Free expansion — strain, no stress</h4>
+        <div class="formula-box !bg-transparent !border-0 mt-2">$$ \delta = \alpha\,\Delta T\,L $$</div>
+        <p class="text-sm mt-2">The bar lengthens freely. Nothing resists it, so no internal force develops.</p>
+      </div>
+      <div class="p-4 rounded-lg bg-red-50 dark:bg-red-900/20">
+        <h4 class="font-bold text-red-800 dark:text-red-300">Fully restrained — stress, no strain</h4>
+        <div class="formula-box !bg-transparent !border-0 mt-2">$$ \sigma = \alpha\,\Delta T\,E $$</div>
+        <p class="text-sm mt-2">Supports prevent the expansion. The bar is effectively pushed back to its original length, and \(L\) cancels out — <b>the stress does not depend on the length.</b></p>
+      </div>
+    </div>
+    <p class="text-sm mt-4"><b>Partial restraint (a gap \(\Delta\) is provided):</b> only the expansion beyond the gap is resisted.</p>
+    <div class="formula-box mt-2">$$ \sigma = \frac{E\,(\alpha\,\Delta T\,L - \Delta)}{L} $$</div>
+    <p class="text-sm mt-2">If \(\alpha \Delta T L \le \Delta\) the bar never touches the far support and the stress is zero. Always check this first.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-4">Thermal stress lab</h3>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <label class="text-sm block mb-1" for="th-mat">Material</label>
+        <select id="th-mat" class="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:border-gray-600">
+          <option value="12e-6|200">Steel (α = 12×10⁻⁶, E = 200 GPa)</option>
+          <option value="17e-6|100">Copper (α = 17×10⁻⁶, E = 100 GPa)</option>
+          <option value="23e-6|70">Aluminium (α = 23×10⁻⁶, E = 70 GPa)</option>
+          <option value="11e-6|25">Concrete (α = 11×10⁻⁶, E = 25 GPa)</option>
+        </select>
+        <label class="flex justify-between text-sm mb-1"><span>Temperature rise ΔT (°C)</span><span class="num font-bold text-brand-600" id="th-dt-lbl">40</span></label>
+        <input id="th-dt" type="range" min="0" max="100" value="40" class="slider-custom mb-4">
+        <label class="flex justify-between text-sm mb-1"><span>Length L (mm)</span><span class="num font-bold text-brand-600" id="th-l-lbl">2000</span></label>
+        <input id="th-l" type="range" min="500" max="6000" step="100" value="2000" class="slider-custom mb-4">
+        <label class="flex justify-between text-sm mb-1"><span>Expansion gap Δ (mm)</span><span class="num font-bold text-brand-600" id="th-gap-lbl">0.00</span></label>
+        <input id="th-gap" type="range" min="0" max="300" value="0" class="slider-custom">
+        <p class="text-xs text-gray-500 mt-1">Gap slider runs 0 to 3.00 mm.</p>
+      </div>
+      <div class="space-y-3">
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Free expansion α·ΔT·L</p><p class="text-2xl font-bold num text-brand-600" id="th-free">—</p></div>
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Actual movement</p><p class="text-2xl font-bold num" id="th-move">—</p></div>
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Induced stress (compressive on heating)</p><p class="text-2xl font-bold num text-red-500" id="th-stress">—</p></div>
+        <p class="text-sm" id="th-note"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Composite bar under temperature change</h3>
+    <p class="text-sm mb-3">When two bonded materials with different α are heated, the one that wants to expand more is held back (goes into compression) and the other is dragged along (goes into tension). Since no external load acts:</p>
+    <div class="formula-box">$$ \sigma_1 A_1 = \sigma_2 A_2 \qquad\text{and}\qquad \frac{\sigma_1}{E_1} + \frac{\sigma_2}{E_2} = (\alpha_1 - \alpha_2)\,\Delta T $$</div>
+    <p class="text-sm mt-3">Take \(\alpha_1 > \alpha_2\). The first equation is equilibrium of the internal pull-and-push pair; the second says the strain difference the two would have had is exactly taken up by the elastic strains. This is the bimetallic strip, and it is why a thermostat bends.</p>
+  </div>
+</div>
+
+<!-- ============ M15 FOS ============ -->
+<div id="module-15" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 15</p><h2 class="mtitle">Factor of safety</h2>
+
+  <div class="card mb-5">
+    <p class="mb-4">No structure is designed at the stress that breaks it. A margin covers variation in material, errors in load estimation, workmanship, corrosion and the consequences of failure.</p>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="formula-box"><p class="text-xs text-gray-500 mb-1">Brittle materials</p>$$ \text{FOS} = \frac{\sigma_{ultimate}}{\sigma_{working}} $$</div>
+      <div class="formula-box"><p class="text-xs text-gray-500 mb-1">Ductile materials</p>$$ \text{FOS} = \frac{\sigma_{yield}}{\sigma_{working}} $$</div>
+    </div>
+    <p class="text-sm mt-4">For ductile materials, yield — not fracture — is the limit of usefulness, because a permanently bent member has already failed to do its job.</p>
+    <table class="data mt-4">
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>Working / actual stress</td><td>What the member really carries under service load</td></tr>
+      <tr><td>Permissible / allowable stress</td><td>The ceiling set by the code = limiting stress ÷ FOS</td></tr>
+      <tr><td>Limiting stress</td><td>Yield for ductile, ultimate for brittle</td></tr>
+    </table>
+    <p class="text-sm mt-3">Typical values: steel in tension 1.5–2.0, concrete 3.0, timber 4.0–6.0, and higher again where failure endangers life or the loading is poorly known.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-4">Design a member</h3>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div><label class="text-sm block mb-1" for="fos-P">Service load (kN)</label><input id="fos-P" type="number" value="150" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-sm block mb-1" for="fos-sy">Yield stress (MPa)</label><input id="fos-sy" type="number" value="250" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-sm block mb-1" for="fos-n">Factor of safety</label><input id="fos-n" type="number" value="1.67" step="0.01" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+    </div>
+    <div id="fos-out" class="mt-5"></div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Working stress versus limit state</h3>
+    <p class="text-sm">The FOS above belongs to <b>working stress design</b>: one factor applied to the material. Modern codes including IS 456 and IS 800 use <b>limit state design</b>, applying a partial safety factor to the material (γ<sub>m</sub>) and separate factors to each load (γ<sub>f</sub>) — for example 1.5 on dead and live load, 1.15 on steel, 1.5 on concrete. The philosophy is the same margin, distributed where the uncertainty actually lies.</p>
+  </div>
+</div>
+
+<!-- ============ M16 NUMERICALS ============ -->
+<div id="module-16" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 16</p><h2 class="mtitle">Solved numerical problems</h2>
+  <div class="flex flex-wrap gap-2 mb-5" id="n16-filters"></div>
+  <div id="n16-list" class="space-y-4"></div>
+</div>
+
+<!-- ============ M17 VIRTUAL LAB ============ -->
+<div id="module-17" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 17</p><h2 class="mtitle">Virtual laboratory — tension test</h2>
+
+  <div class="grid lg:grid-cols-3 gap-5">
+    <div class="card lg:col-span-1">
+      <h3 class="font-bold text-lg mb-4 pb-2 border-b dark:border-gray-700">Test parameters</h3>
+
+      <label class="flex justify-between text-sm mb-1"><span>Axial load P</span><span id="val-load" class="font-bold num text-brand-600">50 kN</span></label>
+      <input type="range" id="sim-load" class="slider-custom mb-4" min="0" max="200" value="50">
+
+      <label class="flex justify-between text-sm mb-1"><span>Area A</span><span id="val-area" class="font-bold num text-brand-600">300 mm²</span></label>
+      <input type="range" id="sim-area" class="slider-custom mb-4" min="10" max="500" value="300">
+
+      <label class="flex justify-between text-sm mb-1"><span>Length L</span><span id="val-length" class="font-bold num text-brand-600">1000 mm</span></label>
+      <input type="range" id="sim-length" class="slider-custom mb-4" min="500" max="5000" step="50" value="1000">
+
+      <label class="flex justify-between text-sm mb-1"><span>Temperature rise ΔT</span><span id="val-temp" class="font-bold num text-brand-600">0 °C</span></label>
+      <input type="range" id="sim-temp" class="slider-custom mb-4" min="0" max="80" value="0">
+
+      <label class="text-sm block mb-1" for="sim-material">Material</label>
+      <select id="sim-material" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 mb-3">
+        <option value="200000|250|12e-6">Mild steel — E 200 GPa, f<sub>y</sub> 250</option>
+        <option value="200000|415|12e-6">HYSD Fe415 — E 200 GPa</option>
+        <option value="70000|95|23e-6">Aluminium — E 70 GPa</option>
+        <option value="100000|70|17e-6">Copper — E 100 GPa</option>
+        <option value="12000|40|5e-6">Timber — E 12 GPa</option>
+      </select>
+
+      <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="sim-restrained" class="rounded"> Both ends restrained (thermal)</label>
+    </div>
+
+    <div class="card lg:col-span-2">
+      <h3 class="font-bold text-lg mb-4 pb-2 border-b dark:border-gray-700">Live readings</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg"><p class="text-xs text-gray-500">Stress σ</p><p class="text-xl font-bold num text-red-500" id="res-stress">—</p></div>
+        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg"><p class="text-xs text-gray-500">Strain ε</p><p class="text-xl font-bold num text-purple-500" id="res-strain">—</p></div>
+        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg"><p class="text-xs text-gray-500">Elongation δL</p><p class="text-xl font-bold num text-blue-500" id="res-def">—</p></div>
+        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg"><p class="text-xs text-gray-500">Utilisation σ/f<sub>y</sub></p><p class="text-xl font-bold num" id="res-util">—</p></div>
+      </div>
+
+      <div id="res-flag" class="mt-3 text-sm"></div>
+
+      <div class="mt-5 relative h-28 bg-gray-100 dark:bg-gray-700/50 rounded-lg overflow-hidden flex items-center">
+        <div class="absolute left-0 top-0 h-full w-3 bg-gray-500 z-10"></div>
+        <div id="vis-bar" class="ml-3 h-10 bg-brand-500/70 transition-all duration-150 flex items-center justify-end rounded-r" style="width:50%">
+          <span class="text-xs mr-2 font-bold text-white tracking-widest" id="vis-arrows">&rarr; &rarr;</span>
+        </div>
+        <div id="vis-wall2" class="absolute right-0 top-0 h-full w-3 bg-gray-500 hidden"></div>
+      </div>
+      <p class="text-center text-xs text-gray-400 mt-1">Elongation shown exaggerated for visibility.</p>
+
+      <div class="h-56 mt-4"><canvas id="lab-chart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M18 SIMULATIONS ============ -->
+<div id="module-18" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 18</p><h2 class="mtitle">Interactive simulations</h2>
+
+  <div class="card mb-5">
+    <h3 class="font-bold text-lg mb-1">Circular bar — every variable at once</h3>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Watch which quantity each slider actually changes. Notice that stress ignores length entirely, while elongation depends on all four.</p>
+    <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+      <div>
+        <label class="flex justify-between text-sm mb-1"><span>Load P</span><span class="num font-bold text-brand-600" id="s18-P-l">80 kN</span></label>
+        <input id="s18-P" type="range" min="0" max="300" value="80" class="slider-custom mb-3">
+        <label class="flex justify-between text-sm mb-1"><span>Diameter d</span><span class="num font-bold text-brand-600" id="s18-d-l">25 mm</span></label>
+        <input id="s18-d" type="range" min="5" max="80" value="25" class="slider-custom mb-3">
+        <label class="flex justify-between text-sm mb-1"><span>Length L</span><span class="num font-bold text-brand-600" id="s18-L-l">2000 mm</span></label>
+        <input id="s18-L" type="range" min="200" max="6000" step="50" value="2000" class="slider-custom mb-3">
+        <label class="flex justify-between text-sm mb-1"><span>Young's modulus E</span><span class="num font-bold text-brand-600" id="s18-E-l">200 GPa</span></label>
+        <input id="s18-E" type="range" min="10" max="220" step="5" value="200" class="slider-custom mb-3">
+        <label class="flex justify-between text-sm mb-1"><span>Poisson's ratio μ</span><span class="num font-bold text-brand-600" id="s18-mu-l">0.30</span></label>
+        <input id="s18-mu" type="range" min="0" max="49" value="30" class="slider-custom">
+      </div>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Area A</span><span class="num font-bold" id="s18-A">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Stress σ</span><span class="num font-bold text-red-500" id="s18-sig">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Strain ε</span><span class="num font-bold" id="s18-eps">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Elongation δL</span><span class="num font-bold text-blue-500" id="s18-dl">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Change in diameter δd</span><span class="num font-bold" id="s18-dd">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Volumetric strain</span><span class="num font-bold" id="s18-ev">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Strain energy U = P·δL/2</span><span class="num font-bold" id="s18-U">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="font-bold text-lg mb-1">Sensitivity — halve one variable, what happens?</h3>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Relative to the current setting above.</p>
+    <table class="data"><tr><th>Change</th><th>Stress</th><th>Elongation</th></tr>
+      <tr><td>Double the load</td><td class="num">×2</td><td class="num">×2</td></tr>
+      <tr><td>Double the length</td><td class="num">no change</td><td class="num">×2</td></tr>
+      <tr><td>Double the diameter</td><td class="num">×0.25</td><td class="num">×0.25</td></tr>
+      <tr><td>Double E</td><td class="num">no change</td><td class="num">×0.5</td></tr>
+    </table>
+    <p class="text-sm mt-3">Diameter is the powerful variable because area goes as \(d^2\). This is why increasing a bolt from 16 mm to 20 mm raises capacity by 56 %, not 25 %.</p>
+  </div>
+</div>
+
+<!-- ============ M19 GAMES ============ -->
+<div id="module-19" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 19</p><h2 class="mtitle">Learning games</h2>
+
+  <div class="card mb-5">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">Match the formula</h3>
+      <button onclick="initMatch()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">Shuffle</button>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Click a quantity on the left, then its formula on the right.</p>
+    <div class="grid grid-cols-2 gap-4">
+      <div id="match-left" class="space-y-2"></div>
+      <div id="match-right" class="space-y-2"></div>
+    </div>
+    <p class="text-sm mt-3 num" id="match-status"></p>
+  </div>
+
+  <div class="card mb-5">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">Find the material</h3>
+      <button onclick="newMaterialRound()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">New clue</button>
+    </div>
+    <p class="p-4 rounded-lg bg-brand-50 dark:bg-brand-900/30 text-sm" id="fm-clue">—</p>
+    <div id="fm-options" class="grid sm:grid-cols-2 gap-2 mt-3"></div>
+    <p class="text-sm mt-2 num" id="fm-status"></p>
+  </div>
+
+  <div class="card mb-5">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">Stress hunt — spot the error</h3>
+      <button onclick="newHunt()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">Next statement</button>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Decide whether the statement is sound engineering or contains a mistake.</p>
+    <p class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 num text-sm" id="hunt-text">—</p>
+    <div class="flex gap-3 mt-3">
+      <button onclick="huntAnswer(true)" class="flex-1 py-2 rounded bg-green-600 text-white font-semibold">Correct as written</button>
+      <button onclick="huntAnswer(false)" class="flex-1 py-2 rounded bg-red-600 text-white font-semibold">Contains an error</button>
+    </div>
+    <p class="text-sm mt-3" id="hunt-fb"></p>
+  </div>
+
+  <div class="card">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">Memory cards</h3>
+      <button onclick="initMemory()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">Restart</button>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Turn over two cards to pair a term with its definition.</p>
+    <div id="memory-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+    <p class="text-sm mt-3 num" id="memory-status"></p>
+  </div>
+</div>
+
+<!-- ============ M20 FORMULA SHEET ============ -->
+<div id="module-20" class="module-content max-w-4xl mx-auto">
+  <div class="flex items-start justify-between flex-wrap gap-3">
+    <div><p class="eyebrow">Module 20</p><h2 class="mtitle">Formula sheet</h2></div>
+    <button onclick="window.print()" class="no-print px-4 py-2 rounded-lg bg-brand-500 text-white font-semibold hover:bg-brand-700"><i class="fas fa-print mr-2"></i>Print or save as PDF</button>
+  </div>
+
+  <div class="card">
+    <div class="grid md:grid-cols-2 gap-x-8 gap-y-5 text-sm">
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Stress and strain</h4>
+        <p>$$\sigma = \frac{P}{A} \qquad \varepsilon = \frac{\delta L}{L}$$</p>
+        <p>$$\tau = \frac{P}{A_s} \qquad \phi = \frac{\delta_s}{h}$$</p>
+        <p>$$\sigma_b = \frac{P}{d\,t}$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Hooke's law and deformation</h4>
+        <p>$$E = \frac{\sigma}{\varepsilon} \qquad \delta L = \frac{PL}{AE}$$</p>
+        <p>$$\delta L_{total} = \sum \frac{P_i L_i}{A_i E_i}$$</p>
+        <p>$$G = \frac{\tau}{\phi} \qquad K = \frac{\sigma_v}{\varepsilon_v}$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Elastic constants</h4>
+        <p>$$E = 2G(1+\mu)$$</p>
+        <p>$$E = 3K(1-2\mu)$$</p>
+        <p>$$E = \frac{9KG}{3K+G}$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Lateral and volumetric</h4>
+        <p>$$\mu = -\frac{\varepsilon_{lat}}{\varepsilon_{long}}$$</p>
+        <p>$$\varepsilon_v = \varepsilon_x+\varepsilon_y+\varepsilon_z$$</p>
+        <p>$$\varepsilon_v = \varepsilon(1-2\mu)$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Composite bars</h4>
+        <p>$$P = \sigma_1 A_1 + \sigma_2 A_2$$</p>
+        <p>$$\frac{\sigma_1}{E_1} = \frac{\sigma_2}{E_2},\quad m = \frac{E_1}{E_2}$$</p>
+        <p>$$\varepsilon = \frac{P}{A_1E_1 + A_2E_2}$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Temperature</h4>
+        <p>$$\delta = \alpha\,\Delta T\,L$$</p>
+        <p>$$\sigma = \alpha\,\Delta T\,E \;\;\text{(full restraint)}$$</p>
+        <p>$$\sigma = \frac{E(\alpha\Delta T L - \Delta)}{L}$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Design</h4>
+        <p>$$\text{FOS} = \frac{\sigma_{yield \text{ or } ult}}{\sigma_{working}}$$</p>
+        <p>$$\sigma_{perm} = \frac{\sigma_{limit}}{\text{FOS}} \qquad A_{req} = \frac{P}{\sigma_{perm}}$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Strain energy</h4>
+        <p>$$U = \frac{1}{2}P\,\delta L = \frac{P^2 L}{2AE}$$</p>
+        <p>$$u = \frac{\sigma^2}{2E} \;\text{per unit volume}$$</p></div>
+    </div>
+
+    <h4 class="font-bold border-b dark:border-gray-700 pb-1 mt-6 mb-2">Standard values</h4>
+    <table class="data">
+      <tr><th>Material</th><th>E (GPa)</th><th>μ</th><th>α (/°C)</th><th>Yield / ultimate (MPa)</th></tr>
+      <tr><td>Mild steel Fe250</td><td class="num">200</td><td class="num">0.30</td><td class="num">12×10⁻⁶</td><td class="num">250 / 410</td></tr>
+      <tr><td>HYSD Fe415</td><td class="num">200</td><td class="num">0.30</td><td class="num">12×10⁻⁶</td><td class="num">415 / 485</td></tr>
+      <tr><td>Cast iron</td><td class="num">100</td><td class="num">0.25</td><td class="num">11×10⁻⁶</td><td class="num">— / 150 (T), 600 (C)</td></tr>
+      <tr><td>Aluminium</td><td class="num">70</td><td class="num">0.33</td><td class="num">23×10⁻⁶</td><td class="num">95 / 110</td></tr>
+      <tr><td>Copper</td><td class="num">100</td><td class="num">0.34</td><td class="num">17×10⁻⁶</td><td class="num">70 / 220</td></tr>
+      <tr><td>Concrete M25</td><td class="num">25</td><td class="num">0.15</td><td class="num">11×10⁻⁶</td><td class="num">— / 25 (C)</td></tr>
+      <tr><td>Timber</td><td class="num">12</td><td class="num">—</td><td class="num">5×10⁻⁶</td><td class="num">— / 40</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ M21 CONCEPT MAP ============ -->
+<div id="module-21" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 21</p><h2 class="mtitle">Concept map</h2>
+  <div class="card">
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Click any node to jump to the module that covers it.</p>
+    <div class="overflow-x-auto">
+      <svg viewBox="0 0 860 470" class="w-full min-w-[700px]" id="cmap" aria-label="Concept map of Unit 1">
+        <defs><marker id="arw" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#94a3b8"/></marker></defs>
+        <g stroke="#94a3b8" stroke-width="1.6" marker-end="url(#arw)" fill="none">
+          <path d="M430,72 L430,110"/>
+          <path d="M400,150 L230,190"/><path d="M460,150 L640,190"/>
+          <path d="M200,228 L200,270"/><path d="M660,228 L660,270"/>
+          <path d="M240,290 L400,300"/><path d="M620,290 L460,300"/>
+          <path d="M430,338 L280,380"/><path d="M430,338 L580,380"/>
+          <path d="M240,418 L240,436" opacity="0"/>
+        </g>
+        <g id="cmap-nodes"></g>
+      </svg>
+    </div>
+    <div class="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-sm">
+      <p><b>The spine of Unit 1:</b> a load produces an internal force; internal force over area is stress; stress produces strain; the ratio of the two is E; E lets you predict deformation; comparing stress against a permissible value is design. Everything else — composite bars, thermal effects, elastic constants — is this chain applied to a harder geometry.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M22 MISTAKES ============ -->
+<div id="module-22" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 22</p><h2 class="mtitle">Common mistakes</h2>
+  <div class="space-y-4" id="mistake-list"></div>
+</div>
+
+<!-- ============ M23 UNIVERSITY QUESTIONS ============ -->
+<div id="module-23" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 23</p><h2 class="mtitle">University question bank</h2>
+  <div class="card mb-5">
+    <p class="text-sm">Questions grouped by topic and marks. Each carries the approach expected by the examiner rather than a full worked answer — attempt it first, then check the method.</p>
+    <div class="flex flex-wrap gap-2 mt-4" id="uq-filters"></div>
+  </div>
+  <div id="uq-list" class="space-y-3"></div>
+</div>
+
+<!-- ============ M24 SELF EVALUATION ============ -->
+<div id="module-24" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 24</p><h2 class="mtitle">Self evaluation</h2>
+
+  <div class="card mb-5">
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Seven levels, from recall to case study. Scores feed the dashboards in Modules 25 and 26.</p>
+    <div class="flex flex-wrap gap-2" id="lvl-tabs"></div>
+  </div>
+
+  <!-- L1 MCQ -->
+  <div class="eval-panel card" id="lvl-1">
+    <h3 class="font-bold text-lg mb-1">Level 1 — Multiple choice</h3>
+    <p class="text-sm text-gray-500 mb-4">20 questions, instant feedback with explanation.</p>
+    <div id="mcq-box"></div>
+    <div class="mt-4 flex items-center justify-between">
+      <p class="text-sm num" id="mcq-progress"></p>
+      <button onclick="resetMCQ()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">Restart level</button>
+    </div>
+  </div>
+
+  <!-- L2 Fill -->
+  <div class="eval-panel card hidden" id="lvl-2">
+    <h3 class="font-bold text-lg mb-1">Level 2 — Fill in the blanks</h3>
+    <p class="text-sm text-gray-500 mb-4">Type the missing word or symbol. Spelling is checked loosely.</p>
+    <div id="fill-box" class="space-y-3"></div>
+    <button onclick="checkFill()" class="mt-4 bg-brand-500 text-white px-5 py-2 rounded font-semibold hover:bg-brand-700">Check answers</button>
+    <p class="mt-3 num text-sm" id="fill-score"></p>
+  </div>
+
+  <!-- L3 True/False -->
+  <div class="eval-panel card hidden" id="lvl-3">
+    <h3 class="font-bold text-lg mb-1">Level 3 — True or false</h3>
+    <p class="text-sm text-gray-500 mb-4">Several of these are the exact misconceptions that cost marks.</p>
+    <div id="tf-box" class="space-y-3"></div>
+    <p class="mt-3 num text-sm" id="tf-score"></p>
+  </div>
+
+  <!-- L4 Match -->
+  <div class="eval-panel card hidden" id="lvl-4">
+    <h3 class="font-bold text-lg mb-1">Level 4 — Match the following</h3>
+    <p class="text-sm text-gray-500 mb-4">Choose the correct partner for each item.</p>
+    <div id="mt-box" class="space-y-3"></div>
+    <button onclick="checkMatchQ()" class="mt-4 bg-brand-500 text-white px-5 py-2 rounded font-semibold hover:bg-brand-700">Check answers</button>
+    <p class="mt-3 num text-sm" id="mt-score"></p>
+  </div>
+
+  <!-- L5 Numerical -->
+  <div class="eval-panel card hidden" id="lvl-5">
+    <h3 class="font-bold text-lg mb-1">Level 5 — Numerical problems</h3>
+    <p class="text-sm text-gray-500 mb-4">Answers are checked to within 2 %. A hint is available before you answer; using it halves the marks for that question.</p>
+    <div id="num-box" class="space-y-4"></div>
+    <p class="mt-3 num text-sm" id="num-score"></p>
+  </div>
+
+  <!-- L6 Case study -->
+  <div class="eval-panel card hidden" id="lvl-6">
+    <h3 class="font-bold text-lg mb-1">Level 6 — Case study</h3>
+    <div class="p-4 rounded-lg bg-brand-50 dark:bg-brand-900/25 text-sm my-4">
+      <p class="font-bold mb-1">Bottom chord of a footbridge truss</p>
+      <p>A pedestrian bridge truss has a bottom chord made of a single ISA angle with a net area of <span class="num">1240 mm²</span> and a length between joints of <span class="num">3000 mm</span>. Analysis gives a maximum tensile force of <span class="num">280 kN</span> under service load. The steel is Fe250 (yield 250 MPa, E = 200 GPa). The client asks for a factor of safety of 1.67 against yield. The deck can tolerate a member extension of 2 mm.</p>
+    </div>
+    <div id="case-box" class="space-y-4"></div>
+    <p class="mt-3 num text-sm" id="case-score"></p>
+  </div>
+
+  <!-- L7 Adaptive -->
+  <div class="eval-panel card hidden" id="lvl-7">
+    <h3 class="font-bold text-lg mb-1">Level 7 — Adaptive quiz</h3>
+    <p class="text-sm text-gray-500 mb-4">The difficulty moves with your performance: two right in a row steps up, one wrong steps down. Ten questions.</p>
+    <div class="flex items-center gap-3 mb-4 text-sm">
+      <span class="chip bg-brand-100 text-brand-900" id="ad-diff">Difficulty 1</span>
+      <span class="num" id="ad-count">Question 1 of 10</span>
+    </div>
+    <div id="ad-box"></div>
+    <button onclick="startAdaptive()" class="mt-4 text-sm px-3 py-1.5 rounded border dark:border-gray-600">Restart</button>
+  </div>
+</div>
+
+<!-- ============ M25 PROGRESS DASHBOARD ============ -->
+<div id="module-25" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 25</p><h2 class="mtitle">Progress dashboard</h2>
+
+  <div class="grid sm:grid-cols-4 gap-4 mb-5">
+    <div class="card !p-4 text-center"><p class="text-xs text-gray-500">Modules visited</p><p class="text-3xl font-bold num text-brand-600" id="db-visited">0</p></div>
+    <div class="card !p-4 text-center"><p class="text-xs text-gray-500">Questions attempted</p><p class="text-3xl font-bold num text-brand-600" id="db-attempts">0</p></div>
+    <div class="card !p-4 text-center"><p class="text-xs text-gray-500">Overall score</p><p class="text-3xl font-bold num text-brand-600" id="db-score">—</p></div>
+    <div class="card !p-4 text-center"><p class="text-xs text-gray-500">Time on module</p><p class="text-3xl font-bold num text-brand-600" id="db-time">0m</p></div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-5 mb-5">
+    <div class="card"><h3 class="font-bold mb-3">Topic-wise performance</h3><div class="h-72"><canvas id="db-radar"></canvas></div></div>
+    <div class="card">
+      <h3 class="font-bold mb-3">Weak topics and suggested revision</h3>
+      <div id="db-weak" class="space-y-2 text-sm"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold">Certificate eligibility</h3>
+      <span class="chip" id="db-cert-chip">—</span>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Requires all 26 modules visited and an overall score of 70 % or more across Levels 1 to 5.</p>
+    <div class="space-y-2 text-sm" id="db-cert-list"></div>
+    <button onclick="issueCertificate()" id="db-cert-btn" class="mt-4 px-5 py-2 rounded-lg bg-brand-500 text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed">Generate certificate</button>
+  </div>
+</div>
+
+<!-- ============ M26 TEACHER DASHBOARD ============ -->
+<div id="module-26" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 26</p><h2 class="mtitle">Teacher dashboard</h2>
+
+  <div class="card mb-5 border-l-4 border-lab-500">
+    <p class="text-sm"><b>How this works.</b> This file has no server, so it reports only the session on this device. To collect a class, have each student open Module 26, click <b>Export my record</b>, and send you the CSV. Load the collected files below to see the class picture. Nothing is uploaded anywhere.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="font-bold mb-3">This session</h3>
+    <div class="grid sm:grid-cols-4 gap-3 text-center text-sm">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Modules visited</p><p class="num font-bold text-xl" id="td-visited">0</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Attempted</p><p class="num font-bold text-xl" id="td-att">0</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Correct</p><p class="num font-bold text-xl" id="td-cor">0</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Time</p><p class="num font-bold text-xl" id="td-time">0m</p></div>
+    </div>
+    <div class="flex flex-wrap gap-3 mt-4">
+      <label class="text-sm flex items-center gap-2">Student name <input id="td-name" placeholder="Roll no. and name" class="p-2 border rounded text-sm dark:bg-gray-700 dark:border-gray-600"></label>
+      <button onclick="exportRecord()" class="px-4 py-2 rounded bg-brand-500 text-white font-semibold text-sm"><i class="fas fa-download mr-1"></i> Export my record</button>
+      <button onclick="resetAll()" class="px-4 py-2 rounded border dark:border-gray-600 text-sm">Clear this device</button>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="font-bold mb-3">Class analytics</h3>
+    <label class="text-sm block mb-2">Load exported CSV files from students</label>
+    <input type="file" id="td-files" accept=".csv" multiple class="text-sm mb-4">
+    <div id="td-class-summary" class="text-sm text-gray-500">No class files loaded yet.</div>
+    <div class="h-72 mt-4 hidden" id="td-chart-wrap"><canvas id="td-chart"></canvas></div>
+  </div>
+
+  <div class="card">
+    <h3 class="font-bold mb-3">Question-level record</h3>
+    <div class="overflow-x-auto"><table class="data" id="td-table"><tr><th>Level</th><th>Topic</th><th>Result</th><th>Time</th></tr></table></div>
+    <button onclick="exportReport()" class="mt-4 px-4 py-2 rounded border dark:border-gray-600 text-sm"><i class="fas fa-file-csv mr-1"></i> Export full report</button>
+  </div>
+</div>
+
+<!-- placeholder retained for safety -->
+<div id="module-placeholder" class="module-content max-w-4xl mx-auto text-center py-20">
+  <i class="fas fa-compass-drafting text-5xl text-gray-300 dark:text-gray-600 mb-4"></i>
+  <h2 class="text-2xl font-bold text-gray-500">Module not found</h2>
+  <p class="text-gray-400 mt-2">Use the list on the left to pick a module.</p>
+</div>
+
+<div class="h-24"></div>
+</main>
+</div>
+
+<!-- ============ TUTOR ============ -->
+<div class="fixed bottom-16 right-5 z-40 no-print" id="ai-tutor-wrap">
+  <button id="ai-tutor-btn" aria-label="Open the study helper" class="bg-brand-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform">
+    <i class="fas fa-chalkboard-user text-xl"></i>
+  </button>
+
+  <div id="ai-tutor-panel" class="hidden absolute bottom-16 right-0 w-[330px] max-w-[92vw] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col" style="height:440px">
+    <div class="bg-brand-900 text-white p-3 flex justify-between items-center">
+      <div class="flex items-center gap-2"><i class="fas fa-book-open-reader"></i><span class="font-bold text-sm">Study helper</span></div>
+      <button id="ai-tutor-close" aria-label="Close helper"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="tutor-log" class="flex-1 p-3 overflow-y-auto bg-gray-50 dark:bg-gray-900 text-sm space-y-2"></div>
+    <div class="p-2 border-t dark:border-gray-700 flex gap-2">
+      <input id="tutor-input" type="text" placeholder="Ask about a formula or topic..." class="flex-1 p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-sm outline-none focus:border-brand-500">
+      <button onclick="tutorSend()" aria-label="Send question" class="bg-brand-500 text-white px-3 rounded hover:bg-brand-700"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2.5 text-center text-xs text-gray-500 dark:text-gray-400 flex-shrink-0 z-10">
+  Prepared by <strong>D. Mandal</strong>, Assistant Professor, Department of Civil Engineering &nbsp;|&nbsp; &copy; 2026
+</footer>
+
+<script>
+/* ============================================================
+   Strength of Materials — Unit 1
+   Prepared by D. Mandal, Assistant Professor, Civil Engineering
+   Single-file interactive module. No network calls, no tracking.
+   ============================================================ */
+
+/* ---------- storage that degrades gracefully ---------- */
+const store = (() => {
+  let ok = true, mem = {};
+  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); } catch(e) { ok = false; }
+  return {
+    get(k, d) { try { const v = ok ? localStorage.getItem(k) : mem[k]; return v ? JSON.parse(v) : d; } catch(e) { return d; } },
+    set(k, v) { try { const s = JSON.stringify(v); if (ok) localStorage.setItem(k, s); else mem[k] = s; } catch(e) {} },
+    clear() { try { if (ok) localStorage.clear(); mem = {}; } catch(e) {} }
+  };
+})();
+
+const TOPICS = ['Stress','Strain','Hooke & E','Curves','Elastic constants','Composite bars','Thermal','Design'];
+
+const state = {
+  visited: new Set(store.get('som_visited', [1])),
+  records: store.get('som_records', []),      // {level, topic, correct, ts}
+  started: Date.now(),
+  elapsed: store.get('som_elapsed', 0)
+};
+
+/* ---------- module list ---------- */
+const modules = [
+  { id:1,  title:'Cover page' },
+  { id:2,  title:'Learning outcomes' },
+  { id:3,  title:'Why study stress?' },
+  { id:4,  title:'Internal & external forces' },
+  { id:5,  title:'Stress: formula & units' },
+  { id:6,  title:'Types of stress' },
+  { id:7,  title:'Strain & deformation' },
+  { id:8,  title:"Hooke's law" },
+  { id:9,  title:'Curve: mild steel' },
+  { id:10, title:'Curve: other materials' },
+  { id:11, title:'Elastic constants' },
+  { id:12, title:'Poisson effect' },
+  { id:13, title:'Composite bars' },
+  { id:14, title:'Temperature stress' },
+  { id:15, title:'Factor of safety' },
+  { id:16, title:'Solved numericals' },
+  { id:17, title:'Virtual laboratory' },
+  { id:18, title:'Interactive simulations' },
+  { id:19, title:'Learning games' },
+  { id:20, title:'Formula sheet' },
+  { id:21, title:'Concept map' },
+  { id:22, title:'Common mistakes' },
+  { id:23, title:'University questions' },
+  { id:24, title:'Self evaluation' },
+  { id:25, title:'Progress dashboard' },
+  { id:26, title:'Teacher dashboard' }
+];
+
+/* ---------- M6 identify-the-stress bank ---------- */
+const M6Q = [
+  { q:'A 20 mm bolt joins two plates in a lap joint carrying 40 kN.', a:'Shear', opts:['Tensile','Shear','Bearing','Thermal'], why:'One plane through the bolt slides relative to the other — single shear, τ = P/A.' },
+  { q:'The same bolt presses against the side of the hole in the plate.', a:'Bearing', opts:['Bearing','Shear','Tensile','Hydrostatic'], why:'Contact pressure over the projected area d×t is bearing stress.' },
+  { q:'A welded rail is held at both ends and the temperature rises by 35 °C.', a:'Thermal', opts:['Thermal','Shear','Bearing','Tensile'], why:'No external load; restraint against free expansion produces σ = αΔT·E, compressive.' },
+  { q:'A masonry pier carries the weight of the floors above it.', a:'Compressive', opts:['Compressive','Tensile','Shear','Thermal'], why:'The load pushes into the section, shortening it.' },
+  { q:'A steel wire supports a hanging sign.', a:'Tensile', opts:['Tensile','Compressive','Bearing','Shear'], why:'The load pulls away from any cut section.' },
+  { q:'A steel ball is lowered deep into the sea.', a:'Hydrostatic', opts:['Hydrostatic','Tensile','Shear','Bearing'], why:'Equal pressure on all faces — volumetric compression governed by the bulk modulus K.' }
+];
+
+/* ---------- M9 mild steel stages ---------- */
+const M9 = [
+  { k:'O–A', name:'Proportional limit (A)', x:0.0011, y:210, txt:'Stress and strain rise in exact proportion. Hooke\'s law holds and the slope of this line is E ≈ 200 GPa. Unload anywhere here and the specimen returns exactly along the same line.' },
+  { k:'A–B', name:'Elastic limit (B)', x:0.0013, y:230, txt:'Still fully recoverable, but no longer a straight line. Slightly above A. Beyond B, some permanent set remains after unloading.' },
+  { k:'C',   name:'Upper yield point (C)', x:0.0016, y:250, txt:'Dislocations break away from their pinning atoms and the material suddenly gives. The load drops even though the machine keeps pulling.' },
+  { k:'D',   name:'Lower yield point (D)', x:0.019,  y:240, txt:'A plateau of plastic flow at almost constant stress — strain grows from about 0.002 to 0.02 with no increase in load. This value is taken as the design yield stress because it is reproducible.' },
+  { k:'D–E', name:'Strain hardening', x:0.10, y:340, txt:'Dislocations tangle and the material regains strength. Stress climbs again with strain, though far less steeply than the elastic line.' },
+  { k:'E',   name:'Ultimate stress (E)', x:0.16, y:410, txt:'The maximum stress the specimen carries, about 410 MPa for Fe250. At this point a neck begins to form at the weakest section.' },
+  { k:'E–F', name:'Necking', x:0.22, y:375, txt:'Deformation localises in the neck. The real area shrinks quickly, so the engineering stress (load ÷ original area) falls even though the true stress keeps rising.' },
+  { k:'F',   name:'Fracture (F)', x:0.25, y:330, txt:'Failure with a cup-and-cone surface. Nominal breaking stress is below the ultimate. Percentage elongation at this point measures ductility — IS 432 requires at least 23 % for Fe250.' }
+];
+
+/* ---------- M16 solved numericals ---------- */
+const N16 = [
+ { lvl:'Easy', topic:'Stress',
+   q:'A circular bar of 20 mm diameter carries an axial pull of 40 kN. Find the tensile stress.',
+   s:['A = (π/4)(20)² = 314.16 mm²','σ = P/A = 40 000 / 314.16','σ = 127.32 N/mm² = 127.32 MPa'] },
+ { lvl:'Easy', topic:'Strain',
+   q:'A steel rod 3 m long and 25 mm in diameter carries 60 kN. Take E = 200 GPa. Find the stress, strain and elongation.',
+   s:['A = (π/4)(25)² = 490.87 mm²','σ = 60 000 / 490.87 = 122.23 MPa','ε = σ/E = 122.23 / 200 000 = 6.11×10⁻⁴','δL = εL = 6.11×10⁻⁴ × 3000 = 1.83 mm'] },
+ { lvl:'Easy', topic:'Design',
+   q:'A tie carries 90 kN. The permissible tensile stress is 150 MPa. Find the required diameter.',
+   s:['A required = P/σ = 90 000 / 150 = 600 mm²','(π/4)d² = 600 → d² = 763.9','d = 27.6 mm, adopt 28 mm'] },
+ { lvl:'Medium', topic:'Strain',
+   q:'A stepped bar carries 30 kN throughout. Segment 1: L = 500 mm, A = 400 mm². Segment 2: L = 800 mm, A = 200 mm². Segment 3: L = 600 mm, A = 300 mm². E = 200 GPa. Find the total elongation and the maximum stress.',
+   s:['The force is the same in all three segments; only the area changes.','σ₁ = 30 000/400 = 75 MPa, σ₂ = 150 MPa, σ₃ = 100 MPa → maximum is 150 MPa in segment 2','δ = Σ PL/AE = (30 000/200 000) × [500/400 + 800/200 + 600/300]','δ = 0.15 × [1.25 + 4.0 + 2.0] = 0.15 × 7.25','δ = 1.0875 mm'] },
+ { lvl:'Medium', topic:'Elastic constants',
+   q:'For a material E = 200 GPa and μ = 0.3. Find G and K.',
+   s:['G = E / [2(1+μ)] = 200 000 / (2 × 1.3) = 76 923 MPa ≈ 76.9 GPa','K = E / [3(1−2μ)] = 200 000 / (3 × 0.4) = 166 667 MPa ≈ 166.7 GPa','Check the ranking E &gt; K &gt; G — satisfied.'] },
+ { lvl:'Medium', topic:'Thermal',
+   q:'A steel bar is held rigidly at both ends and heated through 40 °C. Take α = 12×10⁻⁶ /°C, E = 200 GPa. Find the stress induced.',
+   s:['Full restraint, so σ = α·ΔT·E','σ = 12×10⁻⁶ × 40 × 200 000','σ = 96 MPa, compressive','Note the length does not enter the answer.'] },
+ { lvl:'Medium', topic:'Thermal',
+   q:'A bar 2 m long is heated through 50 °C but a gap of 0.5 mm is left at one end. α = 12×10⁻⁶ /°C, E = 200 GPa. Find the stress.',
+   s:['Free expansion = αΔT·L = 12×10⁻⁶ × 50 × 2000 = 1.2 mm','1.2 mm &gt; 0.5 mm gap, so the bar does bear against the support.','Restrained part = 1.2 − 0.5 = 0.7 mm','ε = 0.7/2000 = 3.5×10⁻⁴','σ = Eε = 200 000 × 3.5×10⁻⁴ = 70 MPa, compressive'] },
+ { lvl:'Medium', topic:'Composite bars',
+   q:'A steel rod of 1000 mm² is surrounded by a copper tube of 2000 mm². The 500 mm long assembly carries 250 kN. Es = 200 GPa, Ec = 100 GPa. Find the stress in each and the shortening.',
+   s:['Equal strain: ε = P / (AsEs + AcEc)','ε = 250 000 / (1000×200 000 + 2000×100 000) = 250 000 / 4×10⁸ = 6.25×10⁻⁴','σs = 200 000 × 6.25×10⁻⁴ = 125 MPa','σc = 100 000 × 6.25×10⁻⁴ = 62.5 MPa','Check: 125×1000 + 62.5×2000 = 125 + 125 = 250 kN ✓','δ = εL = 6.25×10⁻⁴ × 500 = 0.3125 mm'] },
+ { lvl:'University', topic:'Strain',
+   q:'A bar of 20 mm diameter and 1 m length is subjected to an axial pull of 50 kN. E = 200 GPa, μ = 0.3. Find the change in length, change in diameter and change in volume.',
+   s:['A = 314.16 mm², σ = 50 000/314.16 = 159.15 MPa','ε = 159.15/200 000 = 7.958×10⁻⁴','δL = 7.958×10⁻⁴ × 1000 = 0.796 mm (increase)','ε_lat = −με = −0.3 × 7.958×10⁻⁴ = −2.387×10⁻⁴','δd = −2.387×10⁻⁴ × 20 = −0.00477 mm (decrease)','ε_v = ε(1−2μ) = 7.958×10⁻⁴ × 0.4 = 3.183×10⁻⁴','V = 314.16 × 1000 = 314 159 mm³','δV = 3.183×10⁻⁴ × 314 159 = 100 mm³ (increase)'] },
+ { lvl:'University', topic:'Elastic constants',
+   q:'A bar 30 mm × 30 mm × 250 mm long carries an axial pull of 90 kN. The extension is 0.125 mm and the decrease in each lateral dimension is 0.00375 mm. Find E, μ, G and K.',
+   s:['A = 900 mm², σ = 90 000/900 = 100 MPa','ε = 0.125/250 = 5×10⁻⁴ → E = 100/5×10⁻⁴ = 200 000 MPa = 200 GPa','ε_lat = 0.00375/30 = 1.25×10⁻⁴','μ = 1.25×10⁻⁴ / 5×10⁻⁴ = 0.25','G = E/[2(1+μ)] = 200 000/2.5 = 80 000 MPa = 80 GPa','K = E/[3(1−2μ)] = 200 000/1.5 = 133 333 MPa ≈ 133.3 GPa'] },
+ { lvl:'University', topic:'Composite bars',
+   q:'A reinforced concrete column 400 mm × 400 mm has four 20 mm bars. It carries 800 kN. Es = 200 GPa, Ec = 20 GPa. Find the stress in the concrete and in the steel.',
+   s:['Ast = 4 × (π/4)(20)² = 4 × 314.16 = 1256.6 mm²','Ac = 400×400 − 1256.6 = 160 000 − 1256.6 = 158 743.4 mm²','Modular ratio m = Es/Ec = 10','Equal strain: P = σc(Ac + m·Ast) = σc(158 743.4 + 10×1256.6)','P = σc × 171 309.4','σc = 800 000 / 171 309.4 = 4.67 MPa','σs = m·σc = 10 × 4.67 = 46.7 MPa'] },
+ { lvl:'University', topic:'Thermal',
+   q:'A steel rod of 500 mm² is bonded to a copper rod of 800 mm², both 1 m long, and the assembly is heated through 60 °C with the ends free. αs = 12×10⁻⁶, αc = 17×10⁻⁶, Es = 200 GPa, Ec = 100 GPa. Find the stress in each.',
+   s:['Copper wants to expand more, so copper goes into compression and steel into tension.','Equilibrium: σs·As = σc·Ac → 500σs = 800σc → σs = 1.6 σc','Compatibility: σs/Es + σc/Ec = (αc − αs)ΔT','1.6σc/200 000 + σc/100 000 = (17−12)×10⁻⁶ × 60 = 3×10⁻⁴','σc(8×10⁻⁶ + 10×10⁻⁶) = 3×10⁻⁴','σc × 1.8×10⁻⁵ = 3×10⁻⁴ → σc = 16.67 MPa (compression)','σs = 1.6 × 16.67 = 26.67 MPa (tension)'] },
+ { lvl:'GATE', topic:'Elastic constants',
+   q:'For an isotropic material with E = 200 GPa and G = 80 GPa, what is Poisson\'s ratio?',
+   s:['E = 2G(1+μ)','200 = 2 × 80 × (1+μ)','1 + μ = 200/160 = 1.25','μ = 0.25'] },
+ { lvl:'GATE', topic:'Stress',
+   q:'A steel cube of side 100 mm is subjected to a hydrostatic pressure of 100 MPa. E = 200 GPa, μ = 0.25. Find the change in volume.',
+   s:['K = E/[3(1−2μ)] = 200 000/(3×0.5) = 133 333 MPa','ε_v = σ_v/K = 100/133 333 = 7.5×10⁻⁴ (reduction)','V = 100³ = 10⁶ mm³','δV = 7.5×10⁻⁴ × 10⁶ = 750 mm³ decrease'] },
+ { lvl:'GATE', topic:'Strain',
+   q:'Two bars of the same material and length, one of diameter d and one of diameter 2d, carry the same axial load. What is the ratio of their elongations?',
+   s:['δ = PL/AE, so δ ∝ 1/A and A ∝ d²','δ₁/δ₂ = A₂/A₁ = (2d)²/d² = 4','The thinner bar elongates 4 times as much.'] },
+ { lvl:'GATE', topic:'Design',
+   q:'A member of ultimate stress 400 MPa is designed with a factor of safety of 2.5. What load can a 500 mm² section carry?',
+   s:['σ_permissible = 400/2.5 = 160 MPa','P = σ × A = 160 × 500 = 80 000 N','P = 80 kN'] },
+ { lvl:'University', topic:'Design',
+   q:'A hollow steel column of external diameter 200 mm carries 800 kN. The permissible compressive stress is 80 MPa. Find the internal diameter.',
+   s:['A required = 800 000/80 = 10 000 mm²','(π/4)(200² − d²) = 10 000','200² − d² = 10 000 × 4/π = 12 732.4','d² = 40 000 − 12 732.4 = 27 267.6','d = 165.1 mm, adopt 165 mm (which slightly increases the area and is safe)'] },
+ { lvl:'Medium', topic:'Stress',
+   q:'Two plates 12 mm thick are joined by a 20 mm bolt in a lap joint carrying 45 kN. Find the shear stress in the bolt and the bearing stress on the plate.',
+   s:['Single shear: A = (π/4)(20)² = 314.16 mm²','τ = 45 000/314.16 = 143.2 MPa','Bearing area = d × t = 20 × 12 = 240 mm²','σ_b = 45 000/240 = 187.5 MPa'] },
+ { lvl:'Medium', topic:'Stress',
+   q:'Repeat the previous problem for a butt joint with two cover plates (double shear).',
+   s:['Two shear planes: A = 2 × 314.16 = 628.32 mm²','τ = 45 000/628.32 = 71.6 MPa — exactly half the single-shear value','Bearing on the main plate is unchanged at 187.5 MPa'] },
+ { lvl:'Easy', topic:'Hooke & E',
+   q:'A wire of area 5 mm² stretches by 2 mm over a 4 m length under a load of 500 N. Find E.',
+   s:['σ = 500/5 = 100 MPa','ε = 2/4000 = 5×10⁻⁴','E = σ/ε = 100/5×10⁻⁴ = 200 000 MPa = 200 GPa'] },
+ { lvl:'University', topic:'Strain',
+   q:'A bar of 25 mm diameter is subjected to a pull of 60 kN. The measured extension over a 200 mm gauge length is 0.12 mm and the decrease in diameter is 0.0045 mm. Find E, μ and G.',
+   s:['A = 490.87 mm², σ = 60 000/490.87 = 122.23 MPa','ε = 0.12/200 = 6.0×10⁻⁴ → E = 122.23/6.0×10⁻⁴ = 203 718 MPa ≈ 204 GPa','ε_lat = 0.0045/25 = 1.8×10⁻⁴','μ = 1.8×10⁻⁴/6.0×10⁻⁴ = 0.30','G = E/[2(1+μ)] = 203 718/2.6 = 78 353 MPa ≈ 78.4 GPa'] },
+ { lvl:'GATE', topic:'Curves',
+   q:'A material has no distinct yield point. How is its yield strength defined, and how is it found from the curve?',
+   s:['It is defined as the 0.2 % proof stress.','On the stress–strain plot, mark ε = 0.002 on the strain axis.','Draw a line from that point parallel to the initial elastic slope.','The stress where this line intersects the curve is the proof stress.','Used for HYSD steel, aluminium and most non-ferrous metals.'] }
+];
+
+/* ---------- M22 common mistakes ---------- */
+const MISTAKES = [
+  { w:'Writing strain in MPa', r:'Strain is a ratio of two lengths, so it is dimensionless. Write 6.25×10⁻⁴, or 0.0625 %, or 625 µε — never with a stress unit.' },
+  { w:'Using kN with mm²', r:'σ = 40/314 = 0.127 is not MPa. Convert the load to newtons first. Work in N and mm and every answer lands in MPa and mm automatically.' },
+  { w:'Confusing 1 m² with 10³ mm²', r:'1 m² = 10⁶ mm², not 10³. Areas square the conversion factor. The same trap applies to mm³ and m³ with 10⁹.' },
+  { w:'Treating percentage strain as strain', r:'0.2 % proof stress means ε = 0.002, not 0.2. Divide by 100 before substituting into σ = Eε.' },
+  { w:'Forgetting double shear', r:'A bolt in a butt joint has two shear planes, so the area is 2 × (π/4)d². Missing the 2 doubles your computed stress and fails a perfectly adequate bolt.' },
+  { w:'Using the ultimate stress for a ductile design', r:'For a ductile material the useful limit is yield, not fracture. A member that has yielded is permanently distorted and has already failed its purpose.' },
+  { w:'Assuming thermal stress depends on length', r:'For full restraint, σ = αΔT·E. The length cancels. A 2 m bar and a 200 m rail restrained at both ends develop identical stress for the same ΔT.' },
+  { w:'Thinking free expansion causes stress', r:'A bar free to expand develops strain with zero stress. Stress appears only when something resists the movement — the whole topic turns on this one distinction.' },
+  { w:'Dividing the load equally between two materials', r:'In a composite bar the load divides in proportion to AE, not area. Steel with half the area of copper can still carry more load because E is twice as large.' },
+  { w:'Mixing up E and strength', r:'E is stiffness — resistance to deformation. Yield stress is strength — resistance to permanent damage. Fe250 and Fe500 have the same E of 200 GPa and very different strengths.' },
+  { w:'Using the gross area where the net area applies', r:'A bolt hole removes material. For a tension member the capacity is governed by the net section, gross area minus the hole allowance.' },
+  { w:'Rounding the diameter down in design', r:'If d comes out as 27.6 mm, adopt 28 mm. Rounding down reduces the area below the required value and the member is under-designed.' }
+];
+
+/* ---------- M23 university questions ---------- */
+const UQ = [
+ { topic:'Stress & strain', marks:4, q:'Define stress and strain. State their units and explain why strain is dimensionless.', hint:'Definition, formula, SI unit, one line on the ratio of like quantities.' },
+ { topic:'Stress & strain', marks:6, q:'Derive the expression for the elongation of a bar of uniform section under an axial load. Extend it to a stepped bar.', hint:'Start from σ = P/A and ε = δL/L, substitute into E = σ/ε, then sum the segments.' },
+ { topic:'Stress & strain', marks:6, q:'A stepped circular bar of three segments carries an axial pull. Find the total elongation and the maximum stress.', hint:'The force is constant; only area changes. Maximum stress is in the smallest area.' },
+ { topic:'Hooke & curves', marks:4, q:"State Hooke's law and list four of its limitations.", hint:'Proportional limit, non-linear materials, anisotropy, creep, large strain.' },
+ { topic:'Hooke & curves', marks:8, q:'Draw the stress–strain curve for mild steel in tension. Mark and explain the proportional limit, elastic limit, upper and lower yield points, ultimate stress and breaking stress.', hint:'Neat labelled sketch carries most of the marks. Explain why the nominal stress falls after the ultimate point.' },
+ { topic:'Hooke & curves', marks:6, q:'Compare the stress–strain behaviour of mild steel, cast iron and TOR steel. How is the yield strength of TOR steel defined?', hint:'Ductile versus brittle, presence or absence of a yield plateau, 0.2 % proof stress construction.' },
+ { topic:'Elastic constants', marks:6, q:'Define the four elastic constants and derive the relation E = 2G(1+μ).', hint:'Use a square element in pure shear, resolve on the 45° plane, equate the diagonal strain by the two routes.' },
+ { topic:'Elastic constants', marks:6, q:'Derive the relation between E, K and μ, and hence show that μ cannot exceed 0.5.', hint:'ε_v = ε(1−2μ) for uniaxial stress; extend to three-directional stress and set ε_v = 0.' },
+ { topic:'Elastic constants', marks:6, q:'A bar 40 mm × 40 mm × 200 mm carries an axial pull of 160 kN. The extension is 0.20 mm and the lateral contraction is 0.012 mm. Determine E, μ, G and K.', hint:'σ then ε then E; lateral strain gives μ; then apply the two relations.' },
+ { topic:'Composite bars', marks:8, q:'A composite bar consists of a steel rod inside a brass tube, both of the same length, carrying an axial load. Derive the expressions for the stress in each material.', hint:'Two equations: equilibrium P = σ₁A₁ + σ₂A₂ and compatibility δ₁ = δ₂.' },
+ { topic:'Composite bars', marks:8, q:'An RCC column of given size with a stated number of bars carries a load. Find the stress in the steel and the concrete.', hint:'Ac = gross − Ast; use P = σc(Ac + m·Ast) with m = Es/Ec.' },
+ { topic:'Thermal stress', marks:6, q:'Derive the expression for the stress in a bar rigidly held at both ends when the temperature rises by ΔT. What happens if a gap Δ is provided?', hint:'σ = αΔT·E; with a gap, only (αΔT·L − Δ) is resisted. Check whether the gap closes at all.' },
+ { topic:'Thermal stress', marks:8, q:'A composite bar of two materials with different coefficients of expansion is heated. Derive the expressions for the stress in each material.', hint:'Equilibrium σ₁A₁ = σ₂A₂ and compatibility σ₁/E₁ + σ₂/E₂ = (α₁ − α₂)ΔT.' },
+ { topic:'Thermal stress', marks:4, q:'Explain, with reference to railway track, why a gap is left between rails and what happens in continuous welded rail.', hint:'Free expansion versus restrained expansion, magnitude of σ = αΔT·E, risk of buckling.' },
+ { topic:'Design', marks:4, q:'Define factor of safety. State the difference between working stress and permissible stress, and give typical values for steel, concrete and timber.', hint:'FOS = limiting/working; permissible is the code ceiling; ductile uses yield, brittle uses ultimate.' },
+ { topic:'Design', marks:6, q:'A tie member carries a stated tensile load. Design a suitable circular section given the yield stress and factor of safety, and check the extension against a serviceability limit.', hint:'σ_perm = fy/FOS, A = P/σ_perm, choose d and round up, then check δ = PL/AE.' },
+ { topic:'Design', marks:6, q:'Distinguish between working stress design and limit state design. Which does IS 456 adopt and why?', hint:'One global factor versus partial factors on load and material; probabilistic basis; more rational use of material.' },
+ { topic:'Stress & strain', marks:4, q:'A bar is subjected to an axial pull. Find the change in length, diameter and volume given E and μ.', hint:'δL = PL/AE, δd = −μεd, δV = ε(1−2μ)V.' },
+ { topic:'Stress & strain', marks:6, q:'Explain single shear, double shear and bearing stress with sketches, and derive the expression for each in a bolted joint.', hint:'Count the shear planes; bearing area is the projected area d×t.' },
+ { topic:'Hooke & curves', marks:4, q:'Distinguish between ductile and brittle materials with reference to their stress–strain curves and modes of failure.', hint:'Strain at fracture, necking, warning before failure, fracture surface appearance.' }
+];
+
+/* ---------- M24 question banks ---------- */
+const MCQ = [
+ { q:'The unit of stress in the SI system, expressed practically, is:', o:['N/mm² (MPa)','N/mm','mm²/N','dimensionless'], a:0, t:'Stress', e:'Stress is force divided by area, so N/mm² which equals MPa.' },
+ { q:'Strain has the unit:', o:['MPa','mm','no unit','N'], a:2, t:'Strain', e:'It is a ratio of two lengths.' },
+ { q:"Young's modulus is defined as:", o:['stress × strain','stress ÷ strain','strain ÷ stress','load ÷ area'], a:1, t:'Hooke & E', e:'E = σ/ε within the proportional limit.' },
+ { q:'Hooke\'s law is valid up to the:', o:['ultimate stress','breaking stress','proportional limit','yield plateau'], a:2, t:'Hooke & E', e:'Proportionality ends at the proportional limit, which is slightly below the elastic limit.' },
+ { q:'For mild steel the design yield stress is taken at the:', o:['upper yield point','lower yield point','ultimate point','elastic limit'], a:1, t:'Curves', e:'The lower yield point is reproducible and independent of testing speed.' },
+ { q:'The engineering stress falls after the ultimate point because:', o:['the material becomes weaker','the load is reduced','the area is reducing but the original area is used','the machine stops'], a:2, t:'Curves', e:'True stress, computed on the actual necked area, continues to rise.' },
+ { q:'Poisson\'s ratio for most metals lies near:', o:['0.05','0.30','0.60','1.00'], a:1, t:'Elastic constants', e:'Steel 0.3, aluminium 0.33, concrete 0.15.' },
+ { q:'The relation between E, G and μ is:', o:['E = 3G(1+μ)','E = 2G(1+μ)','E = 2G(1−2μ)','E = G(1+μ)'], a:1, t:'Elastic constants', e:'The 2 goes with G; μ is added because shear does not change volume.' },
+ { q:'The relation between E, K and μ is:', o:['E = 3K(1−2μ)','E = 2K(1+μ)','E = 3K(1+2μ)','E = K(1−μ)'], a:0, t:'Elastic constants', e:'The 3 goes with K and μ is subtracted, doubled.' },
+ { q:'A bar free to expand and heated through ΔT develops:', o:['stress but no strain','strain but no stress','both','neither'], a:1, t:'Thermal', e:'Nothing resists the movement, so no internal force develops.' },
+ { q:'The thermal stress in a fully restrained bar is:', o:['αΔT','αΔT·L','αΔT·E','αΔT·E/L'], a:2, t:'Thermal', e:'Length cancels out — the stress is independent of the bar length.' },
+ { q:'In a composite bar of equal length, the two materials have equal:', o:['stress','strain','load','area'], a:1, t:'Composite bars', e:'Rigid connection and equal length force equal strain; stresses divide in the ratio of E.' },
+ { q:'The modular ratio m is defined as:', o:['E₁ + E₂','E₁ − E₂','E₁/E₂','A₁/A₂'], a:2, t:'Composite bars', e:'It is the ratio of the two Young\'s moduli.' },
+ { q:'A bolt in a butt joint with two cover plates is in:', o:['single shear','double shear','bearing only','torsion'], a:1, t:'Stress', e:'Two shear planes, so the resisting area is 2 × (π/4)d².' },
+ { q:'Bearing stress is calculated over:', o:['(π/4)d²','d × t','π d t','2 d t'], a:1, t:'Stress', e:'The projected contact area, diameter times plate thickness.' },
+ { q:'For a ductile material the factor of safety is based on:', o:['ultimate stress','yield stress','breaking stress','proportional limit'], a:1, t:'Design', e:'Yield marks the end of useful service for a ductile member.' },
+ { q:'Volumetric strain for a bar under uniaxial stress equals:', o:['ε(1−2μ)','ε(1+2μ)','ε(1−μ)','3ε'], a:0, t:'Strain', e:'Sum of one longitudinal and two lateral strains: ε − με − με.' },
+ { q:'If a bar is doubled in diameter with the same load, its elongation:', o:['doubles','halves','becomes one quarter','is unchanged'], a:2, t:'Strain', e:'δ ∝ 1/A and A ∝ d², so four times the area gives a quarter of the elongation.' },
+ { q:'The 0.2 % proof stress is used for materials that:', o:['are brittle','have no distinct yield point','have a long yield plateau','are isotropic'], a:1, t:'Curves', e:'HYSD steel, aluminium and most non-ferrous metals.' },
+ { q:'Axial rigidity of a member is:', o:['AE','AE/L','EI','A/E'], a:0, t:'Hooke & E', e:'δ = PL/AE, so AE is the axial rigidity and AE/L is the axial stiffness.' }
+];
+
+const FILLQ = [
+ { pre:'Stress is defined as the internal resisting force per unit', ans:['area'], post:'.' },
+ { pre:'Within the elastic limit, stress is directly proportional to', ans:['strain'], post:'.' },
+ { pre:'The ratio of lateral strain to longitudinal strain is called', ans:["poisson's ratio","poissons ratio","poisson ratio","poisson"], post:'.' },
+ { pre:'The stress in a fully restrained bar heated through ΔT is σ =', ans:['alpha dt e','αδte','α δt e','a dt e','αΔTE','alpha*dt*e'], post:' (write as α ΔT E).' },
+ { pre:'In a composite bar of equal length, both materials have the same', ans:['strain'], post:'.' },
+ { pre:'For mild steel the value of E is about', ans:['200','200 gpa','200gpa','2x10^5','200000'], post:' GPa.' },
+ { pre:'A bolt in a lap joint is in', ans:['single shear','single'], post:'.' },
+ { pre:'The maximum stress reached on the stress–strain curve is called the', ans:['ultimate stress','ultimate','ultimate strength'], post:'.' }
+];
+
+const TFQ = [
+ { q:'Strain is measured in MPa.', a:false, e:'Strain is dimensionless.' },
+ { q:'Thermal stress in a fully restrained bar depends on the length of the bar.', a:false, e:'σ = αΔT·E — the length cancels out.' },
+ { q:'A material can be elastic without obeying Hooke\'s law.', a:true, e:'Rubber returns to its original shape but its curve is not linear.' },
+ { q:'The ultimate stress is always higher than the breaking stress on an engineering curve.', a:true, e:'Necking reduces the real area while the nominal stress uses the original area.' },
+ { q:'In a composite bar, the material with the larger area always carries the larger load.', a:false, e:'The load divides in proportion to AE, not area alone.' },
+ { q:'Poisson\'s ratio can exceed 0.5 for ordinary isotropic materials.', a:false, e:'At μ = 0.5 the volumetric strain is zero; beyond that a bar in tension would lose volume.' },
+ { q:'E is a measure of strength.', a:false, e:'E measures stiffness. Fe250 and Fe500 share E = 200 GPa but differ greatly in strength.' },
+ { q:'A bolt in double shear carries twice the load of the same bolt in single shear at the same shear stress.', a:true, e:'Two resisting planes, so the resisting area doubles.' },
+ { q:'Bearing stress acts over the curved surface area of the hole.', a:false, e:'It is computed over the projected area d × t.' },
+ { q:'For a brittle material the factor of safety is based on the ultimate stress.', a:true, e:'Brittle materials have no meaningful yield point.' }
+];
+
+const MATCHQ = [
+ { l:'σ = P/A', r:'Normal stress' },
+ { l:'τ = P/A_s', r:'Shear stress' },
+ { l:'δL = PL/AE', r:'Axial deformation' },
+ { l:'σ = αΔT·E', r:'Thermal stress, full restraint' },
+ { l:'E = 2G(1+μ)', r:'Relation between E and G' },
+ { l:'ε(1−2μ)', r:'Volumetric strain' },
+ { l:'σ_b = P/(d·t)', r:'Bearing stress' },
+ { l:'m = E₁/E₂', r:'Modular ratio' }
+];
+
+const NUMQ = [
+ { q:'A bar of 16 mm diameter carries an axial pull of 30 kN. Find the tensile stress in MPa.', a:149.2, u:'MPa', t:'Stress', hint:'A = (π/4)(16)² = 201.06 mm², then σ = P/A with P in newtons.' },
+ { q:'A steel rod 2 m long and 400 mm² in area carries 80 kN. E = 200 GPa. Find the elongation in mm.', a:2.0, u:'mm', t:'Strain', hint:'δ = PL/AE = 80 000 × 2000 / (400 × 200 000).' },
+ { q:'A steel bar is fully restrained and heated through 25 °C. α = 12×10⁻⁶, E = 200 GPa. Find the stress in MPa.', a:60, u:'MPa', t:'Thermal', hint:'σ = αΔT·E. Length is not needed.' },
+ { q:'E = 210 GPa and μ = 0.3. Find G in GPa.', a:80.77, u:'GPa', t:'Elastic constants', hint:'G = E / [2(1+μ)].' },
+ { q:'A steel rod of 600 mm² and a copper rod of 900 mm² share 180 kN with equal strain. Es = 200 GPa, Ec = 100 GPa. Find the stress in the steel in MPa.', a:171.4, u:'MPa', t:'Composite bars', hint:'ε = P/(AsEs + AcEc), then σs = Es ε.' },
+ { q:'A member carries 120 kN. The yield stress is 250 MPa and the factor of safety is 2. Find the required area in mm².', a:960, u:'mm²', t:'Design', hint:'σ_perm = 250/2, then A = P/σ_perm.' }
+];
+
+const CASEQ = [
+ { q:'1. Tensile stress in the chord under service load (MPa)', a:225.8, hint:'σ = 280 000 / 1240.' },
+ { q:'2. Permissible stress for FOS = 1.67 (MPa)', a:149.7, hint:'σ_perm = 250 / 1.67.' },
+ { q:'3. Extension of the member under service load (mm)', a:3.39, hint:'δ = PL/AE = 280 000 × 3000 / (1240 × 200 000).' },
+ { q:'4. Net area required to satisfy the permissible stress (mm²)', a:1870, hint:'A = 280 000 / 149.7.' }
+];
+
+const ADQ = [
+ { d:1, q:'Stress is force divided by:', o:['length','area','volume','time'], a:1 },
+ { d:1, q:'The unit of E is:', o:['no unit','MPa','mm','N'], a:1 },
+ { d:1, q:'Strain is:', o:['δL/L','L/δL','P/A','αΔT·E'], a:0 },
+ { d:2, q:'For steel, E is approximately:', o:['20 GPa','70 GPa','200 GPa','2000 GPa'], a:2 },
+ { d:2, q:'Free thermal expansion produces:', o:['stress only','strain only','both','neither'], a:1 },
+ { d:2, q:'A bolt in a lap joint is in:', o:['double shear','single shear','torsion','bending'], a:1 },
+ { d:3, q:'In a composite bar the two materials share equal:', o:['stress','strain','area','modulus'], a:1 },
+ { d:3, q:'Volumetric strain under uniaxial stress is:', o:['ε(1−2μ)','ε(1+μ)','3ε','ε/2'], a:0 },
+ { d:3, q:'For μ = 0.25 and E = 200 GPa, K equals:', o:['80 GPa','133.3 GPa','166.7 GPa','200 GPa'], a:1 },
+ { d:4, q:'A 20 mm bar carries 50 kN. The stress is closest to:', o:['79.6 MPa','159.2 MPa','125.0 MPa','250 MPa'], a:1 },
+ { d:4, q:'Steel restrained at both ends, ΔT = 30 °C, α = 12×10⁻⁶, E = 200 GPa. The stress is:', o:['36 MPa','72 MPa','96 MPa','120 MPa'], a:1 },
+ { d:4, q:'Doubling the diameter of a bar under constant load changes the elongation to:', o:['half','one quarter','double','no change'], a:1 },
+ { d:5, q:'Steel 1000 mm² (E = 200 GPa) with copper 1000 mm² (E = 100 GPa) carries 300 kN. The stress in the steel is:', o:['100 MPa','150 MPa','200 MPa','300 MPa'], a:2 },
+ { d:5, q:'A bar of 2 m with a 0.6 mm gap, α = 12×10⁻⁶, ΔT = 40 °C, E = 200 GPa. The stress is:', o:['0 MPa','36 MPa','96 MPa','60 MPa'], a:1 },
+ { d:5, q:'E = 200 GPa and G = 76.9 GPa. Poisson\'s ratio is closest to:', o:['0.25','0.30','0.33','0.40'], a:1 }
+];
+
+const FLASH = [
+ ['Stress','Internal resisting force per unit area'],
+ ['Strain','Deformation per unit original length'],
+ ["Young's modulus",'Ratio of direct stress to direct strain'],
+ ['Modular ratio','Ratio of the two Young\'s moduli in a composite bar'],
+ ['Bulk modulus','Hydrostatic stress divided by volumetric strain'],
+ ['Ductility','Ability to undergo large plastic strain before fracture']
+];
+
+const HUNTS = [
+ { t:'A 20 mm bolt carrying 40 kN in a lap joint has τ = 40 000 / 314.16 = 127.3 MPa.', ok:true,  e:'Correct — single shear, one plane, area (π/4)(20)².' },
+ { t:'The same bolt in a butt joint with two cover plates has τ = 40 000 / 314.16 = 127.3 MPa.', ok:false, e:'Double shear — divide by 2 × 314.16, giving 63.7 MPa.' },
+ { t:'A bar heated freely through 50 °C develops σ = αΔT·E = 120 MPa.', ok:false, e:'Free expansion produces no stress at all. That formula needs full restraint.' },
+ { t:'For E = 200 GPa and μ = 0.3, G = 200/(2 × 1.3) = 76.9 GPa.', ok:true,  e:'Correct application of E = 2G(1+μ).' },
+ { t:'A strain of 0.002 may be written as 0.2 %.', ok:true,  e:'Correct — multiply by 100 to convert to a percentage.' },
+ { t:'A strain of 0.002 may be written as 2 %.', ok:false, e:'0.002 × 100 = 0.2 %, not 2 %. This factor of 10 is a classic exam slip.' },
+ { t:'A steel rod of 500 mm² and a copper rod of 500 mm² under the same strain carry equal loads.', ok:false, e:'Equal areas but Es = 2Ec, so the steel carries twice the load.' },
+ { t:'For a ductile material designed with FOS = 2 and fy = 250 MPa, the permissible stress is 125 MPa.', ok:true,  e:'Correct — permissible = yield ÷ FOS for a ductile material.' },
+ { t:'An area of 3 m² equals 3000 mm².', ok:false, e:'1 m² = 10⁶ mm², so 3 m² = 3 000 000 mm².' },
+ { t:'For a bar in tension, the diameter decreases and the volume increases.', ok:true,  e:'Correct for μ below 0.5 — lateral contraction does not fully offset the axial extension.' }
+];
+
+const MATERIALS_GAME = [
+ { m:'Mild steel',  c:'Shows a clear upper and lower yield point, elongates about 25 % before fracture, and E is about 200 GPa.' },
+ { m:'Cast iron',   c:'No yield point, no necking, fractures below 1 % strain, and is far stronger in compression than in tension.' },
+ { m:'Aluminium',   c:'Smooth curve with no yield plateau, and E is roughly one third that of steel.' },
+ { m:'Rubber',      c:'Elastic to strains of 300 % or more, but the curve is non-linear from the very start.' },
+ { m:'Concrete',    c:'Weak in tension, strong in compression, brittle, with E near 25 GPa for an M25 mix.' },
+ { m:'HYSD Fe415',  c:'Cold-worked steel with no distinct yield point, so the 0.2 % proof stress is used for design.' }
+];
+
+const TUTOR_KB = [
+ { k:['stress','sigma','p/a'], a:'Stress is internal resisting force per unit area: <b>σ = P/A</b>, in N/mm² (MPa). Work in newtons and millimetres and the answer comes out in MPa directly. Module 5 has the derivation and a calculator.' },
+ { k:['strain','epsilon','elongation','deformation','delta'], a:'Strain is δL/L, a pure ratio with no unit. Deformation of an axially loaded bar is <b>δL = PL/AE</b>, and for a stepped bar you sum PL/AE over the segments. Module 7.' },
+ { k:['hooke','young','modulus','e ='], a:"Hooke's law: within the proportional limit, σ = Eε, so <b>E = σ/ε</b>. E is stiffness, not strength — Fe250 and Fe500 share E = 200 GPa. Module 8." },
+ { k:['poisson','lateral','mu'], a:'Poisson\'s ratio μ = −(lateral strain)/(longitudinal strain), about 0.3 for steel and 0.15 for concrete. It cannot exceed 0.5 for ordinary materials. Modules 11 and 12.' },
+ { k:['bulk','k =','volumetric','volume'], a:'Bulk modulus K = σ_v/ε_v. For uniaxial stress, ε_v = ε(1−2μ). The relations are <b>E = 2G(1+μ)</b>, <b>E = 3K(1−2μ)</b> and <b>E = 9KG/(3K+G)</b>. Module 11.' },
+ { k:['shear','tau','g =','rigidity','bolt'], a:'Shear stress τ = P/A_s, and shear strain φ = δ_s/h in radians, related by τ = Gφ. Count the shear planes: a lap joint is single shear, a butt joint with two cover plates is double shear so the area doubles. Module 6.' },
+ { k:['bearing'], a:'Bearing stress uses the <b>projected</b> contact area: σ_b = P/(d·t), where d is the bolt diameter and t the plate thickness. Module 6.' },
+ { k:['thermal','temperature','expansion','alpha'], a:'Free expansion δ = αΔT·L gives strain but no stress. Full restraint gives <b>σ = αΔT·E</b> — note the length cancels. With a gap Δ, σ = E(αΔT·L − Δ)/L, and you must first check that the gap actually closes. Module 14.' },
+ { k:['composite','compound','modular','rcc','reinforced'], a:'Composite bars are statically indeterminate. Use equilibrium P = σ₁A₁ + σ₂A₂ together with compatibility δ₁ = δ₂, which for equal lengths means equal strain: σ₁/E₁ = σ₂/E₂. The stiffer material attracts more stress. Module 13 has a solver.' },
+ { k:['factor of safety','fos','permissible','allowable','design'], a:'FOS = limiting stress ÷ working stress. Use yield for ductile materials and ultimate for brittle ones. Permissible stress = limiting ÷ FOS, then A_required = P/σ_permissible. Module 15.' },
+ { k:['mild steel','curve','yield','ultimate','necking','graph'], a:'The mild steel curve runs: proportional limit → elastic limit → upper yield → lower yield plateau → strain hardening → ultimate → necking → fracture. The design value is the lower yield point. Module 9 lets you click each stage.' },
+ { k:['proof','tor','hysd','fe415','cast iron','brittle','ductile'], a:'Materials with no distinct yield point use the 0.2 % proof stress: from ε = 0.002, draw a line parallel to the elastic slope and read where it cuts the curve. Module 10 compares the curves.' },
+ { k:['unit','mpa','convert','conversion','gpa'], a:'1 MPa = 1 N/mm² = 10⁶ Pa, and 1 GPa = 1000 MPa. Crucially 1 m² = 10⁶ mm². Keep everything in N and mm and you never need a conversion. Module 22 lists the traps.' },
+ { k:['strain energy','resilience'], a:'Strain energy U = ½P·δL = P²L/(2AE), and per unit volume u = σ²/(2E). It is the area under the load–deformation curve.' },
+ { k:['formula','sheet','revision','revise'], a:'Module 20 is a one-page formula sheet with a print button, and Module 21 shows how the topics connect.' },
+ { k:['exam','question','paper','practice','test'], a:'Module 23 has the university question bank grouped by topic and marks; Module 24 has seven levels of self-testing from MCQ to a case study.' }
+];
+</script>
+
+<script>
+/* ================= NAVIGATION & SHELL ================= */
+let currentModule = 1;
+
+function initNav() {
+  const nav = document.getElementById('nav-menu');
+  modules.forEach(m => {
+    const b = document.createElement('button');
+    b.id = 'nav-btn-' + m.id;
+    b.className = 'w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium transition-colors flex items-center gap-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700';
+    b.onclick = () => switchModule(m.id);
+    b.innerHTML = '<span class="num text-[11px] text-gray-400 w-5 shrink-0">' + m.id + '</span><span class="flex-1">' + m.title + '</span><i class="fas fa-circle-check text-[10px] text-green-500 opacity-0" id="tick-' + m.id + '"></i>';
+    nav.appendChild(b);
+  });
+  refreshTicks();
+}
+
+function refreshTicks() {
+  modules.forEach(m => {
+    const t = document.getElementById('tick-' + m.id);
+    if (t) t.style.opacity = state.visited.has(m.id) ? '1' : '0';
+  });
+  const n = state.visited.size;
+  document.getElementById('progress-bar').style.width = (n / modules.length * 100) + '%';
+  document.getElementById('progress-label').textContent = n + '/26';
+}
+
+function switchModule(id) {
+  document.querySelectorAll('#nav-menu button').forEach(b => {
+    b.classList.remove('bg-brand-50','text-brand-900','dark:bg-gray-700','dark:text-white');
+    b.classList.add('text-gray-600','dark:text-gray-400');
+  });
+  const a = document.getElementById('nav-btn-' + id);
+  if (a) { a.classList.remove('text-gray-600','dark:text-gray-400'); a.classList.add('bg-brand-50','text-brand-900','dark:bg-gray-700','dark:text-white'); }
+
+  document.querySelectorAll('.module-content').forEach(m => m.classList.remove('active'));
+  const target = document.getElementById('module-' + id);
+  (target || document.getElementById('module-placeholder')).classList.add('active');
+
+  currentModule = id;
+  state.visited.add(id);
+  store.set('som_visited', [...state.visited]);
+  refreshTicks();
+  saveTime();
+
+  if (window.MathJax && MathJax.typesetPromise && target) MathJax.typesetPromise([target]).catch(()=>{});
+  if (id === 9)  buildM9();
+  if (id === 10) buildM10();
+  if (id === 17) drawLabChart();
+  if (id === 25) buildDashboard();
+  if (id === 26) buildTeacher();
+  if (window.innerWidth < 768) document.getElementById('sidebar').classList.add('-translate-x-full');
+  document.getElementById('main-content').scrollTop = 0;
+}
+
+function toggleTheme() {
+  const dark = document.documentElement.classList.toggle('dark');
+  store.set('som_theme', dark ? 'dark' : 'light');
+  const i = document.getElementById('theme-icon');
+  i.className = dark ? 'fas fa-sun' : 'fas fa-moon';
+  [m8Chart, m9Chart, m10Chart, labChart, dbChart, tdChart].forEach(c => { if (c) { applyChartTheme(c); c.update(); } });
+}
+
+function applyChartTheme(c) {
+  const dark = document.documentElement.classList.contains('dark');
+  const grid = dark ? 'rgba(148,163,184,.18)' : 'rgba(100,116,139,.15)';
+  const tick = dark ? '#cbd5e1' : '#475569';
+  Object.values(c.options.scales || {}).forEach(s => {
+    if (s.grid) s.grid.color = grid;
+    if (s.ticks) s.ticks.color = tick;
+    if (s.title) s.title.color = tick;
+    if (s.pointLabels) s.pointLabels.color = tick;
+  });
+  if (c.options.plugins && c.options.plugins.legend) c.options.plugins.legend.labels = { color: tick };
+}
+
+function saveTime() {
+  const now = Date.now();
+  state.elapsed += (now - state.started);
+  state.started = now;
+  store.set('som_elapsed', state.elapsed);
+}
+function minutes() { saveTime(); return Math.round(state.elapsed / 60000); }
+
+function logAnswer(level, topic, correct) {
+  state.records.push({ level, topic, correct, ts: Date.now() });
+  store.set('som_records', state.records);
+}
+
+/* ================= M4 SECTION CUT ================= */
+function initM4() {
+  const s = document.getElementById('cut-pos');
+  const move = () => {
+    document.getElementById('cut-line').style.left = s.value + '%';
+    const lbl = document.getElementById('cut-label');
+    lbl.style.left = Math.min(s.value, 70) + '%';
+    lbl.textContent = 'N = 60 kN (tension)';
+  };
+  s.addEventListener('input', move); move();
+}
+
+/* ================= M5 STRESS CALCULATOR ================= */
+function initM5() {
+  const ids = ['c5-p','c5-shape','c5-d1','c5-d2'];
+  ids.forEach(i => document.getElementById(i).addEventListener('input', calc5));
+  document.getElementById('c5-shape').addEventListener('change', shapeLabels5);
+  shapeLabels5();
+}
+function shapeLabels5() {
+  const s = document.getElementById('c5-shape').value;
+  const w2 = document.getElementById('c5-wrap2');
+  const l1 = document.getElementById('c5-l1'), l2 = document.getElementById('c5-l2');
+  if (s === 'circle') { l1.textContent = 'Diameter (mm)'; w2.classList.add('hidden'); }
+  else if (s === 'square') { l1.textContent = 'Side (mm)'; w2.classList.add('hidden'); }
+  else if (s === 'rect') { l1.textContent = 'Depth (mm)'; l2.textContent = 'Width (mm)'; w2.classList.remove('hidden'); }
+  else { l1.textContent = 'Outer diameter (mm)'; l2.textContent = 'Inner diameter (mm)'; w2.classList.remove('hidden'); }
+  calc5();
+}
+function calc5() {
+  const P = parseFloat(document.getElementById('c5-p').value) * 1000;
+  const s = document.getElementById('c5-shape').value;
+  const d1 = parseFloat(document.getElementById('c5-d1').value) || 0;
+  const d2 = parseFloat(document.getElementById('c5-d2').value) || 0;
+  let A = 0, work = '';
+  if (s === 'circle') { A = Math.PI/4*d1*d1; work = 'A = (π/4)(' + d1 + ')² = ' + A.toFixed(2) + ' mm²'; }
+  else if (s === 'square') { A = d1*d1; work = 'A = ' + d1 + '² = ' + A.toFixed(2) + ' mm²'; }
+  else if (s === 'rect') { A = d1*d2; work = 'A = ' + d1 + ' × ' + d2 + ' = ' + A.toFixed(2) + ' mm²'; }
+  else { A = Math.PI/4*(d1*d1 - d2*d2); work = 'A = (π/4)(' + d1 + '² − ' + d2 + '²) = ' + A.toFixed(2) + ' mm²'; }
+  document.getElementById('c5-area').textContent = A > 0 ? A.toFixed(1) + ' mm²' : '—';
+  document.getElementById('c5-stress').textContent = A > 0 ? (P/A).toFixed(2) + ' MPa' : '—';
+  document.getElementById('c5-work').innerHTML = A > 0 ? work + ' &nbsp;→&nbsp; σ = ' + P.toFixed(0) + ' / ' + A.toFixed(2) + ' = <b>' + (P/A).toFixed(2) + ' N/mm²</b>' : 'Enter a valid section.';
+}
+
+/* ================= M6 IDENTIFY QUIZ ================= */
+function initM6() {
+  const box = document.getElementById('m6-quiz');
+  box.innerHTML = '';
+  M6Q.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'mb-5 pb-4 border-b dark:border-gray-700 last:border-0';
+    d.innerHTML = '<p class="font-medium mb-2">' + (i+1) + '. ' + item.q + '</p>';
+    const wrap = document.createElement('div');
+    wrap.className = 'grid sm:grid-cols-2 gap-2';
+    item.opts.forEach(o => {
+      const b = document.createElement('button');
+      b.className = 'quiz-opt !mb-0 text-sm';
+      b.textContent = o;
+      b.onclick = () => {
+        wrap.querySelectorAll('button').forEach(x => x.disabled = true);
+        const good = o === item.a;
+        b.classList.add(good ? 'correct' : 'wrong');
+        if (!good) [...wrap.children].find(x => x.textContent === item.a).classList.add('correct');
+        fb.innerHTML = '<i class="fas fa-lightbulb text-lab-500 mr-1"></i>' + item.why;
+        fb.classList.remove('hidden');
+        logAnswer('Identify', 'Stress', good);
+        m6Score();
+      };
+      wrap.appendChild(b);
+    });
+    const fb = document.createElement('p');
+    fb.className = 'text-sm mt-2 p-2 rounded bg-gray-50 dark:bg-gray-700/50 hidden';
+    d.appendChild(wrap); d.appendChild(fb); box.appendChild(d);
+  });
+}
+function m6Score() {
+  const r = state.records.filter(x => x.level === 'Identify');
+  document.getElementById('m6-score').textContent = 'Attempted ' + r.length + ' — correct ' + r.filter(x => x.correct).length;
+}
+
+/* ================= M8 VIRTUAL EXPERIMENT ================= */
+let m8Chart = null, m8Data = [];
+function initM8() {
+  const ctx = document.getElementById('m8-chart');
+  m8Chart = new Chart(ctx, {
+    type: 'scatter',
+    data: { datasets: [
+      { label: 'Readings', data: m8Data, backgroundColor: '#0ea5e9', pointRadius: 5 },
+      { label: 'Best-fit elastic line', data: [], type: 'line', borderColor: '#f59e0b', borderDash: [6,4], pointRadius: 0, fill: false }
+    ]},
+    options: { responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { title: { display: true, text: 'Strain ε' }, grid: {}, ticks: {} },
+        y: { title: { display: true, text: 'Stress σ (MPa)' }, grid: {}, ticks: {} }
+      }, plugins: { legend: { position: 'bottom' } } }
+  });
+  applyChartTheme(m8Chart); m8Chart.update();
+}
+function m8AddPoint() {
+  const P = parseFloat(document.getElementById('m8-load').value) * 1000;
+  const A = 200, L = 1000, E = 200000, PL = 210;
+  const sigma = P / A;
+  let eps;
+  if (sigma <= PL) eps = sigma / E;
+  else eps = PL/E + (sigma - PL) / (E * 0.05);   // simulated post-elastic softening
+  m8Data.push({ x: +eps.toFixed(6), y: +sigma.toFixed(2) });
+  m8Data.sort((a,b) => a.x - b.x);
+  const el = m8Data.filter(p => p.y <= PL);
+  if (el.length >= 2) {
+    const slope = (el[el.length-1].y - el[0].y) / (el[el.length-1].x - el[0].x);
+    m8Chart.data.datasets[1].data = [{x:0,y:0},{x:el[el.length-1].x, y:el[el.length-1].x*slope}];
+    document.getElementById('m8-result').innerHTML =
+      'Slope of the straight portion: E = Δσ/Δε = <b>' + (slope/1000).toFixed(1) + ' GPa</b>' +
+      (m8Data.some(p => p.y > PL) ? ' &nbsp;—&nbsp; readings above 210 MPa are past the proportional limit and must be left out of the slope.' : '');
+  } else {
+    document.getElementById('m8-result').textContent = 'Record at least two readings within the elastic range to compute the slope.';
+  }
+  m8Chart.update();
+}
+function m8Reset() { m8Data.length = 0; m8Chart.data.datasets[1].data = []; m8Chart.update(); document.getElementById('m8-result').textContent = 'Cleared. Record a reading to begin.'; }
+
+/* ================= M9 MILD STEEL CURVE ================= */
+let m9Chart = null;
+function buildM9() {
+  if (m9Chart) return;
+  const pts = [
+    {x:0,y:0},{x:0.0011,y:210},{x:0.0013,y:230},{x:0.0016,y:250},{x:0.002,y:238},
+    {x:0.008,y:240},{x:0.019,y:240},{x:0.05,y:290},{x:0.10,y:340},{x:0.16,y:410},
+    {x:0.20,y:395},{x:0.22,y:375},{x:0.25,y:330}
+  ];
+  m9Chart = new Chart(document.getElementById('m9-chart'), {
+    type: 'line',
+    data: { datasets: [
+      { label: 'Mild steel Fe250', data: pts, borderColor: '#0ea5e9', borderWidth: 2.5, tension: 0.25, pointRadius: 0, fill: false },
+      { label: 'Selected stage', data: [], backgroundColor: '#f59e0b', pointRadius: 8, showLine: false }
+    ]},
+    options: { responsive: true, maintainAspectRatio: false,
+      scales: { x: { type:'linear', title:{display:true,text:'Strain ε'}, grid:{}, ticks:{} },
+                y: { title:{display:true,text:'Stress σ (MPa)'}, grid:{}, ticks:{} } },
+      plugins: { legend: { position:'bottom' } } }
+  });
+  applyChartTheme(m9Chart); m9Chart.update();
+
+  const bw = document.getElementById('m9-buttons');
+  bw.innerHTML = '';
+  M9.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.className = 'w-full text-left px-3 py-2 rounded-lg text-sm border dark:border-gray-600 hover:border-brand-500 transition';
+    b.innerHTML = '<span class="num text-xs text-lab-600 font-bold mr-2">' + s.k + '</span>' + s.name;
+    b.onclick = () => {
+      m9Chart.data.datasets[1].data = [{x:s.x, y:s.y}];
+      m9Chart.update();
+      document.getElementById('m9-detail').innerHTML = '<b>' + s.name + '</b><br><span class="num text-xs">ε ≈ ' + s.x + ', σ ≈ ' + s.y + ' MPa</span><p class="mt-2">' + s.txt + '</p>';
+      bw.querySelectorAll('button').forEach(x => x.classList.remove('bg-brand-50','dark:bg-gray-700','border-brand-500'));
+      b.classList.add('bg-brand-50','dark:bg-gray-700','border-brand-500');
+    };
+    bw.appendChild(b);
+  });
+}
+
+/* ================= M10 COMPARISON ================= */
+let m10Chart = null;
+const M10SETS = {
+  'Mild steel': { c:'#0ea5e9', d:[[0,0],[0.0012,240],[0.02,240],[0.10,340],[0.16,410],[0.25,330]] },
+  'HYSD Fe415': { c:'#16a34a', d:[[0,0],[0.002,380],[0.01,430],[0.05,480],[0.12,485],[0.15,470]] },
+  'Cast iron':  { c:'#dc2626', d:[[0,0],[0.001,80],[0.003,130],[0.006,150],[0.008,155]] },
+  'Aluminium':  { c:'#7c3aed', d:[[0,0],[0.0013,90],[0.01,105],[0.05,115],[0.10,110]] },
+  'Rubber':     { c:'#ea580c', d:[[0,0],[0.05,2],[0.15,4],[0.25,9],[0.30,18]] }
+};
+function buildM10() {
+  if (m10Chart) return;
+  const ds = Object.entries(M10SETS).map(([k,v]) => ({
+    label: k, borderColor: v.c, borderWidth: 2.5, pointRadius: 0, tension: 0.3, fill: false,
+    data: v.d.map(p => ({x:p[0], y:p[1]}))
+  }));
+  m10Chart = new Chart(document.getElementById('m10-chart'), {
+    type: 'line', data: { datasets: ds },
+    options: { responsive:true, maintainAspectRatio:false,
+      scales: { x:{type:'linear', title:{display:true,text:'Strain ε'}, grid:{}, ticks:{}},
+                y:{title:{display:true,text:'Stress σ (MPa)'}, grid:{}, ticks:{}} },
+      plugins:{ legend:{ position:'bottom' } } }
+  });
+  applyChartTheme(m10Chart); m10Chart.update();
+
+  const tw = document.getElementById('m10-toggles'); tw.innerHTML = '';
+  Object.keys(M10SETS).forEach((k, i) => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border transition';
+    b.style.borderColor = M10SETS[k].c; b.style.color = M10SETS[k].c;
+    b.textContent = k;
+    b.dataset.on = '1';
+    b.onclick = () => {
+      const on = b.dataset.on === '1';
+      b.dataset.on = on ? '0' : '1';
+      b.style.opacity = on ? '0.35' : '1';
+      m10Chart.setDatasetVisibility(i, !on);
+      m10Chart.update();
+    };
+    tw.appendChild(b);
+  });
+}
+
+/* ================= M11 ELASTIC CONSTANTS ================= */
+function initM11() {
+  ['ec-pair','ec-v1','ec-v2'].forEach(i => document.getElementById(i).addEventListener('input', calcEC));
+  document.getElementById('ec-pair').addEventListener('change', ecLabels);
+  ecLabels();
+}
+function ecLabels() {
+  const p = document.getElementById('ec-pair').value;
+  const map = { Emu:['E (GPa)','μ',200,0.3], EG:['E (GPa)','G (GPa)',200,76.9], EK:['E (GPa)','K (GPa)',200,166.7], KG:['K (GPa)','G (GPa)',166.7,76.9] };
+  document.getElementById('ec-l1').textContent = map[p][0];
+  document.getElementById('ec-l2').textContent = map[p][1];
+  document.getElementById('ec-v1').value = map[p][2];
+  document.getElementById('ec-v2').value = map[p][3];
+  calcEC();
+}
+function calcEC() {
+  const p = document.getElementById('ec-pair').value;
+  const a = parseFloat(document.getElementById('ec-v1').value);
+  const b = parseFloat(document.getElementById('ec-v2').value);
+  let E, G, K, mu, note = '';
+  if (p === 'Emu') { E = a; mu = b; G = E/(2*(1+mu)); K = (mu >= 0.5) ? Infinity : E/(3*(1-2*mu)); note = 'Used E = 2G(1+μ) and E = 3K(1−2μ).'; }
+  else if (p === 'EG') { E = a; G = b; mu = E/(2*G) - 1; K = (mu >= 0.5) ? Infinity : E/(3*(1-2*mu)); note = 'μ from E = 2G(1+μ), then K from E = 3K(1−2μ).'; }
+  else if (p === 'EK') { E = a; K = b; mu = (1 - E/(3*K))/2; G = E/(2*(1+mu)); note = 'μ from E = 3K(1−2μ), then G from E = 2G(1+μ).'; }
+  else { K = a; G = b; E = 9*K*G/(3*K+G); mu = E/(2*G) - 1; note = 'E from E = 9KG/(3K+G), then μ from E = 2G(1+μ).'; }
+  const f = v => (v === Infinity || !isFinite(v)) ? '∞' : v.toFixed(v < 1 ? 3 : 1);
+  document.getElementById('ec-E').textContent  = f(E) + (isFinite(E) ? ' GPa' : '');
+  document.getElementById('ec-G').textContent  = f(G) + (isFinite(G) ? ' GPa' : '');
+  document.getElementById('ec-K').textContent  = f(K) + (isFinite(K) ? ' GPa' : '');
+  document.getElementById('ec-mu').textContent = f(mu);
+  if (mu < 0 || mu > 0.5) note += ' <span class="text-red-500 font-semibold">μ is outside 0 to 0.5 — check the input pair, this material would not be physically ordinary.</span>';
+  document.getElementById('ec-note').innerHTML = note;
+}
+
+/* ================= M12 POISSON CUBE ================= */
+function initM12() {
+  ['p12-eps','p12-mu'].forEach(i => document.getElementById(i).addEventListener('input', calcP12));
+  calcP12();
+}
+function calcP12() {
+  const eps = parseFloat(document.getElementById('p12-eps').value) / 10000;  // 0 .. 0.005
+  const mu  = parseFloat(document.getElementById('p12-mu').value) / 100;
+  document.getElementById('p12-eps-lbl').textContent = (eps*1000).toFixed(1);
+  document.getElementById('p12-mu-lbl').textContent = mu.toFixed(2);
+  const lat = -mu * eps, vol = eps * (1 - 2*mu);
+  document.getElementById('p12-lat').textContent = lat.toExponential(3);
+  document.getElementById('p12-vol').textContent = vol.toExponential(3);
+  document.getElementById('p12-dv').textContent = (vol * 1e9 / 1e6).toFixed(2) + ' ×10⁶ mm³';
+  const kx = 1 + lat*40, ky = 1 + eps*40;   // exaggerated
+  const w = 110*kx, h = 110*ky;
+  document.getElementById('p12-face').setAttribute('width', w.toFixed(1));
+  document.getElementById('p12-face').setAttribute('height', h.toFixed(1));
+  const r = 60 + w, bt = 60;
+  document.getElementById('p12-top').setAttribute('points', '60,60 90,35 ' + (90+w) + ',35 ' + r + ',60');
+  document.getElementById('p12-side').setAttribute('points', r + ',' + bt + ' ' + (90+w) + ',35 ' + (90+w) + ',' + (35+h) + ' ' + r + ',' + (60+h));
+}
+
+/* ================= M13 COMPOSITE SOLVER ================= */
+function initM13() {
+  ['cb-P','cb-A1','cb-E1','cb-A2','cb-E2','cb-L'].forEach(i => document.getElementById(i).addEventListener('input', calcCB));
+  calcCB();
+}
+function calcCB() {
+  const P = parseFloat(document.getElementById('cb-P').value)*1000;
+  const A1 = parseFloat(document.getElementById('cb-A1').value), E1 = parseFloat(document.getElementById('cb-E1').value)*1000;
+  const A2 = parseFloat(document.getElementById('cb-A2').value), E2 = parseFloat(document.getElementById('cb-E2').value)*1000;
+  const L  = parseFloat(document.getElementById('cb-L').value);
+  const den = A1*E1 + A2*E2;
+  const out = document.getElementById('cb-out');
+  if (!(den > 0)) { out.innerHTML = '<p class="text-sm text-red-500">Enter positive areas and moduli.</p>'; return; }
+  const eps = P/den, s1 = E1*eps, s2 = E2*eps, P1 = s1*A1/1000, P2 = s2*A2/1000, d = eps*L;
+  out.innerHTML =
+   '<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">' +
+   '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">σ₁</p><p class="num font-bold text-lg text-red-500">' + s1.toFixed(2) + ' MPa</p></div>' +
+   '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">σ₂</p><p class="num font-bold text-lg text-red-500">' + s2.toFixed(2) + ' MPa</p></div>' +
+   '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">P₁ / P₂</p><p class="num font-bold text-lg">' + P1.toFixed(1) + ' / ' + P2.toFixed(1) + ' kN</p></div>' +
+   '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">δ</p><p class="num font-bold text-lg text-blue-500">' + d.toFixed(4) + ' mm</p></div>' +
+   '</div>' +
+   '<div class="mt-4 p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">' +
+   '<p>Common strain ε = P / (A₁E₁ + A₂E₂) = ' + P.toFixed(0) + ' / ' + den.toExponential(3) + ' = ' + eps.toExponential(4) + '</p>' +
+   '<p>σ₁ = E₁ε = ' + E1.toFixed(0) + ' × ' + eps.toExponential(4) + ' = ' + s1.toFixed(2) + ' MPa</p>' +
+   '<p>σ₂ = E₂ε = ' + E2.toFixed(0) + ' × ' + eps.toExponential(4) + ' = ' + s2.toFixed(2) + ' MPa</p>' +
+   '<p>Modular ratio m = E₁/E₂ = ' + (E1/E2).toFixed(3) + ', and σ₁/σ₂ = ' + (s1/s2).toFixed(3) + ' — the same value, as it must be.</p>' +
+   '<p>Check: P₁ + P₂ = ' + (P1+P2).toFixed(1) + ' kN against the applied ' + (P/1000).toFixed(1) + ' kN</p></div>';
+}
+
+/* ================= M14 THERMAL LAB ================= */
+function initM14() {
+  ['th-mat','th-dt','th-l','th-gap'].forEach(i => document.getElementById(i).addEventListener('input', calcTH));
+  calcTH();
+}
+function calcTH() {
+  const [aRaw, eRaw] = document.getElementById('th-mat').value.split('|');
+  const alpha = parseFloat(aRaw), E = parseFloat(eRaw)*1000;
+  const dT = parseFloat(document.getElementById('th-dt').value);
+  const L  = parseFloat(document.getElementById('th-l').value);
+  const gap = parseFloat(document.getElementById('th-gap').value)/100;
+  document.getElementById('th-dt-lbl').textContent = dT;
+  document.getElementById('th-l-lbl').textContent = L;
+  document.getElementById('th-gap-lbl').textContent = gap.toFixed(2);
+
+  const free = alpha*dT*L;
+  const resisted = Math.max(free - gap, 0);
+  const stress = E*resisted/L;
+  document.getElementById('th-free').textContent = free.toFixed(3) + ' mm';
+  document.getElementById('th-move').textContent = Math.min(free, gap).toFixed(3) + ' mm';
+  document.getElementById('th-stress').textContent = stress.toFixed(2) + ' MPa';
+  const n = document.getElementById('th-note');
+  if (gap === 0) n.innerHTML = 'Fully restrained: σ = α·ΔT·E = ' + alpha.toExponential(1) + ' × ' + dT + ' × ' + E.toFixed(0) + ' = <b>' + stress.toFixed(2) + ' MPa</b>. Change the length — the stress does not move.';
+  else if (free <= gap) n.innerHTML = 'Free expansion ' + free.toFixed(3) + ' mm is smaller than the ' + gap.toFixed(2) + ' mm gap, so the bar never reaches the far support. <b>Stress is zero.</b>';
+  else n.innerHTML = 'The gap closes. Only ' + resisted.toFixed(3) + ' mm of expansion is resisted, so σ = E(αΔT·L − Δ)/L = <b>' + stress.toFixed(2) + ' MPa</b> compressive.';
+}
+
+/* ================= M15 FOS DESIGN ================= */
+function initM15() {
+  ['fos-P','fos-sy','fos-n'].forEach(i => document.getElementById(i).addEventListener('input', calcFOS));
+  calcFOS();
+}
+function calcFOS() {
+  const P = parseFloat(document.getElementById('fos-P').value)*1000;
+  const fy = parseFloat(document.getElementById('fos-sy').value);
+  const n = parseFloat(document.getElementById('fos-n').value);
+  const out = document.getElementById('fos-out');
+  if (!(fy > 0 && n > 0 && P > 0)) { out.innerHTML = '<p class="text-sm text-red-500">Enter positive values.</p>'; return; }
+  const perm = fy/n, A = P/perm, d = Math.sqrt(4*A/Math.PI), dAdopt = Math.ceil(d/2)*2;
+  const Aact = Math.PI/4*dAdopt*dAdopt, sAct = P/Aact;
+  out.innerHTML =
+   '<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center mb-4">' +
+   '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Permissible stress</p><p class="num font-bold text-lg">' + perm.toFixed(1) + ' MPa</p></div>' +
+   '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Area required</p><p class="num font-bold text-lg">' + A.toFixed(0) + ' mm²</p></div>' +
+   '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Diameter required</p><p class="num font-bold text-lg">' + d.toFixed(1) + ' mm</p></div>' +
+   '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Adopt</p><p class="num font-bold text-lg text-brand-600">' + dAdopt + ' mm</p></div></div>' +
+   '<div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">' +
+   '<p>σ_perm = f_y / FOS = ' + fy + ' / ' + n + ' = ' + perm.toFixed(2) + ' MPa</p>' +
+   '<p>A = P / σ_perm = ' + P.toFixed(0) + ' / ' + perm.toFixed(2) + ' = ' + A.toFixed(1) + ' mm²</p>' +
+   '<p>d = √(4A/π) = ' + d.toFixed(2) + ' mm → adopt ' + dAdopt + ' mm (always round <b>up</b>)</p>' +
+   '<p>Check: A provided = ' + Aact.toFixed(1) + ' mm², actual stress = ' + sAct.toFixed(2) + ' MPa ' + (sAct <= perm ? '≤' : '&gt;') + ' ' + perm.toFixed(2) + ' MPa ' + (sAct <= perm ? '✓ safe' : '✗ unsafe') + '</p></div>';
+}
+
+/* ================= M16 NUMERICALS ================= */
+function initM16() {
+  const levels = ['All','Easy','Medium','University','GATE'];
+  const fw = document.getElementById('n16-filters'); fw.innerHTML = '';
+  levels.forEach(l => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border dark:border-gray-600 hover:border-brand-500';
+    b.textContent = l + (l === 'All' ? ' (' + N16.length + ')' : ' (' + N16.filter(n => n.lvl === l).length + ')');
+    b.onclick = () => { renderN16(l); fw.querySelectorAll('button').forEach(x => x.classList.remove('bg-brand-500','text-white','border-brand-500')); b.classList.add('bg-brand-500','text-white','border-brand-500'); };
+    fw.appendChild(b);
+    if (l === 'All') b.classList.add('bg-brand-500','text-white','border-brand-500');
+  });
+  renderN16('All');
+}
+const LVLCOLOR = { Easy:'bg-green-100 text-green-800', Medium:'bg-blue-100 text-blue-800', University:'bg-purple-100 text-purple-800', GATE:'bg-orange-100 text-orange-800' };
+function renderN16(filter) {
+  const list = document.getElementById('n16-list'); list.innerHTML = '';
+  N16.filter(n => filter === 'All' || n.lvl === filter).forEach((n, i) => {
+    const d = document.createElement('div');
+    d.className = 'card';
+    d.innerHTML =
+      '<div class="flex items-start gap-3 mb-2"><span class="chip ' + LVLCOLOR[n.lvl] + '">' + n.lvl + '</span><span class="chip bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">' + n.topic + '</span></div>' +
+      '<p class="font-medium mb-3">' + (i+1) + '. ' + n.q + '</p>' +
+      '<button class="text-sm px-3 py-1.5 rounded border dark:border-gray-600 hover:border-brand-500">Show solution</button>' +
+      '<div class="hidden mt-3 p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">' + n.s.map(x => '<p>' + x + '</p>').join('') + '</div>';
+    const btn = d.querySelector('button'), sol = d.querySelector('div.hidden');
+    btn.onclick = () => { sol.classList.toggle('hidden'); btn.textContent = sol.classList.contains('hidden') ? 'Show solution' : 'Hide solution'; };
+    list.appendChild(d);
+  });
+}
+</script>
+
+<script>
+/* ================= M17 VIRTUAL LAB ================= */
+let labChart = null;
+function initM17() {
+  ['sim-load','sim-area','sim-length','sim-temp','sim-material','sim-restrained'].forEach(i =>
+    document.getElementById(i).addEventListener('input', updateLab));
+  updateLab();
+}
+function drawLabChart() {
+  if (labChart) { updateLab(); return; }
+  labChart = new Chart(document.getElementById('lab-chart'), {
+    type: 'line',
+    data: { datasets: [
+      { label: 'Material curve', data: [], borderColor:'#94a3b8', borderWidth:2, pointRadius:0, tension:0.25, fill:false },
+      { label: 'Current state', data: [], backgroundColor:'#dc2626', pointRadius:7, showLine:false }
+    ]},
+    options: { responsive:true, maintainAspectRatio:false,
+      scales:{ x:{type:'linear', title:{display:true,text:'Strain ε'}, grid:{}, ticks:{}},
+               y:{title:{display:true,text:'Stress σ (MPa)'}, grid:{}, ticks:{}} },
+      plugins:{ legend:{position:'bottom'} } }
+  });
+  applyChartTheme(labChart);
+  updateLab();
+}
+function updateLab() {
+  const P = parseFloat(document.getElementById('sim-load').value) * 1000;
+  const A = parseFloat(document.getElementById('sim-area').value);
+  const L = parseFloat(document.getElementById('sim-length').value);
+  const dT = parseFloat(document.getElementById('sim-temp').value);
+  const [Eraw, fyRaw, aRaw] = document.getElementById('sim-material').value.split('|');
+  const E = parseFloat(Eraw), fy = parseFloat(fyRaw), alpha = parseFloat(aRaw);
+  const restrained = document.getElementById('sim-restrained').checked;
+
+  document.getElementById('val-load').textContent   = (P/1000) + ' kN';
+  document.getElementById('val-area').textContent   = A + ' mm²';
+  document.getElementById('val-length').textContent = L + ' mm';
+  document.getElementById('val-temp').textContent   = dT + ' °C';
+  document.getElementById('vis-wall2').classList.toggle('hidden', !restrained);
+
+  const sAxial = P / A;
+  const sThermal = restrained ? alpha * dT * E : 0;
+  const sTotal = sAxial - sThermal;          // thermal is compressive on heating
+  const eps = sTotal / E;
+  let dL = restrained ? 0 : (P*L)/(A*E) + alpha*dT*L;
+
+  document.getElementById('res-stress').textContent = sTotal.toFixed(2) + ' MPa';
+  document.getElementById('res-strain').textContent = restrained ? '0 (held)' : (dL/L).toExponential(3);
+  document.getElementById('res-def').textContent = dL.toFixed(4) + ' mm';
+  const util = Math.abs(sTotal)/fy;
+  const uEl = document.getElementById('res-util');
+  uEl.textContent = (util*100).toFixed(0) + ' %';
+  uEl.className = 'text-xl font-bold num ' + (util > 1 ? 'text-red-600' : util > 0.7 ? 'text-lab-600' : 'text-green-600');
+
+  const flag = document.getElementById('res-flag');
+  if (util > 1) flag.innerHTML = '<span class="chip bg-red-100 text-red-800">Yielded</span> The stress has passed the yield value of ' + fy + ' MPa. Permanent deformation, and δL = PL/AE no longer applies.';
+  else if (restrained && dT > 0) flag.innerHTML = '<span class="chip bg-lab-50 text-lab-900">Restrained</span> Thermal stress of ' + sThermal.toFixed(1) + ' MPa (compressive) is acting against the axial tension. Movement is zero.';
+  else flag.innerHTML = '<span class="chip bg-green-100 text-green-800">Elastic</span> Within the elastic range, so Hooke\'s law applies and the bar recovers fully on unloading.';
+
+  document.getElementById('vis-bar').style.width = Math.min(50 + Math.abs(dL)*4, 92) + '%';
+  const kn = P/1000;
+  document.getElementById('vis-arrows').textContent = kn === 0 ? '' : kn < 60 ? '→' : kn < 130 ? '→ →' : '→ → →';
+
+  if (labChart) {
+    const pts = [];
+    for (let e = 0; e <= 0.004; e += 0.0002) pts.push({x:+e.toFixed(5), y:Math.min(e*E, fy)});
+    pts.push({x:0.02, y:fy});
+    labChart.data.datasets[0].data = pts;
+    labChart.data.datasets[1].data = [{x:Math.max(sAxial/E, 0), y:Math.min(sAxial, fy*1.05)}];
+    labChart.update('none');
+  }
+}
+
+/* ================= M18 SIMULATIONS ================= */
+function initM18() {
+  ['s18-P','s18-d','s18-L','s18-E','s18-mu'].forEach(i => document.getElementById(i).addEventListener('input', calc18));
+  calc18();
+}
+function calc18() {
+  const P = parseFloat(document.getElementById('s18-P').value)*1000;
+  const d = parseFloat(document.getElementById('s18-d').value);
+  const L = parseFloat(document.getElementById('s18-L').value);
+  const E = parseFloat(document.getElementById('s18-E').value)*1000;
+  const mu = parseFloat(document.getElementById('s18-mu').value)/100;
+  document.getElementById('s18-P-l').textContent = (P/1000) + ' kN';
+  document.getElementById('s18-d-l').textContent = d + ' mm';
+  document.getElementById('s18-L-l').textContent = L + ' mm';
+  document.getElementById('s18-E-l').textContent = (E/1000) + ' GPa';
+  document.getElementById('s18-mu-l').textContent = mu.toFixed(2);
+  const A = Math.PI/4*d*d, sig = P/A, eps = sig/E, dl = eps*L, dd = -mu*eps*d, ev = eps*(1-2*mu), U = 0.5*P*dl/1000;
+  document.getElementById('s18-A').textContent   = A.toFixed(1) + ' mm²';
+  document.getElementById('s18-sig').textContent = sig.toFixed(2) + ' MPa';
+  document.getElementById('s18-eps').textContent = eps.toExponential(3);
+  document.getElementById('s18-dl').textContent  = dl.toFixed(4) + ' mm';
+  document.getElementById('s18-dd').textContent  = dd.toFixed(5) + ' mm';
+  document.getElementById('s18-ev').textContent  = ev.toExponential(3);
+  document.getElementById('s18-U').textContent   = U.toFixed(3) + ' N·m';
+}
+
+/* ================= M19 GAMES ================= */
+let matchPick = null, matchDone = 0;
+function initMatch() {
+  matchPick = null; matchDone = 0;
+  const L = document.getElementById('match-left'), R = document.getElementById('match-right');
+  L.innerHTML = ''; R.innerHTML = '';
+  const shuffled = [...MATCHQ].sort(() => Math.random()-0.5);
+  const rights = [...MATCHQ].sort(() => Math.random()-0.5);
+  shuffled.forEach(m => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt !mb-0 num text-sm'; b.textContent = m.l; b.dataset.key = m.r;
+    b.onclick = () => { L.querySelectorAll('button').forEach(x => x.classList.remove('ring-2','ring-brand-500')); b.classList.add('ring-2','ring-brand-500'); matchPick = b; };
+    L.appendChild(b);
+  });
+  rights.forEach(m => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt !mb-0 text-sm'; b.textContent = m.r;
+    b.onclick = () => {
+      if (!matchPick) return;
+      const good = matchPick.dataset.key === m.r;
+      logAnswer('Game', 'Stress', good);
+      if (good) {
+        matchPick.classList.add('correct'); b.classList.add('correct');
+        matchPick.disabled = true; b.disabled = true; matchPick.classList.remove('ring-2','ring-brand-500');
+        matchPick = null; matchDone++;
+        document.getElementById('match-status').textContent = matchDone + ' of ' + MATCHQ.length + ' matched' + (matchDone === MATCHQ.length ? ' — all done.' : '');
+      } else {
+        b.classList.add('wrong');
+        setTimeout(() => b.classList.remove('wrong'), 500);
+        document.getElementById('match-status').textContent = 'Not that one — try again.';
+      }
+    };
+    R.appendChild(b);
+  });
+  document.getElementById('match-status').textContent = '0 of ' + MATCHQ.length + ' matched';
+}
+
+let fmAnswer = null;
+function newMaterialRound() {
+  const pick = MATERIALS_GAME[Math.floor(Math.random()*MATERIALS_GAME.length)];
+  fmAnswer = pick.m;
+  document.getElementById('fm-clue').textContent = pick.c;
+  const opts = [pick.m, ...MATERIALS_GAME.filter(x => x.m !== pick.m).sort(() => Math.random()-0.5).slice(0,3).map(x => x.m)].sort(() => Math.random()-0.5);
+  const box = document.getElementById('fm-options'); box.innerHTML = '';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt !mb-0 text-sm'; b.textContent = o;
+    b.onclick = () => {
+      box.querySelectorAll('button').forEach(x => x.disabled = true);
+      const good = o === fmAnswer;
+      b.classList.add(good ? 'correct' : 'wrong');
+      if (!good) [...box.children].find(x => x.textContent === fmAnswer).classList.add('correct');
+      logAnswer('Game', 'Curves', good);
+      document.getElementById('fm-status').textContent = good ? 'Correct.' : 'The answer was ' + fmAnswer + '.';
+    };
+    box.appendChild(b);
+  });
+  document.getElementById('fm-status').textContent = '';
+}
+
+let huntItem = null;
+function newHunt() {
+  huntItem = HUNTS[Math.floor(Math.random()*HUNTS.length)];
+  document.getElementById('hunt-text').textContent = huntItem.t;
+  document.getElementById('hunt-fb').textContent = '';
+}
+function huntAnswer(saysOk) {
+  if (!huntItem) return;
+  const good = saysOk === huntItem.ok;
+  logAnswer('Game', 'Stress', good);
+  document.getElementById('hunt-fb').innerHTML = (good ? '<span class="chip bg-green-100 text-green-800">Correct</span> ' : '<span class="chip bg-red-100 text-red-800">Not quite</span> ') + huntItem.e;
+}
+
+let memFirst = null, memLock = false, memPairs = 0;
+function initMemory() {
+  memFirst = null; memLock = false; memPairs = 0;
+  const cards = [];
+  FLASH.forEach((f, i) => { cards.push({ id:i, txt:f[0], type:'t' }); cards.push({ id:i, txt:f[1], type:'d' }); });
+  cards.sort(() => Math.random()-0.5);
+  const g = document.getElementById('memory-grid'); g.innerHTML = '';
+  cards.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'flip';
+    el.innerHTML = '<div class="flip-inner">' +
+      '<div class="flip-face bg-brand-500 text-white font-bold"><i class="fas fa-question"></i></div>' +
+      '<div class="flip-face flip-back bg-gray-100 dark:bg-gray-700 border dark:border-gray-600">' + c.txt + '</div></div>';
+    el.onclick = () => {
+      if (memLock || el.classList.contains('open') || el.dataset.done) return;
+      el.classList.add('open');
+      if (!memFirst) { memFirst = { el, c }; return; }
+      memLock = true;
+      const good = memFirst.c.id === c.id && memFirst.c.type !== c.type;
+      logAnswer('Game', 'Strain', good);
+      setTimeout(() => {
+        if (good) {
+          memFirst.el.dataset.done = '1'; el.dataset.done = '1';
+          memFirst.el.style.opacity = '.55'; el.style.opacity = '.55';
+          memPairs++;
+          document.getElementById('memory-status').textContent = memPairs + ' of ' + FLASH.length + ' pairs found' + (memPairs === FLASH.length ? ' — complete.' : '');
+        } else { memFirst.el.classList.remove('open'); el.classList.remove('open'); }
+        memFirst = null; memLock = false;
+      }, good ? 350 : 800);
+    };
+    g.appendChild(el);
+  });
+  document.getElementById('memory-status').textContent = '0 of ' + FLASH.length + ' pairs found';
+}
+
+/* ================= M21 CONCEPT MAP ================= */
+const CMAP = [
+  { x:430, y:50,  w:150, t:'External load', m:4 },
+  { x:430, y:130, w:170, t:'Internal force', m:4 },
+  { x:200, y:208, w:150, t:'Stress σ = P/A', m:5 },
+  { x:660, y:208, w:160, t:'Strain ε = δL/L', m:7 },
+  { x:200, y:288, w:170, t:'Types of stress', m:6 },
+  { x:660, y:288, w:180, t:'Lateral & volumetric', m:12 },
+  { x:430, y:318, w:180, t:"Hooke's law, E", m:8 },
+  { x:280, y:398, w:180, t:'Elastic constants', m:11 },
+  { x:580, y:398, w:180, t:'δL = PL/AE', m:7 },
+  { x:80,  y:398, w:150, t:'Composite bars', m:13 },
+  { x:790, y:398, w:130, t:'Thermal', m:14 },
+  { x:430, y:448, w:180, t:'Design & FOS', m:15 }
+];
+function initCmap() {
+  const g = document.getElementById('cmap-nodes');
+  CMAP.forEach(n => {
+    const grp = document.createElementNS('http://www.w3.org/2000/svg','g');
+    grp.style.cursor = 'pointer';
+    grp.setAttribute('tabindex','0');
+    grp.innerHTML =
+      '<rect x="' + (n.x - n.w/2) + '" y="' + (n.y - 17) + '" width="' + n.w + '" height="34" rx="17" fill="#0ea5e9" fill-opacity="0.12" stroke="#0ea5e9" stroke-width="1.6"/>' +
+      '<text x="' + n.x + '" y="' + (n.y + 5) + '" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="currentColor">' + n.t + '</text>';
+    grp.onclick = () => switchModule(n.m);
+    grp.onkeydown = e => { if (e.key === 'Enter') switchModule(n.m); };
+    g.appendChild(grp);
+  });
+}
+
+/* ================= M22 MISTAKES ================= */
+function initM22() {
+  const box = document.getElementById('mistake-list'); box.innerHTML = '';
+  MISTAKES.forEach((m, i) => {
+    const d = document.createElement('div');
+    d.className = 'card !p-5';
+    d.innerHTML =
+      '<div class="flex gap-3"><span class="chip bg-red-100 text-red-800 h-fit shrink-0"><i class="fas fa-xmark"></i> Mistake ' + (i+1) + '</span>' +
+      '<div><p class="font-bold">' + m.w + '</p><p class="text-sm mt-1.5 text-gray-600 dark:text-gray-300"><span class="text-green-600 font-bold">Correct approach: </span>' + m.r + '</p></div></div>';
+    box.appendChild(d);
+  });
+}
+
+/* ================= M23 UNIVERSITY QUESTIONS ================= */
+function initM23() {
+  const topics = ['All', ...new Set(UQ.map(q => q.topic))];
+  const fw = document.getElementById('uq-filters'); fw.innerHTML = '';
+  topics.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border dark:border-gray-600 hover:border-brand-500';
+    b.textContent = t;
+    b.onclick = () => { renderUQ(t); fw.querySelectorAll('button').forEach(x => x.classList.remove('bg-brand-500','text-white','border-brand-500')); b.classList.add('bg-brand-500','text-white','border-brand-500'); };
+    if (t === 'All') b.classList.add('bg-brand-500','text-white','border-brand-500');
+    fw.appendChild(b);
+  });
+  renderUQ('All');
+}
+function renderUQ(topic) {
+  const list = document.getElementById('uq-list'); list.innerHTML = '';
+  UQ.filter(q => topic === 'All' || q.topic === topic).forEach((q, i) => {
+    const d = document.createElement('div');
+    d.className = 'card !p-5';
+    d.innerHTML =
+      '<div class="flex items-start gap-3 mb-2"><span class="chip bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">' + q.topic + '</span><span class="chip bg-brand-100 text-brand-900">' + q.marks + ' marks</span></div>' +
+      '<p class="font-medium">Q' + (i+1) + '. ' + q.q + '</p>' +
+      '<button class="mt-3 text-sm text-brand-600 font-semibold">Show the expected approach</button>' +
+      '<p class="hidden mt-2 text-sm p-3 rounded bg-gray-50 dark:bg-gray-700/50"><i class="fas fa-key text-lab-500 mr-1"></i>' + q.hint + '</p>';
+    const b = d.querySelector('button'), p = d.querySelector('p.hidden');
+    b.onclick = () => { p.classList.toggle('hidden'); b.textContent = p.classList.contains('hidden') ? 'Show the expected approach' : 'Hide'; };
+    list.appendChild(d);
+  });
+}
+
+/* ================= M24 SELF EVALUATION ================= */
+function initLevels() {
+  const names = ['MCQ','Fill blanks','True / false','Match','Numerical','Case study','Adaptive'];
+  const tw = document.getElementById('lvl-tabs'); tw.innerHTML = '';
+  names.forEach((n, i) => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border dark:border-gray-600 hover:border-brand-500';
+    b.textContent = 'L' + (i+1) + ' · ' + n;
+    b.onclick = () => {
+      document.querySelectorAll('.eval-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById('lvl-' + (i+1)).classList.remove('hidden');
+      tw.querySelectorAll('button').forEach(x => x.classList.remove('bg-brand-500','text-white','border-brand-500'));
+      b.classList.add('bg-brand-500','text-white','border-brand-500');
+    };
+    if (i === 0) b.classList.add('bg-brand-500','text-white','border-brand-500');
+    tw.appendChild(b);
+  });
+  resetMCQ(); buildFill(); buildTF(); buildMatchQ(); buildNum(); buildCase(); startAdaptive();
+}
+
+/* L1 */
+let mcqIdx = 0, mcqRight = 0;
+function resetMCQ() { mcqIdx = 0; mcqRight = 0; renderMCQ(); }
+function renderMCQ() {
+  const box = document.getElementById('mcq-box');
+  if (mcqIdx >= MCQ.length) {
+    box.innerHTML = '<div class="text-center py-8"><p class="text-4xl font-bold num text-brand-600">' + mcqRight + ' / ' + MCQ.length + '</p><p class="mt-2 text-sm text-gray-500">' + (mcqRight >= 16 ? 'Strong grasp of the unit.' : mcqRight >= 12 ? 'Solid, but revise the topics you missed.' : 'Work through Modules 5 to 15 again before retrying.') + '</p></div>';
+    document.getElementById('mcq-progress').textContent = 'Level complete';
+    return;
+  }
+  const q = MCQ[mcqIdx];
+  box.innerHTML = '<p class="font-medium mb-3">' + (mcqIdx+1) + '. ' + q.q + '</p><div id="mcq-opts"></div><p id="mcq-fb" class="hidden text-sm mt-2 p-3 rounded bg-gray-50 dark:bg-gray-700/50"></p>';
+  const ow = document.getElementById('mcq-opts');
+  q.o.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt text-sm'; b.textContent = o;
+    b.onclick = () => {
+      ow.querySelectorAll('button').forEach(x => x.disabled = true);
+      const good = i === q.a;
+      b.classList.add(good ? 'correct' : 'wrong');
+      if (!good) ow.children[q.a].classList.add('correct');
+      if (good) mcqRight++;
+      logAnswer('L1', q.t, good);
+      const fb = document.getElementById('mcq-fb');
+      fb.innerHTML = '<i class="fas fa-lightbulb text-lab-500 mr-1"></i>' + q.e;
+      fb.classList.remove('hidden');
+      setTimeout(() => { mcqIdx++; renderMCQ(); }, 1500);
+    };
+    ow.appendChild(b);
+  });
+  document.getElementById('mcq-progress').textContent = 'Question ' + (mcqIdx+1) + ' of ' + MCQ.length + ' — correct so far ' + mcqRight;
+}
+
+/* L2 */
+function buildFill() {
+  const box = document.getElementById('fill-box'); box.innerHTML = '';
+  FILLQ.forEach((f, i) => {
+    const d = document.createElement('div');
+    d.className = 'text-sm flex flex-wrap items-center gap-2';
+    d.innerHTML = '<span>' + (i+1) + '. ' + f.pre + '</span><input class="fill-in p-1.5 border rounded num w-44 dark:bg-gray-700 dark:border-gray-600" data-i="' + i + '"><span>' + f.post + '</span><span class="fill-fb text-xs"></span>';
+    box.appendChild(d);
+  });
+}
+function norm(s) { return (s||'').toLowerCase().replace(/[\s.]/g,''); }
+function checkFill() {
+  let right = 0;
+  document.querySelectorAll('.fill-in').forEach(inp => {
+    const f = FILLQ[+inp.dataset.i];
+    const good = f.ans.some(a => norm(a) === norm(inp.value));
+    inp.classList.toggle('border-green-500', good);
+    inp.classList.toggle('border-red-500', !good);
+    inp.parentElement.querySelector('.fill-fb').innerHTML = good ? '<span class="text-green-600 font-semibold">✓</span>' : '<span class="text-red-600">✗ ' + f.ans[0] + '</span>';
+    if (good) right++;
+    logAnswer('L2','Stress', good);
+  });
+  document.getElementById('fill-score').textContent = 'Score: ' + right + ' / ' + FILLQ.length;
+}
+
+/* L3 */
+function buildTF() {
+  const box = document.getElementById('tf-box'); box.innerHTML = '';
+  let right = 0, done = 0;
+  TFQ.forEach((t, i) => {
+    const d = document.createElement('div');
+    d.className = 'p-3 rounded border dark:border-gray-700';
+    d.innerHTML = '<p class="text-sm mb-2">' + (i+1) + '. ' + t.q + '</p><div class="flex gap-2"></div><p class="tf-fb text-xs mt-2 hidden"></p>';
+    const bw = d.querySelector('div');
+    ['True','False'].forEach(lbl => {
+      const b = document.createElement('button');
+      b.className = 'px-4 py-1.5 rounded text-sm border dark:border-gray-600 hover:border-brand-500';
+      b.textContent = lbl;
+      b.onclick = () => {
+        bw.querySelectorAll('button').forEach(x => x.disabled = true);
+        const good = (lbl === 'True') === t.a;
+        b.classList.add(good ? 'correct' : 'wrong');
+        const fb = d.querySelector('.tf-fb');
+        fb.innerHTML = (good ? '<span class="text-green-600 font-semibold">Correct. </span>' : '<span class="text-red-600 font-semibold">The answer is ' + (t.a ? 'True' : 'False') + '. </span>') + t.e;
+        fb.classList.remove('hidden');
+        if (good) right++;
+        done++;
+        logAnswer('L3','Hooke & E', good);
+        document.getElementById('tf-score').textContent = 'Score: ' + right + ' / ' + done + ' attempted';
+      };
+      bw.appendChild(b);
+    });
+    box.appendChild(d);
+  });
+}
+
+/* L4 */
+function buildMatchQ() {
+  const box = document.getElementById('mt-box'); box.innerHTML = '';
+  const answers = [...MATCHQ.map(m => m.r)].sort();
+  MATCHQ.forEach((m, i) => {
+    const d = document.createElement('div');
+    d.className = 'flex flex-wrap items-center gap-3 text-sm';
+    d.innerHTML = '<span class="num w-40 font-semibold">' + m.l + '</span><select class="mt-sel p-2 border rounded text-sm dark:bg-gray-700 dark:border-gray-600" data-i="' + i + '"><option value="">— choose —</option>' + answers.map(a => '<option>' + a + '</option>').join('') + '</select><span class="mt-fb text-xs"></span>';
+    box.appendChild(d);
+  });
+}
+function checkMatchQ() {
+  let right = 0;
+  document.querySelectorAll('.mt-sel').forEach(sel => {
+    const m = MATCHQ[+sel.dataset.i];
+    const good = sel.value === m.r;
+    sel.parentElement.querySelector('.mt-fb').innerHTML = good ? '<span class="text-green-600 font-semibold">✓</span>' : '<span class="text-red-600">✗ ' + m.r + '</span>';
+    if (good) right++;
+    logAnswer('L4','Elastic constants', good);
+  });
+  document.getElementById('mt-score').textContent = 'Score: ' + right + ' / ' + MATCHQ.length;
+}
+
+/* L5 */
+function buildNum() {
+  const box = document.getElementById('num-box'); box.innerHTML = '';
+  NUMQ.forEach((n, i) => {
+    const d = document.createElement('div');
+    d.className = 'p-4 rounded border dark:border-gray-700';
+    d.innerHTML =
+      '<p class="text-sm mb-3">' + (i+1) + '. ' + n.q + '</p>' +
+      '<div class="flex flex-wrap gap-2 items-center">' +
+      '<input class="num-in p-2 border rounded num w-36 dark:bg-gray-700 dark:border-gray-600" placeholder="answer" data-i="' + i + '">' +
+      '<span class="text-sm text-gray-500">' + n.u + '</span>' +
+      '<button class="num-check px-3 py-1.5 rounded bg-brand-500 text-white text-sm font-semibold">Check</button>' +
+      '<button class="num-hint px-3 py-1.5 rounded border dark:border-gray-600 text-sm">Hint</button></div>' +
+      '<p class="num-fb text-sm mt-2"></p>';
+    d.querySelector('.num-check').onclick = () => {
+      const v = parseFloat(d.querySelector('.num-in').value);
+      const good = isFinite(v) && Math.abs(v - n.a) / n.a <= 0.02;
+      d.querySelector('.num-fb').innerHTML = good
+        ? '<span class="text-green-600 font-semibold">Correct.</span> Expected ' + n.a + ' ' + n.u + '.'
+        : '<span class="text-red-600 font-semibold">Not within 2 %.</span> Expected ' + n.a + ' ' + n.u + '. ' + n.hint;
+      logAnswer('L5', n.t, good);
+      updateNumScore();
+    };
+    d.querySelector('.num-hint').onclick = () => { d.querySelector('.num-fb').innerHTML = '<i class="fas fa-key text-lab-500 mr-1"></i>' + n.hint; };
+    box.appendChild(d);
+  });
+}
+function updateNumScore() {
+  const r = state.records.filter(x => x.level === 'L5');
+  document.getElementById('num-score').textContent = 'Attempted ' + r.length + ' — correct ' + r.filter(x => x.correct).length;
+}
+
+/* L6 */
+function buildCase() {
+  const box = document.getElementById('case-box'); box.innerHTML = '';
+  CASEQ.forEach((c, i) => {
+    const d = document.createElement('div');
+    d.className = 'flex flex-wrap items-center gap-3 text-sm';
+    d.innerHTML = '<span class="flex-1 min-w-[240px]">' + c.q + '</span><input class="p-2 border rounded num w-32 dark:bg-gray-700 dark:border-gray-600"><button class="px-3 py-1.5 rounded bg-brand-500 text-white text-xs font-semibold">Check</button><span class="cs-fb text-xs"></span>';
+    d.querySelector('button').onclick = () => {
+      const v = parseFloat(d.querySelector('input').value);
+      const good = isFinite(v) && Math.abs(v - c.a)/c.a <= 0.03;
+      d.querySelector('.cs-fb').innerHTML = good ? '<span class="text-green-600 font-semibold">✓ ' + c.a + '</span>' : '<span class="text-red-600">✗ ' + c.a + ' — ' + c.hint + '</span>';
+      logAnswer('L6','Design', good);
+      const r = state.records.filter(x => x.level === 'L6');
+      document.getElementById('case-score').textContent = 'Attempted ' + r.length + ' — correct ' + r.filter(x => x.correct).length;
+    };
+    box.appendChild(d);
+  });
+  const rec = document.createElement('div');
+  rec.className = 'mt-4 p-4 rounded bg-gray-50 dark:bg-gray-700/50 text-sm';
+  rec.innerHTML = '<button class="text-brand-600 font-semibold">Show the design recommendation</button><div class="hidden mt-2 space-y-1">' +
+    '<p>The service stress of 225.8 MPa is well above the permissible 149.7 MPa, so the section <b>fails the strength check</b>.</p>' +
+    '<p>The extension of 3.39 mm also exceeds the 2 mm serviceability limit, so it fails on stiffness too.</p>' +
+    '<p>A net area of at least 1870 mm² is needed for strength. For the 2 mm extension limit, A ≥ PL/(E·δ) = 280 000 × 3000 / (200 000 × 2) = 2100 mm², which governs.</p>' +
+    '<p><b>Recommendation:</b> adopt a member with a net area of at least 2100 mm² — for example a pair of angles rather than a single ISA — and re-check the net section after deducting the bolt holes.</p></div>';
+  rec.querySelector('button').onclick = () => rec.querySelector('div').classList.toggle('hidden');
+  box.appendChild(rec);
+}
+
+/* L7 */
+let adDiff = 1, adCount = 0, adStreak = 0, adRight = 0;
+function startAdaptive() { adDiff = 1; adCount = 0; adStreak = 0; adRight = 0; renderAdaptive(); }
+function renderAdaptive() {
+  const box = document.getElementById('ad-box');
+  if (adCount >= 10) {
+    box.innerHTML = '<div class="text-center py-6"><p class="text-3xl font-bold num text-brand-600">' + adRight + ' / 10</p><p class="text-sm mt-2 text-gray-500">Finished at difficulty level ' + adDiff + ' of 5.</p></div>';
+    document.getElementById('ad-count').textContent = 'Complete';
+    return;
+  }
+  const pool = ADQ.filter(q => q.d === adDiff);
+  const q = pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('ad-diff').textContent = 'Difficulty ' + adDiff;
+  document.getElementById('ad-count').textContent = 'Question ' + (adCount+1) + ' of 10';
+  box.innerHTML = '<p class="font-medium mb-3">' + q.q + '</p><div id="ad-opts"></div>';
+  const ow = document.getElementById('ad-opts');
+  q.o.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt text-sm'; b.textContent = o;
+    b.onclick = () => {
+      ow.querySelectorAll('button').forEach(x => x.disabled = true);
+      const good = i === q.a;
+      b.classList.add(good ? 'correct' : 'wrong');
+      if (!good) ow.children[q.a].classList.add('correct');
+      logAnswer('L7','Stress', good);
+      if (good) { adRight++; adStreak++; if (adStreak >= 2 && adDiff < 5) { adDiff++; adStreak = 0; } }
+      else { adStreak = 0; if (adDiff > 1) adDiff--; }
+      adCount++;
+      setTimeout(renderAdaptive, 1100);
+    };
+    ow.appendChild(b);
+  });
+}
+
+/* ================= M25 DASHBOARD ================= */
+let dbChart = null;
+function topicStats() {
+  const s = {};
+  TOPICS.forEach(t => s[t] = { a:0, c:0 });
+  state.records.forEach(r => { if (s[r.topic]) { s[r.topic].a++; if (r.correct) s[r.topic].c++; } });
+  return s;
+}
+function overallScore() {
+  const r = state.records.filter(x => ['L1','L2','L3','L4','L5'].includes(x.level));
+  if (!r.length) return null;
+  return Math.round(r.filter(x => x.correct).length / r.length * 100);
+}
+function buildDashboard() {
+  const s = topicStats(), score = overallScore();
+  document.getElementById('db-visited').textContent = state.visited.size;
+  document.getElementById('db-attempts').textContent = state.records.length;
+  document.getElementById('db-score').textContent = score === null ? '—' : score + '%';
+  document.getElementById('db-time').textContent = minutes() + 'm';
+
+  const data = TOPICS.map(t => s[t].a ? Math.round(s[t].c / s[t].a * 100) : 0);
+  if (dbChart) { dbChart.data.datasets[0].data = data; dbChart.update(); }
+  else {
+    dbChart = new Chart(document.getElementById('db-radar'), {
+      type: 'radar',
+      data: { labels: TOPICS, datasets: [{ label:'Correct %', data, borderColor:'#0ea5e9', backgroundColor:'rgba(14,165,233,.2)', pointBackgroundColor:'#0ea5e9' }] },
+      options: { responsive:true, maintainAspectRatio:false,
+        scales:{ r:{ min:0, max:100, grid:{}, ticks:{ stepSize:25 }, pointLabels:{ font:{size:11} } } },
+        plugins:{ legend:{ display:false } } }
+    });
+    applyChartTheme(dbChart); dbChart.update();
+  }
+
+  const REV = { 'Stress':[5,6], 'Strain':[7,12], 'Hooke & E':[8], 'Curves':[9,10], 'Elastic constants':[11], 'Composite bars':[13], 'Thermal':[14], 'Design':[15] };
+  const weak = document.getElementById('db-weak'); weak.innerHTML = '';
+  const rows = TOPICS.map(t => ({ t, a:s[t].a, p: s[t].a ? s[t].c/s[t].a*100 : null })).filter(r => r.a > 0 && r.p < 70).sort((a,b) => a.p - b.p);
+  if (!rows.length) weak.innerHTML = '<p class="text-gray-500">Nothing below 70 % yet. Attempt more questions in Module 24 to get a reading on every topic.</p>';
+  rows.forEach(r => {
+    const d = document.createElement('div');
+    d.className = 'flex items-center justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50';
+    d.innerHTML = '<span>' + r.t + ' <span class="num text-xs text-red-500">' + Math.round(r.p) + '%</span></span>' +
+      '<span>' + REV[r.t].map(m => '<button class="text-xs px-2 py-1 rounded border dark:border-gray-600 ml-1" onclick="switchModule(' + m + ')">Module ' + m + '</button>').join('') + '</span>';
+    weak.appendChild(d);
+  });
+
+  const okMods = state.visited.size === 26, okScore = score !== null && score >= 70;
+  const list = document.getElementById('db-cert-list');
+  list.innerHTML =
+    '<p>' + (okMods ? '<i class="fas fa-check text-green-500"></i>' : '<i class="fas fa-xmark text-red-500"></i>') + ' All 26 modules visited (' + state.visited.size + '/26)</p>' +
+    '<p>' + (okScore ? '<i class="fas fa-check text-green-500"></i>' : '<i class="fas fa-xmark text-red-500"></i>') + ' Overall score 70 % or more (' + (score === null ? 'not attempted' : score + '%') + ')</p>';
+  const chip = document.getElementById('db-cert-chip');
+  chip.textContent = (okMods && okScore) ? 'Eligible' : 'Not yet eligible';
+  chip.className = 'chip ' + ((okMods && okScore) ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200');
+  document.getElementById('db-cert-btn').disabled = !(okMods && okScore);
+}
+function issueCertificate() {
+  const w = window.open('', '_blank');
+  if (!w) return;
+  const name = (document.getElementById('td-name') || {}).value || 'Student';
+  w.document.write('<html><head><title>Certificate</title><style>body{font-family:Georgia,serif;text-align:center;padding:60px;border:14px double #0c4a6e;margin:24px}h1{font-size:34px;margin:10px}p{font-size:16px}</style></head><body>' +
+    '<p style="letter-spacing:.3em;text-transform:uppercase;font-size:12px">Certificate of completion</p>' +
+    '<h1>Strength of Materials — Unit 1</h1><p>Stress and Strain</p><hr style="width:120px;margin:26px auto">' +
+    '<p>Awarded to</p><h2 style="font-size:26px">' + name + '</h2>' +
+    '<p>for completing all 26 modules and scoring ' + overallScore() + ' % in the self-evaluation.</p>' +
+    '<p style="margin-top:50px">D. Mandal<br><small>Assistant Professor, Department of Civil Engineering</small></p>' +
+    '<p style="font-size:11px;color:#666">Issued ' + new Date().toLocaleDateString() + '</p></body></html>');
+  w.document.close();
+}
+
+/* ================= M26 TEACHER DASHBOARD ================= */
+let tdChart = null;
+function buildTeacher() {
+  document.getElementById('td-visited').textContent = state.visited.size;
+  document.getElementById('td-att').textContent = state.records.length;
+  document.getElementById('td-cor').textContent = state.records.filter(r => r.correct).length;
+  document.getElementById('td-time').textContent = minutes() + 'm';
+  const t = document.getElementById('td-table');
+  t.innerHTML = '<tr><th>Level</th><th>Topic</th><th>Result</th><th>Time</th></tr>';
+  state.records.slice(-60).reverse().forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + r.level + '</td><td>' + r.topic + '</td><td>' + (r.correct ? '<span class="text-green-600 font-semibold">correct</span>' : '<span class="text-red-600">wrong</span>') + '</td><td class="num">' + new Date(r.ts).toLocaleTimeString() + '</td>';
+    t.appendChild(tr);
+  });
+}
+function csvEscape(v) { return '"' + String(v).replace(/"/g, '""') + '"'; }
+function downloadCSV(name, rows) {
+  const blob = new Blob([rows.map(r => r.map(csvEscape).join(',')).join('\n')], { type:'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+function exportRecord() {
+  const name = document.getElementById('td-name').value || 'unnamed';
+  const s = topicStats();
+  const rows = [['student','modules_visited','attempted','correct','score_percent','minutes'],
+    [name, state.visited.size, state.records.length, state.records.filter(r => r.correct).length, overallScore() === null ? '' : overallScore(), minutes()],
+    [], ['topic','attempted','correct']];
+  TOPICS.forEach(t => rows.push([t, s[t].a, s[t].c]));
+  downloadCSV('som_unit1_' + name.replace(/\W+/g,'_') + '.csv', rows);
+}
+function exportReport() {
+  const rows = [['level','topic','result','timestamp']];
+  state.records.forEach(r => rows.push([r.level, r.topic, r.correct ? 'correct' : 'wrong', new Date(r.ts).toISOString()]));
+  downloadCSV('som_unit1_full_report.csv', rows);
+}
+function initTeacherFiles() {
+  document.getElementById('td-files').addEventListener('change', async e => {
+    const files = [...e.target.files];
+    if (!files.length) return;
+    const students = [];
+    for (const f of files) {
+      const txt = await f.text();
+      const lines = txt.split(/\r?\n/);
+      const vals = (lines[1] || '').split(',').map(s => s.replace(/^"|"$/g,'').replace(/""/g,'"'));
+      if (vals.length >= 6) students.push({ name: vals[0], mods:+vals[1], att:+vals[2], cor:+vals[3], score: vals[4] === '' ? null : +vals[4], min:+vals[5] });
+    }
+    const scored = students.filter(s => s.score !== null);
+    const avg = scored.length ? Math.round(scored.reduce((a,b) => a+b.score, 0)/scored.length) : 0;
+    document.getElementById('td-class-summary').innerHTML =
+      '<p class="mb-2"><b>' + students.length + '</b> records loaded. Class average <b class="num">' + avg + '%</b>. ' +
+      'Average time <b class="num">' + Math.round(students.reduce((a,b) => a+b.min,0)/Math.max(students.length,1)) + ' min</b>. ' +
+      'Below 40 %: <b class="num">' + scored.filter(s => s.score < 40).length + '</b> student(s).</p>';
+    const wrap = document.getElementById('td-chart-wrap'); wrap.classList.remove('hidden');
+    if (tdChart) tdChart.destroy();
+    tdChart = new Chart(document.getElementById('td-chart'), {
+      type:'bar',
+      data:{ labels: students.map(s => s.name), datasets:[{ label:'Score %', data: students.map(s => s.score || 0), backgroundColor:'#0ea5e9' }] },
+      options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ min:0, max:100, grid:{}, ticks:{} }, x:{ grid:{}, ticks:{} } }, plugins:{ legend:{display:false} } }
+    });
+    applyChartTheme(tdChart); tdChart.update();
+  });
+}
+function resetAll() {
+  if (!confirm('Clear all progress and answers stored on this device?')) return;
+  store.clear();
+  state.visited = new Set([1]); state.records = []; state.elapsed = 0; state.started = Date.now();
+  refreshTicks(); buildTeacher();
+  alert('Cleared.');
+}
+
+/* ================= STUDY HELPER ================= */
+function tutorSay(html, mine) {
+  const log = document.getElementById('tutor-log');
+  const d = document.createElement('div');
+  d.className = mine
+    ? 'ml-auto max-w-[85%] bg-brand-500 text-white p-2.5 rounded-lg rounded-br-none'
+    : 'mr-auto max-w-[90%] bg-gray-200 dark:bg-gray-700 p-2.5 rounded-lg rounded-tl-none';
+  d.innerHTML = html;
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+}
+function tutorSend() {
+  const inp = document.getElementById('tutor-input');
+  const q = inp.value.trim();
+  if (!q) return;
+  tutorSay(q.replace(/[<>]/g,''), true);
+  inp.value = '';
+  const lower = q.toLowerCase();
+  let best = null, bestHits = 0;
+  TUTOR_KB.forEach(e => {
+    const hits = e.k.filter(k => lower.includes(k)).length;
+    if (hits > bestHits) { bestHits = hits; best = e; }
+  });
+  setTimeout(() => {
+    if (best) tutorSay(best.a);
+    else tutorSay('I hold a fixed set of notes for this unit, so I could not match that. Try a keyword such as stress, strain, Hooke, Poisson, shear, bearing, thermal, composite, factor of safety, or units. For anything beyond that, ask in class or check Module 20 — the formula sheet.');
+  }, 250);
+}
+
+/* ================= INIT ================= */
+window.addEventListener('DOMContentLoaded', () => {
+  if (store.get('som_theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+    document.getElementById('theme-icon').className = 'fas fa-sun';
+  }
+  initNav();
+  initM4(); initM5(); initM6(); initM8(); initM11(); initM12(); initM13();
+  initM14(); initM15(); initM16(); initM17(); initM18();
+  initMatch(); newMaterialRound(); newHunt(); initMemory();
+  initCmap(); initM22(); initM23(); initLevels(); initTeacherFiles();
+
+  document.getElementById('mobile-menu-btn').addEventListener('click', () =>
+    document.getElementById('sidebar').classList.toggle('-translate-x-full'));
+  document.getElementById('ai-tutor-btn').addEventListener('click', () =>
+    document.getElementById('ai-tutor-panel').classList.toggle('hidden'));
+  document.getElementById('ai-tutor-close').addEventListener('click', () =>
+    document.getElementById('ai-tutor-panel').classList.add('hidden'));
+  document.getElementById('tutor-input').addEventListener('keydown', e => { if (e.key === 'Enter') tutorSend(); });
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' && currentModule < 26) switchModule(currentModule + 1);
+    if (e.key === 'ArrowLeft'  && currentModule > 1)  switchModule(currentModule - 1);
+  });
+
+  tutorSay('This is an offline helper with a fixed set of notes for Unit 1 — it does not connect to any AI service. Ask about a formula or a topic: stress, strain, Hooke\'s law, Poisson, shear, bearing, thermal stress, composite bars, or factor of safety.');
+  switchModule(1);
+  if(!window.__TEST__)setInterval(saveTime, 30000);
+  window.addEventListener('beforeunload', saveTime);
+});
+</script>
+</body>
+</html>
