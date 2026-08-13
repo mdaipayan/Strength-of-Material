@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strength of Materials — Unit 2: Shear Force and Bending Moment | D. Mandal</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Bitter', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace']
+      },
+      colors: {
+        brand: { 50:'#f0f9ff', 100:'#e0f2fe', 200:'#bae6fd', 500:'#0ea5e9', 600:'#0284c7', 700:'#0369a1', 900:'#0c4a6e' },
+        lab:   { 50:'#fffbeb', 500:'#f59e0b', 600:'#d97706', 900:'#78350f' }
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  body { transition: background-color .3s, color .3s; }
+  .module-content { display: none; }
+  .module-content.active { display: block; animation: fadeIn .35s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+
+  h1,h2,h3,h4 { font-family: 'Bitter', Georgia, serif; }
+  .num { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+  .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+  .slider-custom { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #e2e8f0; outline: none; }
+  .dark .slider-custom { background: #334155; }
+  .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #0ea5e9; cursor: pointer; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+  .slider-custom::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #0ea5e9; cursor: pointer; border: 2px solid #fff; }
+
+  :focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; border-radius: 4px; }
+
+  /* Card system */
+  .card { background:#fff; border-radius:.75rem; box-shadow:0 1px 3px rgba(0,0,0,.08); padding:1.5rem 1.75rem; border:1px solid #e5e7eb; }
+  .dark .card { background:#1f2937; border-color:#374151; }
+  .eyebrow { font-family:'Inter',sans-serif; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#0284c7; }
+  .dark .eyebrow { color:#38bdf8; }
+  .mtitle { font-size:1.9rem; line-height:1.15; font-weight:800; margin:.15rem 0 1.25rem; }
+
+  .formula-box { background:#f0f9ff; border:1px solid #bae6fd; border-radius:.6rem; padding:1rem; text-align:center; overflow-x:auto; }
+  .dark .formula-box { background:rgba(12,74,110,.35); border-color:#0369a1; }
+
+  table.data { width:100%; border-collapse:collapse; font-size:.9rem; }
+  table.data th, table.data td { border:1px solid #e5e7eb; padding:.5rem .7rem; text-align:left; }
+  .dark table.data th, .dark table.data td { border-color:#374151; }
+  table.data th { background:#f1f5f9; font-weight:600; }
+  .dark table.data th { background:#111827; }
+
+  .quiz-opt { display:block; width:100%; text-align:left; padding:.65rem .9rem; border:1px solid #d1d5db; border-radius:.5rem; margin-bottom:.5rem; transition:all .15s; background:#fff; }
+  .dark .quiz-opt { background:#111827; border-color:#374151; }
+  .quiz-opt:hover:not(:disabled) { border-color:#0ea5e9; background:#f0f9ff; }
+  .dark .quiz-opt:hover:not(:disabled) { background:rgba(12,74,110,.4); }
+  .quiz-opt.correct { background:#dcfce7 !important; border-color:#16a34a !important; color:#14532d; }
+  .quiz-opt.wrong { background:#fee2e2 !important; border-color:#dc2626 !important; color:#7f1d1d; }
+
+  .chip { display:inline-block; font-size:.7rem; font-weight:600; padding:.15rem .55rem; border-radius:999px; }
+
+  .flip { perspective: 800px; height: 96px; cursor: pointer; }
+  .flip-inner { position:relative; width:100%; height:100%; transition:transform .45s; transform-style:preserve-3d; }
+  .flip.open .flip-inner { transform: rotateY(180deg); }
+  .flip-face { position:absolute; inset:0; backface-visibility:hidden; display:flex; align-items:center; justify-content:center; border-radius:.6rem; padding:.4rem; text-align:center; font-size:.8rem; }
+  .flip-back { transform: rotateY(180deg); }
+
+  @media print {
+    aside, header, footer, #ai-tutor-wrap, .no-print { display:none !important; }
+    main { overflow:visible !important; padding:0 !important; }
+    .module-content { display:none !important; }
+    .module-content.active { display:block !important; }
+    body { background:#fff !important; color:#000 !important; height:auto !important; overflow:visible !important; }
+  }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 h-screen flex flex-col font-sans overflow-hidden">
+
+<!-- ============ TOP BAR ============ -->
+<header class="bg-white dark:bg-gray-800 shadow-sm z-30 flex-shrink-0">
+  <div class="px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2">
+        <i class="fas fa-bars text-lg"></i>
+      </button>
+      <div>
+        <p class="eyebrow leading-none">Interactive Learning Module</p>
+        <h1 class="text-lg font-bold leading-tight text-brand-900 dark:text-brand-200">Strength of Materials &middot; Unit 2</h1>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3 sm:gap-5">
+      <div class="hidden sm:flex flex-col items-end">
+        <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400">Modules visited <span id="progress-label" class="num">0/26</span></span>
+        <div class="w-36 h-1.5 bg-gray-200 rounded-full mt-1 dark:bg-gray-700">
+          <div id="progress-bar" class="h-1.5 bg-brand-500 rounded-full transition-all" style="width:0%"></div>
+        </div>
+      </div>
+      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="flex-1 flex overflow-hidden">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full">
+    <nav class="p-3 space-y-0.5" id="nav-menu" aria-label="Module list"></nav>
+  </aside>
+
+  <!-- ============ CONTENT ============ -->
+  <main class="flex-1 overflow-y-auto p-5 sm:p-8 lg:p-10 bg-gray-50 dark:bg-gray-900 scroll-smooth" id="main-content">
+
+<!-- ============ M1 COVER ============ -->
+<div id="module-1" class="module-content active max-w-4xl mx-auto">
+  <div class="card border-t-4 border-brand-500 text-center py-12 px-6">
+    <p class="eyebrow">Interactive Learning Module</p>
+    <h1 class="text-4xl sm:text-5xl font-extrabold mt-3 mb-4">Strength of Materials</h1>
+    <div class="w-16 h-[3px] bg-lab-500 mx-auto mb-5"></div>
+    <h2 class="text-2xl font-light">Unit 2 &mdash; Shear Force and Bending Moment</h2>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10 max-w-2xl mx-auto text-center">
+      <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg py-3"><p class="text-2xl font-bold num text-brand-600">26</p><p class="text-xs text-gray-500 dark:text-gray-400">Modules</p></div>
+      <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg py-3"><p class="text-2xl font-bold num text-brand-600">1</p><p class="text-xs text-gray-500 dark:text-gray-400">Full beam solver</p></div>
+      <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg py-3"><p class="text-2xl font-bold num text-brand-600">18</p><p class="text-xs text-gray-500 dark:text-gray-400">Solved problems</p></div>
+      <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg py-3"><p class="text-2xl font-bold num text-brand-600">7</p><p class="text-xs text-gray-500 dark:text-gray-400">Test levels</p></div>
+    </div>
+
+    <div class="mt-10 inline-block text-left bg-gray-50 dark:bg-gray-700/60 px-7 py-5 rounded-lg border border-gray-200 dark:border-gray-600">
+      <p class="eyebrow mb-1">Prepared by</p>
+      <p class="text-xl font-bold">D. Mandal</p>
+      <p class="text-sm text-gray-600 dark:text-gray-300">Assistant Professor</p>
+      <p class="text-sm text-gray-600 dark:text-gray-300">Department of Civil Engineering</p>
+    </div>
+
+    <div class="mt-9">
+      <button onclick="switchModule(2)" class="bg-brand-500 text-white px-8 py-3 rounded-full font-bold hover:bg-brand-700 transition shadow-lg">Start learning <i class="fas fa-arrow-right ml-2"></i></button>
+    </div>
+    <p class="text-xs text-gray-400 mt-6">Continues from Unit 1. Works offline after first load; progress is stored on this device only.</p>
+  </div>
+</div>
+
+<!-- ============ M2 OUTCOMES ============ -->
+<div id="module-2" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 2</p><h2 class="mtitle">Learning outcomes</h2>
+  <div class="card">
+    <p class="text-lg mb-5">After completing this unit you should be able to:</p>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO1</b> — Classify beams, supports and loads, and check static determinacy.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO2</b> — Compute support reactions using the equations of equilibrium.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO3</b> — Define shear force and bending moment and apply the sign convention consistently.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO4</b> — Draw SFD and BMD for cantilever, simply supported and overhanging beams.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO5</b> — Use the relations between load, shear force and bending moment.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO6</b> — Locate the position and magnitude of the maximum bending moment.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO7</b> — Locate points of contraflexure and explain their significance.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO8</b> — Handle applied couples and internal hinges on beams.</span></li>
+    </ul>
+    <div class="mt-6 pt-5 border-t dark:border-gray-700 grid sm:grid-cols-3 gap-4 text-sm">
+      <div><p class="eyebrow mb-1">Prerequisites</p><p class="text-gray-600 dark:text-gray-300">Unit 1, free body diagrams, resultant of a distributed load, moment of a force.</p></div>
+      <div><p class="eyebrow mb-1">Follows into</p><p class="text-gray-600 dark:text-gray-300">Unit 3 — bending stress σ = My/I; Unit 4 — deflection of beams.</p></div>
+      <div><p class="eyebrow mb-1">Suggested hours</p><p class="text-gray-600 dark:text-gray-300">10 lecture hours + 4 tutorial hours.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M3 WHY ============ -->
+<div id="module-3" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 3</p><h2 class="mtitle">Why shear force and bending moment?</h2>
+
+  <div class="card mb-5">
+    <p class="text-lg leading-relaxed">Unit 1 dealt with members pulled along their axis, where one number — \(P/A\) — described the whole section. A beam is loaded <b>across</b> its axis, so the internal force varies from point to point along the length. Before you can size a beam you must know two things at every section: how much it is being sliced (shear force) and how much it is being bent (bending moment).</p>
+    <div class="formula-box mt-5">
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">This unit finds the demand; Units 3 and 4 supply the capacity</p>
+      $$ \sigma_b = \frac{M y}{I} \qquad \tau = \frac{V A \bar y}{I b} $$
+    </div>
+    <p class="text-sm mt-4">Both design formulas begin with \(M\) and \(V\). Everything you do in this unit exists to feed those two symbols with the right number, at the right section.</p>
+  </div>
+
+  <div class="grid sm:grid-cols-3 gap-4 mb-5">
+    <div class="card !p-4"><i class="fas fa-ruler-horizontal text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Where to place steel</h4><p class="text-sm text-gray-600 dark:text-gray-300">In an RCC beam, tension steel goes where the BMD is positive at the bottom and where it is negative at the top. The BMD is literally the drawing the bar bender follows.</p></div>
+    <div class="card !p-4"><i class="fas fa-scissors text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Where to add stirrups</h4><p class="text-sm text-gray-600 dark:text-gray-300">Shear is largest near the supports, which is why stirrup spacing is closest there and opens out towards mid-span.</p></div>
+    <div class="card !p-4"><i class="fas fa-arrows-up-down text-2xl text-brand-500"></i><h4 class="font-bold mt-2">Where to curtail bars</h4><p class="text-sm text-gray-600 dark:text-gray-300">Points of contraflexure tell you where the moment changes sign, and therefore where a bar can be stopped or must be lapped.</p></div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">The one thing to carry through the unit</h3>
+    <p class="text-sm">A beam does not care what you call positive. It cares that you keep the same rule from the first line of the answer to the last. Fix the convention in Modules 7 and 8, write it at the top of your answer sheet, and never switch it mid-problem.</p>
+  </div>
+</div>
+
+<!-- ============ M4 BEAMS AND SUPPORTS ============ -->
+<div id="module-4" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 4</p><h2 class="mtitle">Beams, supports and determinacy</h2>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Support types and what they restrain</h3>
+    <table class="data">
+      <tr><th>Support</th><th>Restrains</th><th>Reactions</th><th>Symbol</th></tr>
+      <tr><td>Roller</td><td>Vertical movement only</td><td class="num">1 (V)</td><td>Circle or rollers under the beam</td></tr>
+      <tr><td>Hinge / pin</td><td>Vertical and horizontal movement</td><td class="num">2 (V, H)</td><td>Triangle</td></tr>
+      <tr><td>Fixed / built-in</td><td>Both movements and rotation</td><td class="num">3 (V, H, M)</td><td>Hatched wall</td></tr>
+      <tr><td>Internal hinge</td><td>Transfers V and H but not moment</td><td class="num">adds 1 equation</td><td>Small circle in the span</td></tr>
+    </table>
+    <p class="text-sm mt-3">On a beam carrying only vertical loads the horizontal reaction is zero, so a hinge behaves as a single vertical reaction in the arithmetic. Say so once in your answer rather than ignoring it silently.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Types of beam</h3>
+    <div class="grid sm:grid-cols-2 gap-4 text-sm">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Cantilever</b> — fixed at one end, free at the other. Bending moment is hogging throughout and is largest at the fixed end.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Simply supported</b> — a hinge at one end, a roller at the other. Moment is zero at both ends and sagging in between.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Overhanging</b> — the beam extends beyond one or both supports. Produces hogging over the support and sagging in the span, so the BMD crosses zero.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Fixed beam</b> — built in at both ends. Three unknowns per end, so it is statically indeterminate and outside this unit.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Continuous beam</b> — more than two supports. Also indeterminate; solved later by the three-moment equation or moment distribution.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Propped cantilever</b> — fixed at one end with a prop at the other. One redundant reaction.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">Static determinacy</h3>
+    <p class="text-sm mb-3">A planar beam gives three equations of equilibrium: \(\sum F_x = 0\), \(\sum F_y = 0\), \(\sum M = 0\). Each internal hinge adds one more equation, because the moment there is known to be zero.</p>
+    <div class="formula-box">$$ D_s = R - (3 + h) $$</div>
+    <p class="text-sm mt-3">\(R\) is the number of reaction components and \(h\) the number of internal hinges. If \(D_s = 0\) the beam is determinate and this unit's methods work. If \(D_s > 0\) it is indeterminate to that degree. If \(D_s &lt; 0\) it is a mechanism and will collapse — check this before you start calculating anything.</p>
+    <table class="data mt-4">
+      <tr><th>Beam</th><th>R</th><th>h</th><th>D<sub>s</sub></th><th>Status</th></tr>
+      <tr><td>Cantilever</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td>Determinate</td></tr>
+      <tr><td>Simply supported (hinge + roller)</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td>Determinate</td></tr>
+      <tr><td>Overhanging (hinge + roller)</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td>Determinate</td></tr>
+      <tr><td>Propped cantilever</td><td class="num">4</td><td class="num">0</td><td class="num">1</td><td>Indeterminate to degree 1</td></tr>
+      <tr><td>Fixed beam</td><td class="num">6</td><td class="num">0</td><td class="num">3</td><td>Indeterminate to degree 3</td></tr>
+      <tr><td>Two spans joined by an internal hinge, three supports</td><td class="num">4</td><td class="num">1</td><td class="num">0</td><td>Determinate</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ M5 LOADS ============ -->
+<div id="module-5" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 5</p><h2 class="mtitle">Types of load and their resultants</h2>
+
+  <div class="card mb-5">
+    <p class="mb-4">For finding reactions, every distributed load may be replaced by a single resultant equal to the <b>area of the load diagram</b>, acting through its <b>centroid</b>. Use the resultant for reactions only — never for computing shear or moment inside the loaded region, where the load must be treated as it actually is.</p>
+    <table class="data">
+      <tr><th>Load</th><th>Diagram</th><th>Resultant</th><th>Acts at</th></tr>
+      <tr><td>Point load W</td><td>Arrow</td><td class="num">W</td><td>At its own position</td></tr>
+      <tr><td>UDL, intensity w over length a</td><td>Rectangle</td><td class="num">w·a</td><td>Mid-length of a</td></tr>
+      <tr><td>UVL, zero to w over length a</td><td>Triangle</td><td class="num">½ w·a</td><td>a/3 from the w end</td></tr>
+      <tr><td>Trapezoidal, w₁ to w₂ over a</td><td>Trapezium</td><td class="num">½(w₁+w₂)a</td><td>Split into a rectangle plus a triangle</td></tr>
+      <tr><td>Applied couple M</td><td>Curved arrow</td><td class="num">no vertical force</td><td>Affects ΣM only</td></tr>
+    </table>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Resultant calculator</h3>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div><label class="text-sm block mb-1" for="rc-type">Load type</label>
+        <select id="rc-type" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+          <option value="udl">UDL</option><option value="uvl">UVL, zero at left</option><option value="trap">Trapezoidal</option>
+        </select></div>
+      <div><label class="text-sm block mb-1" id="rc-l1" for="rc-w1">Intensity w (kN/m)</label><input id="rc-w1" type="number" value="10" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div id="rc-wrap2" class="hidden"><label class="text-sm block mb-1" for="rc-w2">w₂ at right (kN/m)</label><input id="rc-w2" type="number" value="20" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-sm block mb-1" for="rc-a">Length a (m)</label><input id="rc-a" type="number" value="4" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+    </div>
+    <div id="rc-out" class="mt-4"></div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">A worked equivalence</h3>
+    <p class="text-sm">A UVL rising from 0 at A to 18 kN/m at B over 6 m has a resultant of ½ × 18 × 6 = 54 kN acting 4 m from A, which is 6/3 = 2 m from B. Students commonly place it at 3 m — the mid-point — which is the rule for a UDL, not a triangle. The centroid of a triangle sits one third of the way from its wide end.</p>
+  </div>
+</div>
+
+<!-- ============ M6 REACTIONS ============ -->
+<div id="module-6" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 6</p><h2 class="mtitle">Support reactions</h2>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">The procedure, every time</h3>
+    <ol class="list-decimal pl-6 space-y-2 text-sm">
+      <li>Draw the free body diagram with all loads and the unknown reactions marked upward.</li>
+      <li>Replace each distributed load by its resultant at its centroid.</li>
+      <li>Take moments about one support so that the other reaction drops out: \(\sum M_A = 0\) gives \(R_B\) in one line.</li>
+      <li>Use \(\sum F_y = 0\) to get the remaining reaction.</li>
+      <li><b>Check</b> with \(\sum M_B = 0\). If it does not close, the error is here and not further down — find it now.</li>
+    </ol>
+    <div class="formula-box mt-4">$$ R_B = \frac{\sum W_i\,x_i \;+\; \sum M_j}{L_{AB}} \qquad R_A = \sum W_i - R_B $$</div>
+    <p class="text-sm mt-3">Distances \(x_i\) are measured from A, and \(M_j\) are applied couples taken as positive when clockwise.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Worked example</h3>
+    <p class="text-sm mb-3">A simply supported beam AB spans 6 m. It carries a UDL of 10 kN/m over the whole span and a point load of 40 kN at 2 m from A.</p>
+    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
+      <p>UDL resultant = 10 × 6 = 60 kN at 3 m from A</p>
+      <p>ΣM<sub>A</sub> = 0: R<sub>B</sub> × 6 = 60 × 3 + 40 × 2 = 180 + 80 = 260</p>
+      <p>R<sub>B</sub> = 260 / 6 = <b>43.33 kN</b></p>
+      <p>ΣF<sub>y</sub> = 0: R<sub>A</sub> = (60 + 40) − 43.33 = <b>56.67 kN</b></p>
+      <p>Check ΣM<sub>B</sub>: 56.67 × 6 − 60 × 3 − 40 × 4 = 340 − 180 − 160 = 0 ✓</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">Three traps in reaction calculations</h3>
+    <ul class="list-disc pl-6 space-y-2 text-sm">
+      <li><b>Overhang loads.</b> A load on an overhang still enters ΣF and ΣM. Its moment about the near support is on the opposite side, so it can make the far reaction negative — a genuine downward reaction, and the roller must be able to hold the beam down.</li>
+      <li><b>Applied couples.</b> A couple has no vertical component, so it appears in ΣM but not in ΣF. If you add it to ΣF the reactions will not sum correctly.</li>
+      <li><b>Partial UDL.</b> The centroid is at the middle of the <i>loaded length</i>, not the middle of the span.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ M7 SHEAR FORCE ============ -->
+<div id="module-7" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 7</p><h2 class="mtitle">Shear force and its sign convention</h2>
+
+  <div class="card mb-5">
+    <p class="mb-4"><b>Shear force at a section</b> is the algebraic sum of all vertical forces on either side of that section. Cut the beam, discard one side, and the shear force is whatever vertical force the cut face must transmit to keep the remaining piece in equilibrium.</p>
+    <div class="formula-box">$$ V_x = \sum F_{y,\text{left of }x} $$</div>
+    <p class="text-sm mt-3">Working from the left or from the right gives the same magnitude with opposite algebraic sign from the summation, which is exactly why the convention below is written in terms of one side.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Sign convention used throughout this unit</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="p-4 rounded-lg bg-green-50 dark:bg-green-900/25 border border-green-200 dark:border-green-800">
+        <p class="font-bold text-green-800 dark:text-green-300"><i class="fas fa-arrow-up"></i> Positive shear</p>
+        <p class="text-sm mt-1 text-green-900 dark:text-green-200">The resultant of all forces <b>to the left</b> of the section acts <b>upward</b>. Equivalently, the left portion tends to slide up relative to the right portion.</p>
+      </div>
+      <div class="p-4 rounded-lg bg-red-50 dark:bg-red-900/25 border border-red-200 dark:border-red-800">
+        <p class="font-bold text-red-800 dark:text-red-300"><i class="fas fa-arrow-down"></i> Negative shear</p>
+        <p class="text-sm mt-1 text-red-900 dark:text-red-200">The resultant of forces to the left acts <b>downward</b>. The left portion tends to slide down relative to the right.</p>
+      </div>
+    </div>
+    <p class="text-sm mt-4">This is the <b>left-up-positive</b> rule, the convention used in IS-code practice and in the standard Indian textbooks. Working from the right, the rule inverts: a downward resultant on the right gives positive shear. Both describe the same physical action.</p>
+    <div class="mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500 text-sm">
+      A sign convention is bookkeeping, not physics. Any consistent rule produces the same beam. Errors come from changing the rule halfway through — or from adopting a rule that reads well in one situation and contradicts the moment convention in another. State your rule once, at the top, and hold it.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">Behaviour of the shear force diagram</h3>
+    <table class="data">
+      <tr><th>Along the beam</th><th>SFD does this</th><th>Why</th></tr>
+      <tr><td>No load</td><td>Horizontal line</td><td>dV/dx = −w = 0</td></tr>
+      <tr><td>Under a UDL</td><td>Straight sloping line</td><td>dV/dx = −w, a constant</td></tr>
+      <tr><td>Under a UVL</td><td>Parabola</td><td>w varies linearly, so V is quadratic</td></tr>
+      <tr><td>At a point load W</td><td>Sudden vertical jump of W</td><td>A finite force over zero length</td></tr>
+      <tr><td>At a support</td><td>Sudden jump equal to the reaction</td><td>A reaction is a point load</td></tr>
+      <tr><td>At an applied couple</td><td>No change at all</td><td>A couple has no vertical force</td></tr>
+    </table>
+    <p class="text-sm mt-3">Two consequences worth memorising: the SFD must close back to zero at the far end of the beam, and the total of all jumps equals the total of all vertical forces. If your SFD does not return to zero, a reaction or a load has been missed.</p>
+  </div>
+</div>
+
+<!-- ============ M8 BENDING MOMENT ============ -->
+<div id="module-8" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 8</p><h2 class="mtitle">Bending moment and its sign convention</h2>
+
+  <div class="card mb-5">
+    <p class="mb-4"><b>Bending moment at a section</b> is the algebraic sum of the moments, about that section, of all forces on one side of it.</p>
+    <div class="formula-box">$$ M_x = \sum \big( F_{\text{left}} \times \text{distance to the section} \big) $$</div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Sagging and hogging</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="p-4 rounded-lg bg-green-50 dark:bg-green-900/25 border border-green-200 dark:border-green-800">
+        <p class="font-bold text-green-800 dark:text-green-300">Sagging — positive</p>
+        <p class="text-sm mt-1 text-green-900 dark:text-green-200">The beam bends into a smile. <b>Tension at the bottom fibre, compression at the top.</b> The moment of the left-hand forces about the section is clockwise.</p>
+        <svg viewBox="0 0 180 50" class="w-full max-w-[180px] mt-3"><path d="M10,18 Q90,44 170,18" fill="none" stroke="#16a34a" stroke-width="3"/><text x="90" y="12" text-anchor="middle" font-size="9" fill="#64748b">compression</text><text x="90" y="48" text-anchor="middle" font-size="9" fill="#64748b">tension</text></svg>
+      </div>
+      <div class="p-4 rounded-lg bg-red-50 dark:bg-red-900/25 border border-red-200 dark:border-red-800">
+        <p class="font-bold text-red-800 dark:text-red-300">Hogging — negative</p>
+        <p class="text-sm mt-1 text-red-900 dark:text-red-200">The beam bends into a frown. <b>Tension at the top fibre, compression at the bottom.</b> Standard over the supports of a continuous beam and throughout a cantilever.</p>
+        <svg viewBox="0 0 180 50" class="w-full max-w-[180px] mt-3"><path d="M10,38 Q90,12 170,38" fill="none" stroke="#dc2626" stroke-width="3"/><text x="90" y="10" text-anchor="middle" font-size="9" fill="#64748b">tension</text><text x="90" y="49" text-anchor="middle" font-size="9" fill="#64748b">compression</text></svg>
+      </div>
+    </div>
+    <p class="text-sm mt-4"><b>Why this matters more than the shear convention:</b> the sign of the moment tells the detailer which face of the beam goes into tension, and steel must be placed on the tension face. Get the sign wrong and the reinforcement ends up on the wrong side of the beam.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">Behaviour of the bending moment diagram</h3>
+    <table class="data">
+      <tr><th>Along the beam</th><th>BMD does this</th><th>Why</th></tr>
+      <tr><td>No load</td><td>Straight sloping line</td><td>dM/dx = V, a constant</td></tr>
+      <tr><td>Under a UDL</td><td>Parabola, second degree</td><td>V varies linearly, so M is quadratic</td></tr>
+      <tr><td>Under a UVL</td><td>Cubic curve</td><td>One further integration</td></tr>
+      <tr><td>At a point load</td><td>Sharp kink, no jump</td><td>The slope changes abruptly because V jumps</td></tr>
+      <tr><td>At an applied couple M₀</td><td>Sudden jump of M₀</td><td>A concentrated moment must appear somewhere</td></tr>
+      <tr><td>At a free end or a simple end support</td><td>Zero</td><td>Nothing beyond it to produce a moment</td></tr>
+    </table>
+    <div class="mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500 text-sm">
+      <b>The degree rule.</b> Each step from load to shear to moment raises the degree of the curve by one. Point load → SFD constant → BMD linear. UDL → SFD linear → BMD parabolic. UVL → SFD parabolic → BMD cubic. This single rule catches most sketching errors before you draw anything.
+    </div>
+  </div>
+</div>
+
+<!-- ============ M9 RELATIONS ============ -->
+<div id="module-9" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 9</p><h2 class="mtitle">Relations between load, shear force and bending moment</h2>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Derivation from an element</h3>
+    <p class="text-sm mb-3">Take an element of length \(dx\) carrying a UDL of intensity \(w\). Let the shear and moment on the left face be \(V\) and \(M\), and on the right face \(V + dV\) and \(M + dM\).</p>
+    <ol class="list-decimal pl-6 space-y-1 text-sm mb-4">
+      <li>Vertical equilibrium: \(V - w\,dx - (V + dV) = 0\)</li>
+      <li>Moment equilibrium about the right face, dropping the second-order term \(w\,dx^2/2\): \(M + V\,dx - (M + dM) = 0\)</li>
+    </ol>
+    <div class="grid md:grid-cols-3 gap-3">
+      <div class="formula-box">$$ \frac{dV}{dx} = -w $$</div>
+      <div class="formula-box">$$ \frac{dM}{dx} = V $$</div>
+      <div class="formula-box">$$ \frac{d^2M}{dx^2} = -w $$</div>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">What each relation buys you</h3>
+    <div class="space-y-3 text-sm">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Slope of the SFD equals minus the load intensity.</b> A heavier UDL gives a steeper SFD. Where there is no load the SFD is flat.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Slope of the BMD equals the shear force.</b> So the bending moment is maximum where the shear force is zero or changes sign. This is the single most useful result in the unit.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Change in shear equals the area of the load diagram.</b> \(V_2 - V_1 = -\int w\,dx\).</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Change in moment equals the area of the SFD.</b> \(M_2 - M_1 = \int V\,dx\). This lets you build the BMD by adding areas off the SFD instead of taking moments at every section — much faster in an exam.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">Area method — worked</h3>
+    <p class="text-sm mb-3">Simply supported beam, 8 m span, UDL 12 kN/m. Reactions are 48 kN each.</p>
+    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
+      <p>V at A (just right) = +48 kN, falling at 12 kN per metre</p>
+      <p>V = 0 at x = 48/12 = 4 m — the mid-point, so the maximum moment is there</p>
+      <p>Area of the SFD from A to 4 m = ½ × 4 × 48 = 96</p>
+      <p>M at 4 m = M at A + area = 0 + 96 = <b>96 kN·m</b></p>
+      <p>Cross-check with the standard result wL²/8 = 12 × 64 / 8 = 96 kN·m ✓</p>
+    </div>
+    <p class="text-sm mt-3">Notice that no section-by-section moment equation was written. For any beam whose SFD you can draw, the BMD follows by accumulating areas from a known zero.</p>
+  </div>
+</div>
+
+<!-- ============ M10 CANTILEVER ============ -->
+<div id="module-10" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 10</p><h2 class="mtitle">Cantilever beams</h2>
+
+  <div class="card mb-5">
+    <p class="text-sm mb-3">For a cantilever, start from the <b>free end</b>. There are no reactions to find first, so shear and moment follow directly from the loads you have passed. The moment is hogging everywhere and largest at the fixed end.</p>
+    <div class="flex flex-wrap gap-2" id="cant-tabs"></div>
+  </div>
+
+  <div class="card mb-5">
+    <div id="cant-desc" class="text-sm mb-4"></div>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="h-52"><canvas id="cant-sfd"></canvas></div>
+      <div class="h-52"><canvas id="cant-bmd"></canvas></div>
+    </div>
+    <div id="cant-work" class="mt-4 p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1"></div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Standard cantilever results, span L</h3>
+    <table class="data">
+      <tr><th>Loading</th><th>Max shear</th><th>Max moment (at fixed end)</th><th>SFD / BMD shape</th></tr>
+      <tr><td>Point load W at free end</td><td class="num">W</td><td class="num">−WL</td><td>Rectangle / triangle</td></tr>
+      <tr><td>Point load W at distance a from fixed end</td><td class="num">W</td><td class="num">−Wa</td><td>Rectangle over a / triangle over a</td></tr>
+      <tr><td>UDL w over the whole span</td><td class="num">wL</td><td class="num">−wL²/2</td><td>Triangle / parabola</td></tr>
+      <tr><td>UVL, zero at free end to w at fixed end</td><td class="num">wL/2</td><td class="num">−wL²/6</td><td>Parabola / cubic</td></tr>
+      <tr><td>Couple M₀ at the free end</td><td class="num">0</td><td class="num">−M₀ throughout</td><td>Zero / rectangle</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ M11 SIMPLY SUPPORTED ============ -->
+<div id="module-11" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 11</p><h2 class="mtitle">Simply supported beams</h2>
+
+  <div class="card mb-5">
+    <p class="text-sm mb-3">Reactions come first. The bending moment is zero at both ends and sagging throughout, so the BMD sits entirely on the positive side. The maximum occurs where the SFD crosses zero.</p>
+    <div class="flex flex-wrap gap-2" id="ss-tabs"></div>
+  </div>
+
+  <div class="card mb-5">
+    <div id="ss-desc" class="text-sm mb-4"></div>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="h-52"><canvas id="ss-sfd"></canvas></div>
+      <div class="h-52"><canvas id="ss-bmd"></canvas></div>
+    </div>
+    <div id="ss-work" class="mt-4 p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1"></div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Standard simply supported results, span L</h3>
+    <table class="data">
+      <tr><th>Loading</th><th>Reactions</th><th>Max shear</th><th>Max moment</th><th>At</th></tr>
+      <tr><td>Point load W at mid-span</td><td class="num">W/2 each</td><td class="num">W/2</td><td class="num">WL/4</td><td>Mid-span</td></tr>
+      <tr><td>Point load W at a from A, b from B</td><td class="num">Wb/L, Wa/L</td><td class="num">larger of the two</td><td class="num">Wab/L</td><td>Under the load</td></tr>
+      <tr><td>UDL w over the whole span</td><td class="num">wL/2 each</td><td class="num">wL/2</td><td class="num">wL²/8</td><td>Mid-span</td></tr>
+      <tr><td>UVL, zero at A to w at B</td><td class="num">wL/6, wL/3</td><td class="num">wL/3</td><td class="num">wL²/(9√3)</td><td>x = L/√3 from A</td></tr>
+      <tr><td>Two equal loads W at L/3 points</td><td class="num">W each</td><td class="num">W</td><td class="num">WL/3</td><td>Constant between the loads</td></tr>
+    </table>
+    <p class="text-sm mt-3">The last row is the pure-bending case used in the laboratory flexure test: between the two loads the shear is zero and the moment is constant, so the section is in pure bending.</p>
+  </div>
+</div>
+
+<!-- ============ M12 OVERHANGING ============ -->
+<div id="module-12" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 12</p><h2 class="mtitle">Overhanging beams and contraflexure</h2>
+
+  <div class="card mb-5">
+    <p class="text-sm">An overhang produces hogging over the support and sagging within the span. Somewhere between them the bending moment passes through zero: that section is a <b>point of contraflexure</b>, also called a point of inflexion.</p>
+    <div class="mt-4 grid sm:grid-cols-3 gap-3 text-sm">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>What it is</b><br>A section where M = 0 and the curvature changes sign.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>How to find it</b><br>Write M as a function of x for the relevant region and set it to zero. Only roots inside that region count.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Why it matters</b><br>The tension face swaps from bottom to top there, so it fixes where main bars are curtailed or lapped.</div>
+    </div>
+    <p class="text-sm mt-4"><b>Do not confuse it with the point of zero shear.</b> Zero shear locates the maximum moment; zero moment locates contraflexure. They are different sections and both may be asked in the same question.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Worked example — the classic</h3>
+    <p class="text-sm mb-3">A beam ABC is 6 m long, supported at A (x = 0) and B (x = 4 m), with a 2 m overhang to C. It carries a UDL of 10 kN/m over the entire 6 m.</p>
+    <div class="grid md:grid-cols-2 gap-5 mb-4">
+      <div class="h-52"><canvas id="oh-sfd"></canvas></div>
+      <div class="h-52"><canvas id="oh-bmd"></canvas></div>
+    </div>
+    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
+      <p>Total load = 10 × 6 = 60 kN acting at 3 m from A</p>
+      <p>ΣM<sub>A</sub> = 0: R<sub>B</sub> × 4 = 60 × 3 = 180 → R<sub>B</sub> = <b>45 kN</b></p>
+      <p>ΣF<sub>y</sub> = 0: R<sub>A</sub> = 60 − 45 = <b>15 kN</b></p>
+      <p>V(x) = 15 − 10x for 0 &lt; x &lt; 4. Zero shear at x = 15/10 = <b>1.5 m</b></p>
+      <p>M(1.5) = 15 × 1.5 − 10 × 1.5 × 0.75 = 22.5 − 11.25 = <b>+11.25 kN·m</b> (maximum sagging)</p>
+      <p>M at B = 15 × 4 − 10 × 4 × 2 = 60 − 80 = <b>−20 kN·m</b> (maximum hogging)</p>
+      <p>Contraflexure: 15x − 5x² = 0 → x(15 − 5x) = 0 → x = <b>3 m</b> from A</p>
+      <p>Check M at C: 15 × 6 + 45 × 2 − 10 × 6 × 3 = 90 + 90 − 180 = 0 ✓</p>
+    </div>
+    <p class="text-sm mt-3">Note that the numerically largest moment, 20 kN·m, is the hogging one over the support — not the sagging one in the span. On overhanging beams the support section usually governs the design, and students who only look at mid-span miss it.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Rule of thumb</h3>
+    <p class="text-sm">Hogging over a support balances sagging in the span. Lengthen the overhang and the hogging grows while the span sagging shrinks. For a beam of total length L with two equal overhangs under a UDL, the two are equal when each overhang is a = 0.207 L: hogging wa²/2 equals sagging w(L−2a)²/8 − wa²/2. That is the most economical proportion, and it is why canopy slabs and balanced-cantilever girders are often set out this way.</p>
+  </div>
+</div>
+
+<!-- ============ M13 COUPLES ============ -->
+<div id="module-13" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 13</p><h2 class="mtitle">Beams carrying applied couples</h2>
+
+  <div class="card mb-5">
+    <p class="text-sm mb-3">A couple applied at a section — from an eccentric bracket, a cantilevered sign, or a column moment — has no vertical component. It changes the moment diagram without touching the shear diagram.</p>
+    <div class="grid sm:grid-cols-2 gap-4 text-sm">
+      <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50"><b>Effect on the SFD</b><br>None. The shear force passes straight through the section unchanged, because ΣF<sub>y</sub> is unaffected.</div>
+      <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50"><b>Effect on the BMD</b><br>A sudden vertical jump equal to the magnitude of the couple, in the direction the couple acts.</div>
+    </div>
+    <p class="text-sm mt-4">The couple does enter the reaction calculation: it appears in ΣM but not in ΣF. On a simply supported beam carrying a couple alone, the two reactions form an equal and opposite pair — one up, one down.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Worked example</h3>
+    <p class="text-sm mb-3">A simply supported beam AB of 6 m carries a clockwise couple of 30 kN·m at 3 m from A. There are no other loads.</p>
+    <div class="grid md:grid-cols-2 gap-5 mb-4">
+      <div class="h-52"><canvas id="cp-sfd"></canvas></div>
+      <div class="h-52"><canvas id="cp-bmd"></canvas></div>
+    </div>
+    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
+      <p>ΣF<sub>y</sub> = 0: R<sub>A</sub> + R<sub>B</sub> = 0, so the reactions are equal and opposite</p>
+      <p>ΣM<sub>A</sub> = 0: 30 − R<sub>B</sub> × 6 = 0 → R<sub>B</sub> = <b>+5 kN (up)</b></p>
+      <p>R<sub>A</sub> = <b>−5 kN</b>, that is 5 kN acting downward — the support must hold the beam down</p>
+      <p>Shear is constant at −5 kN over the whole span. The SFD is a single horizontal line.</p>
+      <p>M just left of 3 m = −5 × 3 = −15 kN·m</p>
+      <p>M just right of 3 m = −15 + 30 = <b>+15 kN·m</b> — a jump of exactly 30</p>
+      <p>M at B = −5 × 6 + 30 = 0 ✓</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Where students lose marks</h3>
+    <ul class="list-disc pl-6 space-y-1.5 text-sm">
+      <li>Adding the couple to ΣF<sub>y</sub>. It has no vertical force, so the reactions come out wrong from the first line.</li>
+      <li>Drawing a jump in the SFD at the couple. The SFD is untouched.</li>
+      <li>Jumping the BMD in the wrong direction. Evaluate M just left and just right of the section rather than guessing.</li>
+      <li>Forgetting that a downward reaction is a legitimate answer. If the arithmetic gives a negative reaction, redraw the arrow and carry on.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ M14 INTERNAL HINGES ============ -->
+<div id="module-14" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 14</p><h2 class="mtitle">Beams with an internal hinge</h2>
+
+  <div class="card mb-5">
+    <p class="text-sm mb-3">An internal hinge in the span transmits shear but <b>cannot transmit moment</b>. That gives one extra equation, \(M = 0\) at the hinge, which is what makes an otherwise indeterminate beam solvable by statics alone.</p>
+    <div class="formula-box">$$ M_{\text{hinge}} = 0 $$</div>
+    <p class="text-sm mt-3">Structures built this way are called <b>compound</b> or <b>Gerber</b> beams. Bridge girders often use them so that the deck can be built in determinate segments and still accommodate settlement.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Solution method</h3>
+    <ol class="list-decimal pl-6 space-y-2 text-sm">
+      <li>Identify which part of the beam is <b>supported</b> and which part is <b>suspended</b> — the suspended part cannot stand without the other.</li>
+      <li>Cut at the hinge and analyse the suspended part first. It is a simple beam or a cantilever in its own right.</li>
+      <li>The vertical force at the hinge, found from that analysis, is applied as a <b>point load</b> on the supported part, acting downward.</li>
+      <li>Analyse the supported part with that extra load and find its reactions.</li>
+      <li>Draw one continuous SFD and BMD across the whole beam. The BMD must pass through zero at the hinge — that is the built-in check.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 class="text-xl font-bold mb-3">Worked example</h3>
+    <p class="text-sm mb-3">Beam ABCD: A is a fixed support at x = 0. There is an internal hinge at C, x = 6 m. D is a roller at x = 9 m. A UDL of 8 kN/m runs over the whole 9 m.</p>
+    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
+      <p><b>Suspended part CD</b>, 3 m long with 8 kN/m, hinged at C and on a roller at D:</p>
+      <p>Total load = 8 × 3 = 24 kN. It behaves as a simply supported span of 3 m.</p>
+      <p>R<sub>D</sub> = 24/2 = <b>12 kN</b>, and the vertical force at the hinge V<sub>C</sub> = <b>12 kN</b></p>
+      <p><b>Supported part AC</b>, a 6 m cantilever fixed at A, with 8 kN/m plus 12 kN transferred down at C:</p>
+      <p>R<sub>A</sub> = 8 × 6 + 12 = 48 + 12 = <b>60 kN</b></p>
+      <p>M<sub>A</sub> = −(8 × 6 × 3) − (12 × 6) = −144 − 72 = <b>−216 kN·m</b> (hogging)</p>
+      <p>Check at C: M = −216 + 60 × 6 − 8 × 6 × 3 = −216 + 360 − 144 = 0 ✓ — the hinge condition is satisfied</p>
+      <p>Maximum sagging in CD = 8 × 3² / 8 = <b>9 kN·m</b> at 1.5 m from C</p>
+    </div>
+    <p class="text-sm mt-3">The check at the hinge is not optional. If M does not come out as zero there, the transferred hinge force is wrong and everything downstream is wrong with it.</p>
+  </div>
+</div>
+
+<!-- ============ M15 MAX BM ============ -->
+<div id="module-15" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 15</p><h2 class="mtitle">Locating the maximum bending moment</h2>
+
+  <div class="card mb-5">
+    <p class="mb-4">Since \(dM/dx = V\), the bending moment is stationary where the shear force is zero. Design is governed by the largest magnitude of moment anywhere on the beam, whether it is sagging or hogging.</p>
+    <div class="formula-box">$$ M \text{ is maximum where } V = 0 \text{ or where } V \text{ changes sign} $$</div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Where to look, in order</h3>
+    <ol class="list-decimal pl-6 space-y-2 text-sm">
+      <li><b>Where the SFD crosses zero within a distributed load.</b> Solve V(x) = 0 for x, then evaluate M(x). This is the usual case.</li>
+      <li><b>At every point load.</b> Under a point load the SFD jumps, so it may cross zero without ever equalling zero. The maximum then sits exactly at the load, and you find it by evaluating M there rather than by solving an equation.</li>
+      <li><b>At every support of an overhanging or fixed beam.</b> Hogging peaks there and frequently exceeds the span sagging.</li>
+      <li><b>At every applied couple.</b> The BMD jumps, so check the value on both sides.</li>
+    </ol>
+    <div class="mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500 text-sm">
+      <b>The trap.</b> If solving V(x) = 0 gives a value of x that falls outside the region where that expression is valid, the root is spurious. Discard it and check the section where the shear actually changes sign — almost always a point load. This is the single most common error in university answer scripts on this topic.
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Worked example — the trap in action</h3>
+    <p class="text-sm mb-3">Simply supported beam of 6 m with a UDL of 10 kN/m over the whole span and a point load of 40 kN at 2 m from A. From Module 6, R<sub>A</sub> = 56.67 kN and R<sub>B</sub> = 43.33 kN.</p>
+    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
+      <p>Region 0 &lt; x &lt; 2: V = 56.67 − 10x. Setting V = 0 gives x = 5.67 m, which is <b>outside</b> this region — reject it.</p>
+      <p>Region 2 &lt; x &lt; 6: V = 56.67 − 40 − 10x = 16.67 − 10x. Setting V = 0 gives x = 1.67 m, again <b>outside</b> the region — reject it.</p>
+      <p>Neither region contains a zero, so the shear must change sign <b>at the point load</b>.</p>
+      <p>V just left of 2 m = 56.67 − 20 = +36.67 kN</p>
+      <p>V just right of 2 m = 36.67 − 40 = −3.33 kN → sign change confirmed at x = 2 m</p>
+      <p>M<sub>max</sub> = 56.67 × 2 − 10 × 2 × 1 = 113.33 − 20 = <b>93.33 kN·m</b> at 2 m from A</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="text-lg font-bold mb-2">Standard maximum moments worth memorising</h3>
+    <table class="data">
+      <tr><th>Beam and loading</th><th>M<sub>max</sub></th><th>Position</th></tr>
+      <tr><td>SS, point load W at centre</td><td class="num">WL/4</td><td>Centre</td></tr>
+      <tr><td>SS, UDL w</td><td class="num">wL²/8</td><td>Centre</td></tr>
+      <tr><td>SS, point load W at a and b</td><td class="num">Wab/L</td><td>Under the load</td></tr>
+      <tr><td>Cantilever, point load W at free end</td><td class="num">WL</td><td>Fixed end</td></tr>
+      <tr><td>Cantilever, UDL w</td><td class="num">wL²/2</td><td>Fixed end</td></tr>
+      <tr><td>Cantilever, UVL peaking at the fixed end</td><td class="num">wL²/6</td><td>Fixed end</td></tr>
+    </table>
+    <p class="text-sm mt-3">Note the ratio: a cantilever of the same span and the same UDL carries four times the moment of a simply supported beam. That is why cantilevers are kept short.</p>
+  </div>
+</div>
+
+<!-- ============ M16 NUMERICALS ============ -->
+<div id="module-16" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 16</p><h2 class="mtitle">Solved numerical problems</h2>
+  <div class="flex flex-wrap gap-2 mb-5" id="n16-filters"></div>
+  <div id="n16-list" class="space-y-4"></div>
+</div>
+
+<!-- ============ M17 BEAM SOLVER ============ -->
+<div id="module-17" class="module-content max-w-6xl mx-auto">
+  <p class="eyebrow">Module 17</p><h2 class="mtitle">Virtual laboratory — beam solver</h2>
+
+  <div class="grid lg:grid-cols-3 gap-5">
+    <div class="card lg:col-span-1">
+      <h3 class="font-bold text-lg mb-3 pb-2 border-b dark:border-gray-700">Beam setup</h3>
+      <label class="text-sm block mb-1" for="bs-type">Beam type</label>
+      <select id="bs-type" class="w-full p-2 border rounded mb-3 dark:bg-gray-700 dark:border-gray-600">
+        <option value="ss">Simply supported</option>
+        <option value="cant">Cantilever, fixed at left</option>
+        <option value="over">Overhanging</option>
+      </select>
+
+      <label class="text-sm block mb-1" for="bs-L">Total length L (m)</label>
+      <input id="bs-L" type="number" value="6" step="0.5" min="1" class="w-full p-2 border rounded num mb-3 dark:bg-gray-700 dark:border-gray-600">
+
+      <div id="bs-supports" class="grid grid-cols-2 gap-2 mb-3">
+        <div><label class="text-xs block mb-1" for="bs-a">Support A at (m)</label><input id="bs-a" type="number" value="0" step="0.5" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+        <div><label class="text-xs block mb-1" for="bs-b">Support B at (m)</label><input id="bs-b" type="number" value="6" step="0.5" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      </div>
+
+      <h4 class="font-bold text-sm mt-4 mb-2 pb-1 border-b dark:border-gray-700">Loads</h4>
+      <div id="bs-loads" class="space-y-2 mb-3"></div>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="addLoad('point')" class="text-xs px-2.5 py-1.5 rounded border dark:border-gray-600 hover:border-brand-500">+ Point load</button>
+        <button onclick="addLoad('udl')" class="text-xs px-2.5 py-1.5 rounded border dark:border-gray-600 hover:border-brand-500">+ UDL</button>
+        <button onclick="addLoad('moment')" class="text-xs px-2.5 py-1.5 rounded border dark:border-gray-600 hover:border-brand-500">+ Couple</button>
+      </div>
+      <p class="text-xs text-gray-500 mt-3">Downward loads and clockwise couples are entered as positive. Shear uses left-up-positive; moment is positive when sagging.</p>
+
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button onclick="loadPreset('ssudl')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">SS + UDL</button>
+        <button onclick="loadPreset('overhang')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">Overhang</button>
+        <button onclick="loadPreset('cant')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">Cantilever</button>
+        <button onclick="loadPreset('mixed')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">UDL + point</button>
+      </div>
+    </div>
+
+    <div class="card lg:col-span-2">
+      <h3 class="font-bold text-lg mb-3 pb-2 border-b dark:border-gray-700">Results</h3>
+      <div id="bs-summary" class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center mb-3"></div>
+      <div id="bs-msg" class="text-sm mb-3"></div>
+      <div id="bs-beam" class="mb-2"></div>
+      <div class="h-48 mb-1"><canvas id="bs-sfd"></canvas></div>
+      <div class="h-48"><canvas id="bs-bmd"></canvas></div>
+      <div id="bs-detail" class="mt-4 p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M18 SIMULATIONS ============ -->
+<div id="module-18" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 18</p><h2 class="mtitle">Interactive simulations</h2>
+
+  <div class="card mb-5">
+    <h3 class="font-bold text-lg mb-1">Move the load, watch the diagrams</h3>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">A simply supported beam with one point load and a UDL. Watch how the maximum moment tracks the point of zero shear.</p>
+    <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+      <div>
+        <label class="flex justify-between text-sm mb-1"><span>Span L</span><span class="num font-bold text-brand-600" id="s18-L-l">6.0 m</span></label>
+        <input id="s18-L" type="range" min="20" max="120" value="60" class="slider-custom mb-3">
+        <label class="flex justify-between text-sm mb-1"><span>Point load W</span><span class="num font-bold text-brand-600" id="s18-W-l">40 kN</span></label>
+        <input id="s18-W" type="range" min="0" max="120" value="40" class="slider-custom mb-3">
+        <label class="flex justify-between text-sm mb-1"><span>Position of W from A</span><span class="num font-bold text-brand-600" id="s18-a-l">2.0 m</span></label>
+        <input id="s18-a" type="range" min="0" max="100" value="33" class="slider-custom mb-3">
+        <label class="flex justify-between text-sm mb-1"><span>UDL intensity w</span><span class="num font-bold text-brand-600" id="s18-w-l">10 kN/m</span></label>
+        <input id="s18-w" type="range" min="0" max="40" value="10" class="slider-custom">
+      </div>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Reaction R<sub>A</sub></span><span class="num font-bold" id="s18-RA">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Reaction R<sub>B</sub></span><span class="num font-bold" id="s18-RB">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Maximum shear</span><span class="num font-bold text-red-500" id="s18-V">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Point of zero shear</span><span class="num font-bold" id="s18-x0">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Maximum moment</span><span class="num font-bold text-blue-500" id="s18-M">—</span></div>
+        <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Required section modulus at 165 MPa</span><span class="num font-bold" id="s18-Z">—</span></div>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-5 mt-5">
+      <div class="h-48"><canvas id="s18-sfd"></canvas></div>
+      <div class="h-48"><canvas id="s18-bmd"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="font-bold text-lg mb-2">What to notice</h3>
+    <ul class="list-disc pl-6 space-y-1.5 text-sm">
+      <li>Slide the point load to mid-span and the moment reaches its largest value. Wab/L is maximised when a = b.</li>
+      <li>Set the UDL to zero and the SFD becomes two flat steps, and the BMD two straight lines meeting in a kink under the load.</li>
+      <li>Set the point load to zero and the SFD becomes a single sloping line, the BMD a clean parabola with its peak at mid-span.</li>
+      <li>Double the span with the UDL alone and the moment quadruples, because wL²/8 goes as the square of the span. This is why span, not load, dominates beam sizing.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ M19 GAMES ============ -->
+<div id="module-19" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 19</p><h2 class="mtitle">Learning games</h2>
+
+  <div class="card mb-5">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">Name that diagram shape</h3>
+      <button onclick="newShapeRound()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">New case</button>
+    </div>
+    <p class="p-4 rounded-lg bg-brand-50 dark:bg-brand-900/30 text-sm" id="shape-clue">—</p>
+    <div id="shape-options" class="grid sm:grid-cols-2 gap-2 mt-3"></div>
+    <p class="text-sm mt-2" id="shape-status"></p>
+  </div>
+
+  <div class="card mb-5">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">Match the formula</h3>
+      <button onclick="initMatch()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">Shuffle</button>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Click a case on the left, then its result on the right.</p>
+    <div class="grid grid-cols-2 gap-4">
+      <div id="match-left" class="space-y-2"></div>
+      <div id="match-right" class="space-y-2"></div>
+    </div>
+    <p class="text-sm mt-3 num" id="match-status"></p>
+  </div>
+
+  <div class="card mb-5">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">Spot the error</h3>
+      <button onclick="newHunt()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">Next statement</button>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Decide whether the statement is sound or contains a mistake.</p>
+    <p class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 num text-sm" id="hunt-text">—</p>
+    <div class="flex gap-3 mt-3">
+      <button onclick="huntAnswer(true)" class="flex-1 py-2 rounded bg-green-600 text-white font-semibold">Correct as written</button>
+      <button onclick="huntAnswer(false)" class="flex-1 py-2 rounded bg-red-600 text-white font-semibold">Contains an error</button>
+    </div>
+    <p class="text-sm mt-3" id="hunt-fb"></p>
+  </div>
+
+  <div class="card">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold text-lg">Memory cards</h3>
+      <button onclick="initMemory()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">Restart</button>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Turn over two cards to pair a term with its meaning.</p>
+    <div id="memory-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+    <p class="text-sm mt-3 num" id="memory-status"></p>
+  </div>
+</div>
+
+<!-- ============ M20 FORMULA SHEET ============ -->
+<div id="module-20" class="module-content max-w-4xl mx-auto">
+  <div class="flex items-start justify-between flex-wrap gap-3">
+    <div><p class="eyebrow">Module 20</p><h2 class="mtitle">Formula and shape sheet</h2></div>
+    <button onclick="window.print()" class="no-print px-4 py-2 rounded-lg bg-brand-500 text-white font-semibold hover:bg-brand-700"><i class="fas fa-print mr-2"></i>Print or save as PDF</button>
+  </div>
+
+  <div class="card mb-5">
+    <div class="grid md:grid-cols-2 gap-x-8 gap-y-5 text-sm">
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Definitions</h4>
+        <p>$$V_x = \sum F_{y,\text{left}} \qquad M_x = \sum (F\cdot d)_{\text{left}}$$</p>
+        <p class="mt-1">Shear positive when the left resultant is upward. Moment positive when sagging.</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Differential relations</h4>
+        <p>$$\frac{dV}{dx} = -w \qquad \frac{dM}{dx} = V \qquad \frac{d^2M}{dx^2} = -w$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Area relations</h4>
+        <p>$$V_2 - V_1 = -\int_{x_1}^{x_2} w\,dx$$</p>
+        <p>$$M_2 - M_1 = \int_{x_1}^{x_2} V\,dx$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Reactions</h4>
+        <p>$$R_B = \frac{\sum W_i x_i + \sum M_j}{L_{AB}} \qquad R_A = \sum W_i - R_B$$</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Determinacy</h4>
+        <p>$$D_s = R - (3 + h)$$</p>
+        <p class="mt-1">Zero means determinate; positive means indeterminate; negative means a mechanism.</p></div>
+
+      <div><h4 class="font-bold border-b dark:border-gray-700 pb-1 mb-2">Feeds into Unit 3</h4>
+        <p>$$\sigma_b = \frac{My}{I} = \frac{M}{Z} \qquad Z_{req} = \frac{M}{\sigma_{perm}}$$</p></div>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h4 class="font-bold mb-3">Standard results</h4>
+    <table class="data">
+      <tr><th>Beam, span L</th><th>Reactions</th><th>V<sub>max</sub></th><th>M<sub>max</sub></th><th>Position of M<sub>max</sub></th></tr>
+      <tr><td>Cantilever, W at free end</td><td class="num">W, WL</td><td class="num">W</td><td class="num">WL (hogging)</td><td>Fixed end</td></tr>
+      <tr><td>Cantilever, UDL w</td><td class="num">wL, wL²/2</td><td class="num">wL</td><td class="num">wL²/2 (hogging)</td><td>Fixed end</td></tr>
+      <tr><td>Cantilever, UVL 0 to w at fixed end</td><td class="num">wL/2, wL²/6</td><td class="num">wL/2</td><td class="num">wL²/6 (hogging)</td><td>Fixed end</td></tr>
+      <tr><td>Cantilever, couple M₀ at free end</td><td class="num">0, M₀</td><td class="num">0</td><td class="num">M₀ throughout</td><td>Everywhere</td></tr>
+      <tr><td>SS, W at centre</td><td class="num">W/2 each</td><td class="num">W/2</td><td class="num">WL/4</td><td>Centre</td></tr>
+      <tr><td>SS, W at a from A</td><td class="num">Wb/L, Wa/L</td><td class="num">Wb/L or Wa/L</td><td class="num">Wab/L</td><td>Under the load</td></tr>
+      <tr><td>SS, UDL w</td><td class="num">wL/2 each</td><td class="num">wL/2</td><td class="num">wL²/8</td><td>Centre</td></tr>
+      <tr><td>SS, UVL 0 at A to w at B</td><td class="num">wL/6, wL/3</td><td class="num">wL/3</td><td class="num">wL²/(9√3)</td><td class="num">x = L/√3</td></tr>
+      <tr><td>SS, two loads W at L/3 points</td><td class="num">W each</td><td class="num">W</td><td class="num">WL/3</td><td>Between the loads</td></tr>
+      <tr><td>SS, couple M₀ at centre</td><td class="num">M₀/L up and down</td><td class="num">M₀/L</td><td class="num">M₀/2</td><td>Either side of the couple</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h4 class="font-bold mb-3">Diagram shapes at a glance</h4>
+    <table class="data">
+      <tr><th>Loading in a region</th><th>SFD</th><th>BMD</th></tr>
+      <tr><td>No load</td><td>Horizontal line</td><td>Sloping straight line</td></tr>
+      <tr><td>Point load</td><td>Vertical jump</td><td>Kink, no jump</td></tr>
+      <tr><td>UDL</td><td>Sloping straight line</td><td>Parabola</td></tr>
+      <tr><td>UVL</td><td>Parabola</td><td>Cubic</td></tr>
+      <tr><td>Applied couple</td><td>No change</td><td>Vertical jump</td></tr>
+      <tr><td>Support reaction</td><td>Vertical jump</td><td>Kink</td></tr>
+    </table>
+    <p class="text-sm mt-3"><b>End conditions:</b> M = 0 at a free end, at a simple end support and at an internal hinge. M ≠ 0 at a fixed end and at a support of an overhanging beam. V = 0 at a free end unless a load sits on it.</p>
+  </div>
+</div>
+
+<!-- ============ M21 CONCEPT MAP ============ -->
+<div id="module-21" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 21</p><h2 class="mtitle">Concept map</h2>
+  <div class="card">
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Click any node to jump to the module that covers it.</p>
+    <div class="overflow-x-auto">
+      <svg viewBox="0 0 860 470" class="w-full min-w-[700px]" id="cmap" aria-label="Concept map of Unit 2">
+        <defs><marker id="arw" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#94a3b8"/></marker></defs>
+        <g stroke="#94a3b8" stroke-width="1.6" marker-end="url(#arw)" fill="none">
+          <path d="M430,70 L430,110"/>
+          <path d="M430,150 L430,190"/>
+          <path d="M390,228 L230,268"/><path d="M470,228 L630,268"/>
+          <path d="M200,306 L200,346"/><path d="M660,306 L660,346"/>
+          <path d="M250,382 L400,420"/><path d="M610,382 L460,420"/>
+        </g>
+        <g id="cmap-nodes"></g>
+      </svg>
+    </div>
+    <div class="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-sm">
+      <p><b>The spine of Unit 2:</b> loads and supports give reactions; reactions and loads give shear force at every section; the area under the shear gives bending moment; the moment tells you where the tension face is and how large the stress will be. Contraflexure, internal hinges and couples are refinements on the same chain, not separate topics.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M22 MISTAKES ============ -->
+<div id="module-22" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 22</p><h2 class="mtitle">Common mistakes</h2>
+  <div class="space-y-4" id="mistake-list"></div>
+</div>
+
+<!-- ============ M23 UNIVERSITY QUESTIONS ============ -->
+<div id="module-23" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 23</p><h2 class="mtitle">University question bank</h2>
+  <div class="card mb-5">
+    <p class="text-sm">Questions grouped by topic and marks, each with the approach the examiner expects. Attempt it on paper first, then check the method.</p>
+    <div class="flex flex-wrap gap-2 mt-4" id="uq-filters"></div>
+  </div>
+  <div id="uq-list" class="space-y-3"></div>
+</div>
+
+<!-- ============ M24 SELF EVALUATION ============ -->
+<div id="module-24" class="module-content max-w-4xl mx-auto">
+  <p class="eyebrow">Module 24</p><h2 class="mtitle">Self evaluation</h2>
+
+  <div class="card mb-5">
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Seven levels, from recall to case study. Scores feed the dashboards in Modules 25 and 26.</p>
+    <div class="flex flex-wrap gap-2" id="lvl-tabs"></div>
+  </div>
+
+  <div class="eval-panel card" id="lvl-1">
+    <h3 class="font-bold text-lg mb-1">Level 1 — Multiple choice</h3>
+    <p class="text-sm text-gray-500 mb-4">20 questions, instant feedback with explanation.</p>
+    <div id="mcq-box"></div>
+    <div class="mt-4 flex items-center justify-between">
+      <p class="text-sm num" id="mcq-progress"></p>
+      <button onclick="resetMCQ()" class="text-sm px-3 py-1.5 rounded border dark:border-gray-600">Restart level</button>
+    </div>
+  </div>
+
+  <div class="eval-panel card hidden" id="lvl-2">
+    <h3 class="font-bold text-lg mb-1">Level 2 — Fill in the blanks</h3>
+    <p class="text-sm text-gray-500 mb-4">Type the missing word or expression. Spelling is checked loosely.</p>
+    <div id="fill-box" class="space-y-3"></div>
+    <button onclick="checkFill()" class="mt-4 bg-brand-500 text-white px-5 py-2 rounded font-semibold hover:bg-brand-700">Check answers</button>
+    <p class="mt-3 num text-sm" id="fill-score"></p>
+  </div>
+
+  <div class="eval-panel card hidden" id="lvl-3">
+    <h3 class="font-bold text-lg mb-1">Level 3 — True or false</h3>
+    <p class="text-sm text-gray-500 mb-4">Several of these are the exact misconceptions that cost marks.</p>
+    <div id="tf-box" class="space-y-3"></div>
+    <p class="mt-3 num text-sm" id="tf-score"></p>
+  </div>
+
+  <div class="eval-panel card hidden" id="lvl-4">
+    <h3 class="font-bold text-lg mb-1">Level 4 — Match the following</h3>
+    <p class="text-sm text-gray-500 mb-4">Choose the correct partner for each item.</p>
+    <div id="mt-box" class="space-y-3"></div>
+    <button onclick="checkMatchQ()" class="mt-4 bg-brand-500 text-white px-5 py-2 rounded font-semibold hover:bg-brand-700">Check answers</button>
+    <p class="mt-3 num text-sm" id="mt-score"></p>
+  </div>
+
+  <div class="eval-panel card hidden" id="lvl-5">
+    <h3 class="font-bold text-lg mb-1">Level 5 — Numerical problems</h3>
+    <p class="text-sm text-gray-500 mb-4">Answers checked to within 2 %. A hint is available before you answer.</p>
+    <div id="num-box" class="space-y-4"></div>
+    <p class="mt-3 num text-sm" id="num-score"></p>
+  </div>
+
+  <div class="eval-panel card hidden" id="lvl-6">
+    <h3 class="font-bold text-lg mb-1">Level 6 — Case study</h3>
+    <div class="p-4 rounded-lg bg-brand-50 dark:bg-brand-900/25 text-sm my-4">
+      <p class="font-bold mb-1">Balcony beam with an overhang</p>
+      <p>A beam ABC rests on supports at A (x = 0) and B (x = 5 m) and cantilevers 2 m beyond B to C. It carries a UDL of 15 kN/m over the whole 7 m from the slab above, plus a point load of 20 kN at the free end C from a parapet wall. The permissible bending stress is 165 MPa.</p>
+    </div>
+    <div id="case-box" class="space-y-4"></div>
+    <p class="mt-3 num text-sm" id="case-score"></p>
+  </div>
+
+  <div class="eval-panel card hidden" id="lvl-7">
+    <h3 class="font-bold text-lg mb-1">Level 7 — Adaptive quiz</h3>
+    <p class="text-sm text-gray-500 mb-4">Two right in a row steps the difficulty up; one wrong steps it down. Ten questions.</p>
+    <div class="flex items-center gap-3 mb-4 text-sm">
+      <span class="chip bg-brand-100 text-brand-900" id="ad-diff">Difficulty 1</span>
+      <span class="num" id="ad-count">Question 1 of 10</span>
+    </div>
+    <div id="ad-box"></div>
+    <button onclick="startAdaptive()" class="mt-4 text-sm px-3 py-1.5 rounded border dark:border-gray-600">Restart</button>
+  </div>
+</div>
+
+<!-- ============ M25 PROGRESS DASHBOARD ============ -->
+<div id="module-25" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 25</p><h2 class="mtitle">Progress dashboard</h2>
+
+  <div class="grid sm:grid-cols-4 gap-4 mb-5">
+    <div class="card !p-4 text-center"><p class="text-xs text-gray-500">Modules visited</p><p class="text-3xl font-bold num text-brand-600" id="db-visited">0</p></div>
+    <div class="card !p-4 text-center"><p class="text-xs text-gray-500">Questions attempted</p><p class="text-3xl font-bold num text-brand-600" id="db-attempts">0</p></div>
+    <div class="card !p-4 text-center"><p class="text-xs text-gray-500">Overall score</p><p class="text-3xl font-bold num text-brand-600" id="db-score">—</p></div>
+    <div class="card !p-4 text-center"><p class="text-xs text-gray-500">Time on module</p><p class="text-3xl font-bold num text-brand-600" id="db-time">0m</p></div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-5 mb-5">
+    <div class="card"><h3 class="font-bold mb-3">Topic-wise performance</h3><div class="h-72"><canvas id="db-radar"></canvas></div></div>
+    <div class="card"><h3 class="font-bold mb-3">Weak topics and suggested revision</h3><div id="db-weak" class="space-y-2 text-sm"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-bold">Certificate eligibility</h3>
+      <span class="chip" id="db-cert-chip">—</span>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Requires all 26 modules visited and an overall score of 70 % or more across Levels 1 to 5.</p>
+    <div class="space-y-2 text-sm" id="db-cert-list"></div>
+    <button onclick="issueCertificate()" id="db-cert-btn" class="mt-4 px-5 py-2 rounded-lg bg-brand-500 text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed">Generate certificate</button>
+  </div>
+</div>
+
+<!-- ============ M26 TEACHER DASHBOARD ============ -->
+<div id="module-26" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 26</p><h2 class="mtitle">Teacher dashboard</h2>
+
+  <div class="card mb-5 border-l-4 border-lab-500">
+    <p class="text-sm"><b>How this works.</b> This file has no server, so it reports only the session on this device. To collect a class, have each student open Module 26, click <b>Export my record</b>, and send you the CSV. Load the collected files below for the class picture. Nothing is uploaded anywhere.</p>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="font-bold mb-3">This session</h3>
+    <div class="grid sm:grid-cols-4 gap-3 text-center text-sm">
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Modules visited</p><p class="num font-bold text-xl" id="td-visited">0</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Attempted</p><p class="num font-bold text-xl" id="td-att">0</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Correct</p><p class="num font-bold text-xl" id="td-cor">0</p></div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Time</p><p class="num font-bold text-xl" id="td-time">0m</p></div>
+    </div>
+    <div class="flex flex-wrap gap-3 mt-4">
+      <label class="text-sm flex items-center gap-2">Student name <input id="td-name" placeholder="Roll no. and name" class="p-2 border rounded text-sm dark:bg-gray-700 dark:border-gray-600"></label>
+      <button onclick="exportRecord()" class="px-4 py-2 rounded bg-brand-500 text-white font-semibold text-sm"><i class="fas fa-download mr-1"></i> Export my record</button>
+      <button onclick="resetAll()" class="px-4 py-2 rounded border dark:border-gray-600 text-sm">Clear this device</button>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="font-bold mb-3">Class analytics</h3>
+    <label class="text-sm block mb-2">Load exported CSV files from students</label>
+    <input type="file" id="td-files" accept=".csv" multiple class="text-sm mb-4">
+    <div id="td-class-summary" class="text-sm text-gray-500">No class files loaded yet.</div>
+    <div class="h-72 mt-4 hidden" id="td-chart-wrap"><canvas id="td-chart"></canvas></div>
+  </div>
+
+  <div class="card">
+    <h3 class="font-bold mb-3">Question-level record</h3>
+    <div class="overflow-x-auto"><table class="data" id="td-table"><tr><th>Level</th><th>Topic</th><th>Result</th><th>Time</th></tr></table></div>
+    <button onclick="exportReport()" class="mt-4 px-4 py-2 rounded border dark:border-gray-600 text-sm"><i class="fas fa-file-csv mr-1"></i> Export full report</button>
+  </div>
+</div>
+
+<div id="module-placeholder" class="module-content max-w-4xl mx-auto text-center py-20">
+  <i class="fas fa-compass-drafting text-5xl text-gray-300 dark:text-gray-600 mb-4"></i>
+  <h2 class="text-2xl font-bold text-gray-500">Module not found</h2>
+  <p class="text-gray-400 mt-2">Use the list on the left to pick a module.</p>
+</div>
+
+<div class="h-24"></div>
+</main>
+</div>
+
+<!-- ============ TUTOR ============ -->
+<div class="fixed bottom-16 right-5 z-40 no-print" id="ai-tutor-wrap">
+  <button id="ai-tutor-btn" aria-label="Open the study helper" class="bg-brand-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform">
+    <i class="fas fa-chalkboard-user text-xl"></i>
+  </button>
+  <div id="ai-tutor-panel" class="hidden absolute bottom-16 right-0 w-[330px] max-w-[92vw] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col" style="height:440px">
+    <div class="bg-brand-900 text-white p-3 flex justify-between items-center">
+      <div class="flex items-center gap-2"><i class="fas fa-book-open-reader"></i><span class="font-bold text-sm">Study helper</span></div>
+      <button id="ai-tutor-close" aria-label="Close helper"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="tutor-log" class="flex-1 p-3 overflow-y-auto bg-gray-50 dark:bg-gray-900 text-sm space-y-2"></div>
+    <div class="p-2 border-t dark:border-gray-700 flex gap-2">
+      <input id="tutor-input" type="text" placeholder="Ask about a formula or topic..." class="flex-1 p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-sm outline-none focus:border-brand-500">
+      <button onclick="tutorSend()" aria-label="Send question" class="bg-brand-500 text-white px-3 rounded hover:bg-brand-700"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2.5 text-center text-xs text-gray-500 dark:text-gray-400 flex-shrink-0 z-10">
+  Prepared by <strong>D. Mandal</strong>, Assistant Professor, Department of Civil Engineering &nbsp;|&nbsp; &copy; 2026
+</footer>
+
+<script>
+/* ============================================================
+   Strength of Materials — Unit 2: Shear Force and Bending Moment
+   Prepared by D. Mandal, Assistant Professor, Civil Engineering
+   Sign convention: shear positive when the resultant of forces to
+   the LEFT of the section acts UPWARD; bending moment positive
+   when SAGGING (tension at the bottom fibre).
+   ============================================================ */
+
+const store = (() => {
+  let ok = true, mem = {};
+  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); } catch(e) { ok = false; }
+  return {
+    get(k, d) { try { const v = ok ? localStorage.getItem(k) : mem[k]; return v ? JSON.parse(v) : d; } catch(e) { return d; } },
+    set(k, v) { try { const s = JSON.stringify(v); if (ok) localStorage.setItem(k, s); else mem[k] = s; } catch(e) {} },
+    clear() { try { if (ok) localStorage.clear(); mem = {}; } catch(e) {} }
+  };
+})();
+
+const TOPICS = ['Reactions','Shear force','Bending moment','Relations','Cantilever','Simply supported','Overhang & hinge','Max BM & design'];
+
+const state = {
+  visited: new Set(store.get('som2_visited', [1])),
+  records: store.get('som2_records', []),
+  started: Date.now(),
+  elapsed: store.get('som2_elapsed', 0)
+};
+
+const modules = [
+  { id:1,  title:'Cover page' },
+  { id:2,  title:'Learning outcomes' },
+  { id:3,  title:'Why SF and BM?' },
+  { id:4,  title:'Beams and supports' },
+  { id:5,  title:'Types of load' },
+  { id:6,  title:'Support reactions' },
+  { id:7,  title:'Shear force' },
+  { id:8,  title:'Bending moment' },
+  { id:9,  title:'Load–shear–moment relations' },
+  { id:10, title:'Cantilever beams' },
+  { id:11, title:'Simply supported beams' },
+  { id:12, title:'Overhang & contraflexure' },
+  { id:13, title:'Applied couples' },
+  { id:14, title:'Internal hinges' },
+  { id:15, title:'Maximum bending moment' },
+  { id:16, title:'Solved numericals' },
+  { id:17, title:'Beam solver (lab)' },
+  { id:18, title:'Interactive simulations' },
+  { id:19, title:'Learning games' },
+  { id:20, title:'Formula & shape sheet' },
+  { id:21, title:'Concept map' },
+  { id:22, title:'Common mistakes' },
+  { id:23, title:'University questions' },
+  { id:24, title:'Self evaluation' },
+  { id:25, title:'Progress dashboard' },
+  { id:26, title:'Teacher dashboard' }
+];
+
+/* ---------- M10 cantilever cases ---------- */
+const CANT_CASES = [
+  { name:'Point load at free end', L:4,
+    cfg:{ type:'cant', L:4, loads:[{kind:'point', x:4, P:20}] },
+    desc:'Cantilever of 4 m fixed at A, carrying 20 kN at the free end B.',
+    work:['V is constant at +20 kN over the whole length — the SFD is a rectangle.',
+          'M(x) measured from the free end = −20 × (distance from B), so the BMD is a straight line.',
+          'M at the fixed end = −20 × 4 = −80 kN·m (hogging)',
+          'Reaction at A = 20 kN up, with a fixing couple of 80 kN·m'] },
+  { name:'UDL over the whole span', L:4,
+    cfg:{ type:'cant', L:4, loads:[{kind:'udl', x1:0, x2:4, w:10}] },
+    desc:'Cantilever of 4 m fixed at A, with a UDL of 10 kN/m throughout.',
+    work:['V varies linearly from 0 at the free end to +40 kN at the fixed end — SFD is a triangle.',
+          'M = −w x²/2 measured from the free end — BMD is a parabola.',
+          'M at the fixed end = −10 × 4² / 2 = −80 kN·m',
+          'Same maximum moment as the previous case, but achieved with twice the total load.'] },
+  { name:'Point load away from the free end', L:5,
+    cfg:{ type:'cant', L:5, loads:[{kind:'point', x:3, P:30}] },
+    desc:'Cantilever of 5 m fixed at A, carrying 30 kN at 3 m from A. The last 2 m is unloaded.',
+    work:['Beyond the load, from x = 3 m to the free end, both V and M are zero.',
+          'V = +30 kN between A and the load.',
+          'M at the fixed end = −30 × 3 = −90 kN·m',
+          'The unloaded tail carries nothing — a common oversight is to draw the BMD running to the free end.'] },
+  { name:'UDL plus a point load', L:4,
+    cfg:{ type:'cant', L:4, loads:[{kind:'udl', x1:0, x2:4, w:8},{kind:'point', x:4, P:15}] },
+    desc:'Cantilever of 4 m with a UDL of 8 kN/m and 15 kN at the free end.',
+    work:['V at the fixed end = 8 × 4 + 15 = 47 kN',
+          'M at the fixed end = −(8 × 4 × 2) − (15 × 4) = −64 − 60 = −124 kN·m',
+          'The SFD is a sloping line starting at 15 kN at the free end.',
+          'Effects simply superpose — solve each load separately and add.'] }
+];
+
+/* ---------- M11 simply supported cases ---------- */
+const SS_CASES = [
+  { name:'Point load at mid-span', L:6,
+    cfg:{ type:'ss', L:6, xa:0, xb:6, loads:[{kind:'point', x:3, P:40}] },
+    desc:'Simply supported beam of 6 m carrying 40 kN at mid-span.',
+    work:['R_A = R_B = 40/2 = 20 kN',
+          'SFD steps from +20 to −20 at mid-span — the jump equals the load.',
+          'M_max = WL/4 = 40 × 6 / 4 = 60 kN·m at the centre',
+          'BMD is a triangle with its apex under the load.'] },
+  { name:'Point load off centre', L:6,
+    cfg:{ type:'ss', L:6, xa:0, xb:6, loads:[{kind:'point', x:2, P:30}] },
+    desc:'Simply supported beam of 6 m carrying 30 kN at 2 m from A.',
+    work:['R_A = Wb/L = 30 × 4 / 6 = 20 kN, R_B = Wa/L = 30 × 2 / 6 = 10 kN',
+          'M_max = Wab/L = 30 × 2 × 4 / 6 = 40 kN·m under the load',
+          'The larger reaction is on the side nearer the load.'] },
+  { name:'UDL over the whole span', L:8,
+    cfg:{ type:'ss', L:8, xa:0, xb:8, loads:[{kind:'udl', x1:0, x2:8, w:12}] },
+    desc:'Simply supported beam of 8 m with a UDL of 12 kN/m.',
+    work:['R_A = R_B = wL/2 = 12 × 8 / 2 = 48 kN',
+          'SFD is a straight line from +48 to −48, crossing zero at mid-span.',
+          'M_max = wL²/8 = 12 × 64 / 8 = 96 kN·m at the centre',
+          'BMD is a parabola, zero at both ends.'] },
+  { name:'Partial UDL', L:8,
+    cfg:{ type:'ss', L:8, xa:0, xb:8, loads:[{kind:'udl', x1:0, x2:4, w:15}] },
+    desc:'Simply supported beam of 8 m with a UDL of 15 kN/m over the left half only.',
+    work:['Total load = 15 × 4 = 60 kN acting at 2 m from A',
+          'R_B = 60 × 2 / 8 = 15 kN, R_A = 60 − 15 = 45 kN',
+          'Zero shear at x = 45/15 = 3 m from A',
+          'M_max = 45 × 3 − 15 × 3 × 1.5 = 135 − 67.5 = 67.5 kN·m',
+          'Beyond the loaded length the SFD is flat at −15 kN and the BMD is a straight line.'] },
+  { name:'Two equal point loads', L:9,
+    cfg:{ type:'ss', L:9, xa:0, xb:9, loads:[{kind:'point', x:3, P:25},{kind:'point', x:6, P:25}] },
+    desc:'Simply supported beam of 9 m with 25 kN at the third points — the laboratory flexure test arrangement.',
+    work:['R_A = R_B = 25 kN by symmetry',
+          'Between the loads the shear is zero, so the moment is constant.',
+          'M = 25 × 3 = 75 kN·m over the middle third — this is pure bending.',
+          'The flexure test uses this so that the central region has moment without shear.'] },
+  { name:'UDL plus a point load', L:6,
+    cfg:{ type:'ss', L:6, xa:0, xb:6, loads:[{kind:'udl', x1:0, x2:6, w:10},{kind:'point', x:2, P:40}] },
+    desc:'Simply supported beam of 6 m with 10 kN/m throughout and 40 kN at 2 m from A.',
+    work:['R_A = 56.67 kN, R_B = 43.33 kN',
+          'The shear changes sign at the point load, not within either UDL region.',
+          'M_max = 56.67 × 2 − 10 × 2 × 1 = 93.33 kN·m at 2 m from A',
+          'This is the case worked in detail in Module 15.'] }
+];
+
+/* ---------- M16 solved numericals ---------- */
+const N16 = [
+ { lvl:'Easy', topic:'Cantilever',
+   q:'A cantilever of 3 m carries a point load of 20 kN at its free end. Find the maximum shear force and bending moment.',
+   s:['Shear is constant along the beam: V = 20 kN','M at the fixed end = −W × L = −20 × 3','M_max = −60 kN·m, hogging','SFD is a rectangle, BMD a triangle.'] },
+ { lvl:'Easy', topic:'Cantilever',
+   q:'A cantilever of 4 m carries a UDL of 10 kN/m. Find the maximum shear force and bending moment.',
+   s:['V_max at the fixed end = wL = 10 × 4 = 40 kN','M_max = −wL²/2 = −10 × 16 / 2','M_max = −80 kN·m, hogging','SFD is a triangle, BMD a parabola.'] },
+ { lvl:'Easy', topic:'Simply supported',
+   q:'A simply supported beam of 6 m carries a point load of 30 kN at 2 m from A. Find the reactions and the maximum bending moment.',
+   s:['R_A = Wb/L = 30 × 4 / 6 = 20 kN','R_B = Wa/L = 30 × 2 / 6 = 10 kN','Check: 20 + 10 = 30 kN ✓','M_max = Wab/L = 30 × 2 × 4 / 6 = 40 kN·m under the load'] },
+ { lvl:'Easy', topic:'Simply supported',
+   q:'A simply supported beam of 8 m carries a UDL of 12 kN/m over the whole span. Find the reactions, maximum shear and maximum moment.',
+   s:['R_A = R_B = wL/2 = 12 × 8 / 2 = 48 kN','V_max = 48 kN at each support','Zero shear at x = 48/12 = 4 m, the mid-span','M_max = wL²/8 = 12 × 64 / 8 = 96 kN·m'] },
+ { lvl:'Medium', topic:'Max BM & design',
+   q:'A simply supported beam of 6 m carries a UDL of 10 kN/m over the whole span together with a point load of 40 kN at 2 m from A. Find the reactions and the maximum bending moment with its position.',
+   s:['Total UDL = 60 kN at 3 m from A','ΣM_A = 0: R_B × 6 = 60 × 3 + 40 × 2 = 260 → R_B = 43.33 kN','R_A = 100 − 43.33 = 56.67 kN',
+      'For 0 &lt; x &lt; 2: V = 56.67 − 10x = 0 gives x = 5.67 m, outside the region — reject',
+      'For 2 &lt; x &lt; 6: V = 16.67 − 10x = 0 gives x = 1.67 m, outside the region — reject',
+      'So the shear changes sign at the point load: V just left = +36.67, just right = −3.33',
+      'M_max = 56.67 × 2 − 10 × 2 × 1 = 93.33 kN·m at 2 m from A'] },
+ { lvl:'Medium', topic:'Overhang & hinge',
+   q:'A beam ABC of 6 m is supported at A (x = 0) and B (x = 4 m) with a 2 m overhang to C. It carries a UDL of 10 kN/m throughout. Find the reactions, the maximum sagging and hogging moments, and the point of contraflexure.',
+   s:['Total load = 60 kN at 3 m from A','ΣM_A = 0: R_B × 4 = 60 × 3 = 180 → R_B = 45 kN','R_A = 60 − 45 = 15 kN',
+      'V(x) = 15 − 10x for 0 &lt; x &lt; 4; zero at x = 1.5 m',
+      'M_max sagging = 15 × 1.5 − 10 × 1.5 × 0.75 = 11.25 kN·m',
+      'M at B = 15 × 4 − 10 × 4 × 2 = −20 kN·m (hogging, and numerically the largest)',
+      'Contraflexure: 15x − 5x² = 0 → x = 3 m from A',
+      'Check at C: 15 × 6 + 45 × 2 − 10 × 6 × 3 = 0 ✓'] },
+ { lvl:'Medium', topic:'Bending moment',
+   q:'A simply supported beam of 6 m carries a clockwise couple of 30 kN·m at 3 m from A, with no other load. Draw the SFD and BMD.',
+   s:['ΣF_y = 0: R_A + R_B = 0, so the reactions form a couple','ΣM_A = 0: 30 = R_B × 6 → R_B = 5 kN up','R_A = −5 kN, that is 5 kN downward',
+      'Shear is constant at −5 kN throughout; the SFD is one horizontal line',
+      'M just left of 3 m = −5 × 3 = −15 kN·m','M just right of 3 m = −15 + 30 = +15 kN·m — a jump of 30',
+      'M at B = −5 × 6 + 30 = 0 ✓'] },
+ { lvl:'Medium', topic:'Simply supported',
+   q:'A simply supported beam of 8 m carries a UDL of 15 kN/m over the left 4 m only. Find the reactions and the maximum bending moment.',
+   s:['Total load = 15 × 4 = 60 kN at 2 m from A','R_B = 60 × 2 / 8 = 15 kN','R_A = 60 − 15 = 45 kN',
+      'V(x) = 45 − 15x for 0 &lt; x &lt; 4; zero at x = 3 m',
+      'M_max = 45 × 3 − 15 × 3 × 1.5 = 135 − 67.5 = 67.5 kN·m at 3 m from A',
+      'Beyond x = 4 m, V is constant at −15 kN so the BMD is a straight line down to zero at B.'] },
+ { lvl:'University', topic:'Simply supported',
+   q:'A simply supported beam of 10 m carries point loads of 40 kN at 3 m and 60 kN at 7 m from A. Draw the SFD and BMD and find the maximum moment.',
+   s:['ΣM_A = 0: R_B × 10 = 40 × 3 + 60 × 7 = 120 + 420 = 540 → R_B = 54 kN','R_A = 100 − 54 = 46 kN',
+      'SFD: +46 up to 3 m, then +6 up to 7 m, then −54 to B',
+      'M at 3 m = 46 × 3 = 138 kN·m','M at 7 m = 54 × 3 = 162 kN·m',
+      'The shear changes sign at the 60 kN load, so M_max = 162 kN·m at 7 m from A'] },
+ { lvl:'University', topic:'Cantilever',
+   q:'A cantilever of 5 m carries a UVL varying from zero at the free end to 20 kN/m at the fixed end. Find the maximum shear force and bending moment.',
+   s:['Total load = ½ × 20 × 5 = 50 kN','Centroid is at 5/3 = 1.667 m from the fixed end (one third from the wide end)',
+      'V_max at the fixed end = 50 kN','M_max = −50 × 1.667 = −83.33 kN·m',
+      'Check against the standard result wL²/6 = 20 × 25 / 6 = 83.33 ✓',
+      'SFD is a parabola, BMD a cubic.'] },
+ { lvl:'University', topic:'Overhang & hinge',
+   q:'A beam ABCD is 9 m long, fixed at A, with an internal hinge at C (6 m from A) and a roller at D (9 m). A UDL of 8 kN/m acts over the whole length. Analyse the beam.',
+   s:['Suspended part CD is 3 m long carrying 24 kN, hinged at C and on a roller at D','R_D = 24/2 = 12 kN, and the hinge transfers 12 kN down onto AC',
+      'Supported part AC is a 6 m cantilever with 8 kN/m plus 12 kN at C','R_A = 8 × 6 + 12 = 60 kN',
+      'M_A = −(8 × 6 × 3) − (12 × 6) = −144 − 72 = −216 kN·m',
+      'Check at the hinge: −216 + 60 × 6 − 8 × 6 × 3 = 0 ✓',
+      'M_max sagging in CD = wl²/8 = 8 × 9 / 8 = 9 kN·m at 1.5 m from C'] },
+ { lvl:'University', topic:'Overhang & hinge',
+   q:'A beam of 8 m is supported at 1 m from each end and carries a UDL of 20 kN/m over the whole length. Find the reactions, the maximum moments and the points of contraflexure.',
+   s:['By symmetry R_A = R_B = 20 × 8 / 2 = 80 kN, at x = 1 m and x = 7 m',
+      'M at each support = −20 × 1 × 0.5 = −10 kN·m (hogging)',
+      'M at mid-span (x = 4 m) = 80 × 3 − 20 × 4 × 2 = 240 − 160 = +80 kN·m',
+      'Taking x from the left end: M(x) = 80(x−1) − 10x² for x &gt; 1',
+      'Set to zero: 10x² − 80x + 80 = 0 → x² − 8x + 8 = 0 → x = 1.172 m and 6.828 m',
+      'Both lie inside the span, so those are the two points of contraflexure.'] },
+ { lvl:'University', topic:'Max BM & design',
+   q:'A simply supported beam of 5 m carries a UDL of 24 kN/m. If the permissible bending stress is 165 MPa, find the required section modulus.',
+   s:['M_max = wL²/8 = 24 × 25 / 8 = 75 kN·m','Convert: M = 75 × 10⁶ N·mm',
+      'Z = M / σ = 75 × 10⁶ / 165','Z = 454 545 mm³ ≈ 454.5 × 10³ mm³',
+      'An ISMB 300 with Z = 573 × 10³ mm³ would be adequate.'] },
+ { lvl:'GATE', topic:'Relations',
+   q:'For a beam, which of the following is true: dM/dx equals what?',
+   s:['From the equilibrium of an element, dM/dx = V','Therefore the bending moment is stationary where the shear force is zero.',
+      'Also dV/dx = −w, so the slope of the SFD equals minus the load intensity.',
+      'And d²M/dx² = −w.'] },
+ { lvl:'GATE', topic:'Simply supported',
+   q:'A simply supported beam of span L carries a UDL w. What is the ratio of the maximum bending moment to the maximum shear force?',
+   s:['M_max = wL²/8, V_max = wL/2','Ratio = (wL²/8) / (wL/2) = L/4','Independent of w — it depends only on the span.'] },
+ { lvl:'GATE', topic:'Cantilever',
+   q:'A cantilever and a simply supported beam have the same span L and the same UDL w. What is the ratio of their maximum bending moments?',
+   s:['Cantilever: wL²/2','Simply supported: wL²/8','Ratio = 4','A cantilever carries four times the moment for the same span and load, which is why cantilever spans are kept short.'] },
+ { lvl:'GATE', topic:'Shear force',
+   q:'At a section where an anticlockwise couple of 40 kN·m is applied to a beam, what happens to the SFD and BMD?',
+   s:['The SFD is unchanged — a couple has no vertical force component.','The BMD jumps by 40 kN·m at that section.','The direction of the jump follows the sense of the couple; evaluate M just left and just right to fix it.'] },
+ { lvl:'GATE', topic:'Bending moment',
+   q:'A simply supported beam carries a UVL rising from zero at A to w at B over span L. Where is the maximum bending moment?',
+   s:['R_A = wL/6, R_B = wL/3','Load intensity at distance x from A is wx/L, so the load to the left is wx²/(2L)',
+      'V(x) = wL/6 − wx²/(2L) = 0 → x² = L²/3 → x = L/√3 = 0.577L',
+      'M_max = wL²/(9√3) ≈ 0.0642 wL²'] }
+];
+
+/* ---------- M22 mistakes ---------- */
+const MISTAKES = [
+ { w:'Using the resultant of a UDL to find the shear inside the loaded region', r:'The resultant is valid only for computing reactions. Inside the load, use the partial length: V(x) = R − w·x. Replacing a UDL by its resultant while sectioning gives a straight-line BMD instead of a parabola.' },
+ { w:'Placing the centroid of a triangular load at mid-length', r:'A UVL resultant acts at one third of the length from the wide end, not at the middle. Only a rectangle has its centroid at mid-length.' },
+ { w:'Adding an applied couple into ΣF_y', r:'A couple has no vertical force. It appears in the moment equation only. Adding it to ΣF corrupts both reactions from the first line onward.' },
+ { w:'Drawing a jump in the SFD at an applied couple', r:'The SFD passes through unchanged. It is the BMD that jumps, by exactly the magnitude of the couple.' },
+ { w:'Accepting a root of V(x) = 0 that lies outside its region', r:'Each shear expression is valid only within the segment it was derived for. If the root falls outside, discard it and look for a sign change at a point load instead.' },
+ { w:'Confusing the point of zero shear with the point of contraflexure', r:'Zero shear locates the maximum moment. Zero moment locates contraflexure. They are different sections and a question may ask for both.' },
+ { w:'Checking only mid-span on an overhanging beam', r:'The hogging moment over the support is frequently larger than the sagging moment in the span. Evaluate both and design for the larger magnitude.' },
+ { w:'Forgetting that the SFD must close to zero', r:'The diagram must return to the axis at the far end. If it does not, a load or a reaction has been left out. Use this as a free check on every problem.' },
+ { w:'Drawing the BMD one degree too low', r:'A UDL gives a parabolic BMD, not a straight line. Point load → linear, UDL → parabolic, UVL → cubic. Each integration raises the degree by one.' },
+ { w:'Assuming a reaction cannot be downward', r:'On an overhanging beam a reaction can come out negative. That is a genuine hold-down force, and the support detail must be able to provide it.' },
+ { w:'Mixing kN·m with N·mm when finding the section modulus', r:'Z = M/σ needs M in N·mm and σ in N/mm². Multiply kN·m by 10⁶ to get N·mm. This is the single most common unit slip when Unit 2 feeds Unit 3.' },
+ { w:'Ignoring the hinge condition as a check', r:'On a beam with an internal hinge, M must be zero there. If your diagram does not pass through zero at the hinge, the transferred force is wrong.' }
+];
+
+/* ---------- M23 university questions ---------- */
+const UQ = [
+ { topic:'Definitions', marks:4, q:'Define shear force and bending moment. State the sign convention you will use and explain what sagging and hogging mean.', hint:'Definitions, the left-up-positive rule for shear, sagging positive for moment, and which fibre goes into tension in each case.' },
+ { topic:'Definitions', marks:4, q:'Classify beams according to their supports, and state which of them are statically determinate.', hint:'Cantilever, simply supported, overhanging, propped cantilever, fixed, continuous. Apply Ds = R − (3 + h).' },
+ { topic:'Relations', marks:6, q:'Derive the relations between load intensity, shear force and bending moment for a beam element of length dx.', hint:'Take ΣF_y = 0 and ΣM = 0 on the element, neglect second-order terms, obtain dV/dx = −w and dM/dx = V.' },
+ { topic:'Relations', marks:4, q:'Prove that the bending moment is maximum at the section where the shear force is zero or changes sign.', hint:'dM/dx = V; setting the derivative to zero gives a stationary value. Mention the point-load case where V jumps through zero.' },
+ { topic:'Cantilever', marks:8, q:'A cantilever of span L carries a UDL of w over its entire length together with a point load W at the free end. Draw the SFD and BMD with all salient values.', hint:'Work from the free end. V at the fixed end = wL + W; M at the fixed end = −(wL²/2 + WL). SFD is a sloping line, BMD a parabola.' },
+ { topic:'Cantilever', marks:6, q:'A cantilever carries a UVL varying from zero at the free end to w at the fixed end. Draw the SFD and BMD.', hint:'Resultant wL/2 at L/3 from the fixed end. V_max = wL/2, M_max = −wL²/6. SFD parabolic, BMD cubic.' },
+ { topic:'Simply supported', marks:8, q:'A simply supported beam carries two unequal point loads. Draw the SFD and BMD and locate the maximum bending moment.', hint:'Reactions first, then the SFD by steps. The maximum moment is under the load where the shear changes sign.' },
+ { topic:'Simply supported', marks:8, q:'A simply supported beam of given span carries a UDL over part of the span. Draw the SFD and BMD and find the position and value of the maximum bending moment.', hint:'Centroid at the middle of the loaded length. Solve V(x) = 0 inside the loaded region only.' },
+ { topic:'Simply supported', marks:6, q:'Show that for a simply supported beam carrying a UVL from zero at one end to w at the other, the maximum bending moment occurs at L/√3 from the lighter end and equals wL²/(9√3).', hint:'R_A = wL/6. Load to the left of x is wx²/2L. Set V = 0 and substitute back into M(x).' },
+ { topic:'Overhang & hinge', marks:8, q:'A beam with an overhang carries a UDL over its whole length. Draw the SFD and BMD, find the maximum sagging and hogging moments, and locate the points of contraflexure.', hint:'Reactions, then V = 0 for maximum sagging, M at the support for hogging, M(x) = 0 for contraflexure. Reject roots outside the region.' },
+ { topic:'Overhang & hinge', marks:6, q:'Define the point of contraflexure. Explain its practical significance in reinforced concrete detailing and describe how to locate it.', hint:'Section where M = 0 and curvature reverses; the tension face swaps, so it governs bar curtailment and lapping.' },
+ { topic:'Overhang & hinge', marks:8, q:'A compound beam with an internal hinge is supported and loaded as shown. Analyse it and draw the SFD and BMD.', hint:'M = 0 at the hinge gives the extra equation. Solve the suspended part first and transfer the hinge force onto the supported part.' },
+ { topic:'Bending moment', marks:6, q:'A simply supported beam carries a couple at a section within the span. Draw the SFD and BMD and comment on the nature of the diagrams.', hint:'Reactions form an equal and opposite pair. SFD constant, BMD jumps by the magnitude of the couple.' },
+ { topic:'Bending moment', marks:4, q:'State the shape of the SFD and BMD for each of: no load, point load, UDL, UVL, applied couple.', hint:'Present it as a table. Each integration raises the degree by one.' },
+ { topic:'Max BM & design', marks:6, q:'A simply supported beam of span L carries a UDL w. Determine the maximum bending moment and hence the section modulus required for a given permissible bending stress.', hint:'M = wL²/8, then Z = M/σ with M converted to N·mm.' },
+ { topic:'Max BM & design', marks:6, q:'Explain why the maximum bending moment for a cantilever is four times that of a simply supported beam of the same span and loading, and discuss the design consequence.', hint:'Compare wL²/2 with wL²/8. Discuss depth requirement, deflection, and why cantilever spans are limited.' },
+ { topic:'Reactions', marks:6, q:'A beam carries a combination of point loads, a partial UDL and an applied couple. Determine the support reactions and verify them.', hint:'Resultants at centroids, take moments about one support, then ΣF_y, then check with ΣM about the other support.' },
+ { topic:'Reactions', marks:4, q:'Explain what is meant by static determinacy of a beam and illustrate with three examples.', hint:'Ds = R − (3 + h); give a determinate, an indeterminate and a mechanism example.' },
+ { topic:'Shear force', marks:4, q:'Sketch the SFD and BMD for a simply supported beam with two equal point loads at the third points, and explain why the arrangement is used in the laboratory flexure test.', hint:'Shear is zero and moment constant between the loads — pure bending in the central third.' },
+ { topic:'Shear force', marks:4, q:'Explain, with reference to the SFD, why stirrup spacing in an RCC beam is closer near the supports.', hint:'Shear is maximum at the supports and falls towards mid-span, so the shear reinforcement follows the shape of the SFD.' }
+];
+
+/* ---------- M24 banks ---------- */
+const MCQ = [
+ { q:'Shear force at a section is the algebraic sum of:', o:['all moments on one side','all vertical forces on one side','all horizontal forces','the reactions only'], a:1, t:'Shear force', e:'It is the sum of vertical forces on either side of the section.' },
+ { q:'In this unit, shear force is positive when the resultant of forces to the left of the section acts:', o:['downward','upward','clockwise','anticlockwise'], a:1, t:'Shear force', e:'Left-up-positive. Working from the right, the rule inverts.' },
+ { q:'A sagging bending moment produces:', o:['tension at the top','tension at the bottom','no stress','shear only'], a:1, t:'Bending moment', e:'Sagging is a smile: compression on top, tension at the bottom fibre.' },
+ { q:'The relation between bending moment and shear force is:', o:['dM/dx = −w','dM/dx = V','dV/dx = M','M = V·x always'], a:1, t:'Relations', e:'The slope of the BMD at any section equals the shear force there.' },
+ { q:'The relation between shear force and load intensity is:', o:['dV/dx = w','dV/dx = −w','dV/dx = M','V = wx²/2'], a:1, t:'Relations', e:'The slope of the SFD equals minus the load intensity.' },
+ { q:'The bending moment is maximum where the shear force:', o:['is maximum','is zero or changes sign','is minimum','equals the reaction'], a:1, t:'Relations', e:'Because dM/dx = V, the moment is stationary where V = 0.' },
+ { q:'For a cantilever of span L with a UDL w, the maximum bending moment is:', o:['wL²/8','wL²/2','wL²/6','wL/2'], a:1, t:'Cantilever', e:'At the fixed end, hogging, and four times the simply supported value.' },
+ { q:'For a simply supported beam of span L with a UDL w, the maximum bending moment is:', o:['wL²/2','wL²/8','wL²/4','wL²/6'], a:1, t:'Simply supported', e:'At mid-span, where the shear crosses zero.' },
+ { q:'For a simply supported beam with a central point load W, the maximum bending moment is:', o:['WL/2','WL/4','WL/8','WL'], a:1, t:'Simply supported', e:'Reactions W/2 each, so M = (W/2)(L/2) = WL/4.' },
+ { q:'Under a UDL, the bending moment diagram is:', o:['a straight line','a parabola','a cubic','a rectangle'], a:1, t:'Bending moment', e:'The SFD is linear, so the BMD is second degree.' },
+ { q:'At a point load, the shear force diagram shows:', o:['a kink','a sudden jump','no change','a parabola'], a:1, t:'Shear force', e:'A finite force applied over zero length gives a step equal to the load.' },
+ { q:'At an applied couple, the shear force diagram shows:', o:['a jump equal to the couple','no change','a kink','a parabola'], a:1, t:'Bending moment', e:'A couple has no vertical component, so the SFD is unaffected. The BMD jumps.' },
+ { q:'A point of contraflexure is a section where:', o:['shear force is zero','bending moment is zero and changes sign','the load is maximum','the reaction acts'], a:1, t:'Overhang & hinge', e:'The curvature reverses and the tension face swaps from one side to the other.' },
+ { q:'The bending moment at an internal hinge is:', o:['maximum','zero','equal to the shear','indeterminate'], a:1, t:'Overhang & hinge', e:'A hinge transmits shear but not moment — this is the extra equation.' },
+ { q:'The resultant of a triangular load of peak w over a length a acts at:', o:['a/2 from either end','a/3 from the wide end','a/4 from the wide end','2a/3 from the wide end'], a:1, t:'Reactions', e:'The centroid of a triangle is one third of the length from its wide end.' },
+ { q:'The degree of static indeterminacy of a propped cantilever is:', o:['0','1','2','3'], a:1, t:'Reactions', e:'Four reaction components against three equations.' },
+ { q:'For a simply supported beam with a point load W at distances a and b from the supports, the maximum moment is:', o:['WL/4','Wab/L','W(a+b)/2','Wab/2'], a:1, t:'Simply supported', e:'It occurs under the load and reduces to WL/4 when a = b = L/2.' },
+ { q:'The change in bending moment between two sections equals:', o:['the area of the load diagram','the area of the shear force diagram','the slope of the SFD','the reaction'], a:1, t:'Relations', e:'Because M₂ − M₁ = ∫V dx.' },
+ { q:'The bending moment at a free end of a cantilever is:', o:['maximum','zero','equal to WL','equal to the reaction'], a:1, t:'Cantilever', e:'There is nothing beyond it to produce a moment, unless a couple is applied there.' },
+ { q:'A UVL produces a bending moment diagram that is:', o:['linear','parabolic','cubic','constant'], a:2, t:'Bending moment', e:'Load is linear, shear is parabolic, moment is cubic — one degree per integration.' }
+];
+
+const FILLQ = [
+ { pre:'The slope of the bending moment diagram at any section equals the', ans:['shear force','shear','v'], post:'.' },
+ { pre:'For a simply supported beam of span L with a UDL w, the maximum bending moment is wL² divided by', ans:['8'], post:'.' },
+ { pre:'A section where the bending moment changes sign is called the point of', ans:['contraflexure','contra flexure','inflexion','inflection'], post:'.' },
+ { pre:'The bending moment at an internal hinge is always', ans:['zero','0'], post:'.' },
+ { pre:'Under a uniformly distributed load the shear force diagram is a', ans:['straight line','line','linear','sloping line'], post:'.' },
+ { pre:'At an applied couple the bending moment diagram shows a sudden', ans:['jump','step','change'], post:'.' },
+ { pre:'For a cantilever of span L carrying a point load W at the free end, the maximum bending moment is', ans:['wl','w l','wxl','w*l'], post:' (write as WL).' },
+ { pre:'A sagging bending moment produces tension at the', ans:['bottom','bottom fibre','bottom fiber'], post:'.' }
+];
+
+const TFQ = [
+ { q:'The shear force diagram must return to zero at the far end of the beam.', a:true, e:'All vertical forces balance, so the accumulated shear closes to zero.' },
+ { q:'An applied couple causes a jump in the shear force diagram.', a:false, e:'It has no vertical component. Only the BMD jumps.' },
+ { q:'The maximum bending moment always occurs at mid-span.', a:false, e:'Only for symmetric loading. In general it is where the shear crosses zero, and on an overhang it may be at a support.' },
+ { q:'The point of contraflexure and the point of zero shear are the same section.', a:false, e:'Zero shear gives maximum moment; zero moment gives contraflexure.' },
+ { q:'A reaction can be directed downward.', a:true, e:'On an overhanging beam this is common, and the support must be able to hold the beam down.' },
+ { q:'Under a UDL the bending moment diagram is a straight line.', a:false, e:'It is a parabola. The SFD is the straight line.' },
+ { q:'A cantilever carries four times the bending moment of a simply supported beam of the same span and UDL.', a:true, e:'wL²/2 against wL²/8.' },
+ { q:'The resultant of a UDL may be used to calculate the shear force at a section inside the loaded length.', a:false, e:'Use it for reactions only. Inside the load, use the partial length up to the section.' },
+ { q:'The bending moment is zero at a simple end support carrying no couple.', a:true, e:'There is nothing beyond it to generate a moment.' },
+ { q:'Between two equal point loads at the third points of a simply supported beam, the beam is in pure bending.', a:true, e:'Shear is zero and moment is constant there — the basis of the laboratory flexure test.' }
+];
+
+const MATCHQ = [
+ { l:'SS beam, UDL w, span L', r:'M_max = wL²/8' },
+ { l:'Cantilever, UDL w, span L', r:'M_max = wL²/2' },
+ { l:'SS beam, central point load W', r:'M_max = WL/4' },
+ { l:'Cantilever, W at free end', r:'M_max = WL' },
+ { l:'SS beam, W at a and b', r:'M_max = Wab/L' },
+ { l:'Cantilever, UVL peaking at fixed end', r:'M_max = wL²/6' },
+ { l:'dM/dx', r:'Shear force V' },
+ { l:'dV/dx', r:'Minus the load intensity' }
+];
+
+const NUMQ = [
+ { q:'A cantilever of 3.5 m carries a UDL of 12 kN/m. Find the maximum bending moment in kN·m (give the magnitude).', a:73.5, u:'kN·m', t:'Cantilever', hint:'M = wL²/2 = 12 × 3.5² / 2.' },
+ { q:'A simply supported beam of 7 m carries a UDL of 16 kN/m. Find the maximum bending moment in kN·m.', a:98, u:'kN·m', t:'Simply supported', hint:'M = wL²/8 = 16 × 49 / 8.' },
+ { q:'A simply supported beam of 9 m carries 45 kN at 3 m from A. Find the reaction at A in kN.', a:30, u:'kN', t:'Reactions', hint:'R_A = Wb/L = 45 × 6 / 9.' },
+ { q:'For the previous beam, find the maximum bending moment in kN·m.', a:90, u:'kN·m', t:'Simply supported', hint:'M = Wab/L = 45 × 3 × 6 / 9.' },
+ { q:'A beam of 6 m is supported at A (0 m) and B (4 m) with a 2 m overhang, carrying 12 kN/m throughout. Find the reaction at B in kN.', a:54, u:'kN', t:'Overhang & hinge', hint:'Total 72 kN at 3 m from A; take moments about A and divide by 4.' },
+ { q:'A simply supported beam of 5 m carries a UDL of 24 kN/m. If the permissible bending stress is 165 MPa, find the required section modulus in ×10³ mm³.', a:454.5, u:'×10³ mm³', t:'Max BM & design', hint:'M = wL²/8 = 75 kN·m = 75×10⁶ N·mm, then Z = M/σ.' }
+];
+
+const CASEQ = [
+ { q:'1. Reaction at support B (kN)', a:101.5, hint:'UDL resultant 105 kN at 3.5 m, plus 20 kN at 7 m. Moments about A: (105 × 3.5 + 20 × 7) / 5.' },
+ { q:'2. Reaction at support A (kN)', a:23.5, hint:'R_A = total load 125 kN minus R_B.' },
+ { q:'3. Maximum sagging moment in span AB (kN·m)', a:18.41, hint:'Zero shear at x = 23.5/15 = 1.567 m, then M = 23.5x − 15x²/2.' },
+ { q:'4. Hogging moment at B (kN·m, give the magnitude)', a:70, hint:'Easier from the overhang side: 15 × 2 × 1 + 20 × 2.' },
+ { q:'5. Required section modulus at 165 MPa (×10³ mm³)', a:424.2, hint:'Design for the largest moment magnitude, 70 kN·m = 70×10⁶ N·mm, then Z = M/σ.' }
+];
+
+const ADQ = [
+ { d:1, q:'Shear force is the sum of:', o:['moments','vertical forces on one side','areas','stresses'], a:1 },
+ { d:1, q:'Sagging moment puts the bottom fibre in:', o:['compression','tension','shear','torsion'], a:1 },
+ { d:1, q:'The BMD at a free end of a cantilever is:', o:['maximum','zero','equal to WL','negative'], a:1 },
+ { d:2, q:'For a SS beam with UDL w and span L, M_max is:', o:['wL²/2','wL²/8','wL²/4','wL/8'], a:1 },
+ { d:2, q:'Under a UDL the SFD is:', o:['constant','a sloping line','a parabola','a cubic'], a:1 },
+ { d:2, q:'dM/dx equals:', o:['−w','V','M','0'], a:1 },
+ { d:3, q:'A point of contraflexure is where:', o:['V = 0','M = 0 and changes sign','the load peaks','the reaction acts'], a:1 },
+ { d:3, q:'An applied couple of 25 kN·m on a beam causes:', o:['a 25 kN jump in the SFD','a 25 kN·m jump in the BMD','no effect at all','a kink in the SFD'], a:1 },
+ { d:3, q:'The bending moment at an internal hinge is:', o:['maximum','zero','equal to the shear','half the span moment'], a:1 },
+ { d:4, q:'A cantilever of 4 m with a UDL of 15 kN/m has M_max of:', o:['30 kN·m','60 kN·m','120 kN·m','240 kN·m'], a:2 },
+ { d:4, q:'A SS beam of 6 m with 60 kN at 2 m from A has R_A equal to:', o:['20 kN','30 kN','40 kN','60 kN'], a:2 },
+ { d:4, q:'A SS beam of 8 m with a UDL of 10 kN/m — the shear force is zero at:', o:['2 m','4 m','6 m','8 m'], a:1 },
+ { d:5, q:'A beam of 6 m on supports at 0 and 4 m carries 10 kN/m throughout. The hogging moment at B is:', o:['−10 kN·m','−20 kN·m','−30 kN·m','−45 kN·m'], a:1 },
+ { d:5, q:'For that same beam, the point of contraflexure from A is at:', o:['1.5 m','2.0 m','3.0 m','4.0 m'], a:2 },
+ { d:5, q:'A SS beam of 6 m carries 10 kN/m plus 40 kN at 2 m from A. M_max is closest to:', o:['45 kN·m','67 kN·m','93 kN·m','113 kN·m'], a:2 }
+];
+
+const FLASH = [
+ ['Shear force','Algebraic sum of vertical forces on one side of a section'],
+ ['Bending moment','Algebraic sum of moments about the section of forces on one side'],
+ ['Sagging','Tension at the bottom fibre, taken as positive'],
+ ['Contraflexure','Section where the bending moment passes through zero'],
+ ['Internal hinge','Transmits shear but not moment'],
+ ['Point of zero shear','Section where the bending moment is a maximum']
+];
+
+const HUNTS = [
+ { t:'For a simply supported beam of 8 m with a UDL of 10 kN/m, M_max = 10 × 8² / 8 = 80 kN·m.', ok:true, e:'Correct application of wL²/8.' },
+ { t:'For a cantilever of 4 m with a UDL of 10 kN/m, M_max = 10 × 4² / 8 = 20 kN·m.', ok:false, e:'Cantilever uses wL²/2, giving 80 kN·m. The /8 formula is for a simply supported beam.' },
+ { t:'An applied couple of 20 kN·m causes the SFD to jump by 20 kN at that section.', ok:false, e:'A couple has no vertical force. Only the BMD jumps.' },
+ { t:'The maximum bending moment occurs where the shear force changes sign.', ok:true, e:'Correct — it follows from dM/dx = V.' },
+ { t:'A UVL of peak 18 kN/m over 6 m has a resultant of 54 kN acting 3 m from the wide end.', ok:false, e:'The magnitude 54 kN is right, but a triangle centroid sits at 6/3 = 2 m from the wide end.' },
+ { t:'On an overhanging beam the reaction at the far support can be negative.', ok:true, e:'Correct — it is a hold-down force and the support must be detailed for it.' },
+ { t:'Under a UDL the bending moment diagram is a straight line.', ok:false, e:'It is a parabola. The straight line is the SFD.' },
+ { t:'The bending moment at an internal hinge is zero, and this supplies the extra equation for a compound beam.', ok:true, e:'Correct — that is exactly what makes such beams determinate.' },
+ { t:'For a simply supported beam with 40 kN at 2 m from A on a 6 m span, R_A = 40 × 2 / 6 = 13.33 kN.', ok:false, e:'R_A = Wb/L uses the far distance: 40 × 4 / 6 = 26.67 kN. The larger reaction is nearer the load.' },
+ { t:'Between two equal point loads at the third points, the shear is zero and the moment is constant.', ok:true, e:'Correct — pure bending, which is why the flexure test uses this arrangement.' }
+];
+
+const SHAPES = [
+ { c:'A cantilever carries a single point load at its free end. What shapes are the SFD and BMD?', a:'Rectangle / triangle' },
+ { c:'A cantilever carries a UDL over its whole length. What shapes are the SFD and BMD?', a:'Triangle / parabola' },
+ { c:'A simply supported beam carries a UDL over its whole span. What shapes are the SFD and BMD?', a:'Sloping line / parabola' },
+ { c:'A simply supported beam carries a single point load at mid-span. What shapes are the SFD and BMD?', a:'Two steps / triangle' },
+ { c:'A cantilever carries a UVL, zero at the free end. What shapes are the SFD and BMD?', a:'Parabola / cubic' },
+ { c:'A simply supported beam carries only a couple within the span. What shapes are the SFD and BMD?', a:'Horizontal line / two lines with a jump' }
+];
+const SHAPE_OPTS = ['Rectangle / triangle','Triangle / parabola','Sloping line / parabola','Two steps / triangle','Parabola / cubic','Horizontal line / two lines with a jump'];
+
+const TUTOR_KB = [
+ { k:['shear force','sfd','shear'], a:'Shear force at a section is the algebraic sum of all vertical forces on one side: <b>V = ΣF<sub>y,left</sub></b>. Positive when the left-hand resultant acts upward. It jumps at a point load or reaction, slopes under a UDL, and is unaffected by an applied couple. Module 7.' },
+ { k:['bending moment','bmd','sagging','hogging'], a:'Bending moment is the sum of moments about the section of the forces on one side. <b>Sagging is positive</b> — tension at the bottom fibre. Hogging is negative, tension at the top, and is what a cantilever has throughout. Module 8.' },
+ { k:['relation','dm/dx','dv/dx','derivative','slope'], a:'<b>dV/dx = −w</b> and <b>dM/dx = V</b>, so d²M/dx² = −w. Consequences: the moment is maximum where the shear crosses zero, the change in shear equals the area of the load diagram, and the change in moment equals the area of the SFD. Module 9.' },
+ { k:['reaction','support','equilibrium'], a:'Take moments about one support so the other drops out: R<sub>B</sub> = (ΣW<sub>i</sub>x<sub>i</sub> + ΣM<sub>j</sub>)/L, then ΣF<sub>y</sub> for the other. Always check with ΣM about the second support. Module 6.' },
+ { k:['cantilever'], a:'Start from the free end so you need no reactions first. Moment is hogging throughout and largest at the fixed end: <b>WL</b> for a point load at the tip, <b>wL²/2</b> for a UDL, <b>wL²/6</b> for a UVL peaking at the fixed end. Module 10.' },
+ { k:['simply supported','ss beam','wl/4','wl2/8'], a:'Reactions first. <b>M_max = WL/4</b> for a central point load, <b>Wab/L</b> for an off-centre load, <b>wL²/8</b> for a full UDL. The moment is zero at both ends. Module 11.' },
+ { k:['contraflexure','inflexion','inflection','overhang'], a:'A point of contraflexure is where the bending moment passes through zero and the curvature reverses. Find it by writing M(x) for the region and setting it to zero, keeping only roots inside that region. It fixes where reinforcement is curtailed. Module 12.' },
+ { k:['couple','moment applied','concentrated moment'], a:'An applied couple leaves the SFD completely unchanged and makes the BMD jump by its own magnitude. It enters ΣM when finding reactions but never ΣF<sub>y</sub>. Module 13.' },
+ { k:['hinge','gerber','compound'], a:'An internal hinge transmits shear but not moment, so <b>M = 0</b> there. Analyse the suspended part first, then apply the hinge force as a point load on the supported part. The BMD passing through zero at the hinge is your check. Module 14.' },
+ { k:['maximum','max bm','zero shear','where is'], a:'The moment is maximum where V = 0 or changes sign. Solve V(x) = 0 within each region and <b>reject roots outside their region</b> — then the sign change is at a point load, and you evaluate M there directly. Also check every support of an overhanging beam. Module 15.' },
+ { k:['udl','uvl','distributed','triangular','resultant','centroid'], a:'UDL resultant = w × a at the mid-length. UVL resultant = ½ w × a at one third from the wide end. Use resultants for reactions only — inside the loaded region use the partial length. Module 5.' },
+ { k:['determinate','indeterminate','determinacy'], a:'D<sub>s</sub> = R − (3 + h). Zero means determinate and solvable here; positive means indeterminate; negative means a mechanism. A propped cantilever is 1, a fixed beam is 3. Module 4.' },
+ { k:['shape','parabola','cubic','degree'], a:'Each step raises the degree by one. Point load → SFD constant, BMD linear. UDL → SFD linear, BMD parabolic. UVL → SFD parabolic, BMD cubic. Module 20 has the full table.' },
+ { k:['section modulus','design','z =','stress','unit 3'], a:'Once M_max is known, Z<sub>required</sub> = M/σ<sub>permissible</sub>. Convert M from kN·m to N·mm by multiplying by 10⁶, and keep σ in N/mm². That conversion is where most marks are lost.' },
+ { k:['stirrup','reinforcement','steel','detailing','rcc'], a:'Shear peaks at the supports, so stirrups are closest there. Tension steel follows the sign of the BMD: bottom where sagging, top where hogging. Points of contraflexure mark where bars may be curtailed. Modules 3 and 12.' },
+ { k:['formula','sheet','revision','revise','standard'], a:'Module 20 is a printable formula and diagram-shape sheet with all the standard cases, and Module 21 shows how the topics connect.' },
+ { k:['solver','draw','plot','check my'], a:'Module 17 is a full beam solver — set the span, supports and loads and it computes reactions and plots the SFD and BMD with the salient values. Use it to check your hand solution, not to replace it.' }
+];
+</script>
+
+<script>
+/* ============================================================
+   BEAM ENGINE
+   Sign convention (fixed throughout this file):
+     V(x) = sum of vertical forces to the LEFT of x, upward positive
+     M(x) = sum of moments about x of forces to the LEFT, sagging positive
+   Loads are entered as downward positive; couples clockwise positive.
+   ============================================================ */
+
+function solveBeam(cfg) {
+  const L = +cfg.L;
+  const loads = (cfg.loads || []).filter(l =>
+    (l.kind === 'point' && isFinite(l.P) && isFinite(l.x)) ||
+    (l.kind === 'udl'   && isFinite(l.w) && l.x2 > l.x1) ||
+    (l.kind === 'moment'&& isFinite(l.M) && isFinite(l.x)));
+
+  let sumW = 0, sumWx = 0, sumM = 0;
+  loads.forEach(l => {
+    if (l.kind === 'point') { sumW += l.P; sumWx += l.P * l.x; }
+    else if (l.kind === 'udl') { const len = l.x2 - l.x1, W = l.w * len; sumW += W; sumWx += W * (l.x1 + len/2); }
+    else if (l.kind === 'moment') { sumM += l.M; }
+  });
+
+  const reactions = [];                       // {x, R} upward positive
+  const couples = loads.filter(l => l.kind === 'moment').map(l => ({ x:l.x, M:l.M }));
+  let msg = '', ok = true, fixedMoment = null;
+
+  if (cfg.type === 'cant') {
+    reactions.push({ x:0, R:sumW, label:'A (fixed)' });
+    fixedMoment = -(sumWx + sumM);            // support couple, clockwise positive
+    couples.push({ x:0, M:fixedMoment });
+  } else {
+    const xa = +cfg.xa, xb = +cfg.xb, d = xb - xa;
+    if (!(d > 0)) return { ok:false, msg:'Support B must be to the right of support A.' };
+    const Rb = (sumWx - sumW*xa + sumM) / d;
+    const Ra = sumW - Rb;
+    reactions.push({ x:xa, R:Ra, label:'A' }, { x:xb, R:Rb, label:'B' });
+    if (Ra < -1e-9 || Rb < -1e-9) msg = 'One reaction is negative, so it acts downward. The support must be able to hold the beam down — a real result on overhanging beams, not an error.';
+  }
+
+  /* --- section functions --- */
+  const V = x => {
+    let v = 0;
+    reactions.forEach(r => { if (r.x <= x + 1e-12) v += r.R; });
+    loads.forEach(l => {
+      if (l.kind === 'point') { if (l.x <= x + 1e-12) v -= l.P; }
+      else if (l.kind === 'udl') {
+        const a = Math.min(Math.max(x, l.x1), l.x2);
+        if (a > l.x1) v -= l.w * (a - l.x1);
+      }
+    });
+    return v;
+  };
+  const M = x => {
+    let m = 0;
+    reactions.forEach(r => { if (r.x <= x + 1e-12) m += r.R * (x - r.x); });
+    loads.forEach(l => {
+      if (l.kind === 'point') { if (l.x <= x + 1e-12) m -= l.P * (x - l.x); }
+      else if (l.kind === 'udl') {
+        const a = Math.min(Math.max(x, l.x1), l.x2);
+        if (a > l.x1) { const len = a - l.x1; m -= l.w * len * (x - (l.x1 + len/2)); }
+      }
+    });
+    couples.forEach(c => { if (c.x <= x + 1e-12) m += c.M; });
+    return m;
+  };
+
+  /* --- sampling, with duplicated points at every discontinuity --- */
+  const eps = 1e-7;
+  const breaks = new Set([0, L]);
+  reactions.forEach(r => breaks.add(r.x));
+  loads.forEach(l => {
+    if (l.kind === 'point' || l.kind === 'moment') breaks.add(l.x);
+    else { breaks.add(l.x1); breaks.add(l.x2); }
+  });
+  const bp = [...breaks].filter(x => x >= -1e-9 && x <= L + 1e-9).sort((a,b) => a-b);
+
+  const samples = [];
+  for (let i = 0; i < bp.length - 1; i++) {
+    const a = bp[i], b = bp[i+1];
+    if (b - a < 1e-9) continue;
+    samples.push({ x:a, V:V(a + eps), M:M(a + eps) });
+    const n = 60;
+    for (let k = 1; k < n; k++) { const x = a + (b - a)*k/n; samples.push({ x, V:V(x), M:M(x) }); }
+    samples.push({ x:b, V:V(b - eps), M:M(b - eps) });   // pre-jump value at the segment end
+  }
+
+  /* --- chart series that show the jumps honestly --- */
+  const sfd = [], bmd = [];
+  bp.forEach((x, i) => {
+    if (i > 0) { sfd.push({ x, y:round(V(x - eps)) }); bmd.push({ x, y:round(M(x - eps)) }); }
+    if (i < bp.length - 1) { sfd.push({ x, y:round(V(x + eps)) }); bmd.push({ x, y:round(M(x + eps)) }); }
+    if (i < bp.length - 1) {
+      const a = bp[i], b = bp[i+1], n = 40;
+      for (let k = 1; k < n; k++) { const xx = a + (b - a)*k/n; sfd.push({ x:round(xx), y:round(V(xx)) }); bmd.push({ x:round(xx), y:round(M(xx)) }); }
+    }
+  });
+
+  /* --- salient values --- */
+  let maxV = 0, maxVx = 0, maxM = 0, maxMx = 0;
+  samples.forEach(s => {
+    if (Math.abs(s.V) > Math.abs(maxV) + 1e-9) { maxV = s.V; maxVx = s.x; }
+    if (Math.abs(s.M) > Math.abs(maxM) + 1e-9) { maxM = s.M; maxMx = s.x; }
+  });
+
+  /* Sign changes, handling three cases: a clean crossing between two
+     samples, an exact zero landing on a sample, and a jump where two
+     samples share the same x (a point load, reaction or couple). */
+  function signChanges(key) {
+    const out = [];
+    for (let i = 1; i < samples.length; i++) {
+      const p = samples[i-1], q = samples[i], a = p[key], b = q[key];
+      if (Math.abs(b) < 1e-9) {
+        const nxt = samples[i+1];
+        if (nxt && a * nxt[key] < 0) out.push(round(q.x));
+        continue;
+      }
+      if (Math.abs(a) < 1e-9) continue;          // already dealt with above
+      if (a * b >= 0) continue;
+      if (Math.abs(q.x - p.x) < 1e-12) out.push(round(q.x));   // jump
+      else out.push(round(p.x + a/(a - b) * (q.x - p.x)));     // interpolate
+    }
+    return out;
+  }
+  const dedupe = arr => arr.filter((v,i) => arr.findIndex(u => Math.abs(u-v) < 1e-3) === i)
+                           .filter(v => v > 1e-6 && v < L - 1e-6);
+  const zeroShear = signChanges('V'), contraflex = signChanges('M');
+
+  return {
+    ok, msg, L, reactions, fixedMoment, sfd, bmd, samples,
+    maxV:round(maxV), maxVx:round(maxVx), maxM:round(maxM), maxMx:round(maxMx),
+    zeroShear:dedupe(zeroShear), contraflex:dedupe(contraflex),
+    totalLoad:round(sumW), V, M
+  };
+}
+function round(v) { return Math.round(v * 1e6) / 1e6; }
+function f2(v) { return (Math.abs(v) < 1e-9 ? 0 : v).toFixed(2); }
+
+/* ---------- chart helpers ---------- */
+function diagramChart(canvasId, label, data, color, existing) {
+  if (existing) { existing.data.datasets[0].data = data; existing.update('none'); return existing; }
+  const c = new Chart(document.getElementById(canvasId), {
+    type: 'line',
+    data: { datasets: [{ label, data, borderColor: color, backgroundColor: color + '33',
+      borderWidth: 2, pointRadius: 0, fill: 'origin', tension: 0 }] },
+    options: { responsive:true, maintainAspectRatio:false, animation:false,
+      scales: { x:{ type:'linear', title:{display:true,text:'Distance from left end (m)'}, grid:{}, ticks:{} },
+                y:{ title:{display:true,text:label}, grid:{}, ticks:{} } },
+      plugins:{ legend:{ display:false },
+        tooltip:{ callbacks:{ label: ctx => ctx.parsed.y.toFixed(2) + ' at x = ' + ctx.parsed.x.toFixed(2) + ' m' } } } }
+  });
+  applyChartTheme(c); c.update();
+  return c;
+}
+
+/* ---------- beam sketch as SVG ---------- */
+function beamSVG(cfg, res) {
+  const L = +cfg.L, W = 720, H = 110, m = 40, sx = v => m + (v/L)*(W - 2*m), y0 = 62;
+  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="w-full" aria-label="Beam sketch">';
+  s += '<rect x="' + sx(0) + '" y="' + (y0-7) + '" width="' + (sx(L)-sx(0)) + '" height="14" fill="#0ea5e9" fill-opacity=".28" stroke="#0ea5e9"/>';
+
+  if (cfg.type === 'cant') {
+    s += '<rect x="' + (sx(0)-12) + '" y="' + (y0-28) + '" width="12" height="56" fill="#64748b"/>';
+    s += '<text x="' + sx(0) + '" y="' + (y0+42) + '" font-size="11" text-anchor="middle" fill="#64748b">A (fixed)</text>';
+  } else {
+    (res.reactions || []).forEach(r => {
+      s += '<polygon points="' + sx(r.x) + ',' + (y0+8) + ' ' + (sx(r.x)-10) + ',' + (y0+26) + ' ' + (sx(r.x)+10) + ',' + (y0+26) + '" fill="#64748b"/>';
+      s += '<text x="' + sx(r.x) + '" y="' + (y0+40) + '" font-size="11" text-anchor="middle" fill="#64748b">' + r.label + ' ' + f2(r.R) + ' kN</text>';
+    });
+  }
+
+  (cfg.loads || []).forEach(l => {
+    if (l.kind === 'point') {
+      s += '<line x1="' + sx(l.x) + '" y1="' + (y0-40) + '" x2="' + sx(l.x) + '" y2="' + (y0-9) + '" stroke="#dc2626" stroke-width="2"/>';
+      s += '<polygon points="' + sx(l.x) + ',' + (y0-7) + ' ' + (sx(l.x)-5) + ',' + (y0-18) + ' ' + (sx(l.x)+5) + ',' + (y0-18) + '" fill="#dc2626"/>';
+      s += '<text x="' + sx(l.x) + '" y="' + (y0-45) + '" font-size="11" text-anchor="middle" fill="#dc2626">' + l.P + ' kN</text>';
+    } else if (l.kind === 'udl') {
+      s += '<rect x="' + sx(l.x1) + '" y="' + (y0-34) + '" width="' + (sx(l.x2)-sx(l.x1)) + '" height="25" fill="#f59e0b" fill-opacity=".22" stroke="#f59e0b"/>';
+      for (let i = 0; i <= 6; i++) {
+        const xx = sx(l.x1) + (sx(l.x2)-sx(l.x1))*i/6;
+        s += '<line x1="' + xx + '" y1="' + (y0-32) + '" x2="' + xx + '" y2="' + (y0-11) + '" stroke="#f59e0b" stroke-width="1.4"/>';
+      }
+      s += '<text x="' + ((sx(l.x1)+sx(l.x2))/2) + '" y="' + (y0-40) + '" font-size="11" text-anchor="middle" fill="#d97706">' + l.w + ' kN/m</text>';
+    } else if (l.kind === 'moment') {
+      s += '<path d="M' + (sx(l.x)-14) + ',' + (y0-16) + ' A14,14 0 1 1 ' + (sx(l.x)+14) + ',' + (y0-16) + '" fill="none" stroke="#7c3aed" stroke-width="2"/>';
+      s += '<polygon points="' + (sx(l.x)+14) + ',' + (y0-16) + ' ' + (sx(l.x)+8) + ',' + (y0-24) + ' ' + (sx(l.x)+19) + ',' + (y0-24) + '" fill="#7c3aed"/>';
+      s += '<text x="' + sx(l.x) + '" y="' + (y0-38) + '" font-size="11" text-anchor="middle" fill="#7c3aed">' + l.M + ' kN·m</text>';
+    }
+  });
+
+  s += '<line x1="' + sx(0) + '" y1="' + (y0+52) + '" x2="' + sx(L) + '" y2="' + (y0+52) + '" stroke="#94a3b8" stroke-width="1"/>';
+  s += '<text x="' + ((sx(0)+sx(L))/2) + '" y="' + (y0+48) + '" font-size="11" text-anchor="middle" fill="#94a3b8">' + L + ' m</text>';
+  return s + '</svg>';
+}
+</script>
+
+<script>
+/* ================= SHELL ================= */
+let currentModule = 1;
+
+function initNav() {
+  const nav = document.getElementById('nav-menu');
+  modules.forEach(m => {
+    const b = document.createElement('button');
+    b.id = 'nav-btn-' + m.id;
+    b.className = 'w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium transition-colors flex items-center gap-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700';
+    b.onclick = () => switchModule(m.id);
+    b.innerHTML = '<span class="num text-[11px] text-gray-400 w-5 shrink-0">' + m.id + '</span><span class="flex-1">' + m.title + '</span><i class="fas fa-circle-check text-[10px] text-green-500 opacity-0" id="tick-' + m.id + '"></i>';
+    nav.appendChild(b);
+  });
+  refreshTicks();
+}
+function refreshTicks() {
+  modules.forEach(m => { const t = document.getElementById('tick-' + m.id); if (t) t.style.opacity = state.visited.has(m.id) ? '1' : '0'; });
+  const n = state.visited.size;
+  document.getElementById('progress-bar').style.width = (n / modules.length * 100) + '%';
+  document.getElementById('progress-label').textContent = n + '/26';
+}
+function switchModule(id) {
+  document.querySelectorAll('#nav-menu button').forEach(b => {
+    b.classList.remove('bg-brand-50','text-brand-900','dark:bg-gray-700','dark:text-white');
+    b.classList.add('text-gray-600','dark:text-gray-400');
+  });
+  const a = document.getElementById('nav-btn-' + id);
+  if (a) { a.classList.remove('text-gray-600','dark:text-gray-400'); a.classList.add('bg-brand-50','text-brand-900','dark:bg-gray-700','dark:text-white'); }
+  document.querySelectorAll('.module-content').forEach(m => m.classList.remove('active'));
+  const target = document.getElementById('module-' + id);
+  (target || document.getElementById('module-placeholder')).classList.add('active');
+
+  currentModule = id;
+  state.visited.add(id);
+  store.set('som2_visited', [...state.visited]);
+  refreshTicks(); saveTime();
+
+  if (window.MathJax && MathJax.typesetPromise && target) MathJax.typesetPromise([target]).catch(()=>{});
+  if (id === 10) showCant(cantIdx);
+  if (id === 11) showSS(ssIdx);
+  if (id === 12) drawOverhang();
+  if (id === 13) drawCouple();
+  if (id === 17) runSolver();
+  if (id === 18) calc18();
+  if (id === 25) buildDashboard();
+  if (id === 26) buildTeacher();
+  if (window.innerWidth < 768) document.getElementById('sidebar').classList.add('-translate-x-full');
+  document.getElementById('main-content').scrollTop = 0;
+}
+const charts = {};
+function toggleTheme() {
+  const dark = document.documentElement.classList.toggle('dark');
+  store.set('som2_theme', dark ? 'dark' : 'light');
+  document.getElementById('theme-icon').className = dark ? 'fas fa-sun' : 'fas fa-moon';
+  Object.values(charts).forEach(c => { if (c) { applyChartTheme(c); c.update(); } });
+}
+function applyChartTheme(c) {
+  const dark = document.documentElement.classList.contains('dark');
+  const grid = dark ? 'rgba(148,163,184,.18)' : 'rgba(100,116,139,.15)';
+  const tick = dark ? '#cbd5e1' : '#475569';
+  Object.values(c.options.scales || {}).forEach(s => {
+    if (s.grid) s.grid.color = grid;
+    if (s.ticks) s.ticks.color = tick;
+    if (s.title) s.title.color = tick;
+    if (s.pointLabels) s.pointLabels.color = tick;
+  });
+  if (c.options.plugins && c.options.plugins.legend) c.options.plugins.legend.labels = { color: tick };
+}
+function saveTime() { const n = Date.now(); state.elapsed += (n - state.started); state.started = n; store.set('som2_elapsed', state.elapsed); }
+function minutes() { saveTime(); return Math.round(state.elapsed / 60000); }
+function logAnswer(level, topic, correct) { state.records.push({ level, topic, correct, ts: Date.now() }); store.set('som2_records', state.records); }
+
+/* ================= M5 RESULTANT ================= */
+function initM5() {
+  ['rc-type','rc-w1','rc-w2','rc-a'].forEach(i => document.getElementById(i).addEventListener('input', calcRC));
+  document.getElementById('rc-type').addEventListener('change', () => {
+    const t = document.getElementById('rc-type').value;
+    document.getElementById('rc-wrap2').classList.toggle('hidden', t !== 'trap');
+    document.getElementById('rc-l1').textContent = t === 'trap' ? 'w₁ at left (kN/m)' : t === 'uvl' ? 'Peak w at right (kN/m)' : 'Intensity w (kN/m)';
+    calcRC();
+  });
+  calcRC();
+}
+function calcRC() {
+  const t = document.getElementById('rc-type').value;
+  const w1 = parseFloat(document.getElementById('rc-w1').value) || 0;
+  const w2 = parseFloat(document.getElementById('rc-w2').value) || 0;
+  const a  = parseFloat(document.getElementById('rc-a').value) || 0;
+  let R, d, work;
+  if (t === 'udl') { R = w1*a; d = a/2; work = 'R = w × a = ' + w1 + ' × ' + a + ' = ' + f2(R) + ' kN at the mid-length, ' + f2(d) + ' m from the left end.'; }
+  else if (t === 'uvl') { R = 0.5*w1*a; d = 2*a/3; work = 'R = ½ w a = 0.5 × ' + w1 + ' × ' + a + ' = ' + f2(R) + ' kN, acting a/3 from the wide (right) end, that is ' + f2(d) + ' m from the left end.'; }
+  else {
+    const Rr = w1*a, Rt = 0.5*(w2-w1)*a;
+    R = Rr + Rt;
+    d = (Rr*(a/2) + Rt*(2*a/3)) / (R || 1);
+    work = 'Split into a rectangle ' + f2(Rr) + ' kN at ' + f2(a/2) + ' m plus a triangle ' + f2(Rt) + ' kN at ' + f2(2*a/3) + ' m. Combined R = ' + f2(R) + ' kN at ' + f2(d) + ' m from the left end.';
+  }
+  document.getElementById('rc-out').innerHTML =
+    '<div class="grid grid-cols-2 gap-3 text-center mb-3">' +
+    '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Resultant</p><p class="num font-bold text-lg text-brand-600">' + f2(R) + ' kN</p></div>' +
+    '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Acts at</p><p class="num font-bold text-lg">' + f2(d) + ' m from left</p></div></div>' +
+    '<p class="text-sm num">' + work + '</p>';
+}
+
+/* ================= M10 / M11 CASE VIEWERS ================= */
+let cantIdx = 0, ssIdx = 0;
+function initCases() {
+  const ct = document.getElementById('cant-tabs');
+  CANT_CASES.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border dark:border-gray-600 hover:border-brand-500';
+    b.textContent = c.name;
+    b.onclick = () => showCant(i);
+    ct.appendChild(b);
+  });
+  const st = document.getElementById('ss-tabs');
+  SS_CASES.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border dark:border-gray-600 hover:border-brand-500';
+    b.textContent = c.name;
+    b.onclick = () => showSS(i);
+    st.appendChild(b);
+  });
+}
+function markTabs(wrapId, i) {
+  const w = document.getElementById(wrapId);
+  [...w.children].forEach((b, k) => {
+    b.classList.toggle('bg-brand-500', k === i);
+    b.classList.toggle('text-white', k === i);
+    b.classList.toggle('border-brand-500', k === i);
+  });
+}
+function showCase(caseObj, idPrefix, tabWrap, idx) {
+  const res = solveBeam(caseObj.cfg);
+  markTabs(tabWrap, idx);
+  document.getElementById(idPrefix + '-desc').innerHTML = '<b>' + caseObj.name + '.</b> ' + caseObj.desc;
+  charts[idPrefix + 'sfd'] = diagramChart(idPrefix + '-sfd', 'Shear force (kN)', res.sfd, '#0ea5e9', charts[idPrefix + 'sfd']);
+  charts[idPrefix + 'bmd'] = diagramChart(idPrefix + '-bmd', 'Bending moment (kN·m)', res.bmd, '#7c3aed', charts[idPrefix + 'bmd']);
+  document.getElementById(idPrefix + '-work').innerHTML = caseObj.work.map(w => '<p>' + w + '</p>').join('') +
+    '<p class="pt-2 mt-2 border-t dark:border-gray-600">Computed by the solver: V<sub>max</sub> = ' + f2(res.maxV) + ' kN, M<sub>max</sub> = ' + f2(res.maxM) + ' kN·m at x = ' + f2(res.maxMx) + ' m</p>';
+}
+function showCant(i) { cantIdx = i; showCase(CANT_CASES[i], 'cant', 'cant-tabs', i); }
+function showSS(i) { ssIdx = i; showCase(SS_CASES[i], 'ss', 'ss-tabs', i); }
+
+function drawOverhang() {
+  const res = solveBeam({ type:'over', L:6, xa:0, xb:4, loads:[{kind:'udl', x1:0, x2:6, w:10}] });
+  charts.ohsfd = diagramChart('oh-sfd', 'Shear force (kN)', res.sfd, '#0ea5e9', charts.ohsfd);
+  charts.ohbmd = diagramChart('oh-bmd', 'Bending moment (kN·m)', res.bmd, '#7c3aed', charts.ohbmd);
+}
+function drawCouple() {
+  const res = solveBeam({ type:'ss', L:6, xa:0, xb:6, loads:[{kind:'moment', x:3, M:30}] });
+  charts.cpsfd = diagramChart('cp-sfd', 'Shear force (kN)', res.sfd, '#0ea5e9', charts.cpsfd);
+  charts.cpbmd = diagramChart('cp-bmd', 'Bending moment (kN·m)', res.bmd, '#7c3aed', charts.cpbmd);
+}
+
+/* ================= M16 NUMERICALS ================= */
+const LVLCOLOR = { Easy:'bg-green-100 text-green-800', Medium:'bg-blue-100 text-blue-800', University:'bg-purple-100 text-purple-800', GATE:'bg-orange-100 text-orange-800' };
+function initM16() {
+  const levels = ['All','Easy','Medium','University','GATE'];
+  const fw = document.getElementById('n16-filters'); fw.innerHTML = '';
+  levels.forEach(l => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border dark:border-gray-600 hover:border-brand-500';
+    b.textContent = l + ' (' + (l === 'All' ? N16.length : N16.filter(n => n.lvl === l).length) + ')';
+    b.onclick = () => { renderN16(l); fw.querySelectorAll('button').forEach(x => x.classList.remove('bg-brand-500','text-white','border-brand-500')); b.classList.add('bg-brand-500','text-white','border-brand-500'); };
+    if (l === 'All') b.classList.add('bg-brand-500','text-white','border-brand-500');
+    fw.appendChild(b);
+  });
+  renderN16('All');
+}
+function renderN16(filter) {
+  const list = document.getElementById('n16-list'); list.innerHTML = '';
+  N16.filter(n => filter === 'All' || n.lvl === filter).forEach((n, i) => {
+    const d = document.createElement('div');
+    d.className = 'card';
+    d.innerHTML =
+      '<div class="flex items-start gap-3 mb-2"><span class="chip ' + LVLCOLOR[n.lvl] + '">' + n.lvl + '</span><span class="chip bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">' + n.topic + '</span></div>' +
+      '<p class="font-medium mb-3">' + (i+1) + '. ' + n.q + '</p>' +
+      '<button class="text-sm px-3 py-1.5 rounded border dark:border-gray-600 hover:border-brand-500">Show solution</button>' +
+      '<div class="hidden mt-3 p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">' + n.s.map(x => '<p>' + x + '</p>').join('') + '</div>';
+    const btn = d.querySelector('button'), sol = d.querySelector('div.hidden');
+    btn.onclick = () => { sol.classList.toggle('hidden'); btn.textContent = sol.classList.contains('hidden') ? 'Show solution' : 'Hide solution'; };
+    list.appendChild(d);
+  });
+}
+
+/* ================= M17 SOLVER UI ================= */
+let beamLoads = [{ kind:'udl', x1:0, x2:6, w:10 }, { kind:'point', x:2, P:40 }];
+function initSolver() {
+  ['bs-type','bs-L','bs-a','bs-b'].forEach(i => document.getElementById(i).addEventListener('input', () => {
+    if (document.getElementById('bs-type').value === 'ss') {
+      document.getElementById('bs-a').value = 0;
+      document.getElementById('bs-b').value = document.getElementById('bs-L').value;
+    }
+    document.getElementById('bs-supports').style.display = document.getElementById('bs-type').value === 'cant' ? 'none' : '';
+    runSolver();
+  }));
+  renderLoadRows();
+}
+function addLoad(kind) {
+  const L = parseFloat(document.getElementById('bs-L').value) || 6;
+  if (kind === 'point') beamLoads.push({ kind:'point', x:+(L/2).toFixed(2), P:20 });
+  else if (kind === 'udl') beamLoads.push({ kind:'udl', x1:0, x2:L, w:10 });
+  else beamLoads.push({ kind:'moment', x:+(L/2).toFixed(2), M:20 });
+  renderLoadRows(); runSolver();
+}
+function removeLoad(i) { beamLoads.splice(i,1); renderLoadRows(); runSolver(); }
+function renderLoadRows() {
+  const box = document.getElementById('bs-loads'); box.innerHTML = '';
+  if (!beamLoads.length) box.innerHTML = '<p class="text-xs text-gray-500">No loads yet. Add one below.</p>';
+  beamLoads.forEach((l, i) => {
+    const d = document.createElement('div');
+    d.className = 'p-2 rounded border dark:border-gray-600 text-xs';
+    let fields = '';
+    if (l.kind === 'point') fields =
+      '<label class="block">P (kN)<input type="number" value="' + l.P + '" data-i="' + i + '" data-f="P" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>' +
+      '<label class="block">at x (m)<input type="number" step="0.25" value="' + l.x + '" data-i="' + i + '" data-f="x" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>';
+    else if (l.kind === 'udl') fields =
+      '<label class="block">w (kN/m)<input type="number" value="' + l.w + '" data-i="' + i + '" data-f="w" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>' +
+      '<label class="block">from (m)<input type="number" step="0.25" value="' + l.x1 + '" data-i="' + i + '" data-f="x1" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>' +
+      '<label class="block">to (m)<input type="number" step="0.25" value="' + l.x2 + '" data-i="' + i + '" data-f="x2" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>';
+    else fields =
+      '<label class="block">M (kN·m)<input type="number" value="' + l.M + '" data-i="' + i + '" data-f="M" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>' +
+      '<label class="block">at x (m)<input type="number" step="0.25" value="' + l.x + '" data-i="' + i + '" data-f="x" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>';
+    const names = { point:'Point load', udl:'UDL', moment:'Couple (clockwise +)' };
+    d.innerHTML = '<div class="flex justify-between items-center mb-1"><b>' + names[l.kind] + '</b>' +
+      '<button onclick="removeLoad(' + i + ')" class="text-red-500" aria-label="Remove load"><i class="fas fa-trash"></i></button></div>' +
+      '<div class="grid grid-cols-' + (l.kind === 'udl' ? '3' : '2') + ' gap-1">' + fields + '</div>';
+    box.appendChild(d);
+  });
+  box.querySelectorAll('.ld').forEach(inp => inp.addEventListener('input', () => {
+    beamLoads[+inp.dataset.i][inp.dataset.f] = parseFloat(inp.value);
+    runSolver();
+  }));
+}
+function loadPreset(p) {
+  const set = (type, L, a, b, loads) => {
+    document.getElementById('bs-type').value = type;
+    document.getElementById('bs-L').value = L;
+    document.getElementById('bs-a').value = a;
+    document.getElementById('bs-b').value = b;
+    document.getElementById('bs-supports').style.display = type === 'cant' ? 'none' : '';
+    beamLoads = loads; renderLoadRows(); runSolver();
+  };
+  if (p === 'ssudl') set('ss', 8, 0, 8, [{kind:'udl', x1:0, x2:8, w:12}]);
+  else if (p === 'overhang') set('over', 6, 0, 4, [{kind:'udl', x1:0, x2:6, w:10}]);
+  else if (p === 'cant') set('cant', 4, 0, 4, [{kind:'udl', x1:0, x2:4, w:10},{kind:'point', x:4, P:15}]);
+  else set('ss', 6, 0, 6, [{kind:'udl', x1:0, x2:6, w:10},{kind:'point', x:2, P:40}]);
+}
+function runSolver() {
+  const cfg = {
+    type: document.getElementById('bs-type').value,
+    L: parseFloat(document.getElementById('bs-L').value),
+    xa: parseFloat(document.getElementById('bs-a').value),
+    xb: parseFloat(document.getElementById('bs-b').value),
+    loads: beamLoads
+  };
+  if (cfg.type === 'ss') { cfg.xa = 0; cfg.xb = cfg.L; }
+  const msgEl = document.getElementById('bs-msg');
+  if (!(cfg.L > 0)) { msgEl.innerHTML = '<span class="text-red-500">Enter a positive beam length.</span>'; return; }
+  const bad = beamLoads.some(l => (l.kind !== 'udl' && (l.x < 0 || l.x > cfg.L)) || (l.kind === 'udl' && (l.x1 < 0 || l.x2 > cfg.L || l.x2 <= l.x1)));
+  if (bad) { msgEl.innerHTML = '<span class="text-red-500">A load lies outside the beam, or a UDL ends before it starts. Fix the positions to see the diagrams.</span>'; return; }
+
+  const res = solveBeam(cfg);
+  if (!res.ok) { msgEl.innerHTML = '<span class="text-red-500">' + res.msg + '</span>'; return; }
+  msgEl.innerHTML = res.msg ? '<span class="chip bg-lab-50 text-lab-900">Note</span> ' + res.msg : '';
+
+  document.getElementById('bs-beam').innerHTML = beamSVG(cfg, res);
+
+  const cards = [
+    ['Total load', f2(res.totalLoad) + ' kN'],
+    cfg.type === 'cant' ? ['Reaction at A', f2(res.reactions[0].R) + ' kN'] : ['R<sub>A</sub> / R<sub>B</sub>', f2(res.reactions[0].R) + ' / ' + f2(res.reactions[1].R) + ' kN'],
+    ['Max shear', f2(res.maxV) + ' kN'],
+    ['Max moment', f2(res.maxM) + ' kN·m']
+  ];
+  document.getElementById('bs-summary').innerHTML = cards.map(c =>
+    '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">' + c[0] + '</p><p class="num font-bold text-lg text-brand-600">' + c[1] + '</p></div>').join('');
+
+  charts.bssfd = diagramChart('bs-sfd', 'Shear force (kN)', res.sfd, '#0ea5e9', charts.bssfd);
+  charts.bsbmd = diagramChart('bs-bmd', 'Bending moment (kN·m)', res.bmd, '#7c3aed', charts.bsbmd);
+
+  let lines = [];
+  if (cfg.type === 'cant') {
+    lines.push('Reaction at the fixed end = ' + f2(res.reactions[0].R) + ' kN upward');
+    lines.push('Fixing couple at the support = ' + f2(Math.abs(res.fixedMoment)) + ' kN·m ' + (res.fixedMoment < 0 ? '(hogging)' : ''));
+  } else {
+    lines.push('ΣM about A gives R<sub>B</sub> = ' + f2(res.reactions[1].R) + ' kN; ΣF<sub>y</sub> then gives R<sub>A</sub> = ' + f2(res.reactions[0].R) + ' kN');
+    lines.push('Check: R<sub>A</sub> + R<sub>B</sub> = ' + f2(res.reactions[0].R + res.reactions[1].R) + ' kN against a total load of ' + f2(res.totalLoad) + ' kN ✓');
+  }
+  lines.push('Maximum shear force = ' + f2(res.maxV) + ' kN at x = ' + f2(res.maxVx) + ' m');
+  lines.push('Maximum bending moment = ' + f2(res.maxM) + ' kN·m at x = ' + f2(res.maxMx) + ' m — ' + (res.maxM >= 0 ? 'sagging, tension at the bottom fibre' : 'hogging, tension at the top fibre'));
+  lines.push(res.zeroShear.length ? 'Shear force is zero or changes sign at x = ' + res.zeroShear.map(f2).join(' m, ') + ' m' : 'The shear force does not change sign within the span.');
+  lines.push(res.contraflex.length ? 'Point(s) of contraflexure at x = ' + res.contraflex.map(f2).join(' m, ') + ' m' : 'No point of contraflexure — the moment keeps one sign throughout.');
+  lines.push('Section modulus required at 165 MPa = ' + f2(Math.abs(res.maxM) * 1e6 / 165 / 1000) + ' ×10³ mm³');
+  document.getElementById('bs-detail').innerHTML = lines.map(l => '<p>' + l + '</p>').join('');
+}
+
+/* ================= M18 SIMULATION ================= */
+function initM18() { ['s18-L','s18-W','s18-a','s18-w'].forEach(i => document.getElementById(i).addEventListener('input', calc18)); }
+function calc18() {
+  const L = parseFloat(document.getElementById('s18-L').value)/10;
+  const W = parseFloat(document.getElementById('s18-W').value);
+  const a = Math.min(parseFloat(document.getElementById('s18-a').value)/100 * L, L);
+  const w = parseFloat(document.getElementById('s18-w').value);
+  document.getElementById('s18-L-l').textContent = L.toFixed(1) + ' m';
+  document.getElementById('s18-W-l').textContent = W + ' kN';
+  document.getElementById('s18-a-l').textContent = a.toFixed(1) + ' m';
+  document.getElementById('s18-w-l').textContent = w + ' kN/m';
+
+  const loads = [];
+  if (w > 0) loads.push({ kind:'udl', x1:0, x2:L, w });
+  if (W > 0) loads.push({ kind:'point', x:a, P:W });
+  const res = solveBeam({ type:'ss', L, xa:0, xb:L, loads });
+
+  document.getElementById('s18-RA').textContent = f2(res.reactions[0].R) + ' kN';
+  document.getElementById('s18-RB').textContent = f2(res.reactions[1].R) + ' kN';
+  document.getElementById('s18-V').textContent  = f2(res.maxV) + ' kN';
+  document.getElementById('s18-x0').textContent = res.zeroShear.length ? res.zeroShear.map(f2).join(', ') + ' m' : 'no sign change';
+  document.getElementById('s18-M').textContent  = f2(res.maxM) + ' kN·m at ' + f2(res.maxMx) + ' m';
+  document.getElementById('s18-Z').textContent  = f2(Math.abs(res.maxM)*1e6/165/1000) + ' ×10³ mm³';
+
+  charts.s18sfd = diagramChart('s18-sfd', 'Shear force (kN)', res.sfd, '#0ea5e9', charts.s18sfd);
+  charts.s18bmd = diagramChart('s18-bmd', 'Bending moment (kN·m)', res.bmd, '#7c3aed', charts.s18bmd);
+}
+
+/* ================= M19 GAMES ================= */
+let shapeAns = null;
+function newShapeRound() {
+  const pick = SHAPES[Math.floor(Math.random()*SHAPES.length)];
+  shapeAns = pick.a;
+  document.getElementById('shape-clue').textContent = pick.c;
+  const wrong = SHAPE_OPTS.filter(o => o !== pick.a).sort(() => Math.random()-0.5).slice(0,3);
+  const opts = [pick.a, ...wrong].sort(() => Math.random()-0.5);
+  const box = document.getElementById('shape-options'); box.innerHTML = '';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt !mb-0 text-sm'; b.textContent = o;
+    b.onclick = () => {
+      box.querySelectorAll('button').forEach(x => x.disabled = true);
+      const good = o === shapeAns;
+      b.classList.add(good ? 'correct' : 'wrong');
+      if (!good) [...box.children].find(x => x.textContent === shapeAns).classList.add('correct');
+      logAnswer('Game','Bending moment', good);
+      document.getElementById('shape-status').textContent = good ? 'Correct.' : 'The answer was: ' + shapeAns;
+    };
+    box.appendChild(b);
+  });
+  document.getElementById('shape-status').textContent = '';
+}
+
+let matchPick = null, matchDone = 0;
+function initMatch() {
+  matchPick = null; matchDone = 0;
+  const Lb = document.getElementById('match-left'), Rb = document.getElementById('match-right');
+  Lb.innerHTML = ''; Rb.innerHTML = '';
+  [...MATCHQ].sort(() => Math.random()-0.5).forEach(m => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt !mb-0 num text-sm'; b.textContent = m.l; b.dataset.key = m.r;
+    b.onclick = () => { Lb.querySelectorAll('button').forEach(x => x.classList.remove('ring-2','ring-brand-500')); b.classList.add('ring-2','ring-brand-500'); matchPick = b; };
+    Lb.appendChild(b);
+  });
+  [...MATCHQ].sort(() => Math.random()-0.5).forEach(m => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt !mb-0 text-sm'; b.textContent = m.r;
+    b.onclick = () => {
+      if (!matchPick) return;
+      const good = matchPick.dataset.key === m.r;
+      logAnswer('Game','Relations', good);
+      if (good) {
+        matchPick.classList.add('correct'); b.classList.add('correct');
+        matchPick.disabled = true; b.disabled = true; matchPick.classList.remove('ring-2','ring-brand-500');
+        matchPick = null; matchDone++;
+        document.getElementById('match-status').textContent = matchDone + ' of ' + MATCHQ.length + ' matched' + (matchDone === MATCHQ.length ? ' — all done.' : '');
+      } else { b.classList.add('wrong'); setTimeout(() => b.classList.remove('wrong'), 500); document.getElementById('match-status').textContent = 'Not that one — try again.'; }
+    };
+    Rb.appendChild(b);
+  });
+  document.getElementById('match-status').textContent = '0 of ' + MATCHQ.length + ' matched';
+}
+
+let huntItem = null;
+function newHunt() { huntItem = HUNTS[Math.floor(Math.random()*HUNTS.length)]; document.getElementById('hunt-text').textContent = huntItem.t; document.getElementById('hunt-fb').textContent = ''; }
+function huntAnswer(saysOk) {
+  if (!huntItem) return;
+  const good = saysOk === huntItem.ok;
+  logAnswer('Game','Bending moment', good);
+  document.getElementById('hunt-fb').innerHTML = (good ? '<span class="chip bg-green-100 text-green-800">Correct</span> ' : '<span class="chip bg-red-100 text-red-800">Not quite</span> ') + huntItem.e;
+}
+
+let memFirst = null, memLock = false, memPairs = 0;
+function initMemory() {
+  memFirst = null; memLock = false; memPairs = 0;
+  const cards = [];
+  FLASH.forEach((f, i) => { cards.push({ id:i, txt:f[0] }); cards.push({ id:i, txt:f[1] }); });
+  cards.sort(() => Math.random()-0.5);
+  const g = document.getElementById('memory-grid'); g.innerHTML = '';
+  cards.forEach((c, n) => {
+    const el = document.createElement('div');
+    el.className = 'flip'; el.dataset.n = n;
+    el.innerHTML = '<div class="flip-inner"><div class="flip-face bg-brand-500 text-white font-bold"><i class="fas fa-question"></i></div>' +
+      '<div class="flip-face flip-back bg-gray-100 dark:bg-gray-700 border dark:border-gray-600">' + c.txt + '</div></div>';
+    el.onclick = () => {
+      if (memLock || el.classList.contains('open') || el.dataset.done) return;
+      el.classList.add('open');
+      if (!memFirst) { memFirst = { el, c }; return; }
+      memLock = true;
+      const good = memFirst.c.id === c.id && memFirst.el !== el;
+      logAnswer('Game','Shear force', good);
+      setTimeout(() => {
+        if (good) {
+          memFirst.el.dataset.done = '1'; el.dataset.done = '1';
+          memFirst.el.style.opacity = '.55'; el.style.opacity = '.55';
+          memPairs++;
+          document.getElementById('memory-status').textContent = memPairs + ' of ' + FLASH.length + ' pairs found' + (memPairs === FLASH.length ? ' — complete.' : '');
+        } else { memFirst.el.classList.remove('open'); el.classList.remove('open'); }
+        memFirst = null; memLock = false;
+      }, good ? 350 : 800);
+    };
+    g.appendChild(el);
+  });
+  document.getElementById('memory-status').textContent = '0 of ' + FLASH.length + ' pairs found';
+}
+
+/* ================= M21 CONCEPT MAP ================= */
+const CMAP = [
+  { x:430, y:50,  w:180, t:'Loads and supports', m:5 },
+  { x:430, y:130, w:170, t:'Support reactions', m:6 },
+  { x:430, y:210, w:210, t:'Section at distance x', m:7 },
+  { x:200, y:288, w:170, t:'Shear force V', m:7 },
+  { x:660, y:288, w:190, t:'Bending moment M', m:8 },
+  { x:200, y:366, w:180, t:'dV/dx = −w', m:9 },
+  { x:660, y:366, w:170, t:'dM/dx = V', m:9 },
+  { x:200, y:440, w:200, t:'Contraflexure, hinges', m:12 },
+  { x:660, y:440, w:190, t:'Max BM and design', m:15 },
+  { x:430, y:440, w:150, t:'Beam solver', m:17 }
+];
+function initCmap() {
+  const g = document.getElementById('cmap-nodes');
+  CMAP.forEach(n => {
+    const grp = document.createElementNS('http://www.w3.org/2000/svg','g');
+    grp.style.cursor = 'pointer'; grp.setAttribute('tabindex','0');
+    grp.innerHTML =
+      '<rect x="' + (n.x - n.w/2) + '" y="' + (n.y - 17) + '" width="' + n.w + '" height="34" rx="17" fill="#0ea5e9" fill-opacity="0.12" stroke="#0ea5e9" stroke-width="1.6"/>' +
+      '<text x="' + n.x + '" y="' + (n.y + 5) + '" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="currentColor">' + n.t + '</text>';
+    grp.onclick = () => switchModule(n.m);
+    grp.onkeydown = e => { if (e.key === 'Enter') switchModule(n.m); };
+    g.appendChild(grp);
+  });
+}
+
+/* ================= M22 / M23 ================= */
+function initM22() {
+  const box = document.getElementById('mistake-list'); box.innerHTML = '';
+  MISTAKES.forEach((m, i) => {
+    const d = document.createElement('div');
+    d.className = 'card !p-5';
+    d.innerHTML = '<div class="flex gap-3"><span class="chip bg-red-100 text-red-800 h-fit shrink-0"><i class="fas fa-xmark"></i> Mistake ' + (i+1) + '</span>' +
+      '<div><p class="font-bold">' + m.w + '</p><p class="text-sm mt-1.5 text-gray-600 dark:text-gray-300"><span class="text-green-600 font-bold">Correct approach: </span>' + m.r + '</p></div></div>';
+    box.appendChild(d);
+  });
+}
+function initM23() {
+  const topics = ['All', ...new Set(UQ.map(q => q.topic))];
+  const fw = document.getElementById('uq-filters'); fw.innerHTML = '';
+  topics.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border dark:border-gray-600 hover:border-brand-500';
+    b.textContent = t;
+    b.onclick = () => { renderUQ(t); fw.querySelectorAll('button').forEach(x => x.classList.remove('bg-brand-500','text-white','border-brand-500')); b.classList.add('bg-brand-500','text-white','border-brand-500'); };
+    if (t === 'All') b.classList.add('bg-brand-500','text-white','border-brand-500');
+    fw.appendChild(b);
+  });
+  renderUQ('All');
+}
+function renderUQ(topic) {
+  const list = document.getElementById('uq-list'); list.innerHTML = '';
+  UQ.filter(q => topic === 'All' || q.topic === topic).forEach((q, i) => {
+    const d = document.createElement('div');
+    d.className = 'card !p-5';
+    d.innerHTML = '<div class="flex items-start gap-3 mb-2"><span class="chip bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">' + q.topic + '</span><span class="chip bg-brand-100 text-brand-900">' + q.marks + ' marks</span></div>' +
+      '<p class="font-medium">Q' + (i+1) + '. ' + q.q + '</p>' +
+      '<button class="mt-3 text-sm text-brand-600 font-semibold">Show the expected approach</button>' +
+      '<p class="hidden mt-2 text-sm p-3 rounded bg-gray-50 dark:bg-gray-700/50"><i class="fas fa-key text-lab-500 mr-1"></i>' + q.hint + '</p>';
+    const b = d.querySelector('button'), p = d.querySelector('p.hidden');
+    b.onclick = () => { p.classList.toggle('hidden'); b.textContent = p.classList.contains('hidden') ? 'Show the expected approach' : 'Hide'; };
+    list.appendChild(d);
+  });
+}
+
+/* ================= M24 EVALUATION ================= */
+function initLevels() {
+  const names = ['MCQ','Fill blanks','True / false','Match','Numerical','Case study','Adaptive'];
+  const tw = document.getElementById('lvl-tabs'); tw.innerHTML = '';
+  names.forEach((n, i) => {
+    const b = document.createElement('button');
+    b.className = 'px-3 py-1.5 rounded-full text-xs font-semibold border dark:border-gray-600 hover:border-brand-500';
+    b.textContent = 'L' + (i+1) + ' · ' + n;
+    b.onclick = () => {
+      document.querySelectorAll('.eval-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById('lvl-' + (i+1)).classList.remove('hidden');
+      tw.querySelectorAll('button').forEach(x => x.classList.remove('bg-brand-500','text-white','border-brand-500'));
+      b.classList.add('bg-brand-500','text-white','border-brand-500');
+    };
+    if (i === 0) b.classList.add('bg-brand-500','text-white','border-brand-500');
+    tw.appendChild(b);
+  });
+  resetMCQ(); buildFill(); buildTF(); buildMatchQ(); buildNum(); buildCase(); startAdaptive();
+}
+let mcqIdx = 0, mcqRight = 0;
+function resetMCQ() { mcqIdx = 0; mcqRight = 0; renderMCQ(); }
+function renderMCQ() {
+  const box = document.getElementById('mcq-box');
+  if (mcqIdx >= MCQ.length) {
+    box.innerHTML = '<div class="text-center py-8"><p class="text-4xl font-bold num text-brand-600">' + mcqRight + ' / ' + MCQ.length + '</p><p class="mt-2 text-sm text-gray-500">' + (mcqRight >= 16 ? 'Strong grasp of the unit.' : mcqRight >= 12 ? 'Solid, but revise the topics you missed.' : 'Work through Modules 7 to 15 again before retrying.') + '</p></div>';
+    document.getElementById('mcq-progress').textContent = 'Level complete';
+    return;
+  }
+  const q = MCQ[mcqIdx];
+  box.innerHTML = '<p class="font-medium mb-3">' + (mcqIdx+1) + '. ' + q.q + '</p><div id="mcq-opts"></div><p id="mcq-fb" class="hidden text-sm mt-2 p-3 rounded bg-gray-50 dark:bg-gray-700/50"></p>';
+  const ow = document.getElementById('mcq-opts');
+  q.o.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt text-sm'; b.textContent = o;
+    b.onclick = () => {
+      ow.querySelectorAll('button').forEach(x => x.disabled = true);
+      const good = i === q.a;
+      b.classList.add(good ? 'correct' : 'wrong');
+      if (!good) ow.children[q.a].classList.add('correct');
+      if (good) mcqRight++;
+      logAnswer('L1', q.t, good);
+      const fb = document.getElementById('mcq-fb');
+      fb.innerHTML = '<i class="fas fa-lightbulb text-lab-500 mr-1"></i>' + q.e;
+      fb.classList.remove('hidden');
+      setTimeout(() => { mcqIdx++; renderMCQ(); }, 1500);
+    };
+    ow.appendChild(b);
+  });
+  document.getElementById('mcq-progress').textContent = 'Question ' + (mcqIdx+1) + ' of ' + MCQ.length + ' — correct so far ' + mcqRight;
+}
+function buildFill() {
+  const box = document.getElementById('fill-box'); box.innerHTML = '';
+  FILLQ.forEach((f, i) => {
+    const d = document.createElement('div');
+    d.className = 'text-sm flex flex-wrap items-center gap-2';
+    d.innerHTML = '<span>' + (i+1) + '. ' + f.pre + '</span><input class="fill-in p-1.5 border rounded num w-44 dark:bg-gray-700 dark:border-gray-600" data-i="' + i + '"><span>' + f.post + '</span><span class="fill-fb text-xs"></span>';
+    box.appendChild(d);
+  });
+}
+function norm(s) { return (s||'').toLowerCase().replace(/[\s.·]/g,''); }
+function checkFill() {
+  let right = 0;
+  document.querySelectorAll('.fill-in').forEach(inp => {
+    const f = FILLQ[+inp.dataset.i];
+    const good = f.ans.some(a => norm(a) === norm(inp.value));
+    inp.classList.toggle('border-green-500', good);
+    inp.classList.toggle('border-red-500', !good);
+    inp.parentElement.querySelector('.fill-fb').innerHTML = good ? '<span class="text-green-600 font-semibold">✓</span>' : '<span class="text-red-600">✗ ' + f.ans[0] + '</span>';
+    if (good) right++;
+    logAnswer('L2','Bending moment', good);
+  });
+  document.getElementById('fill-score').textContent = 'Score: ' + right + ' / ' + FILLQ.length;
+}
+function buildTF() {
+  const box = document.getElementById('tf-box'); box.innerHTML = '';
+  let right = 0, done = 0;
+  TFQ.forEach((t, i) => {
+    const d = document.createElement('div');
+    d.className = 'p-3 rounded border dark:border-gray-700';
+    d.innerHTML = '<p class="text-sm mb-2">' + (i+1) + '. ' + t.q + '</p><div class="flex gap-2"></div><p class="tf-fb text-xs mt-2 hidden"></p>';
+    const bw = d.querySelector('div');
+    ['True','False'].forEach(lbl => {
+      const b = document.createElement('button');
+      b.className = 'px-4 py-1.5 rounded text-sm border dark:border-gray-600 hover:border-brand-500';
+      b.textContent = lbl;
+      b.onclick = () => {
+        bw.querySelectorAll('button').forEach(x => x.disabled = true);
+        const good = (lbl === 'True') === t.a;
+        b.classList.add(good ? 'correct' : 'wrong');
+        const fb = d.querySelector('.tf-fb');
+        fb.innerHTML = (good ? '<span class="text-green-600 font-semibold">Correct. </span>' : '<span class="text-red-600 font-semibold">The answer is ' + (t.a ? 'True' : 'False') + '. </span>') + t.e;
+        fb.classList.remove('hidden');
+        if (good) right++;
+        done++;
+        logAnswer('L3','Shear force', good);
+        document.getElementById('tf-score').textContent = 'Score: ' + right + ' / ' + done + ' attempted';
+      };
+      bw.appendChild(b);
+    });
+    box.appendChild(d);
+  });
+}
+function buildMatchQ() {
+  const box = document.getElementById('mt-box'); box.innerHTML = '';
+  const answers = [...MATCHQ.map(m => m.r)].sort();
+  MATCHQ.forEach((m, i) => {
+    const d = document.createElement('div');
+    d.className = 'flex flex-wrap items-center gap-3 text-sm';
+    d.innerHTML = '<span class="num w-56 font-semibold">' + m.l + '</span><select class="mt-sel p-2 border rounded text-sm dark:bg-gray-700 dark:border-gray-600" data-i="' + i + '"><option value="">— choose —</option>' + answers.map(a => '<option>' + a + '</option>').join('') + '</select><span class="mt-fb text-xs"></span>';
+    box.appendChild(d);
+  });
+}
+function checkMatchQ() {
+  let right = 0;
+  document.querySelectorAll('.mt-sel').forEach(sel => {
+    const m = MATCHQ[+sel.dataset.i];
+    const good = sel.value === m.r;
+    sel.parentElement.querySelector('.mt-fb').innerHTML = good ? '<span class="text-green-600 font-semibold">✓</span>' : '<span class="text-red-600">✗ ' + m.r + '</span>';
+    if (good) right++;
+    logAnswer('L4','Relations', good);
+  });
+  document.getElementById('mt-score').textContent = 'Score: ' + right + ' / ' + MATCHQ.length;
+}
+function buildNum() {
+  const box = document.getElementById('num-box'); box.innerHTML = '';
+  NUMQ.forEach((n, i) => {
+    const d = document.createElement('div');
+    d.className = 'p-4 rounded border dark:border-gray-700';
+    d.innerHTML = '<p class="text-sm mb-3">' + (i+1) + '. ' + n.q + '</p>' +
+      '<div class="flex flex-wrap gap-2 items-center"><input class="num-in p-2 border rounded num w-36 dark:bg-gray-700 dark:border-gray-600" placeholder="answer" data-i="' + i + '">' +
+      '<span class="text-sm text-gray-500">' + n.u + '</span>' +
+      '<button class="num-check px-3 py-1.5 rounded bg-brand-500 text-white text-sm font-semibold">Check</button>' +
+      '<button class="num-hint px-3 py-1.5 rounded border dark:border-gray-600 text-sm">Hint</button></div><p class="num-fb text-sm mt-2"></p>';
+    d.querySelector('.num-check').onclick = () => {
+      const v = parseFloat(d.querySelector('.num-in').value);
+      const good = isFinite(v) && Math.abs(v - n.a) / Math.abs(n.a) <= 0.02;
+      d.querySelector('.num-fb').innerHTML = good
+        ? '<span class="text-green-600 font-semibold">Correct.</span> Expected ' + n.a + ' ' + n.u + '.'
+        : '<span class="text-red-600 font-semibold">Not within 2 %.</span> Expected ' + n.a + ' ' + n.u + '. ' + n.hint;
+      logAnswer('L5', n.t, good);
+      const r = state.records.filter(x => x.level === 'L5');
+      document.getElementById('num-score').textContent = 'Attempted ' + r.length + ' — correct ' + r.filter(x => x.correct).length;
+    };
+    d.querySelector('.num-hint').onclick = () => { d.querySelector('.num-fb').innerHTML = '<i class="fas fa-key text-lab-500 mr-1"></i>' + n.hint; };
+    box.appendChild(d);
+  });
+}
+function buildCase() {
+  const box = document.getElementById('case-box'); box.innerHTML = '';
+  CASEQ.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'flex flex-wrap items-center gap-3 text-sm';
+    d.innerHTML = '<span class="flex-1 min-w-[260px]">' + c.q + '</span><input class="p-2 border rounded num w-32 dark:bg-gray-700 dark:border-gray-600"><button class="px-3 py-1.5 rounded bg-brand-500 text-white text-xs font-semibold">Check</button><span class="cs-fb text-xs"></span>';
+    d.querySelector('button').onclick = () => {
+      const v = parseFloat(d.querySelector('input').value);
+      const good = isFinite(v) && Math.abs(v - c.a)/Math.abs(c.a) <= 0.03;
+      d.querySelector('.cs-fb').innerHTML = good ? '<span class="text-green-600 font-semibold">✓ ' + c.a + '</span>' : '<span class="text-red-600">✗ ' + c.a + ' — ' + c.hint + '</span>';
+      logAnswer('L6','Max BM & design', good);
+      const r = state.records.filter(x => x.level === 'L6');
+      document.getElementById('case-score').textContent = 'Attempted ' + r.length + ' — correct ' + r.filter(x => x.correct).length;
+    };
+    box.appendChild(d);
+  });
+  const rec = document.createElement('div');
+  rec.className = 'mt-4 p-4 rounded bg-gray-50 dark:bg-gray-700/50 text-sm';
+  rec.innerHTML = '<button class="text-brand-600 font-semibold">Show the design recommendation</button><div class="hidden mt-2 space-y-1">' +
+    '<p>The hogging moment of 70 kN·m over support B is nearly four times the sagging moment of 18.4 kN·m in the span. <b>The support section governs the design</b>, and a student who checks only mid-span will under-size the beam badly.</p>' +
+    '<p>Main tension steel must therefore run along the <b>top</b> face over B and continue past the point of contraflexure into the span.</p>' +
+    '<p>Required Z = 70×10⁶ / 165 = 424×10³ mm³. An ISMB 300 (Z = 573×10³ mm³) is adequate with reserve; an ISMB 250 (Z = 410×10³ mm³) is not.</p>' +
+    '<p>Shear is also largest just left of B, so shear reinforcement or web checks should be concentrated there rather than at mid-span.</p></div>';
+  rec.querySelector('button').onclick = () => rec.querySelector('div').classList.toggle('hidden');
+  box.appendChild(rec);
+}
+let adDiff = 1, adCount = 0, adStreak = 0, adRight = 0;
+function startAdaptive() { adDiff = 1; adCount = 0; adStreak = 0; adRight = 0; renderAdaptive(); }
+function renderAdaptive() {
+  const box = document.getElementById('ad-box');
+  if (adCount >= 10) {
+    box.innerHTML = '<div class="text-center py-6"><p class="text-3xl font-bold num text-brand-600">' + adRight + ' / 10</p><p class="text-sm mt-2 text-gray-500">Finished at difficulty level ' + adDiff + ' of 5.</p></div>';
+    document.getElementById('ad-count').textContent = 'Complete';
+    return;
+  }
+  const pool = ADQ.filter(q => q.d === adDiff);
+  const q = pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('ad-diff').textContent = 'Difficulty ' + adDiff;
+  document.getElementById('ad-count').textContent = 'Question ' + (adCount+1) + ' of 10';
+  box.innerHTML = '<p class="font-medium mb-3">' + q.q + '</p><div id="ad-opts"></div>';
+  const ow = document.getElementById('ad-opts');
+  q.o.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt text-sm'; b.textContent = o;
+    b.onclick = () => {
+      ow.querySelectorAll('button').forEach(x => x.disabled = true);
+      const good = i === q.a;
+      b.classList.add(good ? 'correct' : 'wrong');
+      if (!good) ow.children[q.a].classList.add('correct');
+      logAnswer('L7','Max BM & design', good);
+      if (good) { adRight++; adStreak++; if (adStreak >= 2 && adDiff < 5) { adDiff++; adStreak = 0; } }
+      else { adStreak = 0; if (adDiff > 1) adDiff--; }
+      adCount++;
+      setTimeout(renderAdaptive, 1100);
+    };
+    ow.appendChild(b);
+  });
+}
+
+/* ================= M25 / M26 ================= */
+function topicStats() { const s = {}; TOPICS.forEach(t => s[t] = { a:0, c:0 }); state.records.forEach(r => { if (s[r.topic]) { s[r.topic].a++; if (r.correct) s[r.topic].c++; } }); return s; }
+function overallScore() {
+  const r = state.records.filter(x => ['L1','L2','L3','L4','L5'].includes(x.level));
+  if (!r.length) return null;
+  return Math.round(r.filter(x => x.correct).length / r.length * 100);
+}
+function buildDashboard() {
+  const s = topicStats(), score = overallScore();
+  document.getElementById('db-visited').textContent = state.visited.size;
+  document.getElementById('db-attempts').textContent = state.records.length;
+  document.getElementById('db-score').textContent = score === null ? '—' : score + '%';
+  document.getElementById('db-time').textContent = minutes() + 'm';
+  const data = TOPICS.map(t => s[t].a ? Math.round(s[t].c / s[t].a * 100) : 0);
+  if (charts.db) { charts.db.data.datasets[0].data = data; charts.db.update(); }
+  else {
+    charts.db = new Chart(document.getElementById('db-radar'), {
+      type:'radar',
+      data:{ labels:TOPICS, datasets:[{ label:'Correct %', data, borderColor:'#0ea5e9', backgroundColor:'rgba(14,165,233,.2)', pointBackgroundColor:'#0ea5e9' }] },
+      options:{ responsive:true, maintainAspectRatio:false, scales:{ r:{ min:0, max:100, grid:{}, ticks:{ stepSize:25 }, pointLabels:{ font:{ size:10 } } } }, plugins:{ legend:{ display:false } } }
+    });
+    applyChartTheme(charts.db); charts.db.update();
+  }
+  const REV = { 'Reactions':[6], 'Shear force':[7,9], 'Bending moment':[8,9], 'Relations':[9], 'Cantilever':[10], 'Simply supported':[11], 'Overhang & hinge':[12,14], 'Max BM & design':[15,17] };
+  const weak = document.getElementById('db-weak'); weak.innerHTML = '';
+  const rows = TOPICS.map(t => ({ t, a:s[t].a, p: s[t].a ? s[t].c/s[t].a*100 : null })).filter(r => r.a > 0 && r.p < 70).sort((a,b) => a.p - b.p);
+  if (!rows.length) weak.innerHTML = '<p class="text-gray-500">Nothing below 70 % yet. Attempt more questions in Module 24 to get a reading on every topic.</p>';
+  rows.forEach(r => {
+    const d = document.createElement('div');
+    d.className = 'flex items-center justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50';
+    d.innerHTML = '<span>' + r.t + ' <span class="num text-xs text-red-500">' + Math.round(r.p) + '%</span></span><span>' +
+      REV[r.t].map(m => '<button class="text-xs px-2 py-1 rounded border dark:border-gray-600 ml-1" onclick="switchModule(' + m + ')">Module ' + m + '</button>').join('') + '</span>';
+    weak.appendChild(d);
+  });
+  const okMods = state.visited.size === 26, okScore = score !== null && score >= 70;
+  document.getElementById('db-cert-list').innerHTML =
+    '<p>' + (okMods ? '<i class="fas fa-check text-green-500"></i>' : '<i class="fas fa-xmark text-red-500"></i>') + ' All 26 modules visited (' + state.visited.size + '/26)</p>' +
+    '<p>' + (okScore ? '<i class="fas fa-check text-green-500"></i>' : '<i class="fas fa-xmark text-red-500"></i>') + ' Overall score 70 % or more (' + (score === null ? 'not attempted' : score + '%') + ')</p>';
+  const chip = document.getElementById('db-cert-chip');
+  chip.textContent = (okMods && okScore) ? 'Eligible' : 'Not yet eligible';
+  chip.className = 'chip ' + ((okMods && okScore) ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200');
+  document.getElementById('db-cert-btn').disabled = !(okMods && okScore);
+}
+function issueCertificate() {
+  const w = window.open('', '_blank'); if (!w) return;
+  const name = (document.getElementById('td-name') || {}).value || 'Student';
+  w.document.write('<html><head><title>Certificate</title><style>body{font-family:Georgia,serif;text-align:center;padding:60px;border:14px double #0c4a6e;margin:24px}h1{font-size:34px;margin:10px}p{font-size:16px}</style></head><body>' +
+    '<p style="letter-spacing:.3em;text-transform:uppercase;font-size:12px">Certificate of completion</p>' +
+    '<h1>Strength of Materials — Unit 2</h1><p>Shear Force and Bending Moment</p><hr style="width:120px;margin:26px auto">' +
+    '<p>Awarded to</p><h2 style="font-size:26px">' + name + '</h2>' +
+    '<p>for completing all 26 modules and scoring ' + overallScore() + ' % in the self-evaluation.</p>' +
+    '<p style="margin-top:50px">D. Mandal<br><small>Assistant Professor, Department of Civil Engineering</small></p>' +
+    '<p style="font-size:11px;color:#666">Issued ' + new Date().toLocaleDateString() + '</p></body></html>');
+  w.document.close();
+}
+function buildTeacher() {
+  document.getElementById('td-visited').textContent = state.visited.size;
+  document.getElementById('td-att').textContent = state.records.length;
+  document.getElementById('td-cor').textContent = state.records.filter(r => r.correct).length;
+  document.getElementById('td-time').textContent = minutes() + 'm';
+  const t = document.getElementById('td-table');
+  t.innerHTML = '<tr><th>Level</th><th>Topic</th><th>Result</th><th>Time</th></tr>';
+  state.records.slice(-60).reverse().forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + r.level + '</td><td>' + r.topic + '</td><td>' + (r.correct ? '<span class="text-green-600 font-semibold">correct</span>' : '<span class="text-red-600">wrong</span>') + '</td><td class="num">' + new Date(r.ts).toLocaleTimeString() + '</td>';
+    t.appendChild(tr);
+  });
+}
+function csvEscape(v) { return '"' + String(v).replace(/"/g, '""') + '"'; }
+function downloadCSV(name, rows) {
+  const blob = new Blob([rows.map(r => r.map(csvEscape).join(',')).join('\n')], { type:'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+function exportRecord() {
+  const name = document.getElementById('td-name').value || 'unnamed';
+  const s = topicStats();
+  const rows = [['student','modules_visited','attempted','correct','score_percent','minutes'],
+    [name, state.visited.size, state.records.length, state.records.filter(r => r.correct).length, overallScore() === null ? '' : overallScore(), minutes()],
+    [], ['topic','attempted','correct']];
+  TOPICS.forEach(t => rows.push([t, s[t].a, s[t].c]));
+  downloadCSV('som_unit2_' + name.replace(/\W+/g,'_') + '.csv', rows);
+}
+function exportReport() {
+  const rows = [['level','topic','result','timestamp']];
+  state.records.forEach(r => rows.push([r.level, r.topic, r.correct ? 'correct' : 'wrong', new Date(r.ts).toISOString()]));
+  downloadCSV('som_unit2_full_report.csv', rows);
+}
+function initTeacherFiles() {
+  document.getElementById('td-files').addEventListener('change', async e => {
+    const files = [...e.target.files]; if (!files.length) return;
+    const students = [];
+    for (const f of files) {
+      const txt = await f.text();
+      const lines = txt.split(/\r?\n/);
+      const vals = (lines[1] || '').split(',').map(s => s.replace(/^"|"$/g,'').replace(/""/g,'"'));
+      if (vals.length >= 6) students.push({ name:vals[0], mods:+vals[1], att:+vals[2], cor:+vals[3], score: vals[4] === '' ? null : +vals[4], min:+vals[5] });
+    }
+    const scored = students.filter(s => s.score !== null);
+    const avg = scored.length ? Math.round(scored.reduce((a,b) => a+b.score, 0)/scored.length) : 0;
+    document.getElementById('td-class-summary').innerHTML =
+      '<p class="mb-2"><b>' + students.length + '</b> records loaded. Class average <b class="num">' + avg + '%</b>. Average time <b class="num">' +
+      Math.round(students.reduce((a,b) => a+b.min,0)/Math.max(students.length,1)) + ' min</b>. Below 40 %: <b class="num">' + scored.filter(s => s.score < 40).length + '</b> student(s).</p>';
+    document.getElementById('td-chart-wrap').classList.remove('hidden');
+    if (charts.td) charts.td.destroy();
+    charts.td = new Chart(document.getElementById('td-chart'), {
+      type:'bar',
+      data:{ labels:students.map(s => s.name), datasets:[{ label:'Score %', data:students.map(s => s.score || 0), backgroundColor:'#0ea5e9' }] },
+      options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ min:0, max:100, grid:{}, ticks:{} }, x:{ grid:{}, ticks:{} } }, plugins:{ legend:{ display:false } } }
+    });
+    applyChartTheme(charts.td); charts.td.update();
+  });
+}
+function resetAll() {
+  if (!confirm('Clear all progress and answers stored on this device?')) return;
+  store.clear();
+  state.visited = new Set([1]); state.records = []; state.elapsed = 0; state.started = Date.now();
+  refreshTicks(); buildTeacher(); alert('Cleared.');
+}
+
+/* ================= STUDY HELPER ================= */
+function tutorSay(html, mine) {
+  const log = document.getElementById('tutor-log');
+  const d = document.createElement('div');
+  d.className = mine ? 'ml-auto max-w-[85%] bg-brand-500 text-white p-2.5 rounded-lg rounded-br-none'
+                     : 'mr-auto max-w-[90%] bg-gray-200 dark:bg-gray-700 p-2.5 rounded-lg rounded-tl-none';
+  d.innerHTML = html; log.appendChild(d); log.scrollTop = log.scrollHeight;
+}
+function tutorSend() {
+  const inp = document.getElementById('tutor-input');
+  const q = inp.value.trim(); if (!q) return;
+  tutorSay(q.replace(/[<>]/g,''), true); inp.value = '';
+  const lower = q.toLowerCase();
+  let best = null, bestHits = 0;
+  TUTOR_KB.forEach(e => { const hits = e.k.filter(k => lower.includes(k)).length; if (hits > bestHits) { bestHits = hits; best = e; } });
+  setTimeout(() => {
+    if (best) tutorSay(best.a);
+    else tutorSay('I hold a fixed set of notes for this unit, so I could not match that. Try a keyword such as shear force, bending moment, reactions, cantilever, contraflexure, hinge, couple, UDL, or maximum moment. For anything beyond that, ask in class or open Module 20 — the formula sheet.');
+  }, 250);
+}
+
+/* ================= INIT ================= */
+window.addEventListener('DOMContentLoaded', () => {
+  if (store.get('som2_theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+    document.getElementById('theme-icon').className = 'fas fa-sun';
+  }
+  initNav(); initM5(); initCases(); initM16(); initSolver(); initM18();
+  newShapeRound(); initMatch(); newHunt(); initMemory();
+  initCmap(); initM22(); initM23(); initLevels(); initTeacherFiles();
+
+  document.getElementById('mobile-menu-btn').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('-translate-x-full'));
+  document.getElementById('ai-tutor-btn').addEventListener('click', () => document.getElementById('ai-tutor-panel').classList.toggle('hidden'));
+  document.getElementById('ai-tutor-close').addEventListener('click', () => document.getElementById('ai-tutor-panel').classList.add('hidden'));
+  document.getElementById('tutor-input').addEventListener('keydown', e => { if (e.key === 'Enter') tutorSend(); });
+  document.addEventListener('keydown', e => {
+    if (['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' && currentModule < 26) switchModule(currentModule + 1);
+    if (e.key === 'ArrowLeft'  && currentModule > 1)  switchModule(currentModule - 1);
+  });
+
+  tutorSay('This is an offline helper with a fixed set of notes for Unit 2 — it does not connect to any AI service. Ask about shear force, bending moment, reactions, cantilevers, contraflexure, hinges, couples, or where the maximum moment occurs.');
+  switchModule(1);
+  if (!window.__TEST__) setInterval(saveTime, 30000);
+  window.addEventListener('beforeunload', saveTime);
+});
+</script>
+</body>
+</html>
