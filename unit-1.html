@@ -1342,16 +1342,16 @@ const N16 = [
  { lvl:'Medium', topic:'Composite bars',
    q:'A steel rod of 1000 mm² is surrounded by a copper tube of 2000 mm². The 500 mm long assembly carries 250 kN. Es = 200 GPa, Ec = 100 GPa. Find the stress in each and the shortening.',
    s:['Equal strain: ε = P / (AsEs + AcEc)','ε = 250 000 / (1000×200 000 + 2000×100 000) = 250 000 / 4×10⁸ = 6.25×10⁻⁴','σs = 200 000 × 6.25×10⁻⁴ = 125 MPa','σc = 100 000 × 6.25×10⁻⁴ = 62.5 MPa','Check: 125×1000 + 62.5×2000 = 125 + 125 = 250 kN ✓','δ = εL = 6.25×10⁻⁴ × 500 = 0.3125 mm'] },
- { lvl:'University', topic:'Strain',
+ { lvl:'External Exam ', topic:'Strain',
    q:'A bar of 20 mm diameter and 1 m length is subjected to an axial pull of 50 kN. E = 200 GPa, μ = 0.3. Find the change in length, change in diameter and change in volume.',
    s:['A = 314.16 mm², σ = 50 000/314.16 = 159.15 MPa','ε = 159.15/200 000 = 7.958×10⁻⁴','δL = 7.958×10⁻⁴ × 1000 = 0.796 mm (increase)','ε_lat = −με = −0.3 × 7.958×10⁻⁴ = −2.387×10⁻⁴','δd = −2.387×10⁻⁴ × 20 = −0.00477 mm (decrease)','ε_v = ε(1−2μ) = 7.958×10⁻⁴ × 0.4 = 3.183×10⁻⁴','V = 314.16 × 1000 = 314 159 mm³','δV = 3.183×10⁻⁴ × 314 159 = 100 mm³ (increase)'] },
- { lvl:'University', topic:'Elastic constants',
+ { lvl:'External Exam ', topic:'Elastic constants',
    q:'A bar 30 mm × 30 mm × 250 mm long carries an axial pull of 90 kN. The extension is 0.125 mm and the decrease in each lateral dimension is 0.00375 mm. Find E, μ, G and K.',
    s:['A = 900 mm², σ = 90 000/900 = 100 MPa','ε = 0.125/250 = 5×10⁻⁴ → E = 100/5×10⁻⁴ = 200 000 MPa = 200 GPa','ε_lat = 0.00375/30 = 1.25×10⁻⁴','μ = 1.25×10⁻⁴ / 5×10⁻⁴ = 0.25','G = E/[2(1+μ)] = 200 000/2.5 = 80 000 MPa = 80 GPa','K = E/[3(1−2μ)] = 200 000/1.5 = 133 333 MPa ≈ 133.3 GPa'] },
- { lvl:'University', topic:'Composite bars',
+ { lvl:'External Exam ', topic:'Composite bars',
    q:'A reinforced concrete column 400 mm × 400 mm has four 20 mm bars. It carries 800 kN. Es = 200 GPa, Ec = 20 GPa. Find the stress in the concrete and in the steel.',
    s:['Ast = 4 × (π/4)(20)² = 4 × 314.16 = 1256.6 mm²','Ac = 400×400 − 1256.6 = 160 000 − 1256.6 = 158 743.4 mm²','Modular ratio m = Es/Ec = 10','Equal strain: P = σc(Ac + m·Ast) = σc(158 743.4 + 10×1256.6)','P = σc × 171 309.4','σc = 800 000 / 171 309.4 = 4.67 MPa','σs = m·σc = 10 × 4.67 = 46.7 MPa'] },
- { lvl:'University', topic:'Thermal',
+ { lvl:'External Exam ', topic:'Thermal',
    q:'A steel rod of 500 mm² is bonded to a copper rod of 800 mm², both 1 m long, and the assembly is heated through 60 °C with the ends free. αs = 12×10⁻⁶, αc = 17×10⁻⁶, Es = 200 GPa, Ec = 100 GPa. Find the stress in each.',
    s:['Copper wants to expand more, so copper goes into compression and steel into tension.','Equilibrium: σs·As = σc·Ac → 500σs = 800σc → σs = 1.6 σc','Compatibility: σs/Es + σc/Ec = (αc − αs)ΔT','1.6σc/200 000 + σc/100 000 = (17−12)×10⁻⁶ × 60 = 3×10⁻⁴','σc(8×10⁻⁶ + 10×10⁻⁶) = 3×10⁻⁴','σc × 1.8×10⁻⁵ = 3×10⁻⁴ → σc = 16.67 MPa (compression)','σs = 1.6 × 16.67 = 26.67 MPa (tension)'] },
  { lvl:'GATE', topic:'Elastic constants',
@@ -1366,7 +1366,7 @@ const N16 = [
  { lvl:'GATE', topic:'Design',
    q:'A member of ultimate stress 400 MPa is designed with a factor of safety of 2.5. What load can a 500 mm² section carry?',
    s:['σ_permissible = 400/2.5 = 160 MPa','P = σ × A = 160 × 500 = 80 000 N','P = 80 kN'] },
- { lvl:'University', topic:'Design',
+ { lvl:'External Exam ', topic:'Design',
    q:'A hollow steel column of external diameter 200 mm carries 800 kN. The permissible compressive stress is 80 MPa. Find the internal diameter.',
    s:['A required = 800 000/80 = 10 000 mm²','(π/4)(200² − d²) = 10 000','200² − d² = 10 000 × 4/π = 12 732.4','d² = 40 000 − 12 732.4 = 27 267.6','d = 165.1 mm, adopt 165 mm (which slightly increases the area and is safe)'] },
  { lvl:'Medium', topic:'Stress',
@@ -1378,7 +1378,7 @@ const N16 = [
  { lvl:'Easy', topic:'Hooke & E',
    q:'A wire of area 5 mm² stretches by 2 mm over a 4 m length under a load of 500 N. Find E.',
    s:['σ = 500/5 = 100 MPa','ε = 2/4000 = 5×10⁻⁴','E = σ/ε = 100/5×10⁻⁴ = 200 000 MPa = 200 GPa'] },
- { lvl:'University', topic:'Strain',
+ { lvl:'External Exam ', topic:'Strain',
    q:'A bar of 25 mm diameter is subjected to a pull of 60 kN. The measured extension over a 200 mm gauge length is 0.12 mm and the decrease in diameter is 0.0045 mm. Find E, μ and G.',
    s:['A = 490.87 mm², σ = 60 000/490.87 = 122.23 MPa','ε = 0.12/200 = 6.0×10⁻⁴ → E = 122.23/6.0×10⁻⁴ = 203 718 MPa ≈ 204 GPa','ε_lat = 0.0045/25 = 1.8×10⁻⁴','μ = 1.8×10⁻⁴/6.0×10⁻⁴ = 0.30','G = E/[2(1+μ)] = 203 718/2.6 = 78 353 MPa ≈ 78.4 GPa'] },
  { lvl:'GATE', topic:'Curves',
@@ -1402,7 +1402,7 @@ const MISTAKES = [
   { w:'Rounding the diameter down in design', r:'If d comes out as 27.6 mm, adopt 28 mm. Rounding down reduces the area below the required value and the member is under-designed.' }
 ];
 
-/* ---------- M23 university questions ---------- */
+/* ---------- M23 External Exam  questions ---------- */
 const UQ = [
  { topic:'Stress & strain', marks:4, q:'Define stress and strain. State their units and explain why strain is dimensionless.', hint:'Definition, formula, SI unit, one line on the ratio of like quantities.' },
  { topic:'Stress & strain', marks:6, q:'Derive the expression for the elongation of a bar of uniform section under an axial load. Extend it to a stepped bar.', hint:'Start from σ = P/A and ε = δL/L, substitute into E = σ/ε, then sum the segments.' },
@@ -1566,7 +1566,7 @@ const TUTOR_KB = [
  { k:['unit','mpa','convert','conversion','gpa'], a:'1 MPa = 1 N/mm² = 10⁶ Pa, and 1 GPa = 1000 MPa. Crucially 1 m² = 10⁶ mm². Keep everything in N and mm and you never need a conversion. Module 22 lists the traps.' },
  { k:['strain energy','resilience'], a:'Strain energy U = ½P·δL = P²L/(2AE), and per unit volume u = σ²/(2E). It is the area under the load–deformation curve.' },
  { k:['formula','sheet','revision','revise'], a:'Module 20 is a one-page formula sheet with a print button, and Module 21 shows how the topics connect.' },
- { k:['exam','question','paper','practice','test'], a:'Module 23 has the university question bank grouped by topic and marks; Module 24 has seven levels of self-testing from MCQ to a case study.' }
+ { k:['exam','question','paper','practice','test'], a:'Module 23 has the External Exam  question bank grouped by topic and marks; Module 24 has seven levels of self-testing from MCQ to a case study.' }
 ];
 </script>
 
@@ -2001,7 +2001,7 @@ function calcFOS() {
 
 /* ================= M16 NUMERICALS ================= */
 function initM16() {
-  const levels = ['All','Easy','Medium','University','GATE'];
+  const levels = ['All','Easy','Medium','External Exam ','GATE'];
   const fw = document.getElementById('n16-filters'); fw.innerHTML = '';
   levels.forEach(l => {
     const b = document.createElement('button');
@@ -2013,7 +2013,7 @@ function initM16() {
   });
   renderN16('All');
 }
-const LVLCOLOR = { Easy:'bg-green-100 text-green-800', Medium:'bg-blue-100 text-blue-800', University:'bg-purple-100 text-purple-800', GATE:'bg-orange-100 text-orange-800' };
+const LVLCOLOR = { Easy:'bg-green-100 text-green-800', Medium:'bg-blue-100 text-blue-800', External Exam :'bg-purple-100 text-purple-800', GATE:'bg-orange-100 text-orange-800' };
 function renderN16(filter) {
   const list = document.getElementById('n16-list'); list.innerHTML = '';
   N16.filter(n => filter === 'All' || n.lvl === filter).forEach((n, i) => {
@@ -2280,7 +2280,7 @@ function initM22() {
   });
 }
 
-/* ================= M23 UNIVERSITY QUESTIONS ================= */
+/* ================= M23 External Exam  QUESTIONS ================= */
 function initM23() {
   const topics = ['All', ...new Set(UQ.map(q => q.topic))];
   const fw = document.getElementById('uq-filters'); fw.innerHTML = '';
