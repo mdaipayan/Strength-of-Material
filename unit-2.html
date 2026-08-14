@@ -172,7 +172,7 @@ tailwind.config = {
     <ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
       <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.1</b> — Classify beams, supports and loads, and check static determinacy.</span></li>
       <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.2</b> — Compute support reactions using the equations of equilibrium.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.33</b> — Define shear force and bending moment and apply the sign convention consistently.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.3</b> — Define shear force and bending moment and apply the sign convention consistently.</span></li>
       <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.4</b> — Draw SFD and BMD for cantilever, simply supported and overhanging beams.</span></li>
       <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.5</b> — Use the relations between load, shear force and bending moment.</span></li>
       <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.6</b> — Locate the position and magnitude of the maximum bending moment.</span></li>
@@ -180,7 +180,7 @@ tailwind.config = {
       <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.8</b> — Handle applied couples and internal hinges on beams.</span></li>
     </ul>
     <div class="mt-6 pt-5 border-t dark:border-gray-700 grid sm:grid-cols-3 gap-4 text-sm">
-      <div><p class="eyebrow mb-1">Prerequisites</p><p class="text-gray-600 dark:text-gray-300">Unit 1, free-body diagrams, resultant of a distributed load, moment of a force.</p></div>
+      <div><p class="eyebrow mb-1">Prerequisites</p><p class="text-gray-600 dark:text-gray-300">Unit 1, free body diagrams, resultant of a distributed load, moment of a force.</p></div>
       <div><p class="eyebrow mb-1">Follows into</p><p class="text-gray-600 dark:text-gray-300">Unit 3 — bending stress σ = My/I; Unit 4 — deflection of beams.</p></div>
       <div><p class="eyebrow mb-1">Suggested hours</p><p class="text-gray-600 dark:text-gray-300">10 lecture hours + 4 tutorial hours.</p></div>
     </div>
@@ -198,6 +198,23 @@ tailwind.config = {
       $$ \sigma_b = \frac{M y}{I} \qquad \tau = \frac{V A \bar y}{I b} $$
     </div>
     <p class="text-sm mt-4">Both design formulas begin with \(M\) and \(V\). Everything you do in this unit exists to feed those two symbols with the right number, at the right section.</p>
+  </div>
+
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="legend" data-num="3.0" data-cap="How to read every figure in this unit"></figure>
+  <h3 class="text-xl font-bold mb-3">Six real members, and the beam each one becomes</h3>
+  <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Every beam problem starts as an object you can walk up to and touch. The engineer's first move is always the same: strip away the material and draw a line with supports and loads on it. Compare the two halves of each figure — that idealisation step carries most of the judgement, and it is the step never marked in an exam yet always deciding whether the answer means anything.</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
+    <figure data-fig="obj_balcony" data-num="3.1" data-cap="Balcony slab &rarr; cantilever, fixed at the wall" class="p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></figure>
+    <figure data-fig="obj_lintel" data-num="3.2" data-cap="Lintel over a door &rarr; simply supported beam" class="p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></figure>
+    <figure data-fig="obj_footbridge" data-num="3.3" data-cap="Footbridge deck &rarr; simply supported beam" class="p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></figure>
+    <figure data-fig="obj_crane" data-num="3.4" data-cap="Crane runway girder &rarr; simply supported beam with a moving load" class="p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></figure>
+    <figure data-fig="obj_diving" data-num="3.5" data-cap="Springboard &rarr; cantilever with a load at the free end" class="p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></figure>
+    <figure data-fig="obj_sleeper" data-num="3.6" data-cap="Railway sleeper &rarr; rails push down, ballast pushes up" class="p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></figure>
+  </div>
+
+  <div class="card mb-5">
+    <h3 class="text-lg font-bold mb-2">The sleeper is worth a second look</h3>
+    <p class="text-sm">It is the one case where the loads point <b>down</b> at two places and the reaction is spread <b>upward</b> along the whole length — the reverse of every other figure. The result is hogging under the middle and sagging under each rail, which is why a prestressed concrete sleeper is reinforced top and bottom. If you can idealise the sleeper correctly you can idealise anything in this unit.</p>
   </div>
 
   <div class="grid sm:grid-cols-3 gap-4 mb-5">
@@ -225,11 +242,13 @@ tailwind.config = {
       <tr><td>Fixed / built-in</td><td>Both movements and rotation</td><td class="num">3 (V, H, M)</td><td>Hatched wall</td></tr>
       <tr><td>Internal hinge</td><td>Transfers V and H but not moment</td><td class="num">adds 1 equation</td><td>Small circle in the span</td></tr>
     </table>
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="supports" data-num="4.1" data-cap="Support symbols and the reaction components each one provides"></figure>
     <p class="text-sm mt-3">On a beam carrying only vertical loads the horizontal reaction is zero, so a hinge behaves as a single vertical reaction in the arithmetic. Say so once in your answer rather than ignoring it silently.</p>
   </div>
 
   <div class="card mb-5">
     <h3 class="text-xl font-bold mb-3">Types of beam</h3>
+    <figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="beamtypes" data-num="4.2" data-cap="The six standard beam types drawn to the same conventions"></figure>
     <div class="grid sm:grid-cols-2 gap-4 text-sm">
       <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Cantilever</b> — fixed at one end, free at the other. Bending moment is hogging throughout and is largest at the fixed end.</div>
       <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Simply supported</b> — a hinge at one end, a roller at the other. Moment is zero at both ends and sagging in between.</div>
@@ -263,7 +282,7 @@ tailwind.config = {
 
   <div class="card mb-5">
     <p class="mb-4">For finding reactions, every distributed load may be replaced by a single resultant equal to the <b>area of the load diagram</b>, acting through its <b>centroid</b>. Use the resultant for reactions only — never for computing shear or moment inside the loaded region, where the load must be treated as it actually is.</p>
-    <table class="data">
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="loadtypes" data-num="5.1" data-cap="Load types, with the violet arrow marking where each resultant acts"></figure>    <table class="data">
       <tr><th>Load</th><th>Diagram</th><th>Resultant</th><th>Acts at</th></tr>
       <tr><td>Point load W</td><td>Arrow</td><td class="num">W</td><td>At its own position</td></tr>
       <tr><td>UDL, intensity w over length a</td><td>Rectangle</td><td class="num">w·a</td><td>Mid-length of a</td></tr>
@@ -284,7 +303,8 @@ tailwind.config = {
       <div id="rc-wrap2" class="hidden"><label class="text-sm block mb-1" for="rc-w2">w₂ at right (kN/m)</label><input id="rc-w2" type="number" value="20" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
       <div><label class="text-sm block mb-1" for="rc-a">Length a (m)</label><input id="rc-a" type="number" value="4" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
     </div>
-    <div id="rc-out" class="mt-4"></div>
+    <div id="rc-fig" class="mt-4"></div>
+    <div id="rc-out" class="mt-2"></div>
   </div>
 
   <div class="card">
@@ -313,6 +333,7 @@ tailwind.config = {
   <div class="card mb-5">
     <h3 class="text-xl font-bold mb-3">Worked example</h3>
     <p class="text-sm mb-3">A simply supported beam AB spans 6 m. It carries a UDL of 10 kN/m over the whole span and a point load of 40 kN at 2 m from A.</p>
+    <figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="fbd" data-num="6.1" data-cap="Free body diagram — draw this before writing a single equation"></figure>
     <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
       <p>UDL resultant = 10 × 6 = 60 kN at 3 m from A</p>
       <p>ΣM<sub>A</sub> = 0: R<sub>B</sub> × 6 = 60 × 3 + 40 × 2 = 180 + 80 = 260</p>
@@ -342,7 +363,7 @@ tailwind.config = {
     <p class="text-sm mt-3">Working from the left or from the right gives the same magnitude with opposite algebraic sign from the summation, which is exactly why the convention below is written in terms of one side.</p>
   </div>
 
-  <div class="card mb-5">
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="section" data-num="7.1" data-cap="Method of sections — the cut face must supply both a force V and a couple M"></figure>  <div class="card mb-5">
     <h3 class="text-xl font-bold mb-3">Sign convention used throughout this unit</h3>
     <div class="grid sm:grid-cols-2 gap-4">
       <div class="p-4 rounded-lg bg-green-50 dark:bg-green-900/25 border border-green-200 dark:border-green-800">
@@ -354,6 +375,7 @@ tailwind.config = {
         <p class="text-sm mt-1 text-red-900 dark:text-red-200">The resultant of forces to the left acts <b>downward</b>. The left portion tends to slide down relative to the right.</p>
       </div>
     </div>
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="shearsign" data-num="7.2" data-cap="Positive and negative shear as the direction the left portion tends to slide"></figure>
     <p class="text-sm mt-4">This is the <b>left-up-positive</b> rule, the convention used in IS-code practice and in the standard Indian textbooks. Working from the right, the rule inverts: a downward resultant on the right gives positive shear. Both describe the same physical action.</p>
     <div class="mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500 text-sm">
       A sign convention is bookkeeping, not physics. Any consistent rule produces the same beam. Errors come from changing the rule halfway through — or from adopting a rule that reads well in one situation and contradicts the moment convention in another. State your rule once, at the top, and hold it.
@@ -398,6 +420,7 @@ tailwind.config = {
         <svg viewBox="0 0 180 50" class="w-full max-w-[180px] mt-3"><path d="M10,38 Q90,12 170,38" fill="none" stroke="#dc2626" stroke-width="3"/><text x="90" y="10" text-anchor="middle" font-size="9" fill="#64748b">tension</text><text x="90" y="49" text-anchor="middle" font-size="9" fill="#64748b">compression</text></svg>
       </div>
     </div>
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="momentsign" data-num="8.1" data-cap="Sagging and hogging: which fibre goes into tension, and where the steel follows"></figure>
     <p class="text-sm mt-4"><b>Why this matters more than the shear convention:</b> the sign of the moment tells the detailer which face of the beam goes into tension, and steel must be placed on the tension face. Get the sign wrong and the reinforcement ends up on the wrong side of the beam.</p>
   </div>
 
@@ -429,7 +452,7 @@ tailwind.config = {
       <li>Vertical equilibrium: \(V - w\,dx - (V + dV) = 0\)</li>
       <li>Moment equilibrium about the right face, dropping the second-order term \(w\,dx^2/2\): \(M + V\,dx - (M + dM) = 0\)</li>
     </ol>
-    <div class="grid md:grid-cols-3 gap-3">
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="element" data-num="9.1" data-cap="Equilibrium of an element of length dx — the origin of both differential relations"></figure>    <div class="grid md:grid-cols-3 gap-3">
       <div class="formula-box">$$ \frac{dV}{dx} = -w $$</div>
       <div class="formula-box">$$ \frac{dM}{dx} = V $$</div>
       <div class="formula-box">$$ \frac{d^2M}{dx^2} = -w $$</div>
@@ -470,7 +493,8 @@ tailwind.config = {
   </div>
 
   <div class="card mb-5">
-    <div id="cant-desc" class="text-sm mb-4"></div>
+    <div id="cant-desc" class="text-sm mb-3"></div>
+    <div id="cant-beam" class="mb-4 p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></div>
     <div class="grid md:grid-cols-2 gap-5">
       <div class="h-52"><canvas id="cant-sfd"></canvas></div>
       <div class="h-52"><canvas id="cant-bmd"></canvas></div>
@@ -501,7 +525,8 @@ tailwind.config = {
   </div>
 
   <div class="card mb-5">
-    <div id="ss-desc" class="text-sm mb-4"></div>
+    <div id="ss-desc" class="text-sm mb-3"></div>
+    <div id="ss-beam" class="mb-4 p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></div>
     <div class="grid md:grid-cols-2 gap-5">
       <div class="h-52"><canvas id="ss-sfd"></canvas></div>
       <div class="h-52"><canvas id="ss-bmd"></canvas></div>
@@ -534,6 +559,7 @@ tailwind.config = {
       <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>How to find it</b><br>Write M as a function of x for the relevant region and set it to zero. Only roots inside that region count.</div>
       <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Why it matters</b><br>The tension face swaps from bottom to top there, so it fixes where main bars are curtailed or lapped.</div>
     </div>
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="contraflexure" data-num="12.1" data-cap="Deflected shape, contraflexure point, and the bar arrangement it dictates"></figure>
     <p class="text-sm mt-4"><b>Do not confuse it with the point of zero shear.</b> Zero shear locates the maximum moment; zero moment locates contraflexure. They are different sections and both may be asked in the same question.</p>
   </div>
 
@@ -615,7 +641,7 @@ tailwind.config = {
     <p class="text-sm mt-3">Structures built this way are called <b>compound</b> or <b>Gerber</b> beams. Bridge girders often use them so that the deck can be built in determinate segments and still accommodate settlement.</p>
   </div>
 
-  <div class="card mb-5">
+<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="hinge" data-num="14.1" data-cap="Splitting a compound beam at the internal hinge"></figure>  <div class="card mb-5">
     <h3 class="text-xl font-bold mb-3">Solution method</h3>
     <ol class="list-decimal pl-6 space-y-2 text-sm">
       <li>Identify which part of the beam is <b>supported</b> and which part is <b>suspended</b> — the suspended part cannot stand without the other.</li>
@@ -668,6 +694,7 @@ tailwind.config = {
   <div class="card mb-5">
     <h3 class="text-xl font-bold mb-3">Worked example — the trap in action</h3>
     <p class="text-sm mb-3">Simply supported beam of 6 m with a UDL of 10 kN/m over the whole span and a point load of 40 kN at 2 m from A. From Module 6, R<sub>A</sub> = 56.67 kN and R<sub>B</sub> = 43.33 kN.</p>
+    <figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="maxbm" data-num="15.1" data-cap="The shear jumps through zero at the point load, so the maximum moment sits there"></figure>
     <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
       <p>Region 0 &lt; x &lt; 2: V = 56.67 − 10x. Setting V = 0 gives x = 5.67 m, which is <b>outside</b> this region — reject it.</p>
       <p>Region 2 &lt; x &lt; 6: V = 56.67 − 40 − 10x = 16.67 − 10x. Setting V = 0 gives x = 1.67 m, again <b>outside</b> the region — reject it.</p>
@@ -898,6 +925,7 @@ tailwind.config = {
 
   <div class="card">
     <h4 class="font-bold mb-3">Diagram shapes at a glance</h4>
+    <figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="shapes" data-num="20.1" data-cap="The eight standard cases with the shape of each diagram — the page to memorise"></figure>
     <table class="data">
       <tr><th>Loading in a region</th><th>SFD</th><th>BMD</th></tr>
       <tr><td>No load</td><td>Horizontal line</td><td>Sloping straight line</td></tr>
@@ -943,7 +971,7 @@ tailwind.config = {
 
 <!-- ============ M23 UNIVERSITY QUESTIONS ============ -->
 <div id="module-23" class="module-content max-w-4xl mx-auto">
-  <p class="eyebrow">Module 23</p><h2 class="mtitle">Question Bank</h2>
+  <p class="eyebrow">Module 23</p><h2 class="mtitle">Question bank</h2>
   <div class="card mb-5">
     <p class="text-sm">Questions grouped by topic and marks, each with the approach the examiner expects. Attempt it on paper first, then check the method.</p>
     <div class="flex flex-wrap gap-2 mt-4" id="uq-filters"></div>
@@ -1537,6 +1565,602 @@ const TUTOR_KB = [
 
 <script>
 /* ============================================================
+   FIGURE LIBRARY — drawing system
+   ------------------------------------------------------------
+   One palette, one type scale, one set of primitives. Rules every
+   figure obeys:
+     · text is never placed on top of a line, arrow or hatch
+     · labels sit in reserved gutters, or connect by a leader line
+     · dimension text sits above its dimension line, never on it
+     · bold is <tspan font-weight>, never <b> — SVG does not render
+       unknown elements or their content, so <b> eats the word
+   Palette is semantic and identical across all 19 figures:
+     sky    beam / member          amber  distributed load
+     red    point load             green  reaction / tension face
+     violet internal action        slate  ground, geometry, notes
+   ============================================================ */
+
+const P = { beam:'#0284c7', beamF:'rgba(14,165,233,.26)', load:'#f59e0b', loadF:'rgba(245,158,11,.20)',
+            pt:'#dc2626', rx:'#16a34a', act:'#7c3aed', geo:'#64748b', mute:'#94a3b8' };
+const TS = { title:12.5, label:11, note:9.5, tiny:8.5 };
+
+const DEFS = `<defs>
+  <pattern id="hx" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="7" stroke="${P.mute}" stroke-width="1.5"/>
+  </pattern>
+  ${['pt','rx','act','geo','load','beam'].map(k =>
+    `<marker id="a-${k}" markerWidth="10" markerHeight="10" refX="8.5" refY="3" orient="auto">
+       <path d="M0,0 L8.5,3 L0,6 z" fill="${P[k]}"/></marker>`).join('')}
+  <marker id="a-ptS" markerWidth="8" markerHeight="8" refX="6.5" refY="2.4" orient="auto">
+    <path d="M0,0 L6.5,2.4 L0,4.8 z" fill="${P.pt}"/></marker>
+</defs>`;
+
+function svg(w, h, body, label) {
+  return '<svg viewBox="0 0 ' + w + ' ' + h + '" class="w-full h-auto" role="img" aria-label="' + label + '">' + DEFS + body + '</svg>';
+}
+function cap(n, t) {
+  return '<figcaption class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center leading-snug"><b>Figure ' + n + '</b> — ' + t + '</figcaption>';
+}
+
+/* ---------- primitives ---------- */
+function T(x, y, s, o) {
+  o = o || {};
+  return `<text x="${x}" y="${y}" font-size="${o.size || TS.label}" fill="${o.color || 'currentColor'}"` +
+    ` text-anchor="${o.anchor || 'start'}"${o.weight ? ` font-weight="${o.weight}"` : ''}` +
+    `${o.style ? ` font-style="${o.style}"` : ''}>${s}</text>`;
+}
+function B(s) { return `<tspan font-weight="700">${s}</tspan>`; }
+function arrow(x1, y1, x2, y2, kind, w) {
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${P[kind]}" stroke-width="${w || 1.9}" marker-end="url(#a-${kind})" stroke-linecap="round"/>`;
+}
+function leader(x1, y1, x2, y2, color) {
+  return `<path d="M${x1},${y1} L${x2},${y2}" stroke="${color || P.mute}" stroke-width="1" fill="none" stroke-dasharray="3 2.5"/>` +
+         `<circle cx="${x2}" cy="${y2}" r="2.4" fill="${color || P.mute}"/>`;
+}
+function beamBar(x, y, w, h) {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h || 11}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.6"/>`;
+}
+function udl(x1, x2, yTop, yBot, n) {
+  n = n || Math.max(3, Math.round((x2 - x1) / 34));
+  let s = `<rect x="${x1}" y="${yTop}" width="${x2-x1}" height="${yBot-yTop}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>`;
+  for (let i = 0; i <= n; i++) {
+    const x = x1 + (x2 - x1) * i / n;
+    s += `<line x1="${x}" y1="${yTop+2}" x2="${x}" y2="${yBot-2}" stroke="${P.load}" stroke-width="1.1"/>`;
+  }
+  return s;
+}
+function tri(x1, x2, yTop, yBot, peakRight) {
+  const p = peakRight ? `${x1},${yBot} ${x2},${yTop} ${x2},${yBot}` : `${x1},${yTop} ${x1},${yBot} ${x2},${yBot}`;
+  return `<polygon points="${p}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>`;
+}
+function dimH(x1, x2, y, label) {
+  return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${P.mute}" stroke-width="1"/>` +
+         `<line x1="${x1}" y1="${y-4.5}" x2="${x1}" y2="${y+4.5}" stroke="${P.mute}" stroke-width="1.2"/>` +
+         `<line x1="${x2}" y1="${y-4.5}" x2="${x2}" y2="${y+4.5}" stroke="${P.mute}" stroke-width="1.2"/>` +
+         T((x1+x2)/2, y - 7, label, { size:TS.note, anchor:'middle', color:P.mute });
+}
+function baseline(x1, x2, y) { return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${P.mute}" stroke-width="1.1"/>`; }
+function rule(y, x1, x2) { return `<line x1="${x1||8}" y1="${y}" x2="${x2||612}" y2="${y}" stroke="${P.mute}" stroke-width="0.8" stroke-dasharray="3 3" opacity=".7"/>`; }
+
+/* ---------- support symbols ---------- */
+function symRoller(x, y) {
+  return `<g stroke="${P.geo}" fill="none" stroke-width="1.7">
+    <polygon points="${x},${y} ${x-11},${y+14} ${x+11},${y+14}"/>
+    <circle cx="${x-6}" cy="${y+18}" r="3.8"/><circle cx="${x+6}" cy="${y+18}" r="3.8"/>
+    <line x1="${x-16}" y1="${y+22.5}" x2="${x+16}" y2="${y+22.5}"/></g>`;
+}
+function symPin(x, y) {
+  return `<g stroke="${P.geo}" fill="none" stroke-width="1.7">
+    <polygon points="${x},${y} ${x-11},${y+17} ${x+11},${y+17}"/>
+    <line x1="${x-17}" y1="${y+17}" x2="${x+17}" y2="${y+17}"/></g>
+    <rect x="${x-17}" y="${y+17}" width="34" height="6" fill="url(#hx)"/>`;
+}
+function symFixed(x, y, h) {
+  h = h || 46;
+  return `<line x1="${x}" y1="${y-h/2}" x2="${x}" y2="${y+h/2}" stroke="${P.geo}" stroke-width="2.4"/>
+    <rect x="${x-8}" y="${y-h/2}" width="8" height="${h}" fill="url(#hx)"/>`;
+}
+function symHinge(x, y) { return `<circle cx="${x}" cy="${y}" r="6.5" fill="#fff" stroke="${P.pt}" stroke-width="2.2"/>`; }
+
+const FIG = {};
+
+/* ============ LEGEND ============ */
+FIG.legend = (() => {
+  const items = [['beam','Beam or member'],['load','Distributed load (UDL, UVL)'],['pt','Point load'],
+                 ['rx','Reaction, or tension face'],['act','Internal action: V, M, resultant'],['geo','Support, ground, geometry']];
+  let s = '';
+  items.forEach((it, i) => {
+    const x = 22 + (i % 3) * 200, y = 28 + ((i / 3) | 0) * 30;
+    s += `<rect x="${x}" y="${y-9}" width="22" height="11" rx="2" fill="${P[it[0]]}" fill-opacity=".3" stroke="${P[it[0]]}" stroke-width="1.5"/>`;
+    s += T(x + 32, y, it[1], { size:TS.note });
+  });
+  s += T(310, 78, 'The same colour carries the same meaning in every figure of this unit.', { size:TS.tiny, anchor:'middle', color:P.mute });
+  return svg(620, 88, s, 'Colour key used across all figures');
+})();
+
+/* ============ MODULE 3 — REAL OBJECTS ============ */
+function objCard(title, art, ideal, label) {
+  return svg(320, 232,
+    T(12, 17, title, { size:TS.title, weight:'700' }) + art +
+    rule(142, 12, 308) +
+    T(12, 138, 'idealised as', { size:TS.tiny, color:P.mute, style:'italic' }) + ideal, label);
+}
+
+FIG.obj_balcony = objCard('Balcony slab', `
+  ${T(16, 32, 'building wall', { size:TS.tiny, color:P.mute })}
+  <rect x="16" y="38" width="42" height="94" fill="url(#hx)" stroke="${P.geo}" stroke-width="1.5"/>
+  <line x1="62" y1="64" x2="252" y2="64" stroke="${P.geo}" stroke-width="2.2"/>
+  ${[66,120,180,240].map(x => `<line x1="${x}" y1="96" x2="${x}" y2="64" stroke="${P.geo}" stroke-width="1.8"/>`).join('')}
+  ${beamBar(58, 96, 198, 13)}
+  ${T(258, 70, 'railing', { size:TS.tiny, color:P.mute })}
+  ${T(157, 128, 'slab spanning out from the wall', { size:TS.tiny, anchor:'middle', color:P.mute })}
+`, `
+  ${T(166, 156, 'w — self weight, finishes, people', { size:TS.tiny, anchor:'middle', color:P.load })}
+  ${udl(72, 260, 162, 178)}
+  ${beamBar(72, 178, 188, 9)}
+  ${symFixed(72, 184, 40)}
+  ${T(72, 214, 'fixed', { size:TS.tiny, anchor:'middle', color:P.mute })}
+  ${T(262, 184, 'free', { size:TS.tiny, color:P.mute })}
+`, 'Balcony slab idealised as a cantilever');
+
+FIG.obj_lintel = objCard('Lintel over a door', `
+  ${T(160, 30, 'only the brickwork in the triangle reaches the lintel', { size:TS.tiny, anchor:'middle', color:P.load })}
+  <g stroke="${P.mute}" stroke-width="0.9" fill="none" opacity=".8">
+    ${[0,1,2,3].map(r => `<line x1="24" y1="${38+r*13}" x2="296" y2="${38+r*13}"/>`).join('')}
+    ${[0,1,2,3,4,5,6,7,8,9,10].map(c => `<line x1="${24+c*27.2}" y1="38" x2="${24+c*27.2}" y2="90"/>`).join('')}
+  </g>
+  <polygon points="160,44 112,88 208,88" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>
+  ${beamBar(96, 90, 128, 13)}
+  <rect x="24" y="90" width="72" height="42" fill="url(#hx)" stroke="${P.geo}" stroke-width="1.3"/>
+  <rect x="224" y="90" width="72" height="42" fill="url(#hx)" stroke="${P.geo}" stroke-width="1.3"/>
+  ${T(160, 120, 'door opening', { size:TS.tiny, anchor:'middle', color:P.mute })}
+`, `
+  ${T(160, 156, 'triangular load from the wall above', { size:TS.tiny, anchor:'middle', color:P.load })}
+  ${tri(128, 160, 162, 180, true)}${tri(160, 192, 162, 180, false)}
+  ${beamBar(96, 180, 128, 9)}
+  ${symPin(96, 189)}${symRoller(224, 189)}
+  ${T(96, 222, 'hinge', { size:TS.tiny, anchor:'middle', color:P.mute })}
+  ${T(224, 222, 'roller', { size:TS.tiny, anchor:'middle', color:P.mute })}
+`, 'Lintel over a door opening idealised as a simply supported beam');
+
+FIG.obj_footbridge = objCard('Footbridge deck', `
+  ${T(160, 34, 'pedestrian live load', { size:TS.tiny, anchor:'middle', color:P.pt })}
+  ${arrow(112, 40, 112, 60, 'pt', 1.6)}${arrow(160, 40, 160, 60, 'pt', 1.6)}${arrow(208, 40, 208, 60, 'pt', 1.6)}
+  <line x1="52" y1="64" x2="268" y2="64" stroke="${P.geo}" stroke-width="2"/>
+  ${[52,96,140,184,228,268].map(x => `<line x1="${x}" y1="90" x2="${x}" y2="64" stroke="${P.mute}" stroke-width="1.1"/>`).join('')}
+  ${beamBar(44, 90, 232, 12)}
+  <rect x="14" y="102" width="34" height="30" fill="url(#hx)" stroke="${P.geo}" stroke-width="1.3"/>
+  <rect x="272" y="102" width="34" height="30" fill="url(#hx)" stroke="${P.geo}" stroke-width="1.3"/>
+  ${T(160, 126, 'deck between two abutments', { size:TS.tiny, anchor:'middle', color:P.mute })}
+`, `
+  ${T(160, 156, 'w — deck plus crowd', { size:TS.tiny, anchor:'middle', color:P.load })}
+  ${udl(60, 260, 162, 178)}
+  ${beamBar(60, 178, 200, 9)}
+  ${symPin(60, 187)}${symRoller(260, 187)}
+  ${dimH(60, 260, 224, 'span L')}
+`, 'Footbridge deck idealised as a simply supported beam');
+
+FIG.obj_crane = objCard('Crane runway girder', `
+  ${T(162, 34, 'trolley travels along the girder', { size:TS.tiny, anchor:'middle', color:P.mute })}
+  <line x1="98" y1="44" x2="64" y2="44" stroke="${P.mute}" stroke-width="1.1" marker-end="url(#a-geo)"/>
+  <line x1="226" y1="44" x2="260" y2="44" stroke="${P.mute}" stroke-width="1.1" marker-end="url(#a-geo)"/>
+  <rect x="140" y="56" width="44" height="15" fill="none" stroke="${P.geo}" stroke-width="1.5"/>
+  <circle cx="149" cy="74" r="3.6" fill="none" stroke="${P.geo}" stroke-width="1.3"/>
+  <circle cx="175" cy="74" r="3.6" fill="none" stroke="${P.geo}" stroke-width="1.3"/>
+  ${beamBar(36, 72, 248, 13)}
+  <rect x="20" y="85" width="16" height="47" fill="url(#hx)" stroke="${P.geo}" stroke-width="1.3"/>
+  <rect x="284" y="85" width="16" height="47" fill="url(#hx)" stroke="${P.geo}" stroke-width="1.3"/>
+  <line x1="162" y1="85" x2="162" y2="106" stroke="${P.geo}" stroke-width="1.3"/>
+  <rect x="147" y="106" width="30" height="20" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>
+  ${T(184, 120, 'lifted load', { size:TS.tiny, color:P.mute })}
+`, `
+  ${T(176, 156, 'W, position varies', { size:TS.tiny, anchor:'middle', color:P.pt })}
+  ${arrow(176, 162, 176, 179, 'pt')}
+  ${beamBar(60, 182, 200, 9)}
+  ${symPin(60, 191)}${symRoller(260, 191)}
+  ${dimH(60, 176, 226, 'a')}${dimH(176, 260, 226, 'b')}
+`, 'Crane runway girder idealised as a simply supported beam with a moving point load');
+
+FIG.obj_diving = objCard('Diving springboard', `
+  ${T(18, 34, 'concrete plinth', { size:TS.tiny, color:P.mute })}
+  <circle cx="258" cy="54" r="7" fill="none" stroke="${P.pt}" stroke-width="1.8"/>
+  <line x1="258" y1="61" x2="258" y2="78" stroke="${P.pt}" stroke-width="1.8"/>
+  <line x1="258" y1="66" x2="246" y2="58" stroke="${P.pt}" stroke-width="1.6"/>
+  <line x1="258" y1="66" x2="270" y2="58" stroke="${P.pt}" stroke-width="1.6"/>
+  <path d="M74,78 Q170,80 262,88" stroke="${P.beam}" stroke-width="9" fill="none" stroke-linecap="round" opacity=".5"/>
+  <rect x="18" y="40" width="56" height="60" fill="url(#hx)" stroke="${P.geo}" stroke-width="1.3"/>
+  <path d="M12,110 L308,110 L308,132 L12,132 Z" fill="${P.beamF}" opacity=".45"/>
+  <path d="M12,112 Q58,106 106,112 T206,110 T308,114" stroke="${P.beam}" stroke-width="1.3" fill="none"/>
+  ${T(160, 126, 'water', { size:TS.tiny, anchor:'middle', color:P.mute })}
+  ${T(150, 102, 'board clamped at the pool edge', { size:TS.tiny, anchor:'middle', color:P.mute })}
+`, `
+  ${T(246, 156, 'W at the tip', { size:TS.tiny, anchor:'middle', color:P.pt })}
+  ${arrow(246, 162, 246, 179, 'pt')}
+  ${beamBar(76, 182, 176, 9)}
+  ${symFixed(76, 186, 34)}
+  ${T(76, 212, 'fixed', { size:TS.tiny, anchor:'middle', color:P.mute })}
+  ${dimH(76, 246, 226, 'L')}
+`, 'Diving springboard idealised as a cantilever with a load at the free end');
+
+FIG.obj_sleeper = objCard('Railway sleeper', `
+  ${T(160, 32, 'wheel loads arrive through the two rails', { size:TS.tiny, anchor:'middle', color:P.pt })}
+  ${arrow(100, 38, 100, 62, 'pt')}${arrow(220, 38, 220, 62, 'pt')}
+  <rect x="92" y="66" width="16" height="20" fill="${P.geo}" fill-opacity=".5" stroke="${P.geo}" stroke-width="1.3"/>
+  <rect x="212" y="66" width="16" height="20" fill="${P.geo}" fill-opacity=".5" stroke="${P.geo}" stroke-width="1.3"/>
+  ${beamBar(52, 86, 216, 16)}
+  <polygon points="8,102 312,102 320,128 0,128" fill="${P.mute}" fill-opacity=".2" stroke="${P.mute}" stroke-width="1.1"/>
+  ${[16,46,76,106,136,166,196,226,256,286].map(x => `<circle cx="${x+6}" cy="115" r="2.8" fill="${P.mute}" opacity=".6"/>`).join('')}
+  ${T(160, 124, 'ballast', { size:TS.tiny, anchor:'middle', color:P.mute })}
+`, `
+  ${T(160, 156, 'two rail loads down', { size:TS.tiny, anchor:'middle', color:P.pt })}
+  ${arrow(100, 162, 100, 178, 'pt', 1.7)}${arrow(220, 162, 220, 178, 'pt', 1.7)}
+  ${beamBar(52, 181, 216, 10)}
+  ${[60,88,116,144,172,200,228,256].map(x => arrow(x, 212, x, 195, 'rx', 1.5)).join('')}
+  ${T(160, 226, 'ballast pushes up along the whole length', { size:TS.tiny, anchor:'middle', color:P.rx })}
+`, 'Railway sleeper idealised as a beam loaded down by the rails and up by the ballast');
+
+/* ============ MODULE 4 ============ */
+FIG.supports = (() => {
+  const col = i => 78 + i * 156;
+  let s = '';
+  s += beamBar(col(0)-56, 52, 112) + symRoller(col(0), 63);
+  s += arrow(col(0), 126, col(0), 102, 'rx') + T(col(0)+10, 118, 'V', { size:TS.note, color:P.rx, weight:'700' });
+
+  s += beamBar(col(1)-56, 52, 112) + symPin(col(1), 63);
+  s += arrow(col(1), 126, col(1), 102, 'rx') + T(col(1)+10, 120, 'V', { size:TS.note, color:P.rx, weight:'700' });
+  s += arrow(col(1)-46, 92, col(1)-18, 92, 'rx') + T(col(1)-32, 85, 'H', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+
+  s += symFixed(col(2)-54, 58, 50) + beamBar(col(2)-54, 52, 110);
+  s += arrow(col(2)-42, 126, col(2)-42, 102, 'rx') + T(col(2)-32, 120, 'V', { size:TS.note, color:P.rx, weight:'700' });
+  s += arrow(col(2)-2, 92, col(2)+26, 92, 'rx') + T(col(2)+12, 85, 'H', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  s += `<path d="M${col(2)+40},110 A16,16 0 1 1 ${col(2)+56},97" fill="none" stroke="${P.rx}" stroke-width="1.9" marker-end="url(#a-rx)"/>`;
+  s += T(col(2)+62, 118, 'M', { size:TS.note, color:P.rx, weight:'700' });
+
+  s += beamBar(col(3)-56, 52, 53) + beamBar(col(3)+3, 52, 53) + symHinge(col(3), 57);
+  s += arrow(col(3)-34, 96, col(3)-12, 96, 'act') + arrow(col(3)+34, 96, col(3)+12, 96, 'act');
+  s += T(col(3), 122, 'shear passes across,', { size:TS.tiny, anchor:'middle', color:P.act });
+  s += T(col(3), 133, 'moment does not', { size:TS.tiny, anchor:'middle', color:P.act });
+
+  [['Roller','1 reaction: V'],['Hinge or pin','2 reactions: V and H'],['Fixed','3 reactions: V, H and M'],['Internal hinge','M = 0, so one extra equation']]
+    .forEach((n, i) => {
+      s += T(col(i), 162, n[0], { size:TS.label, anchor:'middle', weight:'700' });
+      s += T(col(i), 178, n[1], { size:TS.note, anchor:'middle', color:P.mute });
+    });
+  return svg(620, 194, s, 'Support types and the reaction components each one provides');
+})();
+
+FIG.beamtypes = (() => {
+  const cells = [
+    ['Cantilever', x => symFixed(x, 46, 34) + beamBar(x, 41, 150), 1],
+    ['Simply supported', x => beamBar(x, 41, 150) + symPin(x, 52) + symRoller(x + 150, 52), 1],
+    ['Overhanging', x => beamBar(x, 41, 170) + symPin(x + 14, 52) + symRoller(x + 110, 52), 1],
+    ['Propped cantilever', x => symFixed(x, 46, 34) + beamBar(x, 41, 150) + symRoller(x + 150, 52), 0],
+    ['Fixed at both ends', x => symFixed(x, 46, 34) + beamBar(x, 41, 150) + `<g transform="translate(${2*x+150},0) scale(-1,1)">${symFixed(x, 46, 34)}</g>`, 0],
+    ['Continuous', x => beamBar(x, 41, 176) + symPin(x, 52) + symRoller(x + 88, 52) + symRoller(x + 176, 52), 0]
+  ];
+  const notes = ['determinate','determinate','determinate','indeterminate, degree 1','indeterminate, degree 3','indeterminate'];
+  let s = '';
+  cells.forEach((c, i) => {
+    const cx = 20 + (i % 3) * 200, cy = ((i / 3) | 0) * 112;
+    s += `<g transform="translate(0,${cy})">` +
+      T(cx + 88, 20, c[0], { size:TS.label, anchor:'middle', weight:'700' }) + c[1](cx) +
+      T(cx + 88, 98, notes[i], { size:TS.note, anchor:'middle', color: c[2] ? P.rx : P.pt }) + '</g>';
+  });
+  s += rule(234);
+  s += T(310, 254, 'Only the three in green can be solved by equilibrium alone — those are the beams this unit covers.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 268, s, 'The six standard beam types and which of them are statically determinate');
+})();
+
+/* ============ MODULE 5 ============ */
+FIG.loadtypes = (() => {
+  const cell = (i, title, art, n1, n2) => {
+    const cx = 16 + (i % 3) * 200, cy = ((i / 3) | 0) * 156;
+    return `<g transform="translate(${cx},${cy})">` +
+      T(92, 16, title, { size:TS.label, anchor:'middle', weight:'700' }) + art +
+      T(92, 122, n1, { size:TS.note, anchor:'middle', color:P.mute }) +
+      (n2 ? T(92, 135, n2, { size:TS.note, anchor:'middle', color:P.mute }) : '') + '</g>';
+  };
+  const bar = beamBar(12, 88, 160, 9);
+  let s = '';
+  s += cell(0, 'Point load',
+    bar + arrow(92, 46, 92, 84, 'pt') + T(92, 40, 'W', { size:TS.label, anchor:'middle', color:P.pt, weight:'700' }),
+    'The resultant is W itself,', 'acting at its own position');
+  s += cell(1, 'UDL, intensity w',
+    udl(12, 172, 62, 84) + bar + arrow(92, 46, 92, 58, 'act') + T(92, 40, 'R = w·a', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }) + dimH(12, 92, 108, 'a/2'),
+    'Rectangle of load, so the', 'resultant sits at the mid-length');
+  s += cell(2, 'UVL, zero to w',
+    tri(12, 172, 60, 84, true) + bar + arrow(118.7, 46, 118.7, 58, 'act') + T(118.7, 40, 'R = ½w·a', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }) + dimH(118.7, 172, 108, 'a/3'),
+    'Triangle of load, so the resultant', 'sits a/3 from the wide end');
+  s += cell(3, 'Trapezoidal',
+    `<polygon points="12,84 12,70 172,54 172,84" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>` + bar +
+    `<line x1="98" y1="56" x2="98" y2="84" stroke="${P.load}" stroke-width="1" stroke-dasharray="3 2"/>` +
+    T(52, 48, 'rectangle', { size:TS.tiny, anchor:'middle', color:P.load }) + T(140, 42, 'triangle', { size:TS.tiny, anchor:'middle', color:P.load }),
+    'Split into two simple shapes,', 'then combine the two resultants');
+  s += cell(4, 'Applied couple',
+    bar + `<path d="M74,68 A19,19 0 1 1 108,62" fill="none" stroke="${P.act}" stroke-width="2.1" marker-end="url(#a-act)"/>` +
+    T(92, 40, 'M₀', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }),
+    'No vertical force at all —', 'enters ΣM but never ΣF');
+  s += cell(5, 'Several point loads',
+    bar + arrow(46, 52, 46, 84, 'pt', 1.7) + arrow(92, 52, 92, 84, 'pt', 1.7) + arrow(138, 52, 138, 84, 'pt', 1.7) +
+    T(46, 46, 'W₁', { size:TS.note, anchor:'middle', color:P.pt }) + T(92, 46, 'W₂', { size:TS.note, anchor:'middle', color:P.pt }) + T(138, 46, 'W₃', { size:TS.note, anchor:'middle', color:P.pt }),
+    'Handled one at a time —', 'their effects simply superpose');
+  s += rule(318);
+  s += T(310, 338, 'Violet marks a resultant. Use it to find reactions only, never to find V or M inside the loaded length.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 350, s, 'The load types with the position of each resultant');
+})();
+
+/* ============ MODULE 6 ============ */
+FIG.fbd = (() => {
+  const A = 70, Bx = 550, y = 118;
+  let s = T(16, 20, 'Free body diagram — every force acting, and nothing else', { size:TS.title, weight:'700' });
+  s += T(230, 36, '40 kN', { size:TS.label, anchor:'middle', color:P.pt, weight:'700' });
+  s += arrow(230, 44, 230, 78, 'pt', 2.2);
+  s += udl(A, Bx, 84, 114);
+  s += T(430, 74, '10 kN/m over the full span', { size:TS.label, anchor:'middle', color:P.load });
+  s += beamBar(A, y, Bx - A, 12) + symPin(A, y + 12) + symRoller(Bx, y + 12);
+  s += arrow(A, 200, A, 170, 'rx', 2.2) + T(A, 218, 'R', { size:TS.label, anchor:'middle', color:P.rx, weight:'700' }) +
+       T(A + 8, 222, 'A', { size:TS.tiny, color:P.rx }) + T(A, 234, '56.67 kN', { size:TS.note, anchor:'middle', color:P.rx });
+  s += arrow(Bx, 200, Bx, 172, 'rx', 2.2) + T(Bx, 218, 'R', { size:TS.label, anchor:'middle', color:P.rx, weight:'700' }) +
+       T(Bx + 8, 222, 'B', { size:TS.tiny, color:P.rx }) + T(Bx, 234, '43.33 kN', { size:TS.note, anchor:'middle', color:P.rx });
+  s += dimH(A, 230, 266, '2 m') + dimH(230, Bx, 266, '4 m');
+  s += rule(282);
+  s += T(310, 302, 'Reactions are drawn upward by assumption. A negative answer simply means the arrow points the other way.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 314, s, 'Free body diagram of the worked example beam');
+})();
+
+/* ============ MODULE 7 ============ */
+FIG.section = (() => {
+  let s = T(16, 20, '1', { size:TS.title, weight:'700', color:P.mute }) + T(32, 20, 'The whole beam, with a section taken at distance x', { size:TS.label });
+  s += T(300, 34, 'W', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' }) + arrow(300, 42, 300, 62, 'pt', 2);
+  s += beamBar(80, 68, 460, 11) + symPin(80, 79) + symRoller(540, 79);
+  s += arrow(80, 126, 80, 104, 'rx', 1.9) + T(80, 142, 'R', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  s += arrow(540, 126, 540, 104, 'rx', 1.9) + T(540, 142, 'R', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  s += `<line x1="215" y1="56" x2="215" y2="98" stroke="${P.pt}" stroke-width="1.7" stroke-dasharray="6 4"/>`;
+  s += T(206, 52, 'cut here', { size:TS.note, anchor:'end', color:P.pt });
+  s += dimH(80, 215, 164, 'x');
+  s += rule(182);
+  s += T(16, 206, '2', { size:TS.title, weight:'700', color:P.mute }) + T(32, 206, 'Keep the left piece — the cut face must restore its equilibrium', { size:TS.label });
+  s += beamBar(80, 244, 135, 11) + symPin(80, 255);
+  s += arrow(80, 300, 80, 278, 'rx', 1.9) + T(80, 316, 'R', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  s += `<line x1="215" y1="238" x2="215" y2="261" stroke="${P.pt}" stroke-width="3"/>`;
+  s += arrow(233, 316, 233, 272, 'act', 2.1);
+  s += leader(300, 322, 238, 306, P.act) + T(306, 326, 'V — the vertical force the face must carry', { size:TS.note, color:P.act });
+  s += `<path d="M233,234 A20,20 0 1 1 259,220" fill="none" stroke="${P.act}" stroke-width="2.1" marker-end="url(#a-act)"/>`;
+  s += leader(348, 232, 264, 220, P.act) + T(354, 236, 'M — the couple the face must carry', { size:TS.note, color:P.act });
+  s += rule(344);
+  s += T(310, 366, 'V = ΣF of everything to the left.    M = Σ(force × its distance to the cut) of everything to the left.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 378, s, 'Method of sections: the cut face carries both a shear force and a bending moment');
+})();
+
+FIG.shearsign = (() => {
+  const panel = (x0, title, color, upLeft) => {
+    const yL = upLeft ? 66 : 86, yR = upLeft ? 86 : 66;
+    let s = T(x0 + 150, 24, title, { size:TS.title, anchor:'middle', weight:'700', color });
+    s += `<rect x="${x0+56}" y="${yL}" width="94" height="34" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.5"/>`;
+    s += `<rect x="${x0+152}" y="${yR}" width="94" height="34" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.5"/>`;
+    s += `<line x1="${x0+151}" y1="${Math.min(yL,yR)-8}" x2="${x0+151}" y2="${Math.max(yL,yR)+42}" stroke="${P.mute}" stroke-width="1" stroke-dasharray="4 3"/>`;
+    const k = upLeft ? 'rx' : 'pt';
+    if (upLeft) { s += arrow(x0 + 103, 154, x0 + 103, 108, k, 2.1) + arrow(x0 + 199, 40, x0 + 199, 82, k, 2.1); }
+    else        { s += arrow(x0 + 103, 40, x0 + 103, 82, k, 2.1) + arrow(x0 + 199, 154, x0 + 199, 108, k, 2.1); }
+    return s;
+  };
+  let s = panel(0, 'Positive shear', P.rx, true) + panel(310, 'Negative shear', P.pt, false);
+  s += T(150, 186, 'The left portion tends to slide ' + B('up'), { size:TS.label, anchor:'middle' });
+  s += T(150, 204, 'Resultant of the forces to the left acts upward.', { size:TS.note, anchor:'middle', color:P.mute });
+  s += T(460, 186, 'The left portion tends to slide ' + B('down'), { size:TS.label, anchor:'middle' });
+  s += T(460, 204, 'Resultant of the forces to the left acts downward.', { size:TS.note, anchor:'middle', color:P.mute });
+  s += rule(222);
+  s += T(310, 242, 'The blocks are drawn offset only to show the tendency — the beam does not actually separate.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 254, s, 'Positive and negative shear shown as the sliding tendency at a section');
+})();
+
+/* ============ MODULE 8 ============ */
+FIG.momentsign = (() => {
+  let s = T(155, 22, 'Sagging — positive', { size:TS.title, anchor:'middle', weight:'700', color:P.rx });
+  s += T(155, 40, 'compression on top, tension underneath', { size:TS.note, anchor:'middle', color:P.mute });
+  s += `<path d="M45,74 Q155,120 265,74" fill="none" stroke="${P.beam}" stroke-width="2.6"/>`;
+  s += `<path d="M45,100 Q155,146 265,100" fill="none" stroke="${P.beam}" stroke-width="2.6"/>`;
+  s += `<line x1="45" y1="74" x2="45" y2="100" stroke="${P.beam}" stroke-width="2.6"/><line x1="265" y1="74" x2="265" y2="100" stroke="${P.beam}" stroke-width="2.6"/>`;
+  s += `<path d="M45,87 Q155,133 265,87" fill="none" stroke="${P.mute}" stroke-width="1.2" stroke-dasharray="5 4"/>`;
+  s += leader(100, 58, 155, 96, P.pt) + T(96, 55, 'top fibre shortens', { size:TS.note, anchor:'end', color:P.pt });
+  s += leader(212, 158, 155, 133, P.rx) + T(216, 162, 'bottom fibre stretches', { size:TS.note, color:P.rx });
+  s += T(272, 116, 'neutral axis', { size:TS.tiny, color:P.mute });
+
+  s += T(465, 22, 'Hogging — negative', { size:TS.title, anchor:'middle', weight:'700', color:P.pt });
+  s += T(465, 40, 'tension on top, compression underneath', { size:TS.note, anchor:'middle', color:P.mute });
+  s += `<path d="M355,134 Q465,88 575,134" fill="none" stroke="${P.beam}" stroke-width="2.6"/>`;
+  s += `<path d="M355,108 Q465,62 575,108" fill="none" stroke="${P.beam}" stroke-width="2.6"/>`;
+  s += `<line x1="355" y1="108" x2="355" y2="134" stroke="${P.beam}" stroke-width="2.6"/><line x1="575" y1="108" x2="575" y2="134" stroke="${P.beam}" stroke-width="2.6"/>`;
+  s += leader(410, 58, 465, 76, P.rx) + T(406, 55, 'top fibre stretches', { size:TS.note, anchor:'end', color:P.rx });
+  s += leader(520, 158, 465, 125, P.pt) + T(574, 162, 'bottom fibre shortens', { size:TS.note, anchor:'end', color:P.pt });
+  s += rule(186);
+  s += T(310, 208, 'Concrete is weak in tension, so the main steel goes on whichever face the moment stretches', { size:TS.label, anchor:'middle', weight:'700' });
+  const sec = (x, top) => {
+    const by = top ? 244 : 266;
+    let g = `<rect x="${x}" y="234" width="200" height="42" fill="none" stroke="${P.mute}" stroke-width="1.5"/>`;
+    g += `<line x1="${x+10}" y1="${by}" x2="${x+190}" y2="${by}" stroke="${P.rx}" stroke-width="3"/>`;
+    [0,1,2,3,4].forEach(i => { g += `<circle cx="${x+30+i*35}" cy="${by}" r="3.4" fill="${P.rx}"/>`; });
+    return g;
+  };
+  s += sec(55, false) + T(155, 298, 'Bottom steel — mid-span of a beam or slab', { size:TS.note, anchor:'middle', color:P.mute });
+  s += sec(365, true) + T(465, 298, 'Top steel — over a support, or in a cantilever', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 312, s, 'Sagging and hogging: which fibre goes into tension and where the reinforcement follows');
+})();
+
+/* ============ MODULE 9 ============ */
+FIG.element = (() => {
+  const L = 218, R = 402, top = 158, bot = 206;
+  let s = T(16, 20, 'Cut an element of length dx out of a loaded beam', { size:TS.label });
+  s += beamBar(60, 44, 500, 11);
+  s += `<rect x="${L}" y="40" width="${R-L}" height="19" fill="${P.loadF}" stroke="${P.pt}" stroke-width="1.5" stroke-dasharray="5 3"/>`;
+  s += leader(452, 30, 404, 44, P.pt) + T(458, 28, 'this element, enlarged below', { size:TS.note, color:P.pt });
+  s += rule(80);
+  s += T(310, 100, 'w per unit length', { size:TS.label, anchor:'middle', color:P.load, weight:'700' });
+  s += udl(L, R, 108, 138);
+  s += `<rect x="${L}" y="${top}" width="${R-L}" height="${bot-top}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.8"/>`;
+  /* left face: M above, V below, labels pushed out into clear space */
+  s += `<path d="M${L-18},${top-8} A18,18 0 1 0 ${L-4},${top-26}" fill="none" stroke="${P.act}" stroke-width="2" marker-end="url(#a-act)"/>`;
+  s += T(L - 46, top - 22, 'M', { size:TS.label, anchor:'middle', color:P.act, weight:'700' });
+  s += arrow(L - 18, bot + 58, L - 18, bot + 10, 'act', 2);
+  s += T(L - 46, bot + 42, 'V', { size:TS.label, anchor:'middle', color:P.act, weight:'700' });
+  /* right face: V above, M below */
+  s += arrow(R + 18, top - 50, R + 18, top - 8, 'act', 2);
+  s += T(R + 32, top - 34, 'V + dV', { size:TS.label, color:P.act, weight:'700' });
+  s += `<path d="M${R+18},${bot+8} A18,18 0 1 1 ${R+4},${bot+26}" fill="none" stroke="${P.act}" stroke-width="2" marker-end="url(#a-act)"/>`;
+  s += T(R + 32, bot + 34, 'M + dM', { size:TS.label, color:P.act, weight:'700' });
+  s += dimH(L, R, bot + 34, 'dx');
+  s += rule(284);
+  s += T(310, 306, 'ΣF<tspan baseline-shift="sub" font-size="8">y</tspan> :   V − w·dx − (V + dV) = 0   gives   dV/dx = −w', { size:TS.label, anchor:'middle' });
+  s += T(310, 328, 'ΣM :   M + V·dx − (M + dM) = 0   gives   dM/dx = V', { size:TS.label, anchor:'middle' });
+  s += T(310, 348, 'The second-order term w·dx²/2 vanishes as dx → 0.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 360, s, 'Equilibrium of a beam element of length dx, giving the two differential relations');
+})();
+
+/* ============ MODULE 12 ============ */
+FIG.contraflexure = (() => {
+  const A = 80, Bx = 400, C = 560, X = 300;
+  let s = T(16, 20, '1', { size:TS.title, weight:'700', color:P.mute }) + T(32, 20, 'Beam and loading', { size:TS.label });
+  s += udl(A, C, 40, 62) + beamBar(A, 62, C - A, 11) + symPin(A, 73) + symRoller(Bx, 73);
+  s += T(A, 116, 'A', { size:TS.note, anchor:'middle', color:P.mute }) + T(Bx, 116, 'B', { size:TS.note, anchor:'middle', color:P.mute }) + T(C, 80, 'C, free', { size:TS.note, anchor:'middle', color:P.mute });
+  s += rule(134);
+  s += T(16, 156, '2', { size:TS.title, weight:'700', color:P.mute }) + T(32, 156, 'Deflected shape — the curvature reverses part way along', { size:TS.label });
+  s += T(X, 178, 'point of contraflexure', { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
+  s += `<path d="M${A},204 Q240,240 ${Bx},204 Q480,186 ${C},160" fill="none" stroke="${P.beam}" stroke-width="3"/>`;
+  s += `<line x1="${A}" y1="196" x2="${A}" y2="214" stroke="${P.geo}" stroke-width="2"/><line x1="${Bx}" y1="196" x2="${Bx}" y2="214" stroke="${P.geo}" stroke-width="2"/>`;
+  s += `<line x1="${X}" y1="184" x2="${X}" y2="218" stroke="${P.act}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+  s += `<circle cx="${X}" cy="223" r="4.5" fill="${P.act}"/>`;
+  s += T(190, 256, 'sags — tension at the bottom', { size:TS.note, anchor:'middle', color:P.rx });
+  s += T(510, 152, 'hogs — tension at the top', { size:TS.note, anchor:'middle', color:P.pt });
+  s += rule(272);
+  s += T(16, 294, '3', { size:TS.title, weight:'700', color:P.mute }) + T(32, 294, 'Bending moment diagram, and the bar arrangement it dictates', { size:TS.label });
+  s += `<line x1="${X-46}" y1="316" x2="${C+6}" y2="316" stroke="${P.pt}" stroke-width="3.4"/>`;
+  s += T(C + 6, 312, 'top bars over the support', { size:TS.note, anchor:'end', color:P.pt });
+  s += baseline(A, C, 352);
+  s += `<path d="M${A},352 Q190,384 ${X},352" fill="${P.rx}" fill-opacity=".2" stroke="${P.rx}" stroke-width="2"/>`;
+  s += `<path d="M${X},352 Q350,338 ${Bx},328 Q480,340 ${C},352" fill="${P.pt}" fill-opacity=".2" stroke="${P.pt}" stroke-width="2"/>`;
+  s += `<line x1="${X}" y1="344" x2="${X}" y2="360" stroke="${P.act}" stroke-width="2.4"/>`;
+  s += T(X + 6, 372, 'M = 0', { size:TS.tiny, color:P.act });
+  s += `<line x1="${A-6}" y1="398" x2="${X+46}" y2="398" stroke="${P.rx}" stroke-width="3.4"/>`;
+  s += T(A - 6, 414, 'bottom bars, carried past the contraflexure point', { size:TS.note, color:P.rx });
+  return svg(620, 424, s, 'Overhanging beam: deflected shape, contraflexure point, and the resulting bar arrangement');
+})();
+
+/* ============ MODULE 14 ============ */
+FIG.hinge = (() => {
+  let s = T(16, 20, '1', { size:TS.title, weight:'700', color:P.mute }) + T(32, 20, 'The compound beam as built', { size:TS.label });
+  s += T(398, 40, 'internal hinge, M = 0', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+  s += leader(398, 46, 398, 56, P.pt);
+  s += symFixed(70, 74, 42) + beamBar(70, 68, 322, 11) + beamBar(404, 68, 146, 11) + symHinge(398, 73) + symRoller(550, 79);
+  s += T(70, 114, 'A, fixed', { size:TS.note, anchor:'middle', color:P.mute }) + T(550, 120, 'D, roller', { size:TS.note, anchor:'middle', color:P.mute });
+  s += rule(136);
+  s += T(16, 158, '2', { size:TS.title, weight:'700', color:P.mute }) + T(32, 158, 'Cut at the hinge and solve the suspended part CD on its own', { size:TS.label });
+  s += udl(404, 550, 176, 196) + beamBar(404, 196, 146, 11) + symRoller(550, 207);
+  s += arrow(404, 262, 404, 222, 'rx', 2) + T(404, 278, 'V', { size:TS.label, anchor:'middle', color:P.rx, weight:'700' }) + T(412, 282, 'C', { size:TS.tiny, color:P.rx }) + T(404, 292, '12 kN', { size:TS.note, anchor:'middle', color:P.rx });
+  s += arrow(550, 262, 550, 234, 'rx', 2) + T(550, 278, 'R', { size:TS.label, anchor:'middle', color:P.rx, weight:'700' }) + T(558, 282, 'D', { size:TS.tiny, color:P.rx }) + T(550, 292, '12 kN', { size:TS.note, anchor:'middle', color:P.rx });
+  s += rule(310);
+  s += T(16, 332, '3', { size:TS.title, weight:'700', color:P.mute }) + T(32, 332, 'Apply that hinge force downward on the supported part AC', { size:TS.label });
+  s += T(400, 356, '12 kN transferred from the hinge', { size:TS.note, color:P.pt });
+  s += udl(70, 392, 350, 370) + beamBar(70, 370, 322, 11) + symFixed(70, 376, 34);
+  s += arrow(392, 344, 392, 366, 'pt', 2.1);
+  return svg(620, 398, s, 'Analysing a compound beam: solve the suspended span first, then transfer the hinge force');
+})();
+
+/* ============ MODULE 15 ============ */
+FIG.maxbm = (() => {
+  const A = 80, Bx = 540, xP = 233;
+  let s = T(16, 20, 'Beam', { size:TS.label, weight:'700' });
+  s += T(xP, 36, '40 kN', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' }) + arrow(xP, 42, xP, 62, 'pt', 2.1);
+  s += T(440, 60, '10 kN/m', { size:TS.note, anchor:'middle', color:P.load });
+  s += udl(A, Bx, 68, 86) + beamBar(A, 86, Bx - A, 11) + symPin(A, 97) + symRoller(Bx, 97);
+  s += rule(140);
+  s += T(16, 162, 'Shear force diagram', { size:TS.label, weight:'700' });
+  s += T(340, 162, 'the shear jumps straight through zero here', { size:TS.note, color:P.act });
+  s += baseline(A, Bx, 216);
+  s += `<path d="M${A},216 L${A},184 L${xP},198 L${xP},234 L${Bx},262 L${Bx},216 Z" fill="${P.beam}" fill-opacity=".18" stroke="${P.beam}" stroke-width="2"/>`;
+  s += `<circle cx="${xP}" cy="216" r="5" fill="${P.act}"/>`;
+  s += leader(334, 166, xP + 7, 212, P.act);
+  s += T(150, 178, '+36.67', { size:TS.note, anchor:'middle', color:P.rx });
+  s += T(xP + 26, 250, '−3.33', { size:TS.note, color:P.pt });
+  s += rule(282);
+  s += T(16, 304, 'Bending moment diagram', { size:TS.label, weight:'700' });
+  s += T(366, 304, 'M = 93.33 kN·m, at the load and not at mid-span', { size:TS.note, color:P.act });
+  s += baseline(A, Bx, 372);
+  s += `<path d="M${A},372 Q160,350 ${xP},334 Q390,354 ${Bx},372 Z" fill="${P.rx}" fill-opacity=".2" stroke="${P.rx}" stroke-width="2"/>`;
+  s += `<line x1="${xP}" y1="334" x2="${xP}" y2="372" stroke="${P.act}" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+  s += `<circle cx="${xP}" cy="334" r="4.5" fill="${P.act}"/>`;
+  s += leader(360, 308, xP + 7, 331, P.act);
+  s += `<line x1="${(A+Bx)/2}" y1="362" x2="${(A+Bx)/2}" y2="380" stroke="${P.mute}" stroke-width="1" stroke-dasharray="3 3"/>`;
+  s += T((A + Bx) / 2, 394, 'mid-span', { size:TS.tiny, anchor:'middle', color:P.mute });
+  return svg(620, 406, s, 'When the shear jumps through zero at a point load, the maximum moment sits at that load');
+})();
+
+/* ============ MODULE 20 — SHAPE SHEET ============ */
+FIG.shapes = (() => {
+  const W = 126, GY = 172;
+  const cell = (i, title, beam, sfd, bmd) => {
+    const x = 74 + (i % 4) * 137, y = 30 + ((i / 4) | 0) * GY;
+    return `<g transform="translate(${x},${y})">` +
+      T(W / 2, 0, title, { size:TS.note, anchor:'middle', weight:'700' }) +
+      `<g transform="translate(0,12)">${beam}</g>` +
+      `<g transform="translate(0,58)">${baseline(0, W, 20)}${sfd}</g>` +
+      `<g transform="translate(0,110)">${baseline(0, W, 20)}${bmd}</g></g>`;
+  };
+  const bar = `<rect x="0" y="10" width="${W}" height="7" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.2"/>`;
+  const ld = `<rect x="0" y="1" width="${W}" height="8" fill="${P.loadF}" stroke="${P.load}" stroke-width="1"/>`;
+  const pl = x => `<line x1="${x}" y1="0" x2="${x}" y2="8" stroke="${P.pt}" stroke-width="1.6" marker-end="url(#a-ptS)"/>`;
+  const sf = d => `<path d="${d}" fill="${P.beam}" fill-opacity=".18" stroke="${P.beam}" stroke-width="1.6"/>`;
+  const bm = (d, c) => `<path d="${d}" fill="${c}" fill-opacity=".2" stroke="${c}" stroke-width="1.6"/>`;
+  let s = '';
+  [0,1].forEach(r => ['beam','SFD','BMD'].forEach((l, k) => {
+    s += T(64, 30 + r * GY + 28 + k * 52, l, { size:TS.tiny, anchor:'end', color:P.mute });
+  }));
+  s += cell(0, 'Cantilever + tip load', bar + pl(W - 2), sf(`M0,20 L0,4 L${W},4 L${W},20 Z`), bm(`M0,20 L0,3 L${W},20 Z`, P.pt));
+  s += cell(1, 'Cantilever + UDL', bar + ld, sf(`M0,20 L0,4 L${W},20 Z`), bm(`M0,3 Q${W*0.7},14 ${W},20 L0,20 Z`, P.pt));
+  s += cell(2, 'SS + central load', bar + pl(W/2), sf(`M0,20 L0,8 L${W/2},8 L${W/2},32 L${W},32 L${W},20 Z`), bm(`M0,20 L${W/2},3 L${W},20 Z`, P.rx));
+  s += cell(3, 'SS + UDL', bar + ld, sf(`M0,20 L0,6 L${W},34 L${W},20 Z`), bm(`M0,20 Q${W/2},-8 ${W},20 Z`, P.rx));
+  s += cell(4, 'SS + off-centre load', bar + pl(W*0.34), sf(`M0,20 L0,9 L${W*0.34},9 L${W*0.34},31 L${W},31 L${W},20 Z`), bm(`M0,20 L${W*0.34},4 L${W},20 Z`, P.rx));
+  s += cell(5, 'SS + third-point loads', bar + pl(W/3) + pl(2*W/3), sf(`M0,20 L0,8 L${W/3},8 L${W/3},20 L${2*W/3},20 L${2*W/3},32 L${W},32 L${W},20 Z`), bm(`M0,20 L${W/3},5 L${2*W/3},5 L${W},20 Z`, P.rx));
+  s += cell(6, 'Overhang + UDL', bar + ld, sf(`M0,20 L0,9 L${W*0.66},31 L${W*0.66},4 L${W},20 Z`), bm(`M0,20 Q${W*0.33},7 ${W*0.5},14 L${W*0.66},30 Q${W*0.83},25 ${W},20 Z`, P.act));
+  s += cell(7, 'SS + couple at mid-span', bar + `<path d="M${W/2-9},4 A9,9 0 1 1 ${W/2+9},2" fill="none" stroke="${P.act}" stroke-width="1.5"/>`, sf(`M0,20 L0,11 L${W},11 L${W},20 Z`), bm(`M0,20 L${W/2},31 L${W/2},9 L${W},20 Z`, P.act));
+  s += rule(360, 40, 580);
+  s += T(310, 380, 'Green = sagging throughout, red = hogging throughout, violet = the diagram changes sign along the beam.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 392, s, 'Eight standard cases with the shape of the shear force and bending moment diagram for each');
+})();
+
+/* ---------- render ---------- */
+function renderFigures() {
+  document.querySelectorAll('[data-fig]').forEach(el => {
+    const name = el.dataset.fig;
+    if (FIG[name]) el.innerHTML = FIG[name] + (el.dataset.cap ? cap(el.dataset.num || '', el.dataset.cap) : '');
+  });
+}
+
+/* ---------- live load diagram for the Module 5 calculator ---------- */
+function loadDiagramSVG(type, w1, w2, a, R, d) {
+  const X0 = 70, X1 = 490, yB = 128, H = 52, sc = v => X0 + (v / a) * (X1 - X0);
+  let shape = '';
+  if (type === 'udl') shape = `<rect x="${X0}" y="${yB-H}" width="${X1-X0}" height="${H}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+  else if (type === 'uvl') shape = `<polygon points="${X0},${yB} ${X1},${yB-H} ${X1},${yB}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+  else {
+    const m = Math.max(w1, w2) || 1;
+    shape = `<polygon points="${X0},${yB} ${X0},${yB-H*(w1/m)} ${X1},${yB-H*(w2/m)} ${X1},${yB}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+  }
+  const xr = sc(d);
+  return svg(560, 238,
+    T(xr, 32, 'R = ' + R.toFixed(2) + ' kN', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }) +
+    arrow(xr, 40, xr, yB - H - 6, 'act', 2.2) +
+    shape + beamBar(X0, yB, X1 - X0, 11) +
+    `<line x1="${xr}" y1="${yB+11}" x2="${xr}" y2="${yB+38}" stroke="${P.act}" stroke-width="1" stroke-dasharray="4 3"/>` +
+    dimH(X0, xr, yB + 50, d.toFixed(2) + ' m to the centroid') +
+    dimH(X0, X1, yB + 80, 'a = ' + a + ' m') +
+    rule(220, 40, 520) +
+    T(280, 234, 'The resultant acts at the centroid of the load diagram — that is the mid-length only when the load is a UDL.', { size:TS.note, anchor:'middle', color:P.mute }),
+    'Load diagram with its resultant');
+}
+</script>
+
+<script>
+/* ============================================================
    BEAM ENGINE
    Sign convention (fixed throughout this file):
      V(x) = sum of vertical forces to the LEFT of x, upward positive
@@ -1690,44 +2314,49 @@ function diagramChart(canvasId, label, data, color, existing) {
   return c;
 }
 
-/* ---------- beam sketch as SVG ---------- */
+/* ---------- beam sketch, drawn with the shared figure system ---------- */
 function beamSVG(cfg, res) {
-  const L = +cfg.L, W = 720, H = 110, m = 40, sx = v => m + (v/L)*(W - 2*m), y0 = 62;
-  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="w-full" aria-label="Beam sketch">';
-  s += '<rect x="' + sx(0) + '" y="' + (y0-7) + '" width="' + (sx(L)-sx(0)) + '" height="14" fill="#0ea5e9" fill-opacity=".28" stroke="#0ea5e9"/>';
+  const L = +cfg.L, W = 720, m = 56, sx = v => m + (v / L) * (W - 2 * m), yB = 132;
+  const pts = (cfg.loads || []).filter(l => l.kind !== 'udl').map(l => l.x);
+  let s = '';
 
-  if (cfg.type === 'cant') {
-    s += '<rect x="' + (sx(0)-12) + '" y="' + (y0-28) + '" width="12" height="56" fill="#64748b"/>';
-    s += '<text x="' + sx(0) + '" y="' + (y0+42) + '" font-size="11" text-anchor="middle" fill="#64748b">A (fixed)</text>';
-  } else {
-    (res.reactions || []).forEach(r => {
-      s += '<polygon points="' + sx(r.x) + ',' + (y0+8) + ' ' + (sx(r.x)-10) + ',' + (y0+26) + ' ' + (sx(r.x)+10) + ',' + (y0+26) + '" fill="#64748b"/>';
-      s += '<text x="' + sx(r.x) + '" y="' + (y0+40) + '" font-size="11" text-anchor="middle" fill="#64748b">' + r.label + ' ' + f2(r.R) + ' kN</text>';
-    });
-  }
+  /* distributed loads sit on the beam; their labels go in the widest clear gap
+     so that a point-load arrow never lands on top of the text */
+  (cfg.loads || []).filter(l => l.kind === 'udl').forEach(l => {
+    s += udl(sx(l.x1), sx(l.x2), yB - 34, yB);
+    let best = (l.x1 + l.x2) / 2, bestGap = -1;
+    for (let k = 1; k <= 12; k++) {
+      const t = l.x1 + (l.x2 - l.x1) * k / 13;
+      const gap = pts.length ? Math.min.apply(null, pts.map(p => Math.abs(p - t))) : 99;
+      if (gap > bestGap) { bestGap = gap; best = t; }
+    }
+    s += T(sx(best), yB - 42, l.w + ' kN/m', { size:TS.note, anchor:'middle', color:P.load });
+  });
 
   (cfg.loads || []).forEach(l => {
     if (l.kind === 'point') {
-      s += '<line x1="' + sx(l.x) + '" y1="' + (y0-40) + '" x2="' + sx(l.x) + '" y2="' + (y0-9) + '" stroke="#dc2626" stroke-width="2"/>';
-      s += '<polygon points="' + sx(l.x) + ',' + (y0-7) + ' ' + (sx(l.x)-5) + ',' + (y0-18) + ' ' + (sx(l.x)+5) + ',' + (y0-18) + '" fill="#dc2626"/>';
-      s += '<text x="' + sx(l.x) + '" y="' + (y0-45) + '" font-size="11" text-anchor="middle" fill="#dc2626">' + l.P + ' kN</text>';
-    } else if (l.kind === 'udl') {
-      s += '<rect x="' + sx(l.x1) + '" y="' + (y0-34) + '" width="' + (sx(l.x2)-sx(l.x1)) + '" height="25" fill="#f59e0b" fill-opacity=".22" stroke="#f59e0b"/>';
-      for (let i = 0; i <= 6; i++) {
-        const xx = sx(l.x1) + (sx(l.x2)-sx(l.x1))*i/6;
-        s += '<line x1="' + xx + '" y1="' + (y0-32) + '" x2="' + xx + '" y2="' + (y0-11) + '" stroke="#f59e0b" stroke-width="1.4"/>';
-      }
-      s += '<text x="' + ((sx(l.x1)+sx(l.x2))/2) + '" y="' + (y0-40) + '" font-size="11" text-anchor="middle" fill="#d97706">' + l.w + ' kN/m</text>';
+      s += T(sx(l.x), yB - 78, l.P + ' kN', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+      s += arrow(sx(l.x), yB - 70, sx(l.x), yB - 4, 'pt', 2.1);
     } else if (l.kind === 'moment') {
-      s += '<path d="M' + (sx(l.x)-14) + ',' + (y0-16) + ' A14,14 0 1 1 ' + (sx(l.x)+14) + ',' + (y0-16) + '" fill="none" stroke="#7c3aed" stroke-width="2"/>';
-      s += '<polygon points="' + (sx(l.x)+14) + ',' + (y0-16) + ' ' + (sx(l.x)+8) + ',' + (y0-24) + ' ' + (sx(l.x)+19) + ',' + (y0-24) + '" fill="#7c3aed"/>';
-      s += '<text x="' + sx(l.x) + '" y="' + (y0-38) + '" font-size="11" text-anchor="middle" fill="#7c3aed">' + l.M + ' kN·m</text>';
+      s += T(sx(l.x), yB - 78, l.M + ' kN·m', { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
+      s += `<path d="M${sx(l.x)-17},${yB-42} A18,18 0 1 1 ${sx(l.x)+15},${yB-52}" fill="none" stroke="${P.act}" stroke-width="2.1" marker-end="url(#a-act)"/>`;
     }
   });
 
-  s += '<line x1="' + sx(0) + '" y1="' + (y0+52) + '" x2="' + sx(L) + '" y2="' + (y0+52) + '" stroke="#94a3b8" stroke-width="1"/>';
-  s += '<text x="' + ((sx(0)+sx(L))/2) + '" y="' + (y0+48) + '" font-size="11" text-anchor="middle" fill="#94a3b8">' + L + ' m</text>';
-  return s + '</svg>';
+  s += beamBar(sx(0), yB, sx(L) - sx(0), 13);
+
+  if (cfg.type === 'cant') {
+    s += symFixed(sx(0), yB + 6, 56);
+    s += T(sx(0), yB + 58, 'fixed', { size:TS.tiny, anchor:'middle', color:P.mute });
+  } else {
+    (res.reactions || []).forEach((r, i) => {
+      s += (i === 0 ? symPin : symRoller)(sx(r.x), yB + 13);
+      s += T(sx(r.x), yB + 56, r.label, { size:TS.note, anchor:'middle', weight:'700', color:P.rx });
+      s += T(sx(r.x), yB + 69, f2(r.R) + ' kN', { size:TS.note, anchor:'middle', color:P.rx });
+    });
+  }
+  s += dimH(sx(0), sx(L), yB + 92, L + ' m');
+  return svg(W, 240, s, 'Beam, loading and computed reactions');
 }
 </script>
 
@@ -1829,6 +2458,9 @@ function calcRC() {
     d = (Rr*(a/2) + Rt*(2*a/3)) / (R || 1);
     work = 'Split into a rectangle ' + f2(Rr) + ' kN at ' + f2(a/2) + ' m plus a triangle ' + f2(Rt) + ' kN at ' + f2(2*a/3) + ' m. Combined R = ' + f2(R) + ' kN at ' + f2(d) + ' m from the left end.';
   }
+  document.getElementById('rc-fig').innerHTML = (a > 0)
+    ? loadDiagramSVG(t, w1, w2, a, R, d) + '<figcaption class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">The violet arrow marks the resultant, drawn at the centroid of the load diagram</figcaption>'
+    : '';
   document.getElementById('rc-out').innerHTML =
     '<div class="grid grid-cols-2 gap-3 text-center mb-3">' +
     '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Resultant</p><p class="num font-bold text-lg text-brand-600">' + f2(R) + ' kN</p></div>' +
@@ -1868,6 +2500,8 @@ function showCase(caseObj, idPrefix, tabWrap, idx) {
   const res = solveBeam(caseObj.cfg);
   markTabs(tabWrap, idx);
   document.getElementById(idPrefix + '-desc').innerHTML = '<b>' + caseObj.name + '.</b> ' + caseObj.desc;
+  document.getElementById(idPrefix + '-beam').innerHTML = beamSVG(caseObj.cfg, res) +
+    '<figcaption class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">Loading diagram — reactions are computed, not assumed</figcaption>';
   charts[idPrefix + 'sfd'] = diagramChart(idPrefix + '-sfd', 'Shear force (kN)', res.sfd, '#0ea5e9', charts[idPrefix + 'sfd']);
   charts[idPrefix + 'bmd'] = diagramChart(idPrefix + '-bmd', 'Bending moment (kN·m)', res.bmd, '#7c3aed', charts[idPrefix + 'bmd']);
   document.getElementById(idPrefix + '-work').innerHTML = caseObj.work.map(w => '<p>' + w + '</p>').join('') +
@@ -2575,6 +3209,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.add('dark');
     document.getElementById('theme-icon').className = 'fas fa-sun';
   }
+  renderFigures();
   initNav(); initM5(); initCases(); initM16(); initSolver(); initM18();
   newShapeRound(); initMatch(); newHunt(); initMemory();
   initCmap(); initM22(); initM23(); initLevels(); initTeacherFiles();
