@@ -170,14 +170,14 @@ tailwind.config = {
   <div class="card">
     <p class="text-lg mb-5">After completing this unit you should be able to:</p>
     <ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO1</b> — Define stress and strain and state their units.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO2</b> — Calculate normal, shear and bearing stresses in members.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO3</b> — Explain elastic behaviour and the limits of Hooke's law.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO4</b> — Draw and interpret stress–strain diagrams for common materials.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO5</b> — Solve composite (compound) bar problems.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO6</b> — Solve temperature (thermal) stress problems, with and without a gap.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO7</b> — Calculate the four elastic constants and use the relations between them.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO8</b> — Apply factor of safety to size a member in a design problem.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 1.1</b> — Define stress and strain and state their units.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 1.22</b> — Calculate normal, shear and bearing stresses in members.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 1.3</b> — Explain elastic behaviour and the limits of Hooke's law.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 1.4</b> — Draw and interpret stress–strain diagrams for common materials.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 1.5</b> — Solve composite (compound) bar problems.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 1.6</b> — Solve temperature (thermal) stress problems, with and without a gap.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 1.7</b> — Calculate the four elastic constants and use the relations between them.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 1.8</b> — Apply factor of safety to size a member in a design problem.</span></li>
     </ul>
     <div class="mt-6 pt-5 border-t dark:border-gray-700 grid sm:grid-cols-3 gap-4 text-sm">
       <div><p class="eyebrow mb-1">Prerequisites</p><p class="text-gray-600 dark:text-gray-300">Statics, free body diagrams, equilibrium equations, area properties.</p></div>
@@ -372,7 +372,7 @@ tailwind.config = {
         <div class="formula-box mt-3 !p-2">$$ \tau = \frac{P}{2 \times \tfrac{\pi}{4}d^2} $$</div>
       </div>
     </div>
-    <p class="text-sm mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500">Forgetting the factor of 2 in double shear is the most common bolt-design error in university papers. Count the planes on the sketch before you write the formula.</p>
+    <p class="text-sm mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500">Forgetting the factor of 2 in double shear is the most common bolt-design error in Exam papers. Count the planes on the sketch before you write the formula.</p>
   </div>
 
   <div class="card">
@@ -1047,9 +1047,9 @@ tailwind.config = {
   <div class="space-y-4" id="mistake-list"></div>
 </div>
 
-<!-- ============ M23 UNIVERSITY QUESTIONS ============ -->
+<!-- ============ M23 Exam QUESTIONS ============ -->
 <div id="module-23" class="module-content max-w-4xl mx-auto">
-  <p class="eyebrow">Module 23</p><h2 class="mtitle">University question bank</h2>
+  <p class="eyebrow">Module 23</p><h2 class="mtitle">Exam question bank</h2>
   <div class="card mb-5">
     <p class="text-sm">Questions grouped by topic and marks. Each carries the approach expected by the examiner rather than a full worked answer — attempt it first, then check the method.</p>
     <div class="flex flex-wrap gap-2 mt-4" id="uq-filters"></div>
@@ -1340,7 +1340,7 @@ const N16 = [
    q:'A bar 2 m long is heated through 50 °C but a gap of 0.5 mm is left at one end. α = 12×10⁻⁶ /°C, E = 200 GPa. Find the stress.',
    s:['Free expansion = αΔT·L = 12×10⁻⁶ × 50 × 2000 = 1.2 mm','1.2 mm &gt; 0.5 mm gap, so the bar does bear against the support.','Restrained part = 1.2 − 0.5 = 0.7 mm','ε = 0.7/2000 = 3.5×10⁻⁴','σ = Eε = 200 000 × 3.5×10⁻⁴ = 70 MPa, compressive'] },
  { lvl:'Medium', topic:'Composite bars',
-   q:'A steel rod of 1000 mm² is surrounded by a copper tube of 2000 mm². The 500 mm long assembly carries 250 kN. Es = 200 GPa, Ec = 100 GPa. Find the stress in each and the shortening.',
+   q:'A steel rod of 1000 mm² is surrounded by a copper tube of 2000 mm². The 500-mm-long assembly carries 250 kN. Es = 200 GPa, Ec = 100 GPa. Find the stress in each and the shortening.',
    s:['Equal strain: ε = P / (AsEs + AcEc)','ε = 250 000 / (1000×200 000 + 2000×100 000) = 250 000 / 4×10⁸ = 6.25×10⁻⁴','σs = 200 000 × 6.25×10⁻⁴ = 125 MPa','σc = 100 000 × 6.25×10⁻⁴ = 62.5 MPa','Check: 125×1000 + 62.5×2000 = 125 + 125 = 250 kN ✓','δ = εL = 6.25×10⁻⁴ × 500 = 0.3125 mm'] },
  { lvl:'University', topic:'Strain',
    q:'A bar of 20 mm diameter and 1 m length is subjected to an axial pull of 50 kN. E = 200 GPa, μ = 0.3. Find the change in length, change in diameter and change in volume.',
