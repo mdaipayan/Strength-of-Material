@@ -170,14 +170,14 @@ tailwind.config = {
   <div class="card">
     <p class="text-lg mb-5">After completing this unit you should be able to:</p>
     <ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.1</b> — Classify beams, supports and loads, and check static determinacy.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.2</b> — Compute support reactions using the equations of equilibrium.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.3</b> — Define shear force and bending moment and apply the sign convention consistently.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.4</b> — Draw SFD and BMD for cantilever, simply supported and overhanging beams.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.5</b> — Use the relations between load, shear force and bending moment.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.6</b> — Locate the position and magnitude of the maximum bending moment.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.7</b> — Locate points of contraflexure and explain their significance.</span></li>
-      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO 2.8</b> — Handle applied couples and internal hinges on beams.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO1</b> — Classify beams, supports and loads, and check static determinacy.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO2</b> — Compute support reactions using the equations of equilibrium.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO3</b> — Define shear force and bending moment and apply the sign convention consistently.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO4</b> — Draw SFD and BMD for cantilever, simply supported and overhanging beams.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO5</b> — Use the relations between load, shear force and bending moment.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO6</b> — Locate the position and magnitude of the maximum bending moment.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO7</b> — Locate points of contraflexure and explain their significance.</span></li>
+      <li class="flex gap-3 items-start"><i class="fas fa-check-circle text-green-500 mt-1"></i><span><b>CO8</b> — Handle applied couples and internal hinges on beams.</span></li>
     </ul>
     <div class="mt-6 pt-5 border-t dark:border-gray-700 grid sm:grid-cols-3 gap-4 text-sm">
       <div><p class="eyebrow mb-1">Prerequisites</p><p class="text-gray-600 dark:text-gray-300">Unit 1, free body diagrams, resultant of a distributed load, moment of a force.</p></div>
@@ -687,7 +687,7 @@ tailwind.config = {
       <li><b>At every applied couple.</b> The BMD jumps, so check the value on both sides.</li>
     </ol>
     <div class="mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500 text-sm">
-      <b>The trap.</b> If solving V(x) = 0 gives a value of x that falls outside the region where that expression is valid, the root is spurious. Discard it and check the section where the shear actually changes sign — almost always a point load. This is the single most common error in answer scripts on this topic.
+      <b>The trap.</b> If solving V(x) = 0 gives a value of x that falls outside the region where that expression is valid, the root is spurious. Discard it and check the section where the shear actually changes sign — almost always a point load. This is the single most common error in university answer scripts on this topic.
     </div>
   </div>
 
@@ -969,9 +969,9 @@ tailwind.config = {
   <div class="space-y-4" id="mistake-list"></div>
 </div>
 
-<!-- ============ M23 External Exam QUESTIONS ============ -->
+<!-- ============ M23 UNIVERSITY QUESTIONS ============ -->
 <div id="module-23" class="module-content max-w-4xl mx-auto">
-  <p class="eyebrow">Module 23</p><h2 class="mtitle">Question Bank</h2>
+  <p class="eyebrow">Module 23</p><h2 class="mtitle">University question bank</h2>
   <div class="card mb-5">
     <p class="text-sm">Questions grouped by topic and marks, each with the approach the examiner expects. Attempt it on paper first, then check the method.</p>
     <div class="flex flex-wrap gap-2 mt-4" id="uq-filters"></div>
@@ -1198,7 +1198,7 @@ const modules = [
   { id:20, title:'Formula & shape sheet' },
   { id:21, title:'Concept map' },
   { id:22, title:'Common mistakes' },
-  { id:23, title:'Question Bank' },
+  { id:23, title:'University questions' },
   { id:24, title:'Self evaluation' },
   { id:25, title:'Progress dashboard' },
   { id:26, title:'Teacher dashboard' }
@@ -1323,26 +1323,26 @@ const N16 = [
       'V(x) = 45 − 15x for 0 &lt; x &lt; 4; zero at x = 3 m',
       'M_max = 45 × 3 − 15 × 3 × 1.5 = 135 − 67.5 = 67.5 kN·m at 3 m from A',
       'Beyond x = 4 m, V is constant at −15 kN so the BMD is a straight line down to zero at B.'] },
- { lvl:'External Exam', topic:'Simply supported',
+ { lvl:'University', topic:'Simply supported',
    q:'A simply supported beam of 10 m carries point loads of 40 kN at 3 m and 60 kN at 7 m from A. Draw the SFD and BMD and find the maximum moment.',
    s:['ΣM_A = 0: R_B × 10 = 40 × 3 + 60 × 7 = 120 + 420 = 540 → R_B = 54 kN','R_A = 100 − 54 = 46 kN',
       'SFD: +46 up to 3 m, then +6 up to 7 m, then −54 to B',
       'M at 3 m = 46 × 3 = 138 kN·m','M at 7 m = 54 × 3 = 162 kN·m',
       'The shear changes sign at the 60 kN load, so M_max = 162 kN·m at 7 m from A'] },
- { lvl:'External Exam', topic:'Cantilever',
+ { lvl:'University', topic:'Cantilever',
    q:'A cantilever of 5 m carries a UVL varying from zero at the free end to 20 kN/m at the fixed end. Find the maximum shear force and bending moment.',
    s:['Total load = ½ × 20 × 5 = 50 kN','Centroid is at 5/3 = 1.667 m from the fixed end (one third from the wide end)',
       'V_max at the fixed end = 50 kN','M_max = −50 × 1.667 = −83.33 kN·m',
       'Check against the standard result wL²/6 = 20 × 25 / 6 = 83.33 ✓',
       'SFD is a parabola, BMD a cubic.'] },
- { lvl:'External Exam', topic:'Overhang & hinge',
+ { lvl:'University', topic:'Overhang & hinge',
    q:'A beam ABCD is 9 m long, fixed at A, with an internal hinge at C (6 m from A) and a roller at D (9 m). A UDL of 8 kN/m acts over the whole length. Analyse the beam.',
    s:['Suspended part CD is 3 m long carrying 24 kN, hinged at C and on a roller at D','R_D = 24/2 = 12 kN, and the hinge transfers 12 kN down onto AC',
       'Supported part AC is a 6 m cantilever with 8 kN/m plus 12 kN at C','R_A = 8 × 6 + 12 = 60 kN',
       'M_A = −(8 × 6 × 3) − (12 × 6) = −144 − 72 = −216 kN·m',
       'Check at the hinge: −216 + 60 × 6 − 8 × 6 × 3 = 0 ✓',
       'M_max sagging in CD = wl²/8 = 8 × 9 / 8 = 9 kN·m at 1.5 m from C'] },
- { lvl:'External Exam', topic:'Overhang & hinge',
+ { lvl:'University', topic:'Overhang & hinge',
    q:'A beam of 8 m is supported at 1 m from each end and carries a UDL of 20 kN/m over the whole length. Find the reactions, the maximum moments and the points of contraflexure.',
    s:['By symmetry R_A = R_B = 20 × 8 / 2 = 80 kN, at x = 1 m and x = 7 m',
       'M at each support = −20 × 1 × 0.5 = −10 kN·m (hogging)',
@@ -1350,7 +1350,7 @@ const N16 = [
       'Taking x from the left end: M(x) = 80(x−1) − 10x² for x &gt; 1',
       'Set to zero: 10x² − 80x + 80 = 0 → x² − 8x + 8 = 0 → x = 1.172 m and 6.828 m',
       'Both lie inside the span, so those are the two points of contraflexure.'] },
- { lvl:'External Exam', topic:'Max BM & design',
+ { lvl:'University', topic:'Max BM & design',
    q:'A simply supported beam of 5 m carries a UDL of 24 kN/m. If the permissible bending stress is 165 MPa, find the required section modulus.',
    s:['M_max = wL²/8 = 24 × 25 / 8 = 75 kN·m','Convert: M = 75 × 10⁶ N·mm',
       'Z = M / σ = 75 × 10⁶ / 165','Z = 454 545 mm³ ≈ 454.5 × 10³ mm³',
@@ -1392,7 +1392,7 @@ const MISTAKES = [
  { w:'Ignoring the hinge condition as a check', r:'On a beam with an internal hinge, M must be zero there. If your diagram does not pass through zero at the hinge, the transferred force is wrong.' }
 ];
 
-/* ---------- M23 External Exam questions ---------- */
+/* ---------- M23 university questions ---------- */
 const UQ = [
  { topic:'Definitions', marks:4, q:'Define shear force and bending moment. State the sign convention you will use and explain what sagging and hogging mean.', hint:'Definitions, the left-up-positive rule for shear, sagging positive for moment, and which fibre goes into tension in each case.' },
  { topic:'Definitions', marks:4, q:'Classify beams according to their supports, and state which of them are statically determinate.', hint:'Cantilever, simply supported, overhanging, propped cantilever, fixed, continuous. Apply Ds = R − (3 + h).' },
@@ -2522,9 +2522,9 @@ function drawCouple() {
 }
 
 /* ================= M16 NUMERICALS ================= */
-const LVLCOLOR = { Easy:'bg-green-100 text-green-800', Medium:'bg-blue-100 text-blue-800', External Exam:'bg-purple-100 text-purple-800', GATE:'bg-orange-100 text-orange-800' };
+const LVLCOLOR = { Easy:'bg-green-100 text-green-800', Medium:'bg-blue-100 text-blue-800', University:'bg-purple-100 text-purple-800', GATE:'bg-orange-100 text-orange-800' };
 function initM16() {
-  const levels = ['All','Easy','Medium','External Exam','GATE'];
+  const levels = ['All','Easy','Medium','University','GATE'];
   const fw = document.getElementById('n16-filters'); fw.innerHTML = '';
   levels.forEach(l => {
     const b = document.createElement('button');
