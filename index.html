@@ -150,7 +150,6 @@ tailwind.config = {
         <a href="unit-2.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 2</p><h3 class="text-xl font-bold mb-2">Shear Force &amp; Bending Moment</h3><p class="text-sm text-gray-600">Reactions, SFD and BMD, contraflexure.</p></a>
         <a href="unit-3.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 3</p><h3 class="text-xl font-bold mb-2">Bending &amp; Shear Stresses</h3><p class="text-sm text-gray-600">Simple bending, section modulus, shear distribution.</p></a>
         <a href="unit-4.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 4</p><h3 class="text-xl font-bold mb-2">Slope and Deflection of Beams</h3><p class="text-sm text-gray-600">Elastic curve, Macaulay&rsquo;s method, superposition.</p></a>
-        <a href="unit-5.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 5</p><h3 class="text-xl font-bold mb-2">Torsion of Circular Sections</h3><p class="text-sm text-gray-600">Shafts, angle of twist, power transmission.</p></a>
       </div>
       <p class="mt-4 text-sm text-gray-500">Progress tracking needs JavaScript, but every unit above opens and works normally without it enabled here.</p>
     </noscript>
@@ -222,12 +221,30 @@ tailwind.config = {
    ============================================================ */
 
 const UNITS = [
-  { n:1, file:'unit-1.html', key:'som',  icon:'fa-compress-arrows-alt', title:'Stress and Strain', desc:'Elastic constants, composite bars, temperature stresses and the stress–strain curve.', ready:true },
-  { n:2, file:'unit-2.html', key:'som2', icon:'fa-chart-line', title:'Shear Force &amp; Bending Moment', desc:'Reactions, SFD and BMD for every determinate beam, contraflexure and internal hinges.', ready:true },
-  { n:3, file:'unit-3.html', key:'som3', icon:'fa-grip-lines-vertical', title:'Bending &amp; Shear Stresses', desc:'Simple bending theory, moment of inertia, section modulus, shear distribution and composite beams.', ready:true },
-  { n:4, file:'unit-4.html', key:'som4', icon:'fa-wave-square', title:'Slope and Deflection of Beams', desc:"Elastic curve, boundary conditions, double integration, Macaulay's method, moment-area and superposition.", ready:true },
-  { n:5, file:'unit-5.html', key:'som5', icon:'fa-rotate', title:'Torsion of Circular Sections', desc:'Solid and hollow shafts, torsional shear stress, angle of twist, power transmission and combined loading.', ready:true },
-  { n:6, file:null, key:'som6', icon:'fa-arrows-left-right-to-line', title:'Combined Direct &amp; Bending Stresses', desc:'Eccentric loading, extreme fibre stresses, stress distribution and the middle-third rule.', ready:false }
+  { n:1, file:'unit-1.html', key:'som',  icon:'fa-compress-arrows-alt',
+    title:'Stress and Strain',
+    desc:'Elastic constants, composite bars, temperature stresses and the stress–strain curve.',
+    ready:true },
+  { n:2, file:'unit-2.html', key:'som2', icon:'fa-chart-line',
+    title:'Shear Force &amp; Bending Moment',
+    desc:'Reactions, SFD and BMD for every determinate beam, contraflexure and internal hinges.',
+    ready:true },
+  { n:3, file:'unit-3.html', key:'som3', icon:'fa-grip-lines-vertical',
+    title:'Bending &amp; Shear Stresses',
+    desc:'Simple bending theory, moment of inertia, section modulus, shear distribution and composite beams.',
+    ready:true },
+  { n:4, file:'unit-4.html', key:'som4', icon:'fa-wave-square',
+    title:'Slope and Deflection of Beams',
+    desc:"Elastic curve, boundary conditions, double integration, Macaulay's method, moment-area and superposition.",
+    ready:true },
+  { n:5, file:'unit-5.html', key:'som5', icon:'fa-rotate',
+    title:'Torsion of Circular Sections',
+    desc:'Solid and hollow shafts, torsional shear stress, angle of twist, power transmission and combined loading.',
+    ready:true },
+  { n:6, file:null, key:'som6', icon:'fa-arrows-left-right-to-line',
+    title:'Combined Direct &amp; Bending Stresses',
+    desc:'Eccentric loading, extreme fibre stresses, stress distribution and the middle-third rule.',
+    ready:false }
 ];
 
 const MODULES_PER_UNIT = 26;
@@ -243,19 +260,12 @@ function unitProgress(u) {
   const graded  = records.filter(r => ['L1','L2','L3','L4','L5'].includes(r.level));
   const score   = graded.length ? Math.round(graded.filter(r => r.correct).length / graded.length * 100) : null;
   const lastTs  = records.length ? Math.max.apply(null, records.map(r => r.ts || 0)) : 0;
-  
-  // FIX: Determine unique items if the unit files push numbers, or cap at MODULES_PER_UNIT to avoid > 100% errors
-  const visitedCount = Array.isArray(visited) ? Math.min(visited.length, MODULES_PER_UNIT) : 0;
-
   return {
-    visited: visitedCount,
-    pct: Math.min(100, Math.round(visitedCount / MODULES_PER_UNIT * 100)),
-    attempted: records.length, 
-    score,
+    visited: Array.isArray(visited) ? visited.length : 0,
+    pct: Math.min(100, Math.round((Array.isArray(visited) ? visited.length : 0) / MODULES_PER_UNIT * 100)),
+    attempted: records.length, score,
     minutes: Math.round(elapsed / 60000),
-    lastTs, 
-    // FIX: Changed from visited.length > 1 to > 0 so module 1 counts as 'started'
-    started: visitedCount > 0 || records.length > 0
+    lastTs, started: (Array.isArray(visited) && visited.length > 1) || records.length > 0
   };
 }
 
@@ -263,24 +273,12 @@ function renderUnits() {
   const grid = document.getElementById('unit-grid');
   grid.innerHTML = '';
   let totalVisited = 0, totalMinutes = 0, anyStarted = false, resume = null, bestTs = -1;
-  let firstIncomplete = null; // FIX: Cache this to avoid re-reading localStorage later
 
   UNITS.forEach(u => {
     const p = u.ready ? unitProgress(u) : { visited:0, pct:0, attempted:0, score:null, minutes:0, lastTs:0, started:false };
-    
-    if (u.ready) { 
-        totalVisited += p.visited; 
-        totalMinutes += p.minutes; 
-        
-        // Caching the first incomplete unit for fallback resume logic
-        if (p.pct < 100 && !firstIncomplete) firstIncomplete = u;
-    }
-    
+    if (u.ready) { totalVisited += p.visited; totalMinutes += p.minutes; }
     if (p.started) anyStarted = true;
-    if (u.ready && p.started && p.pct < 100 && p.lastTs > bestTs) { 
-        bestTs = p.lastTs; 
-        resume = u; 
-    }
+    if (u.ready && p.started && p.pct < 100 && p.lastTs > bestTs) { bestTs = p.lastTs; resume = u; }
 
     const el = document.createElement(u.ready ? 'a' : 'div');
     if (u.ready) { el.href = u.file; }
@@ -318,7 +316,7 @@ function renderUnits() {
 
     el.innerHTML =
       '<div class="flex items-start justify-between mb-4"><div class="' + iconWrap + '"><i class="fas ' + u.icon + ' text-xl" aria-hidden="true"></i></div>' + badge + '</div>' +
-      '<p class="eyebrow mb-1' + (u.ready ? '' : ' !text-gray-400') + '">unit ' + u.n + '</p>' +
+      '<p class="eyebrow mb-1' + (u.ready ? '' : ' !text-gray-400') + '">Unit ' + u.n + '</p>' +
       '<h3 class="text-xl font-bold mb-2 ' + (u.ready ? '' : 'text-gray-400') + '">' + u.title + '</h3>' +
       '<p class="text-sm ' + (u.ready ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400') + ' flex-1">' + u.desc + '</p>' +
       bar + cta;
@@ -328,10 +326,7 @@ function renderUnits() {
 
   /* ---- overall strip ---- */
   const readyCount = UNITS.filter(u => u.ready).length;
-  
-  // FIX: Cap at 100 to prevent SVG breaking on edge cases
-  const overall = Math.min(100, Math.round(totalVisited / (readyCount * MODULES_PER_UNIT) * 100)); 
-  
+  const overall = Math.round(totalVisited / (readyCount * MODULES_PER_UNIT) * 100);
   const strip = document.getElementById('progress-strip');
   strip.classList.remove('hidden');
 
@@ -348,14 +343,12 @@ function renderUnits() {
     det.textContent = readyCount * MODULES_PER_UNIT + ' modules across ' + readyCount + ' units';
     link.href = UNITS[0].file; txt.textContent = 'Start Unit 1';
   } else {
-    // FIX: Using cached 'firstIncomplete' instead of calling unitProgress() inside .find()
-    const target = resume || firstIncomplete || UNITS[0];
-    
+    const target = resume || UNITS.filter(u => u.ready).find(u => unitProgress(u).pct < 100) || UNITS[0];
     head.textContent = overall >= 100 ? 'All units complete' : 'Pick up where you left off';
     det.textContent = totalVisited + ' of ' + (readyCount * MODULES_PER_UNIT) + ' modules visited' +
                       (totalMinutes > 0 ? ' · ' + totalMinutes + ' min studied' : '');
     link.href = target.file;
-    txt.innerHTML = (overall >= 100 ? 'Revisit unit ' : 'Resume Unit ') + target.n;
+    txt.innerHTML = (overall >= 100 ? 'Revisit Unit ' : 'Resume Unit ') + target.n;
   }
 }
 
