@@ -1,194 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strength of Materials | Interactive Digital Textbook</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strength of Materials — Interactive Digital Textbook | D. Mandal</title>
+<meta name="description" content="A self-paced interactive digital textbook for Strength of Materials, with virtual laboratories, live solvers and graded self-assessment. Prepared by D. Mandal, Assistant Professor, Department of Civil Engineering.">
+<meta name="author" content="D. Mandal">
+<meta name="theme-color" content="#0ea5e9">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230ea5e9'/><rect x='18' y='30' width='64' height='10' fill='white'/><rect x='45' y='30' width='10' height='44' fill='white'/><rect x='18' y='64' width='64' height='10' fill='white'/></svg>">
 
-    <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['Bitter', 'Georgia', 'serif'],
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-          colors: {
-            brand: { 50:'#f0f9ff', 100:'#e0f2fe', 500:'#0ea5e9', 600:'#0284c7', 900:'#0c4a6e' }
-          }
-        }
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Bitter', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace']
+      },
+      colors: {
+        brand: { 50:'#f0f9ff', 100:'#e0f2fe', 200:'#bae6fd', 500:'#0ea5e9', 600:'#0284c7', 700:'#0369a1', 900:'#0c4a6e' },
+        lab:   { 50:'#fffbeb', 500:'#f59e0b', 600:'#d97706', 900:'#78350f' }
       }
     }
-    </script>
+  }
+}
+</script>
 
-    <style>
-        body { transition: background-color .3s, color .3s; }
-        h1, h2, h3, h4 { font-family: 'Bitter', Georgia, serif; }
-        .eyebrow { font-family: 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; color: #0284c7; }
-        
-        .unit-card {
-            transition: all 0.3s ease;
-            border: 1px solid #e5e7eb;
-        }
-        .unit-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            border-color: #0ea5e9;
-        }
-    </style>
+<style>
+  body { transition: background-color .3s, color .3s; }
+  h1, h2, h3, h4 { font-family: 'Bitter', Georgia, serif; }
+  .num { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+  .eyebrow { font-family:'Inter',sans-serif; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#0284c7; }
+  .dark .eyebrow { color:#38bdf8; }
+
+  .unit-card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .unit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px -8px rgba(0,0,0,.18); border-color:#0ea5e9; }
+  .dark .unit-card:hover { box-shadow: 0 12px 26px -8px rgba(0,0,0,.6); }
+
+  :focus-visible { outline: 3px solid #f59e0b; outline-offset: 3px; border-radius: 10px; }
+  .skip { position:absolute; left:-9999px; }
+  .skip:focus { left:1rem; top:1rem; z-index:60; padding:.6rem 1rem; background:#0ea5e9; color:#fff; border-radius:.5rem; }
+
+  @media (prefers-reduced-motion: reduce) { * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+</style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans flex flex-col min-h-screen">
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans flex flex-col min-h-screen">
 
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <i class="fas fa-layer-group text-brand-500 text-xl"></i>
-                <span class="font-bold text-lg text-brand-900">Civil Engineering Hub</span>
-            </div>
-            <a href="https://github.com" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition flex items-center gap-2">
-                <i class="fab fa-github text-lg"></i> View Repository
-            </a>
+<a href="#units" class="skip">Skip to the course units</a>
+
+<!-- ============ HEADER ============ -->
+<header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <i class="fas fa-layer-group text-brand-500 text-xl" aria-hidden="true"></i>
+      <div class="leading-none">
+        <span class="font-bold text-lg text-brand-900 dark:text-brand-200">Civil Engineering Hub</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Strength of Materials</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 sm:gap-4">
+      <span id="hdr-progress" class="hidden sm:block text-xs font-semibold text-gray-500 dark:text-gray-400 num"></span>
+      <button onclick="toggleTheme()" aria-label="Switch between light and dark theme"
+              class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-9 h-9 rounded-full transition">
+        <i id="theme-icon" class="fas fa-moon" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="flex-1">
+
+  <!-- ============ HERO ============ -->
+  <section class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 pt-14 pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <p class="eyebrow mb-3">Self-paced learning portal</p>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight">Strength of Materials</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-4 max-w-2xl mx-auto">
+        An interactive digital textbook with virtual laboratories, live structural solvers and graded self-assessment.
+      </p>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-9 max-w-2xl mx-auto">
+        Every unit runs entirely in the browser and works offline once loaded. Nothing is uploaded anywhere.
+      </p>
+
+      <div class="inline-flex items-center gap-4 bg-gray-50 dark:bg-gray-700/60 border border-gray-200 dark:border-gray-600 rounded-full px-6 py-3 shadow-sm">
+        <div class="bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-brand-200 rounded-full w-12 h-12 flex items-center justify-center shrink-0">
+          <i class="fas fa-chalkboard-user text-xl" aria-hidden="true"></i>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="flex-1">
-        
-        <!-- Hero Section -->
-        <div class="bg-white border-b border-gray-200 pt-16 pb-20">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-                <p class="eyebrow mb-3">Self-Paced Learning Portal</p>
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-                    Strength of Materials
-                </h1>
-                <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
-                    An interactive, digital textbook featuring live simulations, virtual laboratories, and AI-assisted self-evaluation modules for civil engineering students.
-                </p>
-                
-                <!-- Instructor Badge -->
-                <div class="inline-flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-full px-6 py-3 shadow-sm">
-                    <div class="bg-brand-100 text-brand-600 rounded-full w-12 h-12 flex items-center justify-center">
-                        <i class="fas fa-chalkboard-teacher text-xl"></i>
-                    </div>
-                    <div class="text-left">
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Prepared By</p>
-                        <p class="font-bold text-gray-900">D. Mandal</p>
-                        <p class="text-xs text-gray-600">Assistant Professor, Dept. of Civil Engineering</p>
-                    </div>
-                </div>
-            </div>
+        <div class="text-left">
+          <p class="text-[11px] text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">Prepared by</p>
+          <p class="font-bold">D. Mandal</p>
+          <p class="text-xs text-gray-600 dark:text-gray-300">Assistant Professor, Dept. of Civil Engineering</p>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Course Units Grid -->
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-bold text-gray-900">Course Syllabus</h2>
-                <span class="text-sm font-semibold text-gray-500 bg-gray-200 px-3 py-1 rounded-full">B.Tech / Diploma</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- Unit 1 Card (Active) -->
-                <a href="unit-1.html" class="unit-card bg-white rounded-xl p-6 flex flex-col h-full cursor-pointer group">
-                    <div class="w-12 h-12 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center mb-4 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-compress-arrows-alt text-xl"></i>
-                    </div>
-                    <p class="eyebrow mb-1">Unit 1</p>
-                    <h3 class="text-xl font-bold mb-2 text-gray-900">Stress and Strain</h3>
-                    <p class="text-sm text-gray-600 flex-1">
-                        Fundamental concepts, elastic constants, composite bars, temperature stresses, and stress-strain curves.
-                    </p>
-                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center text-sm font-semibold text-brand-600">
-                        <span>Start Module</span>
-                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </a>
-
-                <!-- Unit 2 Card (Active) -->
-                <a href="unit-2.html" class="unit-card bg-white rounded-xl p-6 flex flex-col h-full cursor-pointer group">
-                    <div class="w-12 h-12 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center mb-4 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-chart-line text-xl"></i>
-                    </div>
-                    <p class="eyebrow mb-1">Unit 2</p>
-                    <h3 class="text-xl font-bold mb-2 text-gray-900">Shear Force & Bending Moment</h3>
-                    <p class="text-sm text-gray-600 flex-1">
-                        Analysis of beams under various loading conditions, point of contraflexure, and SFD/BMD diagrams.
-                    </p>
-                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center text-sm font-semibold text-brand-600">
-                        <span>Start Module</span>
-                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </a>
-
-                <!-- Unit 3 Card (Placeholder) -->
-                <a href="unit-3.html" class="unit-card bg-white rounded-xl p-6 flex flex-col h-full cursor-pointer group">
-                     <div class="w-12 h-12 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center mb-4 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                          <i class="fas fa-chart-line text-xl"></i>
-                    </div>
-                    <p class="eyebrow mb-1">Unit 3</p>
-                    <h3 class="text-xl font-bold mb-2 text-gray-900">Bending & Shear Stresses</h3>
-                    <p class="text-sm text-gray-600 flex-1">
-                        Theory of simple bending, section modulus, and shear stress distribution in beam cross-sections.
-                    </p>
-                     <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center text-sm font-semibold text-brand-600">
-                        <span>Start Module</span>
-                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </a>
-                <!-- Unit 4 Card (Placeholder) -->
-               <a href="unit-4.html" class="unit-card bg-white rounded-xl p-6 flex flex-col h-full cursor-pointer group">
-                    <div class="w-12 h-12 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center mb-4 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-sync-alt text-xl"></i>
-                    </div>
-                    <p class="eyebrow mb-1 text-gray-400">Unit 4</p>
-                    <h3 class="text-xl font-bold mb-2 text-gray-900">Slope and Deflection of Beams: Interactive Learning Module</h3>
-                    <p class="text-sm text-gray-600 flex-1">
-                        Elastic curve, boundary conditions, double integration, Macaulay's method, moment-area, and superposition, with solved problems and graded tests.
-                    </p>
-                    <div class="mt-4 pt-4 border-t border-gray-200 flex justify-between items-center text-sm font-semibold text-gray-400">
-                        <span>Start Module</span>
-                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </a>
-
-                 <!-- Unit 5 Card (Placeholder) -->
-                 <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 flex flex-col h-full relative overflow-hidden">
-                    <div class="w-12 h-12 rounded-lg bg-gray-200 text-gray-400 flex items-center justify-center mb-4">
-                        <i class="fas fa-columns text-xl"></i>
-                    </div>
-                    <p class="eyebrow mb-1 text-gray-400">Unit 5</p>
-                    <h3 class="text-xl font-bold mb-2 text-gray-400">Columns & Struts</h3>
-                    <p class="text-sm text-gray-400 flex-1">
-                        Euler's theory, effective length, slenderness ratio, and Rankine's formula for buckling.
-                    </p>
-                    <div class="mt-4 pt-4 border-t border-gray-200 flex justify-between items-center text-sm font-semibold text-gray-400">
-                        <span>Coming Soon</span>
-                        <i class="fas fa-lock"></i>
-                    </div>
-                </div>
-            </div>
+  <!-- ============ RESUME + OVERALL PROGRESS ============ -->
+  <section id="progress-strip" class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 hidden">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 sm:p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+        <div class="shrink-0 flex items-center gap-4">
+          <svg viewBox="0 0 80 80" class="w-20 h-20" aria-hidden="true">
+            <circle cx="40" cy="40" r="33" fill="none" stroke="currentColor" class="text-gray-200 dark:text-gray-700" stroke-width="9"/>
+            <circle id="ring" cx="40" cy="40" r="33" fill="none" stroke="#0ea5e9" stroke-width="9"
+                    stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="207.3"
+                    transform="rotate(-90 40 40)" style="transition:stroke-dashoffset .6s ease"/>
+            <text id="ring-label" x="40" y="45" text-anchor="middle" font-size="17" font-weight="700"
+                  font-family="JetBrains Mono, monospace" fill="currentColor">0%</text>
+          </svg>
+          <div>
+            <p class="eyebrow">Your progress</p>
+            <p class="font-bold text-lg" id="prog-headline">Not started yet</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 num" id="prog-detail"></p>
+          </div>
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-8">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-            <p class="text-sm text-gray-500 mb-2">
-                Designed for self-paced, autonomous learning.
-            </p>
-            <p class="text-sm text-gray-500 font-semibold">
-                &copy; 2026 | D. Mandal, Assistant Professor, Department of Civil Engineering
-            </p>
+        <div class="sm:ml-auto flex flex-col sm:items-end gap-2 w-full sm:w-auto">
+          <a id="resume-link" href="#units"
+             class="inline-flex items-center justify-center gap-2 bg-brand-500 text-white px-6 py-3 rounded-full font-bold hover:bg-brand-700 transition shadow">
+            <span id="resume-text">Start Unit 1</span>
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+          <button onclick="clearProgress()" class="text-xs text-gray-500 dark:text-gray-400 hover:underline">Clear progress on this device</button>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
+  <!-- ============ UNITS ============ -->
+  <section id="units" class="max-w-6xl mx-auto px-4 sm:px-6 py-14">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+      <h2 class="text-2xl font-bold">Course syllabus</h2>
+      <span class="text-xs font-semibold text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full">B.Tech / Diploma</span>
+    </div>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">Each unit is 26 modules and takes roughly 10&ndash;14 hours. Work through them in order &mdash; each builds directly on the one before.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="unit-grid"></div>
+
+    <noscript>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="unit-1.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 1</p><h3 class="text-xl font-bold mb-2">Stress and Strain</h3><p class="text-sm text-gray-600">Elastic constants, composite bars, temperature stresses.</p></a>
+        <a href="unit-2.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 2</p><h3 class="text-xl font-bold mb-2">Shear Force &amp; Bending Moment</h3><p class="text-sm text-gray-600">Reactions, SFD and BMD, contraflexure.</p></a>
+        <a href="unit-3.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 3</p><h3 class="text-xl font-bold mb-2">Bending &amp; Shear Stresses</h3><p class="text-sm text-gray-600">Simple bending, section modulus, shear distribution.</p></a>
+        <a href="unit-4.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 4</p><h3 class="text-xl font-bold mb-2">Slope and Deflection of Beams</h3><p class="text-sm text-gray-600">Elastic curve, Macaulay&rsquo;s method, superposition.</p></a>
+        <a href="unit-5.html" class="unit-card bg-white rounded-xl p-6 border border-gray-200"><p class="eyebrow mb-1">Unit 5</p><h3 class="text-xl font-bold mb-2">Torsion of Circular Sections</h3><p class="text-sm text-gray-600">Shafts, angle of twist, power transmission.</p></a>
+      </div>
+      <p class="mt-4 text-sm text-gray-500">Progress tracking needs JavaScript, but every unit above opens and works normally without it enabled here.</p>
+    </noscript>
+
+    <div class="mt-8 p-4 rounded-xl bg-lab-50 dark:bg-lab-900/25 border-l-4 border-lab-500 text-sm">
+      <p><b>How the units connect.</b> Unit 2 finds the bending moment; Unit 3 turns it into a stress and a section size; Unit 4 checks whether that section is stiff enough. Skipping ahead will leave gaps, because each unit opens by using a result the previous one produced.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOW TO USE ============ -->
+  <section class="bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700 py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl font-bold mb-8 text-center">What is inside every unit</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div>
+          <div class="w-11 h-11 rounded-lg bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200 flex items-center justify-center mb-3"><i class="fas fa-flask" aria-hidden="true"></i></div>
+          <h3 class="font-bold mb-1">Virtual laboratory</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">A working solver, not an animation. Change the span, section or load and every number recomputes.</p>
+        </div>
+        <div>
+          <div class="w-11 h-11 rounded-lg bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200 flex items-center justify-center mb-3"><i class="fas fa-square-root-variable" aria-hidden="true"></i></div>
+          <h3 class="font-bold mb-1">Worked problems</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Twenty solved numericals per unit, graded Easy to GATE, with every line of arithmetic shown.</p>
+        </div>
+        <div>
+          <div class="w-11 h-11 rounded-lg bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200 flex items-center justify-center mb-3"><i class="fas fa-list-check" aria-hidden="true"></i></div>
+          <h3 class="font-bold mb-1">Seven levels of testing</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">MCQ, fill-in-the-blanks, true/false, matching, numerical, a case study and an adaptive quiz.</p>
+        </div>
+        <div>
+          <div class="w-11 h-11 rounded-lg bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200 flex items-center justify-center mb-3"><i class="fas fa-print" aria-hidden="true"></i></div>
+          <h3 class="font-bold mb-1">Printable formula sheet</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">One page per unit, laid out for revision and ready to print or save as PDF.</p>
+        </div>
+      </div>
+
+      <div class="mt-10 grid md:grid-cols-2 gap-6 text-sm">
+        <div class="p-5 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+          <h3 class="font-bold mb-2"><i class="fas fa-user-graduate text-brand-500 mr-2" aria-hidden="true"></i>For students</h3>
+          <p class="text-gray-600 dark:text-gray-300">Your progress and quiz scores are stored in this browser on this device only. They are not sent anywhere, and they will not follow you to another computer or a private window. Export your record from Module 26 if your teacher asks for it.</p>
+        </div>
+        <div class="p-5 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+          <h3 class="font-bold mb-2"><i class="fas fa-chalkboard text-brand-500 mr-2" aria-hidden="true"></i>For teachers</h3>
+          <p class="text-gray-600 dark:text-gray-300">Each unit is one self-contained HTML file. Copy it to a shared drive, a USB stick or the college LMS &mdash; no server or installation is needed. Module 26 collects the CSV records students export and reports the class average.</p>
+        </div>
+      </div>
+
+      <p class="mt-8 text-xs text-gray-500 dark:text-gray-400 text-center max-w-3xl mx-auto">
+        The study helper in each unit is an offline keyword-matched reference, not an AI service. It works without a network connection and sends nothing to any server.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Designed for self-paced, autonomous learning.</p>
+    <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">&copy; 2026 &nbsp;|&nbsp; D. Mandal, Assistant Professor, Department of Civil Engineering</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   Course portal
+   Reads the progress each unit file writes to localStorage, so
+   the cards show real completion rather than a static label.
+   Keys written by the units:  som_visited / som2_visited /
+   som3_visited / som4_visited, plus *_records and *_elapsed.
+   ============================================================ */
+
+const UNITS = [
+  { n:1, file:'Unit-1.html', key:'som',  icon:'fa-compress-arrows-alt',
+    title:'Stress and Strain',
+    desc:'Elastic constants, composite bars, temperature stresses and the stress–strain curve.',
+    ready:true },
+  { n:2, file:'Unit-2.html', key:'som2', icon:'fa-chart-line',
+    title:'Shear Force &amp; Bending Moment',
+    desc:'Reactions, SFD and BMD for every determinate beam, contraflexure and internal hinges.',
+    ready:true },
+  { n:3, file:'Unit-3.html', key:'som3', icon:'fa-grip-lines-vertical',
+    title:'Bending &amp; Shear Stresses',
+    desc:'Simple bending theory, moment of inertia, section modulus, shear distribution and composite beams.',
+    ready:true },
+  { n:4, file:'Unit-4.html', key:'som4', icon:'fa-wave-square',
+    title:'Slope and Deflection of Beams',
+    desc:"Elastic curve, boundary conditions, double integration, Macaulay's method, moment-area and superposition.",
+    ready:true },
+  { n:5, file:'Unit-5.html', key:'som5', icon:'fa-rotate',
+    title:'Torsion of Circular Sections',
+    desc:'Solid and hollow shafts, torsional shear stress, angle of twist, power transmission and combined loading.',
+    ready:true },
+  { n:6, file:null, key:'som6', icon:'fa-arrows-left-right-to-line',
+    title:'Combined Direct &amp; Bending Stresses',
+    desc:'Eccentric loading, extreme fibre stresses, stress distribution and the middle-third rule.',
+    ready:false }
+];
+
+const MODULES_PER_UNIT = 26;
+
+/* localStorage can throw in a sandboxed frame — degrade quietly */
+const safeGet = k => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } };
+const safeSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+
+function unitProgress(u) {
+  const visited = safeGet(u.key + '_visited') || [];
+  const records = safeGet(u.key + '_records') || [];
+  const elapsed = safeGet(u.key + '_elapsed') || 0;
+  const graded  = records.filter(r => ['L1','L2','L3','L4','L5'].includes(r.level));
+  const score   = graded.length ? Math.round(graded.filter(r => r.correct).length / graded.length * 100) : null;
+  const lastTs  = records.length ? Math.max.apply(null, records.map(r => r.ts || 0)) : 0;
+  return {
+    visited: Array.isArray(visited) ? visited.length : 0,
+    pct: Math.min(100, Math.round((Array.isArray(visited) ? visited.length : 0) / MODULES_PER_UNIT * 100)),
+    attempted: records.length, score,
+    minutes: Math.round(elapsed / 60000),
+    lastTs, started: (Array.isArray(visited) && visited.length > 1) || records.length > 0
+  };
+}
+
+function renderUnits() {
+  const grid = document.getElementById('unit-grid');
+  grid.innerHTML = '';
+  let totalVisited = 0, totalMinutes = 0, anyStarted = false, resume = null, bestTs = -1;
+
+  UNITS.forEach(u => {
+    const p = u.ready ? unitProgress(u) : { visited:0, pct:0, attempted:0, score:null, minutes:0, lastTs:0, started:false };
+    if (u.ready) { totalVisited += p.visited; totalMinutes += p.minutes; }
+    if (p.started) anyStarted = true;
+    if (u.ready && p.started && p.pct < 100 && p.lastTs > bestTs) { bestTs = p.lastTs; resume = u; }
+
+    const el = document.createElement(u.ready ? 'a' : 'div');
+    if (u.ready) { el.href = u.file; }
+
+    el.className = u.ready
+      ? 'unit-card bg-white dark:bg-gray-800 rounded-xl p-6 flex flex-col h-full border border-gray-200 dark:border-gray-700 group'
+      : 'bg-gray-100 dark:bg-gray-800/50 rounded-xl p-6 flex flex-col h-full border border-dashed border-gray-300 dark:border-gray-700';
+
+    const badge = !u.ready
+      ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400">In preparation</span>'
+      : p.pct >= 100
+        ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-800"><i class="fas fa-check mr-1" aria-hidden="true"></i>Complete</span>'
+        : p.started
+          ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-lab-50 text-lab-900 dark:bg-lab-900/40 dark:text-lab-500">In progress</span>'
+          : '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200">26 modules</span>';
+
+    const iconWrap = u.ready
+      ? 'w-12 h-12 rounded-lg bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white transition-colors'
+      : 'w-12 h-12 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-400 flex items-center justify-center';
+
+    const bar = u.ready
+      ? '<div class="mt-4"><div class="flex justify-between text-[11px] font-semibold text-gray-500 dark:text-gray-400 mb-1">' +
+          '<span class="num">' + p.visited + ' / ' + MODULES_PER_UNIT + ' modules</span>' +
+          (p.score !== null ? '<span class="num">score ' + p.score + '%</span>' : (p.minutes > 0 ? '<span class="num">' + p.minutes + ' min</span>' : '<span>not started</span>')) +
+        '</div><div class="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">' +
+          '<div class="h-1.5 bg-brand-500 rounded-full" style="width:' + p.pct + '%"></div></div></div>'
+      : '';
+
+    const cta = u.ready
+      ? '<div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center text-sm font-semibold text-brand-600 dark:text-brand-200">' +
+          '<span>' + (p.pct >= 100 ? 'Review module' : p.started ? 'Continue' : 'Start module') + '</span>' +
+          '<i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform" aria-hidden="true"></i></div>'
+      : '<div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center text-sm font-semibold text-gray-400">' +
+          '<span>Coming soon</span><i class="fas fa-lock" aria-hidden="true"></i></div>';
+
+    el.innerHTML =
+      '<div class="flex items-start justify-between mb-4"><div class="' + iconWrap + '"><i class="fas ' + u.icon + ' text-xl" aria-hidden="true"></i></div>' + badge + '</div>' +
+      '<p class="eyebrow mb-1' + (u.ready ? '' : ' !text-gray-400') + '">Unit ' + u.n + '</p>' +
+      '<h3 class="text-xl font-bold mb-2 ' + (u.ready ? '' : 'text-gray-400') + '">' + u.title + '</h3>' +
+      '<p class="text-sm ' + (u.ready ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400') + ' flex-1">' + u.desc + '</p>' +
+      bar + cta;
+
+    grid.appendChild(el);
+  });
+
+  /* ---- overall strip ---- */
+  const readyCount = UNITS.filter(u => u.ready).length;
+  const overall = Math.round(totalVisited / (readyCount * MODULES_PER_UNIT) * 100);
+  const strip = document.getElementById('progress-strip');
+  strip.classList.remove('hidden');
+
+  const C = 2 * Math.PI * 33;
+  document.getElementById('ring').setAttribute('stroke-dashoffset', C * (1 - overall/100));
+  document.getElementById('ring-label').textContent = overall + '%';
+  document.getElementById('hdr-progress').textContent = overall + '% complete';
+
+  const head = document.getElementById('prog-headline'), det = document.getElementById('prog-detail');
+  const link = document.getElementById('resume-link'), txt = document.getElementById('resume-text');
+
+  if (!anyStarted) {
+    head.textContent = 'Ready when you are';
+    det.textContent = readyCount * MODULES_PER_UNIT + ' modules across ' + readyCount + ' units';
+    link.href = UNITS[0].file; txt.textContent = 'Start Unit 1';
+  } else {
+    const target = resume || UNITS.filter(u => u.ready).find(u => unitProgress(u).pct < 100) || UNITS[0];
+    head.textContent = overall >= 100 ? 'All units complete' : 'Pick up where you left off';
+    det.textContent = totalVisited + ' of ' + (readyCount * MODULES_PER_UNIT) + ' modules visited' +
+                      (totalMinutes > 0 ? ' · ' + totalMinutes + ' min studied' : '');
+    link.href = target.file;
+    txt.innerHTML = (overall >= 100 ? 'Revisit Unit ' : 'Resume Unit ') + target.n;
+  }
+}
+
+function clearProgress() {
+  if (!confirm('Clear all saved progress and quiz scores for every unit on this device? This cannot be undone.')) return;
+  UNITS.forEach(u => ['_visited','_records','_elapsed'].forEach(s => { try { localStorage.removeItem(u.key + s); } catch (e) {} }));
+  renderUnits();
+}
+
+/* theme — written to every unit's key so the whole set matches */
+function applyTheme(dark) {
+  document.documentElement.classList.toggle('dark', dark);
+  document.getElementById('theme-icon').className = dark ? 'fas fa-sun' : 'fas fa-moon';
+  UNITS.forEach(u => safeSet(u.key + '_theme', dark ? 'dark' : 'light'));
+}
+function toggleTheme() { applyTheme(!document.documentElement.classList.contains('dark')); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = safeGet('som_theme');
+  applyTheme(saved ? saved === 'dark' : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  renderUnits();
+});
+/* refresh the cards when the student returns from a unit */
+window.addEventListener('pageshow', renderUnits);
+</script>
 </body>
 </html>
