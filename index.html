@@ -222,23 +222,23 @@ tailwind.config = {
    ============================================================ */
 
 const UNITS = [
-  { n:1, file:'Unit-1.html', key:'som',  icon:'fa-compress-arrows-alt',
+  { n:1, file:'unit-1.html', key:'som',  icon:'fa-compress-arrows-alt',
     title:'Stress and Strain',
     desc:'Elastic constants, composite bars, temperature stresses and the stress–strain curve.',
     ready:true },
-  { n:2, file:'Unit-2.html', key:'som2', icon:'fa-chart-line',
+  { n:2, file:'unit-2.html', key:'som2', icon:'fa-chart-line',
     title:'Shear Force &amp; Bending Moment',
     desc:'Reactions, SFD and BMD for every determinate beam, contraflexure and internal hinges.',
     ready:true },
-  { n:3, file:'Unit-3.html', key:'som3', icon:'fa-grip-lines-vertical',
+  { n:3, file:'unit-3.html', key:'som3', icon:'fa-grip-lines-vertical',
     title:'Bending &amp; Shear Stresses',
     desc:'Simple bending theory, moment of inertia, section modulus, shear distribution and composite beams.',
     ready:true },
-  { n:4, file:'Unit-4.html', key:'som4', icon:'fa-wave-square',
+  { n:4, file:'unit-4.html', key:'som4', icon:'fa-wave-square',
     title:'Slope and Deflection of Beams',
     desc:"Elastic curve, boundary conditions, double integration, Macaulay's method, moment-area and superposition.",
     ready:true },
-  { n:5, file:'Unit-5.html', key:'som5', icon:'fa-rotate',
+  { n:5, file:'unit-5.html', key:'som5', icon:'fa-rotate',
     title:'Torsion of Circular Sections',
     desc:'Solid and hollow shafts, torsional shear stress, angle of twist, power transmission and combined loading.',
     ready:true },
@@ -317,7 +317,7 @@ function renderUnits() {
 
     el.innerHTML =
       '<div class="flex items-start justify-between mb-4"><div class="' + iconWrap + '"><i class="fas ' + u.icon + ' text-xl" aria-hidden="true"></i></div>' + badge + '</div>' +
-      '<p class="eyebrow mb-1' + (u.ready ? '' : ' !text-gray-400') + '">Unit ' + u.n + '</p>' +
+      '<p class="eyebrow mb-1' + (u.ready ? '' : ' !text-gray-400') + '">unit ' + u.n + '</p>' +
       '<h3 class="text-xl font-bold mb-2 ' + (u.ready ? '' : 'text-gray-400') + '">' + u.title + '</h3>' +
       '<p class="text-sm ' + (u.ready ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400') + ' flex-1">' + u.desc + '</p>' +
       bar + cta;
@@ -349,7 +349,7 @@ function renderUnits() {
     det.textContent = totalVisited + ' of ' + (readyCount * MODULES_PER_UNIT) + ' modules visited' +
                       (totalMinutes > 0 ? ' · ' + totalMinutes + ' min studied' : '');
     link.href = target.file;
-    txt.innerHTML = (overall >= 100 ? 'Revisit Unit ' : 'Resume Unit ') + target.n;
+    txt.innerHTML = (overall >= 100 ? 'Revisit unit ' : 'Resume Unit ') + target.n;
   }
 }
 
