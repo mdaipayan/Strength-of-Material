@@ -100,25 +100,34 @@ tailwind.config = {
 
 <!-- ============ TOP BAR ============ -->
 <header class="bg-white dark:bg-gray-800 shadow-sm z-30 flex-shrink-0">
-  <div class="px-4 sm:px-6 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2">
+  <div class="px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0">
         <i class="fas fa-bars text-lg"></i>
       </button>
-      <div>
-        <p class="eyebrow leading-none">Interactive Learning Module</p>
-        <h1 class="text-lg font-bold leading-tight text-brand-900 dark:text-brand-200">Strength of Materials &middot; Unit 3</h1>
+
+      <!-- Return to Home Link -->
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/60 text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-brand-300 hover:border-brand-500 hover:bg-white dark:hover:bg-gray-700 transition shrink-0 min-h-[40px] text-xs font-semibold shadow-2xs group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500" title="Return to Course Home / Syllabus" aria-label="Return to Course Home">
+        <i class="fas fa-house text-brand-500 text-xs sm:text-sm group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+        <span class="font-bold">Home</span>
+      </a>
+
+      <div class="h-6 w-px bg-gray-200 dark:bg-gray-700 shrink-0 hidden sm:block"></div>
+
+      <div class="min-w-0">
+        <p class="eyebrow leading-none truncate text-[10px] sm:text-xs">Interactive Learning Module</p>
+        <h1 class="text-xs sm:text-base md:text-lg font-bold leading-tight text-brand-900 dark:text-brand-200 truncate">Strength of Materials &middot; Unit 3</h1>
       </div>
     </div>
 
-    <div class="flex items-center gap-3 sm:gap-5">
+    <div class="flex items-center gap-2 sm:gap-5 shrink-0">
       <div class="hidden sm:flex flex-col items-end">
         <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400">Modules visited <span id="progress-label" class="num">0/26</span></span>
         <div class="w-36 h-1.5 bg-gray-200 rounded-full mt-1 dark:bg-gray-700">
           <div id="progress-bar" class="h-1.5 bg-brand-500 rounded-full transition-all" style="width:0%"></div>
         </div>
       </div>
-      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition">
+      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition min-h-[44px] min-w-[44px] flex items-center justify-center">
         <i id="theme-icon" class="fas fa-moon"></i>
       </button>
     </div>
@@ -128,8 +137,18 @@ tailwind.config = {
 <div class="flex-1 flex overflow-hidden">
 
   <!-- ============ SIDEBAR ============ -->
-  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full">
-    <nav class="p-3 space-y-0.5" id="nav-menu" aria-label="Module list"></nav>
+  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full flex flex-col">
+    <!-- Home / Syllabus link at top of sidebar -->
+    <div class="p-3 pb-2 border-b border-gray-100 dark:border-gray-700/80 sticky top-0 bg-white dark:bg-gray-800 z-10">
+      <a href="index.html" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-600 font-semibold text-xs transition border border-brand-200/80 dark:border-brand-800/80 group shadow-2xs" title="Return to Course Home / Syllabus">
+        <span class="flex items-center gap-2">
+          <i class="fas fa-arrow-left text-[11px] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true"></i>
+          <span>Course Home</span>
+        </span>
+        <i class="fas fa-house text-xs opacity-80" aria-hidden="true"></i>
+      </a>
+    </div>
+    <nav class="p-3 space-y-0.5 flex-1" id="nav-menu" aria-label="Module list"></nav>
   </aside>
 
   <!-- ============ CONTENT ============ -->
@@ -491,160 +510,362 @@ tailwind.config = {
 </div>
 
 <!-- ============ M11 SHEAR STRESS DERIVATION ============ -->
-<div id="module-11" class="module-content max-w-4xl mx-auto">
-  <p class="eyebrow">Module 11</p><h2 class="mtitle">Shear stress in beams</h2>
+<div id="module-11" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 11</p><h2 class="mtitle">Shear stress in beams — Physical origin &amp; derivation</h2>
 
-  <div class="card mb-5">
-    <p class="text-sm mb-3">Bending moment produces bending stress. The shear force from Unit 2 produces <b>shear stress</b>, and it is distributed in a completely different way — largest where the bending stress is zero, and zero where the bending stress is largest.</p>
-    <figure class="my-4 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="shearderiv" data-num="11.1" data-cap="The free body used to derive the shear formula: unequal bending forces on the two faces must be balanced by shear on the horizontal plane"></figure>
+  <!-- Concept Builder: Why Horizontal Shear Exists -->
+  <div class="card mb-6 border-l-4 border-brand-500">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+      <h3 class="text-xl font-bold text-brand-900 dark:text-brand-200"><i class="fas fa-layer-group text-brand-500 mr-2"></i>Physical intuition: The loose planks vs glued beam experiment</h3>
+      <span class="chip bg-brand-100 text-brand-900 dark:bg-brand-900/40 dark:text-brand-300">Core Concept Builder</span>
+    </div>
+    <p class="text-sm mb-4 text-gray-700 dark:text-gray-300">Why does a <b>vertical</b> load on a beam create <b>horizontal</b> shear stresses between layers? Explore this interactive physical model to understand the origin of internal shear and complementary stresses.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-4">
+      <button id="m11-mode-loose" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition">1. Loose planks (unbonded)</button>
+      <button id="m11-mode-glued" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 hover:border-brand-500 transition">2. Glued beam (shear transfer)</button>
+      <button id="m11-mode-cube" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 hover:border-brand-500 transition">3. Infinitesimal stress cube (&tau;<sub>xy</sub> = &tau;<sub>yx</sub>)</button>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-5 items-center">
+      <div class="lg:col-span-8 bg-gray-50 dark:bg-gray-800/60 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div id="m11-plank-svg-wrap" class="w-full flex justify-center"></div>
+        <div class="flex items-center gap-3 mt-4">
+          <label class="text-xs font-semibold whitespace-nowrap text-gray-600 dark:text-gray-300" for="m11-load-slider">Apply bending load P:</label>
+          <input id="m11-load-slider" type="range" min="0" max="100" value="65" class="slider-custom flex-1">
+          <span id="m11-load-val" class="num text-xs font-bold text-brand-600 w-12 text-right">65%</span>
+        </div>
+      </div>
+      <div class="lg:col-span-4 space-y-3">
+        <div id="m11-plank-desc" class="p-4 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-xs leading-relaxed"></div>
+        <div id="m11-plank-stats" class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-xs num space-y-1"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="card mb-5">
-    <h3 class="text-xl font-bold mb-3">Derivation</h3>
+  <div class="card mb-6">
+    <h3 class="text-xl font-bold mb-3">Mathematical derivation of &tau; = VQ / (I b)</h3>
+    <figure class="my-4 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="shearderiv" data-num="11.1" data-cap="Free body of an element dx: unequal bending moments on left and right faces produce a net horizontal thrust that is resisted by horizontal shear stress &tau; on the cut plane"></figure>
+    
     <ol class="list-decimal pl-6 space-y-2 text-sm">
-      <li>Take an element of length \(dx\). The moment on the left face is \(M\), on the right face \(M + dM\).</li>
-      <li>Consider only the part of the section <b>above</b> a level \(y_1\), of area \(A\).</li>
-      <li>The bending force on the left face of that area is \(\int (My/I)dA = \dfrac{M}{I}A\bar y\), and on the right face \(\dfrac{M+dM}{I}A\bar y\).</li>
-      <li>These are unequal, so the difference must be balanced by a horizontal shear force on the plane at \(y_1\), of area \(b\,dx\):</li>
+      <li>Consider a beam element of length \(dx\). Due to transverse loading, the bending moment changes from \(M\) on the left face to \(M + dM\) on the right face.</li>
+      <li>Isolate the portion of the cross-section <b>above a chosen cut level \(y_1\)</b> (partial area \(A'\)).</li>
+      <li>The normal bending thrust on the left face is \(\int_{y_1}^{y_{top}} \sigma\,dA = \int \frac{My}{I}dA = \frac{M}{I}A'\bar{y}'\).</li>
+      <li>On the right face, the larger thrust is \(\frac{M+dM}{I}A'\bar{y}'\).</li>
+      <li>For horizontal equilibrium of this isolated upper slice, the unbalanced force \(\frac{dM}{I}A'\bar{y}'\) must be resisted by an internal horizontal shear force across the horizontal surface of area \(b \cdot dx\):</li>
     </ol>
-    <div class="formula-box mt-3">$$ \tau \, b \, dx = \frac{dM}{I}A\bar{y} \;\Longrightarrow\; \tau = \frac{dM}{dx}\cdot\frac{A\bar y}{I b} $$</div>
-    <p class="text-sm mt-3">and since \(dM/dx = V\) from Unit 2:</p>
-    <div class="formula-box mt-2 text-lg">$$ \tau = \frac{V A \bar{y}}{I b} $$</div>
+    <div class="formula-box mt-3">$$ \tau \cdot (b \cdot dx) \;=\; \frac{dM}{I} A'\bar{y}' \quad\Longrightarrow\quad \tau \;=\; \left(\frac{dM}{dx}\right) \frac{A'\bar{y}'}{I\,b} $$</div>
+    <p class="text-sm mt-3">From beam equilibrium in Unit 2, the rate of change of bending moment is the shear force \(\dfrac{dM}{dx} = V\). Hence:</p>
+    <div class="formula-box mt-2 text-lg font-bold text-brand-900 dark:text-brand-200">$$ \tau(y) \;=\; \frac{V \cdot Q(y)}{I \cdot b(y)} \;=\; \frac{V \cdot (A'\bar{y}')}{I \cdot b(y)} $$</div>
   </div>
 
-  <div class="card mb-5">
-    <h3 class="text-xl font-bold mb-3">What each symbol means — read carefully</h3>
-    <table class="data">
-      <tr><th>Symbol</th><th>Meaning</th><th>Where students go wrong</th></tr>
-      <tr><td class="num">V</td><td>Shear force at the section, from the SFD</td><td>Using the bending moment instead</td></tr>
-      <tr><td class="num">A</td><td>Area of the section <b>above (or below) the level considered</b>, not the whole section</td><td>Using the total area — the single commonest error in this unit</td></tr>
-      <tr><td class="num">ȳ</td><td>Distance from the neutral axis to the centroid <b>of that area A</b></td><td>Using the distance to the level itself</td></tr>
-      <tr><td class="num">I</td><td>Second moment of area of the <b>whole</b> section about the NA</td><td>Using only the part above the level</td></tr>
-      <tr><td class="num">b</td><td>Width of the section <b>at the level where τ is wanted</b></td><td>Using the flange width when the level is in the web</td></tr>
-    </table>
-    <p class="text-sm mt-3">The product \(A\bar y\) is the <b>first moment of area</b> of the part above the level, taken about the neutral axis. It is often written \(Q\), and \(\tau = VQ/Ib\) is the same formula.</p>
+  <!-- Interactive Cut-Plane & Q(y) Live Dissector -->
+  <div class="card mb-6 border-t-4 border-lab-500">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100"><i class="fas fa-crosshairs text-lab-500 mr-2"></i>Interactive cut-plane &amp; Q(y) step-by-step dissector</h3>
+      <span class="chip bg-lab-50 text-lab-900 dark:bg-lab-900/40 dark:text-lab-300">Live Stress Dissector</span>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Select any cross-section and drag the cut-plane slider across the depth. Observe in real-time how the partial area \(A'\), its centroid \(\bar{y}'\), the first moment \(Q\), the active width \(b\), and the shear stress \(\tau\) are computed.</p>
+
+    <div class="grid sm:grid-cols-3 gap-4 mb-4">
+      <div>
+        <label class="text-xs font-semibold block mb-1" for="m11-sec-select">Choose section geometry:</label>
+        <select id="m11-sec-select" class="w-full p-2 border rounded text-sm dark:bg-gray-700 dark:border-gray-600">
+          <option value="rect">Rectangle (150 &times; 300 mm)</option>
+          <option value="isec">I-Beam (Flanges 150&times;12, Web 8, D=300 mm)</option>
+          <option value="tee">T-Section (Flange 150&times;25, Web 25, D=175 mm)</option>
+          <option value="circ">Solid Circle (Diameter 200 mm)</option>
+          <option value="tri">Triangle (Base 150, Height 300 mm)</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-xs font-semibold block mb-1" for="m11-v-input">Shear Force V (kN):</label>
+        <input id="m11-v-input" type="number" value="60" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600">
+      </div>
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <label class="text-xs font-semibold" for="m11-cut-slider">Cut level elevation y:</label>
+          <span id="m11-cut-disp" class="num text-xs font-bold text-brand-600">y = 150 mm</span>
+        </div>
+        <input id="m11-cut-slider" type="range" min="0" max="300" value="150" class="slider-custom mt-2">
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-5 items-start mt-4">
+      <!-- Section SVG + Stress Diagram SVG -->
+      <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-800/60 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div id="m11-dissector-svg-wrap" class="w-full flex justify-center"></div>
+      </div>
+      <!-- Step-by-step arithmetic computation -->
+      <div class="lg:col-span-5 space-y-3">
+        <div class="p-4 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm text-xs space-y-2">
+          <p class="font-bold text-sm text-brand-900 dark:text-brand-300 pb-2 border-b dark:border-gray-700">Step-by-step calculation at this cut</p>
+          <div class="flex justify-between"><span class="text-gray-500">Cut height from base:</span><span id="m11-calc-y" class="num font-semibold">150.0 mm</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Neutral axis y<sub>NA</sub>:</span><span id="m11-calc-yna" class="num font-semibold">150.0 mm</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Distance from NA (y - y<sub>NA</sub>):</span><span id="m11-calc-ydist" class="num font-semibold">0.0 mm</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Partial area above cut (A'):</span><span id="m11-calc-ap" class="num font-semibold text-brand-600">22,500 mm²</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Centroid of cut area to NA (ȳ'):</span><span id="m11-calc-ybar" class="num font-semibold text-brand-600">75.0 mm</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">First moment Q = A'&middot;ȳ':</span><span id="m11-calc-q" class="num font-bold text-purple-600">1,687,500 mm³</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Section width at cut (b):</span><span id="m11-calc-b" class="num font-semibold">150.0 mm</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Total section I<sub>NA</sub>:</span><span id="m11-calc-i" class="num font-semibold">337.5 &times; 10⁶ mm⁴</span></div>
+          <div class="pt-2 border-t dark:border-gray-700 flex justify-between items-center">
+            <span class="font-bold text-sm">Shear stress &tau; = VQ / (Ib):</span>
+            <span id="m11-calc-tau" class="num font-bold text-base text-red-500">2.00 MPa</span>
+          </div>
+        </div>
+        <div id="m11-calc-insight" class="p-3.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs leading-relaxed text-amber-950 dark:text-amber-200"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3 class="text-xl font-bold mb-3">Complementary shear — why a horizontal stress appears at all</h3>
-    <p class="text-sm mb-3">The shear force is vertical, so students reasonably ask where a horizontal shear stress comes from. The answer is that shear stresses always occur in complementary pairs: a vertical shear stress on a vertical plane is impossible without an equal horizontal shear stress on the horizontal plane, or the element would spin.</p>
-    <p class="text-sm p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500">A stack of loose planks bent over your knee demonstrates this: the planks slide past one another at their interfaces. Glue them and the glue must resist that sliding — the glue carries exactly the horizontal shear stress this formula predicts. That is also why a timber beam can fail by splitting along its length rather than snapping across it.</p>
+  <!-- The 5 Fatal Traps in Shear Stress Calculations -->
+  <div class="card mb-6">
+    <h3 class="text-xl font-bold mb-3"><i class="fas fa-triangle-exclamation text-red-500 mr-2"></i>The 5 fatal traps students make in shear stress</h3>
+    <div class="grid sm:grid-cols-2 gap-3 text-xs">
+      <div class="p-3.5 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800">
+        <p class="font-bold text-red-800 dark:text-red-300 mb-1">❌ Trap 1: Using total section area A instead of partial cut area A'</p>
+        <p class="text-gray-700 dark:text-gray-300">In \(Q = A'\bar{y}'\), \(A'\) is strictly the area <b>above (or below) the cut plane</b>. If you use the entire cross-sectional area, \(Q = 0\) about the centroid and your calculated stress collapses to zero!</p>
+      </div>
+      <div class="p-3.5 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800">
+        <p class="font-bold text-red-800 dark:text-red-300 mb-1">❌ Trap 2: Confusing distance to cut plane y with centroid distance ȳ'</p>
+        <p class="text-gray-700 dark:text-gray-300">\(\bar{y}'\) is the distance from the Neutral Axis to the <b>centroid of the shaded cut area</b>, NOT the distance to the cut plane itself. For a rectangle from \(y\) to \(d/2\), \(\bar{y}' = \frac{1}{2}(y + d/2)\).</p>
+      </div>
+      <div class="p-3.5 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800">
+        <p class="font-bold text-red-800 dark:text-red-300 mb-1">❌ Trap 3: Using flange width b<sub>f</sub> when calculating web stress</p>
+        <p class="text-gray-700 dark:text-gray-300">In an I-beam or T-beam, \(b\) in the denominator is the <b>actual physical width at the exact cut plane</b>. Inside the web, \(b = t_w\). Using \(b_f\) underestimates the web stress by a factor of 15 to 25!</p>
+      </div>
+      <div class="p-3.5 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800">
+        <p class="font-bold text-red-800 dark:text-red-300 mb-1">❌ Trap 4: Assuming shear stress always peaks at the Neutral Axis</p>
+        <p class="text-gray-700 dark:text-gray-300">While \(Q(y)\) is always maximum at the NA, \(\tau(y) \propto \frac{Q(y)}{b(y)}\). In sections with tapering widths (such as triangles and diamonds), \(\tau_{max}\) occurs <b>away from the neutral axis</b>!</p>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ============ M12 SHEAR DISTRIBUTION: RECTANGLE ============ -->
-<div id="module-12" class="module-content max-w-4xl mx-auto">
-  <p class="eyebrow">Module 12</p><h2 class="mtitle">Shear stress in a rectangular section</h2>
+<div id="module-12" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 12</p><h2 class="mtitle">Shear stress in rectangular sections &amp; the 1.5 ratio</h2>
 
-  <div class="card mb-5">
-    <h3 class="text-xl font-bold mb-3">Derivation of the parabola</h3>
-    <p class="text-sm mb-2">For a rectangle of width \(b\) and depth \(d\), take a level at distance \(y\) from the neutral axis. The area above it is \(A = b\left(\frac{d}{2}-y\right)\), and its centroid is at \(\bar y = \frac{1}{2}\left(\frac{d}{2}+y\right)\) from the NA.</p>
-    <div class="formula-box">$$ A\bar y = \frac{b}{2}\left(\frac{d^2}{4} - y^2\right) $$</div>
-    <p class="text-sm mt-3 mb-2">Substituting into \(\tau = VA\bar y/Ib\) with \(I = bd^3/12\):</p>
-    <div class="formula-box">$$ \tau = \frac{6V}{bd^3}\left(\frac{d^2}{4} - y^2\right) $$</div>
-    <p class="text-sm mt-3">The stress is <b>parabolic</b> in \(y\): zero at the top and bottom fibres where \(y = \pm d/2\), and maximum at the neutral axis where \(y = 0\).</p>
-  </div>
-
-  <div class="card mb-5">
-    <h3 class="text-xl font-bold mb-3">The 1.5 result</h3>
-    <div class="formula-box">$$ \tau_{max} = \frac{6V}{bd^3}\cdot\frac{d^2}{4} = \frac{3V}{2bd} = 1.5\,\tau_{average} $$</div>
-    <p class="text-sm mt-3">The maximum shear stress in a rectangular section is <b>1.5 times the average</b>. Anyone who designs on \(V/A\) alone underestimates the peak by a third, which is why this factor is quoted in every code and asked in every examination.</p>
-    <figure class="my-4 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="rectdist" data-num="12.1" data-cap="Rectangular section: bending stress is linear, shear stress is parabolic — and the two peak at opposite places"></figure>
-  </div>
-
-  <div class="card">
-    <h3 class="text-xl font-bold mb-3">Worked example</h3>
-    <p class="text-sm mb-3">The 150 × 300 beam of Module 9 carries a shear force of 60 kN at the same section. Find the average and maximum shear stress, and the stress at 75 mm above the neutral axis.</p>
-    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
-      <p>A = 150 × 300 = 45 000 mm²</p>
-      <p>τ<sub>avg</sub> = V/A = 60 000 / 45 000 = <b>1.33 MPa</b></p>
-      <p>τ<sub>max</sub> = 1.5 × 1.33 = <b>2.00 MPa</b> at the neutral axis</p>
-      <p>At y = 75 mm: τ = (6 × 60 000)/(150 × 300³) × (300²/4 − 75²)</p>
-      <p>τ = 8.889×10⁻⁵ × (22 500 − 5625) = 8.889×10⁻⁵ × 16 875 = <b>1.50 MPa</b></p>
-      <p>Check by the parabola: 2.00 × [1 − (75/150)²] = 2.00 × 0.75 = 1.50 ✓</p>
+  <div class="card mb-6">
+    <h3 class="text-xl font-bold mb-3">Mathematical derivation of the parabolic profile</h3>
+    <p class="text-sm mb-3">For a rectangle of width \(b\) and depth \(d\), take a horizontal cut at distance \(y\) from the central Neutral Axis (\(-d/2 \le y \le d/2\)).</p>
+    
+    <div class="grid md:grid-cols-2 gap-4 my-3 text-xs">
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60 border dark:border-gray-700">
+        <p class="font-bold text-sm mb-1 text-brand-700 dark:text-brand-300">1. Shaded area above level y:</p>
+        <p>$$ A' \;=\; b\left(\frac{d}{2} - y\right) $$</p>
+        <p class="font-bold text-sm mt-3 mb-1 text-brand-700 dark:text-brand-300">2. Centroid of shaded area from NA:</p>
+        <p>$$ \bar{y}' \;=\; y + \frac{1}{2}\left(\frac{d}{2} - y\right) \;=\; \frac{1}{2}\left(\frac{d}{2} + y\right) $$</p>
+      </div>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60 border dark:border-gray-700">
+        <p class="font-bold text-sm mb-1 text-brand-700 dark:text-brand-300">3. First moment of area Q(y):</p>
+        <p>$$ Q(y) = A'\bar{y}' = \frac{b}{2}\left(\frac{d^2}{4} - y^2\right) $$</p>
+        <p class="font-bold text-sm mt-3 mb-1 text-brand-700 dark:text-brand-300">4. Substituting I = bd³/12 into &tau; = VQ/(Ib):</p>
+        <p>$$ \tau(y) = \frac{V \cdot \frac{b}{2}(\frac{d^2}{4}-y^2)}{\frac{bd^3}{12} \cdot b} = \frac{6V}{bd^3}\left(\frac{d^2}{4} - y^2\right) $$</p>
+      </div>
     </div>
-    <p class="text-sm mt-3">Compare the two stresses at this section: bending 42.67 MPa, shear 2.00 MPa. In an ordinary beam of reasonable span the bending stress dominates by an order of magnitude, which is why bending governs design and shear is a check. Shear becomes critical only for short deep beams, heavily loaded near supports, or timber, where the material is weak along the grain.</p>
+
+    <div class="formula-box text-base font-bold">
+      $$ \tau(y) \;=\; \frac{3V}{2bd}\left(1 - \frac{4y^2}{d^2}\right) \;=\; 1.5\,\tau_{avg}\left(1 - \frac{4y^2}{d^2}\right) $$
+    </div>
+  </div>
+
+  <!-- Interactive Parabola & Integration Studio -->
+  <div class="card mb-6 border-l-4 border-brand-500">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+      <h3 class="text-xl font-bold text-brand-900 dark:text-brand-200"><i class="fas fa-chart-area text-brand-500 mr-2"></i>Interactive rectangle stress simulator &amp; integration proof</h3>
+      <span class="chip bg-brand-100 text-brand-900 dark:bg-brand-900/40 dark:text-brand-300">Live Mathematical Proof</span>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Adjust section dimensions and shear force. Verify that the area under the parabolic shear stress curve \(\int \tau(y) b\,dy\) integrates exactly to the applied shear force \(V\).</p>
+
+    <div class="grid sm:grid-cols-3 gap-4 mb-4">
+      <div>
+        <label class="text-xs font-semibold block mb-1" for="m12-b">Width b (mm):</label>
+        <input id="m12-b" type="number" value="150" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600">
+      </div>
+      <div>
+        <label class="text-xs font-semibold block mb-1" for="m12-d">Depth d (mm):</label>
+        <input id="m12-d" type="number" value="300" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600">
+      </div>
+      <div>
+        <label class="text-xs font-semibold block mb-1" for="m12-v">Shear Force V (kN):</label>
+        <input id="m12-v" type="number" value="60" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600">
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-5 items-center">
+      <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-800/60 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div id="m12-sim-svg" class="w-full flex justify-center"></div>
+      </div>
+      <div class="lg:col-span-5 space-y-3">
+        <div class="grid grid-cols-2 gap-3 text-center">
+          <div class="p-3 rounded-lg bg-gray-100 dark:bg-gray-700/50">
+            <p class="text-xs text-gray-500">Average shear &tau;<sub>avg</sub></p>
+            <p id="m12-out-tavg" class="num text-lg font-bold text-gray-800 dark:text-gray-200">1.33 MPa</p>
+          </div>
+          <div class="p-3 rounded-lg bg-brand-50 dark:bg-brand-900/30 border border-brand-200 dark:border-brand-800">
+            <p class="text-xs text-brand-600 dark:text-brand-300">Peak shear &tau;<sub>max</sub> = 1.5 &tau;<sub>avg</sub></p>
+            <p id="m12-out-tmax" class="num text-lg font-bold text-brand-600 dark:text-brand-300">2.00 MPa</p>
+          </div>
+        </div>
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-xs num space-y-2">
+          <p class="font-bold text-sm text-gray-900 dark:text-gray-100 pb-1 border-b dark:border-gray-700">Equilibrium Integration Check</p>
+          <div class="flex justify-between"><span class="text-gray-500">Area under stress profile:</span><span id="m12-out-integ" class="font-semibold">60.00 kN</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Applied Shear Force V:</span><span id="m12-out-applied" class="font-semibold text-green-600">60.00 kN</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Match verdict:</span><span class="font-bold text-green-600">&int; &tau;&middot;b&middot;dy = V &check; Exact</span></div>
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 bg-blue-50 dark:bg-blue-950/40 p-3 rounded-lg border border-blue-200 dark:border-blue-800">
+          <b>Design Insight:</b> Doubling depth \(d\) decreases peak shear stress \(\tau_{max}\) by <b>2&times;</b>, but decreases bending stress \(\sigma_{max}\) by <b>4&times;</b> (since \(Z \propto d^2\)).
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ============ M13 SHEAR: OTHER SECTIONS ============ -->
 <div id="module-13" class="module-content max-w-5xl mx-auto">
-  <p class="eyebrow">Module 13</p><h2 class="mtitle">Shear distribution in other sections</h2>
+  <p class="eyebrow">Module 13</p><h2 class="mtitle">Shear distribution in complex sections &amp; built-up fasteners</h2>
 
-  <div class="card mb-5">
-    <h3 class="text-xl font-bold mb-3">Circular section</h3>
-    <p class="text-sm mb-2">At the neutral axis \(A\bar y = \frac{2}{3}r^3\), \(I = \pi r^4/4\) and \(b = 2r\), giving:</p>
-    <div class="formula-box">$$ \tau_{max} = \frac{4}{3}\,\tau_{average} = \frac{4V}{3\pi r^2} $$</div>
-    <p class="text-sm mt-3">Still parabolic in shape but with a lower peak factor than the rectangle, because the width of a circle is greatest exactly where the first moment is greatest.</p>
-  </div>
+  <!-- I-Section Division of Labour -->
+  <div class="card mb-6 border-l-4 border-brand-500">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+      <h3 class="text-xl font-bold text-brand-900 dark:text-brand-200"><i class="fas fa-arrows-split-up-and-left text-brand-500 mr-2"></i>I-Beams: The division of labour &amp; the 18&times; junction jump</h3>
+      <span class="chip bg-brand-100 text-brand-900 dark:bg-brand-900/40 dark:text-brand-300">Engineering Workhorse</span>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Why does structural engineering rely on I-sections? Because the flanges carry almost all the bending moment, while the thin web carries almost all the shear force!</p>
 
-  <div class="card mb-5">
-    <h3 class="text-xl font-bold mb-3">I-section — the important case</h3>
-    <figure class="my-4 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="idist" data-num="13.1" data-cap="I-section: the shear jumps at the flange-web junction because b changes abruptly"></figure>
-    <p class="text-sm mb-3">The distribution is parabolic within the flange and parabolic within the web, but there is a <b>sudden jump</b> at the junction. Nothing physical changes there — \(A\bar y\) is continuous. What changes is \(b\), from the flange width to the web thickness, and \(\tau\) is inversely proportional to \(b\).</p>
-    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
-      <p>For a 300 deep section, 150 × 12 flanges, 8 mm web, carrying V = 50 kN:</p>
-      <p>I = 88.71 × 10⁶ mm⁴</p>
-      <p>At the junction, A ȳ = 150 × 12 × 144 = 259 200 mm³</p>
-      <p>In the flange (b = 150): τ = 50 000 × 259 200 / (88.71×10⁶ × 150) = <b>0.97 MPa</b></p>
-      <p>In the web (b = 8): τ = 50 000 × 259 200 / (88.71×10⁶ × 8) = <b>18.26 MPa</b></p>
-      <p>The jump factor is exactly 150/8 = 18.75</p>
-      <p class="pt-2 border-t dark:border-gray-600">Peak at the neutral axis: A ȳ = 259 200 + 8 × 138 × 69 = 335 376 mm³</p>
-      <p>τ<sub>max</sub> = 50 000 × 335 376 / (88.71×10⁶ × 8) = <b>23.63 MPa</b></p>
+    <div class="grid sm:grid-cols-4 gap-3 mb-4">
+      <div><label class="text-xs font-semibold block mb-1" for="m13-bf">Flange width b<sub>f</sub></label><input id="m13-bf" type="number" value="150" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-xs font-semibold block mb-1" for="m13-tf">Flange thick t<sub>f</sub></label><input id="m13-tf" type="number" value="12" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-xs font-semibold block mb-1" for="m13-tw">Web thick t<sub>w</sub></label><input id="m13-tw" type="number" value="8" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-xs font-semibold block mb-1" for="m13-D">Overall depth D</label><input id="m13-D" type="number" value="300" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-5 items-center">
+      <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-800/60 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div id="m13-isec-svg" class="w-full flex justify-center"></div>
+      </div>
+      <div class="lg:col-span-5 space-y-3 text-xs num">
+        <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-2">
+          <p class="font-bold text-sm text-gray-900 dark:text-gray-100 font-sans pb-1 border-b dark:border-gray-700">Division of Labour Breakdown</p>
+          <div class="flex justify-between"><span class="text-gray-500">Shear carried by web:</span><span id="m13-web-share" class="font-bold text-brand-600">95.4 %</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Shear carried by flanges:</span><span id="m13-flange-share" class="font-semibold">4.6 %</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Moment carried by flanges:</span><span id="m13-moment-flange" class="font-bold text-purple-600">86.8 %</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Junction jump factor (b<sub>f</sub> / t<sub>w</sub>):</span><span id="m13-jump-factor" class="font-bold text-red-500">18.75 &times;</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">&tau; at junction (in flange):</span><span id="m13-tau-flange" class="font-semibold">0.97 MPa</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">&tau; at junction (in web):</span><span id="m13-tau-web" class="font-bold text-red-500">18.26 MPa</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">&tau; maximum (at NA):</span><span id="m13-tau-na" class="font-bold text-red-600">23.63 MPa</span></div>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 font-sans bg-amber-50 dark:bg-amber-950/40 p-3 rounded-lg border border-amber-200 dark:border-amber-800">
+          <b>Quick Design Formula:</b> Engineers often approximate web shear as \(\tau_{avg,web} \approx \dfrac{V}{D \cdot t_w}\). For this section, \(\dfrac{50000}{300 \times 8} = 20.83\text{ MPa}\), which is roughly 12% below the true peak at the NA.
+        </p>
+      </div>
     </div>
   </div>
 
-  <div class="card mb-5">
-    <h3 class="text-xl font-bold mb-3">Why the web carries the shear and the flanges carry the moment</h3>
-    <p class="text-sm mb-3">Integrating the distribution over the section recovers the full 50 kN, and <b>96 %</b> of it is carried by the web alone. The flanges, meanwhile, carry the great majority of the moment. This clean division of labour is why steel design treats the two separately, using the quick approximation</p>
-    <div class="formula-box">$$ \tau_{avg,\,web} \approx \frac{V}{d\,t_w} $$</div>
-    <p class="text-sm mt-3">For the section above that gives 50 000/(300 × 8) = <b>20.83 MPa</b>, against an exact peak at the neutral axis of <b>23.63 MPa</b>. The approximation is therefore about <b>12 % unconservative</b> — acceptable for a preliminary check because the permissible shear stress carries its own margin, but not a substitute for the exact value when the web is highly stressed. Quote both if a question asks you to comment.</p>
+  <!-- Non-Centroidal Peak Paradox: Triangle & Diamond -->
+  <div class="card mb-6 border-t-4 border-lab-500">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100"><i class="fas fa-gem text-lab-500 mr-2"></i>The non-NA shear peak paradox (triangle &amp; diamond)</h3>
+      <span class="chip bg-lab-50 text-lab-900 dark:bg-lab-900/40 dark:text-lab-300">Exam Classic</span>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Why does shear stress NOT always peak at the Neutral Axis? Because \(\tau(y) \propto \dfrac{Q(y)}{b(y)}\). Even though \(Q(y)\) is maximum at the NA, if the width \(b(y)\) narrows faster than \(Q(y)\) drops, the peak shifts away from the NA!</p>
+
+    <div class="flex gap-2 mb-4">
+      <button id="m13-btn-tri" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition">1. Triangle (base b, height h)</button>
+      <button id="m13-btn-dia" class="px-4 py-1.5 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 hover:border-brand-500 transition">2. Diamond / square on point (diagonal D)</button>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-5 items-center">
+      <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-800/60 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div id="m13-paradox-svg" class="w-full flex justify-center"></div>
+      </div>
+      <div class="lg:col-span-5 space-y-3">
+        <div id="m13-paradox-desc" class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-xs leading-relaxed"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3 class="text-xl font-bold mb-3">Summary of peak factors</h3>
-    <table class="data">
-      <tr><th>Section</th><th>τ<sub>max</sub> / τ<sub>avg</sub></th><th>Shape of distribution</th><th>Position of peak</th></tr>
-      <tr><td>Rectangle</td><td class="num">1.50</td><td>Single parabola</td><td>Neutral axis</td></tr>
-      <tr><td>Solid circle</td><td class="num">1.33</td><td>Single parabola</td><td>Neutral axis</td></tr>
-      <tr><td>Triangle</td><td class="num">1.50</td><td>Parabola, peak off-centre</td><td>Mid-height, not at the NA</td></tr>
-      <tr><td>Thin tube</td><td class="num">2.00</td><td>Varies around the circumference</td><td>Neutral axis</td></tr>
-      <tr><td>I-section</td><td class="num">varies, often 2–3</td><td>Two parabolas with a jump</td><td>Neutral axis, in the web</td></tr>
-      <tr><td>Diamond (square on point)</td><td class="num">1.33</td><td>Peak away from the NA</td><td>At d/8 from the NA</td></tr>
-    </table>
-    <p class="text-sm mt-3">For the triangle and the diamond the maximum shear stress is <b>not</b> at the neutral axis — a favourite examination question, because the rule of thumb that "shear peaks at the NA" is true only when the width does not vary awkwardly.</p>
+  <!-- Built-up Beams: Shear Flow & Fastener Spacing Solver -->
+  <div class="card mb-6">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100"><i class="fas fa-wrench text-brand-500 mr-2"></i>Built-up beams: Shear flow (q) &amp; fastener spacing calculator</h3>
+      <span class="chip bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">Practical Structural Design</span>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">When planks or plates are fastened with nails, bolts, or welds, they must transmit the horizontal <b>shear flow</b> \(q = \tau \cdot b = \dfrac{V Q}{I}\) across the joint interface.</p>
+
+    <div class="grid sm:grid-cols-4 gap-3 mb-4">
+      <div><label class="text-xs font-semibold block mb-1" for="m13-flow-v">Shear Force V (kN)</label><input id="m13-flow-v" type="number" value="25" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-xs font-semibold block mb-1" for="m13-flow-rv">Nail Capacity R<sub>v</sub> (kN)</label><input id="m13-flow-rv" type="number" value="1.8" step="0.1" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-xs font-semibold block mb-1" for="m13-flow-n">Nails per row (n)</label><input id="m13-flow-n" type="number" value="2" min="1" max="4" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-xs font-semibold block mb-1" for="m13-flow-bf">Flange Width (mm)</label><input id="m13-flow-bf" type="number" value="180" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+    </div>
+
+    <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 num text-xs space-y-2">
+      <div id="m13-flow-svg" class="w-full flex justify-center mb-3"></div>
+      <div class="grid sm:grid-cols-3 gap-3 text-center">
+        <div class="p-3 rounded-lg bg-white dark:bg-gray-700/50 shadow-sm"><p class="text-gray-500">Shear Flow q = VQ/I</p><p id="m13-flow-q" class="text-base font-bold text-brand-600">32.4 N/mm</p></div>
+        <div class="p-3 rounded-lg bg-white dark:bg-gray-700/50 shadow-sm"><p class="text-gray-500">Fastener Capacity n&middot;R<sub>v</sub></p><p id="m13-flow-cap" class="text-base font-bold">3.60 kN</p></div>
+        <div class="p-3 rounded-lg bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-800"><p class="text-green-700 dark:text-green-300">Adopt Nail Pitch (s)</p><p id="m13-flow-pitch" class="text-base font-bold text-green-600">110 mm c/c</p></div>
+      </div>
+      <p class="font-sans text-gray-600 dark:text-gray-300 mt-2">
+        <b>Formula:</b> \(s \le \dfrac{n \cdot R_v}{q}\). Fasteners must be spaced closer near the supports (where \(V\) is highest) and can widen towards midspan where \(V \to 0\).
+      </p>
+    </div>
   </div>
 </div>
 
 <!-- ============ M14 COMBINED ============ -->
-<div id="module-14" class="module-content max-w-4xl mx-auto">
-  <p class="eyebrow">Module 14</p><h2 class="mtitle">Bending and shear together</h2>
+<div id="module-14" class="module-content max-w-5xl mx-auto">
+  <p class="eyebrow">Module 14</p><h2 class="mtitle">Bending and shear combined — Mohr's circle &amp; diagonal tension</h2>
 
-  <div class="card mb-5">
-    <p class="text-sm mb-3">At most sections both stresses act at once. Their distributions are complementary in the most literal sense: where one is maximum, the other is zero.</p>
-    <table class="data">
-      <tr><th>Position in the section</th><th>Bending stress σ</th><th>Shear stress τ</th></tr>
-      <tr><td>Extreme fibres (top and bottom)</td><td class="num">maximum</td><td class="num">zero</td></tr>
-      <tr><td>Neutral axis</td><td class="num">zero</td><td class="num">maximum</td></tr>
-      <tr><td>Intermediate</td><td>linear in y</td><td>parabolic in y</td></tr>
+  <div class="card mb-6">
+    <p class="text-sm mb-3">At most cross-sections, bending moment \(M\) and shear force \(V\) act simultaneously. Their spatial distributions are complementary: bending stress \(\sigma\) is maximum at the extreme fibers and zero at the Neutral Axis, while shear stress \(\tau\) is zero at the extreme fibers and maximum at the Neutral Axis.</p>
+    <table class="data text-xs">
+      <tr><th>Position in the section</th><th>Bending stress &sigma;</th><th>Shear stress &tau;</th><th>State of stress</th></tr>
+      <tr><td><b>Extreme Top Fibre</b></td><td class="num text-red-600">Maximum compression</td><td class="num">0</td><td>Pure uniaxial compression</td></tr>
+      <tr><td><b>Intermediate Level</b></td><td class="num">Proportional to y</td><td class="num">Parabolic in y</td><td>Biaxial state (&sigma; + &tau;) &rarr; Mohr's circle</td></tr>
+      <tr><td><b>Neutral Axis (NA)</b></td><td class="num">0</td><td class="num text-brand-600">Maximum shear</td><td>Pure shear &rarr; Principal stresses at 45&deg;</td></tr>
+      <tr><td><b>Extreme Bottom Fibre</b></td><td class="num text-blue-600">Maximum tension</td><td class="num">0</td><td>Pure uniaxial tension</td></tr>
     </table>
-    <p class="text-sm mt-3">Along the <b>length</b> of the beam the same complementarity appears: at a simple support the shear is maximum and the moment zero, while at mid-span of a UDL beam the moment is maximum and the shear zero.</p>
   </div>
 
-  <div class="card mb-5">
-    <h3 class="text-xl font-bold mb-3">Which one governs?</h3>
-    <ul class="list-disc pl-6 space-y-2 text-sm">
-      <li><b>Long, lightly loaded beams:</b> bending governs. Typical span-to-depth ratios above about 10.</li>
-      <li><b>Short, heavily loaded beams:</b> shear governs. \(M\) grows with span but \(V\) does not, so as the span shortens shear catches up.</li>
-      <li><b>Timber:</b> shear frequently governs, because timber is weak in shear parallel to the grain — often only 1 to 2 MPa permissible against 10 or more in bending.</li>
-      <li><b>Thin-webbed plate girders:</b> shear and web buckling govern, which is why stiffeners are welded to the web at intervals.</li>
-    </ul>
-  </div>
+  <!-- Interactive Multi-Depth Stress State & Mohr's Circle Visualizer -->
+  <div class="card mb-6 border-l-4 border-brand-500">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+      <h3 class="text-xl font-bold text-brand-900 dark:text-brand-200"><i class="fas fa-circle-notch text-brand-500 mr-2"></i>Interactive depth-dependent stress state &amp; Mohr's circle visualizer</h3>
+      <span class="chip bg-brand-100 text-brand-900 dark:bg-brand-900/40 dark:text-brand-300">Failure Planes Visualizer</span>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Slide through the depth of the beam from top to bottom. Watch how the combined stress state changes, how Mohr's circle shifts, and why <b>diagonal tension</b> causes 45&deg; shear cracks in concrete beams!</p>
 
-  <div class="card">
-    <h3 class="text-xl font-bold mb-3">A note on principal stresses</h3>
-    <p class="text-sm">At a point away from both the neutral axis and the extreme fibre, \(\sigma\) and \(\tau\) act together, and the true maximum stress is the <b>principal stress</b> obtained by combining them — the Mohr's circle work of Unit 1. In routine beam design the two are checked separately because the critical points for each are at different places, but for a plate girder web the combination is checked explicitly.</p>
-    <div class="formula-box mt-3">$$ \sigma_{1,2} = \frac{\sigma}{2} \pm \sqrt{\left(\frac{\sigma}{2}\right)^2 + \tau^2} $$</div>
+    <div class="grid sm:grid-cols-3 gap-4 mb-4">
+      <div><label class="text-xs font-semibold block mb-1" for="m14-m-in">Bending Moment M (kN&middot;m)</label><input id="m14-m-in" type="number" value="40" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-xs font-semibold block mb-1" for="m14-v-in">Shear Force V (kN)</label><input id="m14-v-in" type="number" value="50" class="w-full p-2 border rounded num text-sm dark:bg-gray-700 dark:border-gray-600"></div>
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <label class="text-xs font-semibold" for="m14-y-slider">Element position y from NA:</label>
+          <span id="m14-y-disp" class="num text-xs font-bold text-brand-600">y = 0 mm (at NA)</span>
+        </div>
+        <input id="m14-y-slider" type="range" min="-150" max="150" value="0" class="slider-custom mt-2">
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-5 items-center">
+      <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-800/60 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div id="m14-mohr-svg" class="w-full flex justify-center"></div>
+      </div>
+      <div class="lg:col-span-5 space-y-3">
+        <div class="p-4 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm text-xs num space-y-1.5">
+          <p class="font-bold text-sm text-gray-900 dark:text-gray-100 font-sans pb-1 border-b dark:border-gray-700">Principal Stresses at this Elevation</p>
+          <div class="flex justify-between"><span class="text-gray-500">Normal stress &sigma;<sub>x</sub>:</span><span id="m14-out-sx" class="font-semibold">0.00 MPa</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Shear stress &tau;<sub>xy</sub>:</span><span id="m14-out-txy" class="font-semibold text-brand-600">1.67 MPa</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Major principal stress &sigma;<sub>1</sub>:</span><span id="m14-out-s1" class="font-bold text-red-500">+1.67 MPa (Tension)</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Minor principal stress &sigma;<sub>2</sub>:</span><span id="m14-out-s2" class="font-bold text-blue-500">-1.67 MPa (Comp.)</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">Principal plane angle &theta;<sub>p</sub>:</span><span id="m14-out-thetap" class="font-bold text-purple-600">45.0&deg;</span></div>
+        </div>
+        <div id="m14-crack-desc" class="p-3.5 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs leading-relaxed text-red-950 dark:text-red-200 font-sans"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1089,6 +1310,184 @@ tailwind.config = {
   <p class="text-gray-400 mt-2">Use the list on the left to pick a module.</p>
 </div>
 
+<!-- ============ INTERACTIVE BEAM LOADING & STRESS DISTRIBUTION STUDIO ============ -->
+<section id="interactive-load-studio" class="max-w-5xl mx-auto mt-10 card border-2 border-brand-500/30 dark:border-brand-500/40 bg-white dark:bg-gray-800 shadow-xl overflow-hidden">
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center text-lg font-bold">
+        <i class="fas fa-arrows-split-up-and-left"></i>
+      </div>
+      <div>
+        <p class="eyebrow">Interactive Studio</p>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Beam Loading & Stress Distribution Visualizer</h2>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 dark:bg-green-950/50 text-green-700 dark:text-green-300 font-semibold border border-green-200 dark:border-green-800">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Live Synchronized Engine
+      </span>
+    </div>
+  </div>
+
+  <!-- Loading Condition Toggle Tabs -->
+  <div class="mb-5">
+    <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider block mb-2">Select Beam Loading Condition</label>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <button id="btn-load-point" onclick="setLoadingMode('point')" class="load-mode-btn p-3 rounded-lg border text-left transition-all flex flex-col justify-between bg-brand-50 border-brand-500 text-brand-900 dark:bg-brand-950/40 dark:border-brand-500 dark:text-white shadow-sm font-semibold">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-sm font-bold">Point Load (P)</span>
+          <i class="fas fa-arrow-down text-red-500"></i>
+        </div>
+        <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">Concentrated load at position a</span>
+      </button>
+
+      <button id="btn-load-udl" onclick="setLoadingMode('udl')" class="load-mode-btn p-3 rounded-lg border text-left transition-all flex flex-col justify-between border-gray-200 dark:border-gray-700 hover:border-brand-400 text-gray-700 dark:text-gray-300">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-sm font-bold">Uniform Load (UDL)</span>
+          <i class="fas fa-bars-staggered text-amber-500"></i>
+        </div>
+        <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">Uniform intensity w along span L</span>
+      </button>
+
+      <button id="btn-load-uvl" onclick="setLoadingMode('uvl')" class="load-mode-btn p-3 rounded-lg border text-left transition-all flex flex-col justify-between border-gray-200 dark:border-gray-700 hover:border-brand-400 text-gray-700 dark:text-gray-300">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-sm font-bold">Varying Load (UVL)</span>
+          <i class="fas fa-signal text-amber-600"></i>
+        </div>
+        <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">Triangular varying 0 → w₀</span>
+      </button>
+
+      <button id="btn-load-pure" onclick="setLoadingMode('pure')" class="load-mode-btn p-3 rounded-lg border text-left transition-all flex flex-col justify-between border-gray-200 dark:border-gray-700 hover:border-brand-400 text-gray-700 dark:text-gray-300">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-sm font-bold">Pure Bending</span>
+          <i class="fas fa-arrows-left-right-to-line text-purple-500"></i>
+        </div>
+        <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">Two point loads at L/3 (V = 0)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive Controls Row -->
+  <div class="grid lg:grid-cols-3 gap-4 mb-5 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700 text-sm">
+    <!-- Beam & Load Parameters -->
+    <div class="space-y-3">
+      <div class="flex justify-between items-center">
+        <label class="text-xs font-semibold text-gray-600 dark:text-gray-300" for="sim-span">Span Length L</label>
+        <span class="num font-bold text-brand-600 dark:text-brand-400" id="sim-span-val">4.0 m</span>
+      </div>
+      <input id="sim-span" type="range" min="2" max="8" step="0.5" value="4.0" class="slider-custom" oninput="updateLoadingStudio()">
+
+      <div class="flex justify-between items-center">
+        <label class="text-xs font-semibold text-gray-600 dark:text-gray-300" id="sim-mag-label" for="sim-mag">Load Magnitude P</label>
+        <span class="num font-bold text-red-500" id="sim-mag-val">40 kN</span>
+      </div>
+      <input id="sim-mag" type="range" min="5" max="100" step="5" value="40" class="slider-custom" oninput="updateLoadingStudio()">
+
+      <div id="sim-pos-group" class="space-y-1">
+        <div class="flex justify-between items-center">
+          <label class="text-xs font-semibold text-gray-600 dark:text-gray-300" for="sim-pos">Load Position a</label>
+          <span class="num font-bold text-gray-700 dark:text-gray-300" id="sim-pos-val">2.0 m</span>
+        </div>
+        <input id="sim-pos" type="range" min="0.5" max="3.5" step="0.1" value="2.0" class="slider-custom" oninput="updateLoadingStudio()">
+      </div>
+    </div>
+
+    <!-- Section Selection & Cross-Section -->
+    <div class="space-y-3">
+      <div>
+        <label class="text-xs font-semibold text-gray-600 dark:text-gray-300 block mb-1" for="sim-sec-type">Cross-Section Shape</label>
+        <select id="sim-sec-type" class="w-full p-2 border rounded-lg dark:bg-gray-800 dark:border-gray-600 text-xs font-medium" onchange="updateLoadingStudio()">
+          <option value="rect">Rectangular (150 × 300 mm)</option>
+          <option value="isec">I-Section (ISMB 300: 150×12 fl, 8mm web)</option>
+          <option value="box">Hollow Box (200 × 300 × 20 mm)</option>
+          <option value="circ">Solid Circular (Ø 200 mm)</option>
+          <option value="tee">T-Section (150×25 fl, 25×150 web)</option>
+        </select>
+      </div>
+
+      <div class="p-2.5 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs space-y-1">
+        <div class="flex justify-between"><span class="text-gray-500">Moment of Inertia I:</span><span id="sim-sec-I" class="num font-semibold text-brand-600">337.5 × 10⁶ mm⁴</span></div>
+        <div class="flex justify-between"><span class="text-gray-500">Section Modulus Z:</span><span id="sim-sec-Z" class="num font-semibold">2250 × 10³ mm³</span></div>
+        <div class="flex justify-between"><span class="text-gray-500">Neutral Axis ȳ:</span><span id="sim-sec-yb" class="num font-semibold">150.0 mm</span></div>
+      </div>
+    </div>
+
+    <!-- Inspection Cutting Section x -->
+    <div class="space-y-3">
+      <div class="flex justify-between items-center">
+        <label class="text-xs font-semibold text-gray-600 dark:text-gray-300" for="sim-x">Inspect Section x (along span)</label>
+        <span class="num font-bold text-purple-600 dark:text-purple-400" id="sim-x-val">2.0 m</span>
+      </div>
+      <input id="sim-x" type="range" min="0" max="4.0" step="0.1" value="2.0" class="slider-custom" oninput="updateLoadingStudio()">
+
+      <div class="flex flex-wrap gap-1.5 pt-1">
+        <button onclick="setSimX(0)" class="text-[11px] px-2 py-1 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:border-brand-500">x = 0 (Support A)</button>
+        <button onclick="setSimX('mid')" class="text-[11px] px-2 py-1 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:border-brand-500">x = L/2 (Midspan)</button>
+        <button onclick="setSimX('mmax')" class="text-[11px] px-2 py-1 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:border-brand-500">x = x<sub>Mmax</sub></button>
+        <button onclick="setSimX('end')" class="text-[11px] px-2 py-1 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:border-brand-500">x = L (Support B)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Dynamic SVG Viewports -->
+  <div class="space-y-4">
+    <!-- Top SVG: Beam Loading FBD + SFD + BMD -->
+    <div class="p-3 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-inner">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-2">
+          <i class="fas fa-layer-group text-brand-500"></i> Beam Free-Body Diagram, Reactions & Internal Actions
+        </h3>
+        <span class="text-[11px] text-gray-500 dark:text-gray-400">Click or drag slider to move inspection section x</span>
+      </div>
+      <div id="sim-svg-beam" class="w-full flex justify-center overflow-hidden"></div>
+    </div>
+
+    <!-- Bottom SVG: Cross-Section Stress Distribution at Section x -->
+    <div class="p-3 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-inner">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-2">
+          <i class="fas fa-arrows-left-right text-purple-500"></i> Cross-Section Stress Distribution at Section x = <span id="sim-sec-title-x" class="text-purple-600 dark:text-purple-400 font-bold">2.0 m</span>
+        </h3>
+        <span class="text-[11px] text-gray-500 dark:text-gray-400">σ = M(x)·y / I &nbsp;|&nbsp; τ = V(x)·Q / (I·b)</span>
+      </div>
+      <div id="sim-svg-stress" class="w-full flex justify-center overflow-hidden"></div>
+    </div>
+  </div>
+
+  <!-- Live Metrics Summary Cards -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 text-center text-xs">
+    <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700">
+      <p class="text-gray-500 dark:text-gray-400 mb-0.5">Support Reactions</p>
+      <p id="sim-stat-rx" class="text-sm font-bold text-green-600 dark:text-green-400 num">R_A = 20.0 kN ↑<br>R_B = 20.0 kN ↑</p>
+    </div>
+    <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700">
+      <p class="text-gray-500 dark:text-gray-400 mb-0.5">Section Actions at x</p>
+      <p id="sim-stat-act" class="text-sm font-bold text-purple-600 dark:text-purple-400 num">V(x) = 0.0 kN<br>M(x) = 40.0 kN·m</p>
+    </div>
+    <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700">
+      <p class="text-gray-500 dark:text-gray-400 mb-0.5">Normal Bending Stress</p>
+      <p id="sim-stat-sigma" class="text-sm font-bold text-red-500 num">σ_top = 17.78 MPa (C)<br>σ_bot = 17.78 MPa (T)</p>
+    </div>
+    <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700">
+      <p class="text-gray-500 dark:text-gray-400 mb-0.5">Transverse Shear Stress</p>
+      <p id="sim-stat-tau" class="text-sm font-bold text-brand-600 dark:text-brand-400 num">τ_max = 0.00 MPa<br>τ_avg = 0.00 MPa</p>
+    </div>
+  </div>
+
+  <!-- Physical Directionality & Mechanics Explanatory Box -->
+  <div class="mt-4 p-4 rounded-xl bg-brand-50/70 dark:bg-brand-950/30 border border-brand-200 dark:border-brand-900 text-xs leading-relaxed space-y-2">
+    <div class="flex items-start gap-2">
+      <i class="fas fa-circle-info text-brand-600 dark:text-brand-400 mt-0.5 text-sm"></i>
+      <div>
+        <h4 class="font-bold text-brand-900 dark:text-brand-200 text-sm mb-1">Mechanics & Force Directionality Insights</h4>
+        <div id="sim-insight-text" class="text-gray-700 dark:text-gray-300 space-y-1">
+          <!-- Dynamic text inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="h-24"></div>
 </main>
 </div>
@@ -1111,8 +1510,13 @@ tailwind.config = {
   </div>
 </div>
 
-<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2.5 text-center text-xs text-gray-500 dark:text-gray-400 flex-shrink-0 z-10">
-  Prepared by <strong>D. Mandal</strong>, Assistant Professor, Department of Civil Engineering &nbsp;|&nbsp; &copy; 2026
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2.5 px-4 text-center text-xs text-gray-500 dark:text-gray-400 flex-shrink-0 z-10 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+  <span>Prepared by <strong>D. Mandal</strong>, Dept. of Civil Engineering &nbsp;|&nbsp; &copy; 2026</span>
+  <span class="text-gray-300 dark:text-gray-600 hidden sm:inline">&bull;</span>
+  <a href="index.html" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 font-semibold hover:underline">
+    <i class="fas fa-house text-[11px]" aria-hidden="true"></i>
+    <span>Return to Course Home</span>
+  </a>
 </footer>
 
 <script>
@@ -1514,13 +1918,23 @@ function udl(x1, x2, yTop, yBot, n) {
   let s = `<rect x="${x1}" y="${yTop}" width="${x2-x1}" height="${yBot-yTop}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>`;
   for (let i = 0; i <= n; i++) {
     const x = x1 + (x2 - x1) * i / n;
-    s += `<line x1="${x}" y1="${yTop+2}" x2="${x}" y2="${yBot-2}" stroke="${P.load}" stroke-width="1.1"/>`;
+    s += `<line x1="${x}" y1="${yTop+2}" x2="${x}" y2="${yBot-2}" stroke="${P.load}" stroke-width="1.1" marker-end="url(#a-load)"/>`;
   }
   return s;
 }
-function tri(x1, x2, yTop, yBot, peakRight) {
+function tri(x1, x2, yTop, yBot, peakRight, n) {
+  n = n || Math.max(3, Math.round((x2 - x1) / 30));
   const p = peakRight ? `${x1},${yBot} ${x2},${yTop} ${x2},${yBot}` : `${x1},${yTop} ${x1},${yBot} ${x2},${yBot}`;
-  return `<polygon points="${p}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>`;
+  let s = `<polygon points="${p}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>`;
+  for (let i = 1; i < n; i++) {
+    const x = x1 + (x2 - x1) * i / n;
+    const t = peakRight ? (i / n) : (1 - i / n);
+    const yt = yBot - t * (yBot - yTop);
+    if (yBot - yt > 8) {
+      s += `<line x1="${x}" y1="${yt+2}" x2="${x}" y2="${yBot-2}" stroke="${P.load}" stroke-width="1.0" marker-end="url(#a-load)"/>`;
+    }
+  }
+  return s;
 }
 function dimH(x1, x2, y, label) {
   return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${P.mute}" stroke-width="1"/>` +
@@ -1586,7 +2000,9 @@ const SECTIONS = {
   circ:   { name:'Solid circle',     fields:[['d','Diameter (mm)',200]] },
   tube:   { name:'Hollow circle',    fields:[['D','Outer diameter (mm)',200],['di','Inner diameter (mm)',160]] },
   isec:   { name:'I-section',        fields:[['bf','Flange width (mm)',150],['tf','Flange thickness (mm)',12],['tw','Web thickness (mm)',8],['D','Overall depth (mm)',300]] },
-  tee:    { name:'T-section',        fields:[['bf','Flange width (mm)',150],['tf','Flange thickness (mm)',25],['tw','Web thickness (mm)',25],['D','Overall depth (mm)',175]] }
+  tee:    { name:'T-section',        fields:[['bf','Flange width (mm)',150],['tf','Flange thickness (mm)',25],['tw','Web thickness (mm)',25],['D','Overall depth (mm)',175]] },
+  tri:    { name:'Triangle (apex up)', fields:[['b','Base b (mm)',150],['h','Height h (mm)',300]] },
+  diamond:{ name:'Diamond (square on point)', fields:[['B','Diagonal width (mm)',200],['D','Diagonal depth (mm)',200]] }
 };
 
 function buildRects(type, v) {
@@ -1614,6 +2030,22 @@ function buildRects(type, v) {
   else if (type === 'tee') {
     R.push({ w:v.tw, y0:0, h:v.D - v.tf });
     R.push({ w:v.bf, y0:v.D - v.tf, h:v.tf });
+  }
+  else if (type === 'tri') {
+    const b = v.b, h = v.h, N = 500;
+    for (let i = 0; i < N; i++) {
+      const y0 = i * h / N, dy = h / N, yc = y0 + dy/2;
+      const w = Math.max(0, b * (1 - yc / h));
+      if (w > 0) R.push({ w, y0, h: dy });
+    }
+  }
+  else if (type === 'diamond') {
+    const B = v.B, D = v.D, N = 500;
+    for (let i = 0; i < N; i++) {
+      const y0 = i * D / N, dy = D / N, yc = y0 + dy/2;
+      const w = yc <= D/2 ? (B * 2 * yc / D) : (B * 2 * (1 - yc / D));
+      if (w > 0) R.push({ w: Math.max(0, w), y0, h: dy });
+    }
   }
   return R.filter(r => r.w > 0 && r.h > 0);
 }
@@ -1676,39 +2108,74 @@ function sectionFigure(sp, M, V, prof) {
   const cx = 120, kx = 84/maxW;
   let s = '';
 
-  /* --- the section --- */
-  s += T(cx, 24, 'Section', { size:TS.label, anchor:'middle', weight:'700' });
+  /* --- the section with applied load arrow --- */
+  s += T(cx, 20, 'Section & Applied Loads', { size:TS.label, anchor:'middle', weight:'700' });
   sp.rects.forEach(r => {
     const h = (r.h/sp.H)*(bot - top);
     s += `<rect x="${(cx - r.w*kx/2).toFixed(2)}" y="${(sc(r.y0 + r.h)).toFixed(2)}" width="${(r.w*kx).toFixed(2)}" height="${Math.max(h,0.4).toFixed(2)}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="0.7"/>`;
   });
   s += `<line x1="${cx-58}" y1="${sc(sp.yb)}" x2="${cx+58}" y2="${sc(sp.yb)}" stroke="${P.act}" stroke-width="1.6" stroke-dasharray="6 4"/>`;
   s += T(cx - 62, sc(sp.yb) - 5, 'NA', { size:TS.note, anchor:'end', color:P.act, weight:'700' });
+  
+  /* Applied Shear V and Moment M arrows */
+  s += arrow(cx, top - 20, cx, top - 2, 'pt', 2.0);
+  s += T(cx + 8, top - 12, 'V ↓', { size:TS.tiny, color:P.pt, weight:'700' });
+  s += `<path d="M${cx - 44},${sc(sp.yb)-20} A20,20 0 1 1 ${cx - 44},${sc(sp.yb)+20}" fill="none" stroke="${P.act}" stroke-width="1.8" marker-end="url(#a-act)"/>`;
+  s += T(cx - 52, sc(sp.yb) + 26, 'M ↷', { size:TS.tiny, anchor:'end', color:P.act, weight:'700' });
+
   s += dimH(cx - 84, cx - 70, bot + 26, '');
   s += T(cx, bot + 30, sp.H.toFixed(0) + ' mm deep', { size:TS.note, anchor:'middle', color:P.mute });
 
-  /* --- bending stress --- */
+  /* --- bending stress with vectors --- */
   const bx = 340, bw = 120;
   const smax = Math.max.apply(null, prof.bend.map(p => Math.abs(p.s))) || 1;
-  s += T(bx, 24, 'Bending stress  σ = My/I', { size:TS.label, anchor:'middle', weight:'700' });
+  s += T(bx, 20, 'Bending stress  σ = My/I', { size:TS.label, anchor:'middle', weight:'700' });
   s += `<line x1="${bx}" y1="${top}" x2="${bx}" y2="${bot}" stroke="${P.mute}" stroke-width="1.1"/>`;
   const bpts = prof.bend.map(p => `${(bx + (p.s/smax)*bw).toFixed(2)},${sc(p.y).toFixed(2)}`).join(' ');
   s += `<polygon points="${bx},${sc(0)} ${bpts} ${bx},${sc(sp.H)}" fill="${P.pt}" fill-opacity=".18" stroke="${P.pt}" stroke-width="1.8"/>`;
+  
+  /* Bending stress vector arrows showing compression & tension */
+  [0.85, 0.45].forEach(k => {
+    const yTopLev = sp.yb + (sp.H - sp.yb) * k;
+    const sTopLev = M*(yTopLev - sp.yb)/sp.I;
+    const xTopLev = bx + (sTopLev/smax)*bw;
+    if (Math.abs(xTopLev - bx) > 6) {
+      s += arrow(xTopLev, sc(yTopLev), bx, sc(yTopLev), 'pt', 1.2);
+    }
+    const yBotLev = sp.yb - (sp.yb) * k;
+    const sBotLev = M*(yBotLev - sp.yb)/sp.I;
+    const xBotLev = bx + (sBotLev/smax)*bw;
+    if (Math.abs(xBotLev - bx) > 6) {
+      s += arrow(bx, sc(yBotLev), xBotLev, sc(yBotLev), 'rx', 1.2);
+    }
+  });
+
   const sTop = M*(sp.H - sp.yb)/sp.I, sBot = M*(0 - sp.yb)/sp.I;
-  s += T(bx + (sTop/smax)*bw + 6, sc(sp.H) + 4, f2(sTop) + ' MPa', { size:TS.note, color:P.pt });
-  s += T(bx + (sBot/smax)*bw - 6, sc(0) + 4, f2(sBot) + ' MPa', { size:TS.note, anchor:'end', color:P.pt });
+  s += T(bx + (sTop/smax)*bw + 6, sc(sp.H) + 4, f2(sTop) + ' MPa (Comp ←)', { size:TS.note, color:P.pt, weight:'600' });
+  s += T(bx + (sBot/smax)*bw - 6, sc(0) + 4, f2(sBot) + ' MPa (Tens →)', { size:TS.note, anchor:'end', color:P.rx, weight:'600' });
   s += T(bx, bot + 30, 'linear — zero at the NA', { size:TS.note, anchor:'middle', color:P.mute });
 
-  /* --- shear stress --- */
+  /* --- shear stress with vectors --- */
   const vx = 580, vw = 120;
   const tmax = Math.max.apply(null, prof.shear.map(p => Math.abs(p.s))) || 1;
-  s += T(vx, 24, 'Shear stress  τ = VAȳ/Ib', { size:TS.label, anchor:'middle', weight:'700' });
+  s += T(vx, 20, 'Shear stress  τ = VAȳ/Ib', { size:TS.label, anchor:'middle', weight:'700' });
   s += `<line x1="${vx}" y1="${top}" x2="${vx}" y2="${bot}" stroke="${P.mute}" stroke-width="1.1"/>`;
   const vpts = prof.shear.map(p => `${(vx + (p.s/tmax)*vw).toFixed(2)},${sc(p.y).toFixed(2)}`).join(' ');
   s += `<polygon points="${vx},${sc(0)} ${vpts} ${vx},${sc(sp.H)}" fill="${P.act}" fill-opacity=".18" stroke="${P.act}" stroke-width="1.8"/>`;
+  
+  /* Shear stress horizontal vectors showing flow */
+  [0.2, 0.4, 0.5, 0.6, 0.8].forEach(k => {
+    const yLev = sp.H * k;
+    const tauLev = prof.shear.find(p => Math.abs(p.y - yLev) < sp.H/10) || { s: prof.tmax * 4*k*(1-k) };
+    const xLev = vx + (Math.abs(tauLev.s)/tmax)*vw;
+    if (xLev - vx > 8) {
+      s += arrow(vx, sc(yLev), xLev, sc(yLev), 'act', 1.2);
+    }
+  });
+
   s += leader(vx + vw + 34, sc(prof.tmaxY) - 16, vx + (prof.tmax/tmax)*vw, sc(prof.tmaxY), P.act);
-  s += T(vx + vw + 38, sc(prof.tmaxY) - 20, f2(prof.tmax) + ' MPa', { size:TS.note, color:P.act, weight:'700' });
-  s += T(vx, bot + 30, 'parabolic — zero at the extreme fibres', { size:TS.note, anchor:'middle', color:P.mute });
+  s += T(vx + vw + 38, sc(prof.tmaxY) - 20, f2(prof.tmax) + ' MPa (Peak →)', { size:TS.note, color:P.act, weight:'700' });
+  s += T(vx, bot + 30, 'parabolic — zero at extreme fibres', { size:TS.note, anchor:'middle', color:P.mute });
 
   s += rule(bot + 44, 40, 720);
   s += T(380, Hs - 4, 'Bending peaks where shear is zero, and shear peaks where bending is zero.', { size:TS.note, anchor:'middle', color:P.mute });
@@ -1772,52 +2239,69 @@ FIG.obj_rail = objCard('Rail section', `
 /* ============ MODULE 4 ============ */
 FIG.purebending = (() => {
   const A = 70, Bx = 550, y = 96;
-  let s = T(16, 20, 'Two equal loads at the third points', { size:TS.label });
-  s += T(215, 40, 'W', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' }) + arrow(215, 46, 215, 82, 'pt', 2);
-  s += T(405, 40, 'W', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' }) + arrow(405, 46, 405, 82, 'pt', 2);
+  let s = T(16, 20, 'Two equal loads at the third points (Pure Bending Setup)', { size:TS.label, weight:'700' });
+  s += arrow(215, 36, 215, 84, 'pt', 2.2) + T(215, 28, 'W ↓', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+  s += arrow(405, 36, 405, 84, 'pt', 2.2) + T(405, 28, 'W ↓', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
   s += beamBar(A, y, Bx - A, 12) + symPin(A, y + 12) + symRoller(Bx, y + 12);
+  
+  /* Support reactions */
+  s += arrow(A, 142, A, 110, 'rx', 2.0) + T(A, 154, 'R_A = W ↑', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+  s += arrow(Bx, 142, Bx, 110, 'rx', 2.0) + T(Bx, 154, 'R_B = W ↑', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+
   s += `<rect x="215" y="${y-4}" width="190" height="20" fill="${P.rx}" fill-opacity=".14" stroke="${P.rx}" stroke-width="1.2" stroke-dasharray="5 3"/>`;
-  s += T(310, 152, 'pure bending region', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
-  s += rule(172);
-  s += T(16, 194, 'Shear force diagram', { size:TS.note, weight:'700' });
-  s += baseline(A, Bx, 226);
-  s += `<path d="M${A},226 L${A},204 L215,204 L215,226 L405,226 L405,248 L${Bx},248 L${Bx},226 Z" fill="${P.beam}" fill-opacity=".18" stroke="${P.beam}" stroke-width="1.8"/>`;
-  s += T(310, 220, 'V = 0 between the loads', { size:TS.note, anchor:'middle', color:P.rx });
-  s += rule(266);
-  s += T(16, 288, 'Bending moment diagram', { size:TS.note, weight:'700' });
-  s += baseline(A, Bx, 336);
-  s += `<path d="M${A},336 L215,300 L405,300 L${Bx},336 Z" fill="${P.rx}" fill-opacity=".2" stroke="${P.rx}" stroke-width="1.8"/>`;
-  s += T(310, 292, 'M constant between the loads', { size:TS.note, anchor:'middle', color:P.rx });
+  s += T(310, 144, 'Pure bending zone: M = W·L/3, V = 0', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  s += rule(166);
+  s += T(16, 186, 'Shear force diagram (SFD)', { size:TS.note, weight:'700' });
+  s += baseline(A, Bx, 218);
+  s += `<path d="M${A},218 L${A},196 L215,196 L215,218 L405,218 L405,240 L${Bx},240 L${Bx},218 Z" fill="${P.beam}" fill-opacity=".18" stroke="${P.beam}" stroke-width="1.8"/>`;
+  s += T(140, 206, '+W', { size:TS.tiny, anchor:'middle', color:P.beam, weight:'700' });
+  s += T(480, 234, '−W', { size:TS.tiny, anchor:'middle', color:P.beam, weight:'700' });
+  s += T(310, 212, 'V = 0 (No shear stress τ)', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  s += rule(256);
+  s += T(16, 276, 'Bending moment diagram (BMD)', { size:TS.note, weight:'700' });
+  s += baseline(A, Bx, 324);
+  s += `<path d="M${A},324 L215,288 L405,288 L${Bx},324 Z" fill="${P.rx}" fill-opacity=".2" stroke="${P.rx}" stroke-width="1.8"/>`;
+  s += T(310, 280, 'M = W·a (Constant Maximum Moment)', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
   return svg(620, 350, s, 'Pure bending in the central third: constant moment, zero shear');
 })();
 
 FIG.planesections = (() => {
-  let s = T(16, 20, 'Before bending', { size:TS.label, weight:'700' });
+  let s = T(16, 20, 'Before bending (Straight Beam Element)', { size:TS.label, weight:'700' });
   s += `<rect x="70" y="44" width="180" height="86" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.6"/>`;
   [0,1,2,3].forEach(i => { s += `<line x1="${100+i*40}" y1="44" x2="${100+i*40}" y2="130" stroke="${P.mute}" stroke-width="1.1"/>`; });
   s += `<line x1="70" y1="87" x2="250" y2="87" stroke="${P.act}" stroke-width="1.5" stroke-dasharray="5 3"/>`;
-  s += T(160, 152, 'sections are plane and parallel', { size:TS.note, anchor:'middle', color:P.mute });
+  s += T(64, 91, 'NA', { size:TS.tiny, anchor:'end', color:P.act, weight:'700' });
+  s += T(160, 150, 'plane and parallel transverse planes', { size:TS.note, anchor:'middle', color:P.mute });
 
-  s += T(340, 20, 'After bending', { size:TS.label, weight:'700' });
+  s += T(340, 20, 'After bending under Sagging Moment M', { size:TS.label, weight:'700' });
   s += `<path d="M370,58 Q460,26 550,58 L550,144 Q460,112 370,144 Z" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.6"/>`;
   [0,1,2].forEach(i => {
     const t = 0.25 + i*0.25, x = 370 + 180*t;
-    const yt = 58 - 32*4*t*(1-t)*0.5 - 0, yb = 144 - 32*4*t*(1-t)*0.5;
     s += `<line x1="${x - 8*(t-0.5)*2}" y1="${(58 - 32*Math.sin(Math.PI*t)*1.0).toFixed(1)}" x2="${x + 8*(t-0.5)*2}" y2="${(144 - 32*Math.sin(Math.PI*t)*1.0).toFixed(1)}" stroke="${P.mute}" stroke-width="1.1"/>`;
   });
   s += `<path d="M370,101 Q460,69 550,101" fill="none" stroke="${P.act}" stroke-width="1.5" stroke-dasharray="5 3"/>`;
-  s += T(460, 152, 'still plane — they have simply rotated', { size:TS.note, anchor:'middle', color:P.mute });
-  s += rule(170);
-  s += T(16, 192, 'Consequence: strain, and therefore stress, is proportional to y', { size:TS.label });
-  s += `<line x1="160" y1="216" x2="160" y2="300" stroke="${P.mute}" stroke-width="1.1"/>`;
-  s += `<polygon points="160,216 232,216 160,258" fill="${P.pt}" fill-opacity=".18" stroke="${P.pt}" stroke-width="1.6"/>`;
-  s += `<polygon points="160,258 88,300 160,300" fill="${P.rx}" fill-opacity=".18" stroke="${P.rx}" stroke-width="1.6"/>`;
-  s += T(240, 222, 'compression', { size:TS.note, color:P.pt });
-  s += T(80, 298, 'tension', { size:TS.note, anchor:'end', color:P.rx });
-  s += T(168, 262, 'zero on the neutral axis', { size:TS.note, color:P.act });
-  s += T(400, 250, 'ε = y / R      σ = E y / R', { size:TS.label, anchor:'middle', weight:'700' });
-  s += T(400, 274, 'Neither expression contains the width of the section,', { size:TS.note, anchor:'middle', color:P.mute });
-  s += T(400, 288, 'which is why one derivation covers every shape.', { size:TS.note, anchor:'middle', color:P.mute });
+  
+  /* Applied Sagging Moment couples on the beam segment */
+  s += `<path d="M344,82 A20,20 0 1 1 344,120" fill="none" stroke="${P.act}" stroke-width="2" marker-end="url(#a-act)"/>`;
+  s += T(322, 105, 'M ↷', { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
+  s += `<path d="M576,120 A20,20 0 1 1 576,82" fill="none" stroke="${P.act}" stroke-width="2" marker-end="url(#a-act)"/>`;
+  s += T(598, 105, 'M ↶', { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
+
+  s += T(460, 150, 'planes stay flat, rotating through dθ', { size:TS.note, anchor:'middle', color:P.mute });
+  s += rule(166);
+  s += T(16, 186, 'Resulting normal stress distribution σ = E·y/R', { size:TS.label, weight:'700' });
+  s += `<line x1="160" y1="210" x2="160" y2="294" stroke="${P.mute}" stroke-width="1.1"/>`;
+  s += `<polygon points="160,210 232,210 160,252" fill="${P.pt}" fill-opacity=".18" stroke="${P.pt}" stroke-width="1.6"/>`;
+  s += `<polygon points="160,252 88,294 160,294" fill="${P.rx}" fill-opacity=".18" stroke="${P.rx}" stroke-width="1.6"/>`;
+  
+  /* Arrows on the stress profile */
+  s += arrow(232, 210, 160, 210, 'pt', 1.8);
+  s += arrow(160, 294, 88, 294, 'rx', 1.8);
+  s += T(240, 214, 'σ_top (Compression ←)', { size:TS.note, color:P.pt, weight:'700' });
+  s += T(80, 298, 'σ_bot (Tension →)', { size:TS.note, anchor:'end', color:P.rx, weight:'700' });
+  s += T(168, 256, 'zero at Neutral Axis', { size:TS.note, color:P.act });
+  s += T(400, 240, 'ε = y / R       σ = E y / R', { size:TS.label, anchor:'middle', weight:'700' });
+  s += T(400, 264, 'Linear variation across beam depth, zero at centroid', { size:TS.note, anchor:'middle', color:P.mute });
   return svg(620, 316, s, 'Plane sections remain plane, so strain varies linearly with distance from the neutral axis');
 })();
 
@@ -1956,39 +2440,51 @@ FIG.economic = (() => {
 /* ============ MODULE 11 ============ */
 FIG.shearderiv = (() => {
   const L = 160, R = 420, top = 70, bot = 176, lev = 110;
-  let s = T(16, 20, 'An element of length dx, with the part above level y₁ isolated', { size:TS.label });
+  let s = T(16, 20, 'Infinitesimal Element dx: Longitudinal Force Imbalance & Interfacial Shear', { size:TS.label, weight:'700' });
   s += `<rect x="${L}" y="${top}" width="${R-L}" height="${bot-top}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.6"/>`;
   s += `<rect x="${L}" y="${top}" width="${R-L}" height="${lev-top}" fill="${P.act}" fill-opacity=".14"/>`;
   s += `<line x1="${L}" y1="${lev}" x2="${R}" y2="${lev}" stroke="${P.act}" stroke-width="1.8"/>`;
   s += T(L - 8, lev + 4, 'y₁', { size:TS.note, anchor:'end', color:P.act, weight:'700' });
   s += `<line x1="${L}" y1="${140}" x2="${R}" y2="${140}" stroke="${P.mute}" stroke-width="1.3" stroke-dasharray="5 3"/>`;
   s += T(R + 8, 144, 'NA', { size:TS.note, color:P.mute });
-  s += T((L+R)/2, top - 10, 'area A above the level, centroid at ȳ from the NA', { size:TS.note, anchor:'middle', color:P.act });
-  s += arrow(L - 14, 86, L - 44, 86, 'pt', 1.8);
-  s += T(L - 50, 90, 'M A ȳ / I', { size:TS.note, anchor:'end', color:P.pt, weight:'700' });
-  s += arrow(R + 14, 86, R + 44, 86, 'pt', 1.8);
-  s += T(R + 50, 90, '(M + dM) A ȳ / I', { size:TS.note, color:P.pt, weight:'700' });
-  s += arrow((L+R)/2 - 40, lev + 22, (L+R)/2 + 40, lev + 22, 'rx', 2);
-  s += T((L+R)/2, lev + 40, 'τ · b · dx  balances the difference', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  s += T((L+R)/2, top - 10, 'Area A\' above level y₁, centroid at ȳ\' from NA', { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
+  
+  /* Longitudinal bending compression force vectors */
+  s += arrow(L - 10, 86, L - 44, 86, 'pt', 2.0);
+  s += T(L - 48, 90, 'F₁ = M·A\'ȳ\' / I ←', { size:TS.note, anchor:'end', color:P.pt, weight:'700' });
+  s += arrow(R + 10, 86, R + 44, 86, 'pt', 2.0);
+  s += T(R + 48, 90, 'F₂ = (M+dM)A\'ȳ\' / I →', { size:TS.note, color:P.pt, weight:'700' });
+  
+  /* Horizontal shear force vector balancing the difference dF */
+  s += arrow((L+R)/2 - 50, lev + 20, (L+R)/2 + 50, lev + 20, 'rx', 2.4);
+  s += T((L+R)/2, lev + 38, 'Horizontal shear force: τ·b·dx → (balances dF = F₂ − F₁)', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  
   s += dimH(L, R, bot + 46, 'dx');
   s += rule(246);
-  s += T(310, 268, 'τ b dx = (dM/I) A ȳ      and      dM/dx = V', { size:TS.label, anchor:'middle' });
-  s += T(310, 296, 'τ = V A ȳ / I b', { size:TS.title, anchor:'middle', weight:'700', color:P.act });
+  s += T(310, 266, 'Equilibrium:  τ · b · dx = dF = (dM / I) · A\' ȳ\'      with  dM/dx = V', { size:TS.label, anchor:'middle' });
+  s += T(310, 294, 'τ = (V · Q) / (I · b)   where Q = A\' ȳ\'', { size:TS.title, anchor:'middle', weight:'700', color:P.act });
   return svg(620, 310, s, 'Free body used to derive the shear stress formula');
 })();
 
 /* ============ MODULE 12 and 13 ============ */
 function distFigure(title, secArt, bendPts, shearPts, notes, H) {
   H = H || 300;
-  let s = T(120, 22, title, { size:TS.label, anchor:'middle', weight:'700' }) + secArt;
-  s += T(340, 22, 'Bending stress', { size:TS.label, anchor:'middle', weight:'700' });
+  let s = T(120, 20, title, { size:TS.label, anchor:'middle', weight:'700' }) + secArt;
+  s += T(340, 20, 'Bending stress σ', { size:TS.label, anchor:'middle', weight:'700' });
   s += `<line x1="340" y1="46" x2="340" y2="226" stroke="${P.mute}" stroke-width="1.1"/>`;
   s += `<polygon points="${bendPts}" fill="${P.pt}" fill-opacity=".18" stroke="${P.pt}" stroke-width="1.8"/>`;
-  s += T(340, 246, 'linear', { size:TS.note, anchor:'middle', color:P.mute });
-  s += T(540, 22, 'Shear stress', { size:TS.label, anchor:'middle', weight:'700' });
+  s += arrow(420, 46, 340, 46, 'pt', 1.6);
+  s += arrow(340, 226, 260, 226, 'rx', 1.6);
+  s += T(426, 50, 'σ_c ←', { size:TS.tiny, color:P.pt, weight:'700' });
+  s += T(254, 230, 'σ_t →', { size:TS.tiny, anchor:'end', color:P.rx, weight:'700' });
+  s += T(340, 246, 'linear (zero at NA)', { size:TS.note, anchor:'middle', color:P.mute });
+  
+  s += T(540, 20, 'Shear stress τ', { size:TS.label, anchor:'middle', weight:'700' });
   s += `<line x1="540" y1="46" x2="540" y2="226" stroke="${P.mute}" stroke-width="1.1"/>`;
   s += `<polygon points="${shearPts}" fill="${P.act}" fill-opacity=".18" stroke="${P.act}" stroke-width="1.8"/>`;
-  s += T(540, 246, 'parabolic', { size:TS.note, anchor:'middle', color:P.mute });
+  s += arrow(540, 136, 630, 136, 'act', 1.8);
+  s += T(636, 140, 'τ_max →', { size:TS.tiny, color:P.act, weight:'700' });
+  s += T(540, 246, 'parabolic (peak at NA)', { size:TS.note, anchor:'middle', color:P.mute });
   s += rule(262);
   notes.forEach((n, i) => { s += T(310, 282 + i*16, n, { size:TS.note, anchor:'middle', color:P.mute }); });
   return s;
@@ -1997,7 +2493,8 @@ function distFigure(title, secArt, bendPts, shearPts, notes, H) {
 FIG.rectdist = (() => {
   const sec = `<rect x="76" y="46" width="88" height="180" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.6"/>` +
     `<line x1="60" y1="136" x2="180" y2="136" stroke="${P.act}" stroke-width="1.6" stroke-dasharray="6 4"/>` +
-    T(56, 140, 'NA', { size:TS.note, anchor:'end', color:P.act, weight:'700' });
+    T(56, 140, 'NA', { size:TS.note, anchor:'end', color:P.act, weight:'700' }) +
+    arrow(120, 22, 120, 42, 'pt', 2.0) + T(120, 16, 'V ↓', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
   const bend = '340,46 420,46 340,136 260,226 340,226';
   let sp = [];
   for (let i = 0; i <= 40; i++) { const t = i/40, y = 46 + t*180, u = (t - 0.5)*2; sp.push(`${(540 + 90*(1-u*u)).toFixed(1)},${y.toFixed(1)}`); }
@@ -2014,7 +2511,8 @@ FIG.idist = (() => {
     `<rect x="112" y="62" width="16" height="148" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.5"/>` +
     `<rect x="70" y="210" width="100" height="16" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.5"/>` +
     `<line x1="56" y1="136" x2="184" y2="136" stroke="${P.act}" stroke-width="1.6" stroke-dasharray="6 4"/>` +
-    T(52, 140, 'NA', { size:TS.note, anchor:'end', color:P.act, weight:'700' });
+    T(52, 140, 'NA', { size:TS.note, anchor:'end', color:P.act, weight:'700' }) +
+    arrow(120, 22, 120, 42, 'pt', 2.0) + T(120, 16, 'V ↓', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
   const bend = '340,46 420,46 340,136 260,226 340,226';
   const q = y => { const t = (y - 46)/180; const u = (t - 0.5)*2; return 1 - u*u; };
   let pts = [];
@@ -2031,7 +2529,7 @@ FIG.idist = (() => {
     ['The jump occurs because b changes from the flange width to the web thickness.',
      'A ȳ is continuous across the junction — only b changes, and τ ∝ 1/b.',
      'About 96 % of the shear force is carried by the web alone.']);
-  s += leader(470, 258, 552, 64, P.act) + T(470, 272, 'sudden jump at the junction', { size:TS.note, anchor:'middle', color:P.act });
+  s += leader(470, 258, 552, 64, P.act) + T(470, 272, 'sudden jump at junction: b_flange → b_web', { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
   return svg(660, 340, s, 'I-section: the shear stress jumps at the flange-web junction');
 })();
 
@@ -2107,6 +2605,10 @@ function switchModule(id) {
   refreshTicks(); saveTime();
   if (window.MathJax && MathJax.typesetPromise && target) MathJax.typesetPromise([target]).catch(()=>{});
   if (id === 7)  calcSP();
+  if (id === 11) initM11Shear();
+  if (id === 12) initM12Shear();
+  if (id === 13) initM13Shear();
+  if (id === 14) initM14Shear();
   if (id === 17) runLab();
   if (id === 18) calc18();
   if (id === 25) buildDashboard();
@@ -2229,6 +2731,731 @@ function calcDZ() {
     '<p>Adopt b = ' + bAd + ' mm, d = ' + dAd + ' mm → Z provided = ' + fmt(Zprov, 'mm³') + '</p>' +
     '<p>Check: σ = ' + sAct.toFixed(2) + ' MPa ' + (sAct <= sg ? '≤' : '&gt;') + ' ' + sg + ' MPa ' + (sAct <= sg ? '✓ safe' : '✗ increase the section') + '</p>' +
     '<p class="text-gray-500">Shear and deflection must still be checked separately.</p></div>';
+}
+
+/* ================= M11 SHEAR STRESS INTERACTIVE TOOLS ================= */
+let m11Mode = 'loose', m11Load = 65, m11Initialized = false;
+
+function initM11Shear() {
+  const bLoose = document.getElementById('m11-mode-loose');
+  const bGlued = document.getElementById('m11-mode-glued');
+  const bCube = document.getElementById('m11-mode-cube');
+  const slider = document.getElementById('m11-load-slider');
+  if (!bLoose || !bGlued || !bCube || !slider) return;
+  
+  if (!m11Initialized) {
+    m11Initialized = true;
+    
+    function setMode(m) {
+      m11Mode = m;
+      [bLoose, bGlued, bCube].forEach(b => {
+        b.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 hover:border-brand-500 transition';
+      });
+      if (m === 'loose') bLoose.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition';
+      if (m === 'glued') bGlued.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition';
+      if (m === 'cube') bCube.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition';
+      renderM11Planks();
+    }
+    
+    bLoose.onclick = () => setMode('loose');
+    bGlued.onclick = () => setMode('glued');
+    bCube.onclick = () => setMode('cube');
+    
+    slider.oninput = e => {
+      m11Load = parseFloat(e.target.value);
+      document.getElementById('m11-load-val').textContent = m11Load + '%';
+      renderM11Planks();
+    };
+    
+    const secSel = document.getElementById('m11-sec-select');
+    const vInp = document.getElementById('m11-v-input');
+    const cutSlider = document.getElementById('m11-cut-slider');
+    
+    function updateSecDims() {
+      const type = secSel.value;
+      let maxH = 300;
+      if (type === 'tee') maxH = 175;
+      if (type === 'circ') maxH = 200;
+      cutSlider.max = maxH;
+      cutSlider.value = Math.round(maxH / 2);
+      renderM11Dissector();
+    }
+    
+    if (secSel) secSel.onchange = updateSecDims;
+    if (vInp) vInp.oninput = renderM11Dissector;
+    if (cutSlider) cutSlider.oninput = renderM11Dissector;
+  }
+  
+  renderM11Planks();
+  renderM11Dissector();
+}
+
+function renderM11Planks() {
+  const wrap = document.getElementById('m11-plank-svg-wrap');
+  const desc = document.getElementById('m11-plank-desc');
+  const stats = document.getElementById('m11-plank-stats');
+  if (!wrap || !desc || !stats) return;
+  
+  const f = m11Load / 100;
+  const W = 520, H = 180;
+  let s = '';
+  
+  if (m11Mode === 'loose') {
+    const numPlanks = 4;
+    const t = 14;
+    const L = 380;
+    const cx = W / 2, cy = 40;
+    const maxDef = f * 42;
+    
+    s += `<rect width="${W}" height="${H}" fill="transparent"/>`;
+    s += `<polygon points="${cx - L/2 - 10},${cy + numPlanks*t + maxDef + 20} ${cx - L/2 + 10},${cy + numPlanks*t + maxDef + 20} ${cx - L/2},${cy + numPlanks*t + maxDef}" fill="${P.geo}" stroke="${P.geo}" stroke-width="1.5"/>`;
+    s += `<polygon points="${cx + L/2 - 10},${cy + numPlanks*t + maxDef + 20} ${cx + L/2 + 10},${cy + numPlanks*t + maxDef + 20} ${cx + L/2},${cy + numPlanks*t + maxDef}" fill="${P.geo}" stroke="${P.geo}" stroke-width="1.5"/>`;
+    
+    s += arrow(cx, cy - 25, cx, cy - 2, 'pt', 2.2);
+    s += T(cx, cy - 30, 'Load P', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+    
+    for (let k = 0; k < numPlanks; k++) {
+      const shift = (k - 1.5) * f * 12;
+      const yBase = cy + k * t;
+      const pathD = `M ${cx - L/2 + shift} ${yBase} Q ${cx} ${yBase + maxDef} ${cx + L/2 + shift} ${yBase} ` +
+                    `L ${cx + L/2 + shift} ${yBase + t - 2} Q ${cx} ${yBase + maxDef + t - 2} ${cx - L/2 + shift} ${yBase + t - 2} Z`;
+      s += `<path d="${pathD}" fill="${k % 2 === 0 ? '#38bdf8' : '#0284c7'}" fill-opacity="0.35" stroke="#0284c7" stroke-width="1.3"/>`;
+      
+      if (k < numPlanks - 1 && f > 0.2) {
+        const slipX = cx + L/2 + shift;
+        const slipY = yBase + t;
+        s += `<line x1="${slipX}" y1="${slipY-3}" x2="${slipX + 8*f}" y2="${slipY-3}" stroke="${P.rx}" stroke-width="1.8"/>`;
+      }
+    }
+    
+    s += T(cx, H - 12, 'Loose planks: horizontal sliding occurs freely at every interface (zero shear transfer)', { size:TS.tiny, anchor:'middle', color:P.mute });
+    
+    desc.innerHTML = `<p class="font-bold text-brand-900 dark:text-brand-300 mb-1">Observation: Free Interfacial Slip</p>` +
+      `<p>Because there is no bond between the planks, each plank bends independently about its own neutral axis. The planks <b>slide past one another</b> with relative horizontal slip &Delta;u at their interfaces. The stack is flexible because total stiffness is only 4 &times; (bt³/12) = <b>1/16th</b> of a solid beam!</p>`;
+      
+    stats.innerHTML = `<div class="flex justify-between"><span>Relative End Slip:</span><span class="font-bold text-red-500">${(f * 18).toFixed(1)} mm</span></div>` +
+      `<div class="flex justify-between"><span>Bending Stiffness (EI):</span><span class="font-semibold text-gray-700 dark:text-gray-300">4 &times; (EI₁) = 0.0625 EI_solid</span></div>` +
+      `<div class="flex justify-between"><span>Midspan Deflection:</span><span class="font-bold text-red-500">16 &times; &delta;_solid (Very Large)</span></div>` +
+      `<div class="flex justify-between"><span>Horizontal Shear Transfer:</span><span class="font-bold text-gray-500">0.0 MPa (Zero)</span></div>`;
+  } else if (m11Mode === 'glued') {
+    const t = 14;
+    const L = 380;
+    const cx = W / 2, cy = 40;
+    const maxDef = f * 6;
+    
+    s += `<rect width="${W}" height="${H}" fill="transparent"/>`;
+    s += `<polygon points="${cx - L/2 - 10},${cy + 4*t + maxDef + 20} ${cx - L/2 + 10},${cy + 4*t + maxDef + 20} ${cx - L/2},${cy + 4*t + maxDef}" fill="${P.geo}" stroke="${P.geo}" stroke-width="1.5"/>`;
+    s += `<polygon points="${cx + L/2 - 10},${cy + 4*t + maxDef + 20} ${cx + L/2 + 10},${cy + 4*t + maxDef + 20} ${cx + L/2},${cy + 4*t + maxDef}" fill="${P.geo}" stroke="${P.geo}" stroke-width="1.5"/>`;
+    
+    s += arrow(cx, cy - 25, cx, cy - 2, 'pt', 2.2);
+    s += T(cx, cy - 30, 'Load P', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+    
+    const pathD = `M ${cx - L/2} ${cy} Q ${cx} ${cy + maxDef} ${cx + L/2} ${cy} ` +
+                  `L ${cx + L/2} ${cy + 4*t} Q ${cx} ${cy + maxDef + 4*t} ${cx - L/2} ${cy + 4*t} Z`;
+    s += `<path d="${pathD}" fill="#0ea5e9" fill-opacity="0.25" stroke="#0ea5e9" stroke-width="1.8"/>`;
+    
+    for (let k = 1; k < 4; k++) {
+      const yLine = cy + k * t;
+      s += `<path d="M ${cx - L/2} ${yLine} Q ${cx} ${yLine + maxDef} ${cx + L/2} ${yLine}" stroke="#0284c7" stroke-width="1.4" stroke-dasharray="4 2"/>`;
+      if (f > 0.2) {
+        s += arrow(cx - L/3, yLine + maxDef/2, cx - L/3 + 24*f, yLine + maxDef/2, 'rx', 1.6);
+        s += arrow(cx + L/3, yLine + maxDef/2, cx + L/3 - 24*f, yLine + maxDef/2, 'rx', 1.6);
+      }
+    }
+    
+    const yNA = cy + 2 * t;
+    s += `<path d="M ${cx - L/2} ${yNA} Q ${cx} ${yNA + maxDef} ${cx + L/2} ${yNA}" stroke="${P.act}" stroke-width="1.8" stroke-dasharray="6 3"/>`;
+    s += T(cx + L/2 + 10, cy + 2*t + 4, 'NA', { size:TS.note, color:P.act, weight:'700' });
+    
+    s += T(cx, H - 12, 'Glued beam: glue interfaces develop horizontal shear stress &tau; to lock the planks into a single unit', { size:TS.tiny, anchor:'middle', color:P.mute });
+    
+    desc.innerHTML = `<p class="font-bold text-brand-900 dark:text-brand-300 mb-1">Observation: Shear Force Resists Sliding</p>` +
+      `<p>When bonded with glue, the cross-sections remain plane and rotate together. To prevent the sliding seen in loose planks, the glue planes must develop <b>horizontal shear stresses &tau;</b>. This gives the beam the full monolithic depth D = 4t, making it <b>16 times stiffer</b>!</p>`;
+      
+    stats.innerHTML = `<div class="flex justify-between"><span>Interfacial Slip:</span><span class="font-bold text-green-600">0.00 mm (Rigidly Bonded)</span></div>` +
+      `<div class="flex justify-between"><span>Monolithic Stiffness (EI):</span><span class="font-semibold text-brand-600">b(4t)³/12 = 16 &times; (4&times;EI₁)</span></div>` +
+      `<div class="flex justify-between"><span>Midspan Deflection:</span><span class="font-bold text-green-600">1.0 &times; &delta;_solid (Minimal)</span></div>` +
+      `<div class="flex justify-between"><span>Horizontal Shear &tau; at NA:</span><span class="font-bold text-brand-600">${(f * 2.4).toFixed(2)} MPa (Peak at NA)</span></div>`;
+  } else {
+    const cx = W / 2, cy = H / 2 - 5, size = 64;
+    s += `<rect width="${W}" height="${H}" fill="transparent"/>`;
+    s += `<rect x="${cx - size/2}" y="${cy - size/2}" width="${size}" height="${size}" fill="#0ea5e9" fill-opacity="0.18" stroke="#0ea5e9" stroke-width="2"/>`;
+    
+    s += arrow(cx + size/2 + 16, cy - size/3, cx + size/2 + 16, cy + size/3, 'pt', 2.0);
+    s += T(cx + size/2 + 22, cy + 4, '&tau;<sub>yx</sub> (Vertical Shear)', { size:TS.note, color:P.pt, weight:'700' });
+    
+    s += arrow(cx - size/2 - 16, cy + size/3, cx - size/2 - 16, cy - size/3, 'pt', 2.0);
+    s += T(cx - size/2 - 22, cy + 4, '&tau;<sub>yx</sub>', { size:TS.note, anchor:'end', color:P.pt, weight:'700' });
+    
+    s += arrow(cx - size/3, cy - size/2 - 16, cx + size/3, cy - size/2 - 16, 'rx', 2.0);
+    s += T(cx, cy - size/2 - 24, '&tau;<sub>xy</sub> (Horizontal Complementary)', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+    
+    s += arrow(cx + size/3, cy + size/2 + 16, cx - size/3, cy + size/2 + 16, 'rx', 2.0);
+    s += T(cx, cy + size/2 + 28, '&tau;<sub>xy</sub>', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+    
+    s += T(cx, H - 10, 'Moment equilibrium: &Sigma;M_z = 0 requires &tau;<sub>xy</sub> = &tau;<sub>yx</sub> on all orthogonal faces', { size:TS.tiny, anchor:'middle', color:P.mute });
+    
+    desc.innerHTML = `<p class="font-bold text-brand-900 dark:text-brand-300 mb-1">Complementary Shear Principle</p>` +
+      `<p>A vertical shear stress &tau;<sub>yx</sub> creates a couple that tries to rotate the infinitesimal element clockwise. To maintain static rotational equilibrium (&Sigma;M = 0), an equal horizontal shear stress &tau;<sub>xy</sub> <b>must act simultaneously</b> on top and bottom faces! Therefore, &tau;<sub>vertical</sub> &equiv; &tau;<sub>horizontal</sub> at every point.</p>`;
+      
+    stats.innerHTML = `<div class="flex justify-between"><span>Vertical Shear &tau;<sub>yx</sub>:</span><span class="font-bold text-brand-600">${(f * 2.5).toFixed(2)} MPa</span></div>` +
+      `<div class="flex justify-between"><span>Horizontal Shear &tau;<sub>xy</sub>:</span><span class="font-bold text-brand-600">${(f * 2.5).toFixed(2)} MPa</span></div>` +
+      `<div class="flex justify-between"><span>Rotational Moment &Sigma;M:</span><span class="font-bold text-green-600">0.00 N&middot;mm (Equilibrium)</span></div>` +
+      `<div class="flex justify-between"><span>Principle:</span><span class="font-bold text-purple-600">&tau;<sub>xy</sub> = &tau;<sub>yx</sub></span></div>`;
+  }
+  
+  wrap.innerHTML = svg(W, H, s, 'Physical simulation of loose vs glued beam');
+}
+
+function renderM11Dissector() {
+  const wrap = document.getElementById('m11-dissector-svg-wrap');
+  if (!wrap) return;
+  
+  const secType = document.getElementById('m11-sec-select').value;
+  const V_kN = parseFloat(document.getElementById('m11-v-input').value) || 60;
+  const V = V_kN * 1000;
+  const cutY = parseFloat(document.getElementById('m11-cut-slider').value) || 150;
+  
+  document.getElementById('m11-cut-disp').textContent = 'y = ' + cutY.toFixed(1) + ' mm';
+  
+  const defMap = {
+    rect: { b:150, d:300 },
+    isec: { bf:150, tf:12, tw:8, D:300 },
+    tee:  { bf:150, tf:25, tw:25, D:175 },
+    circ: { d:200 },
+    tri:  { b:150, h:300 }
+  };
+  const sp = sectionProps(secType, defMap[secType]);
+  if (!sp) return;
+  
+  const H = sp.H;
+  const clampedCut = Math.max(0.1, Math.min(H - 0.1, cutY));
+  
+  const R_above = sp.rects.filter(r => r.y0 + r.h > clampedCut).map(r => {
+    const y0 = Math.max(clampedCut, r.y0);
+    const h = (r.y0 + r.h) - y0;
+    return { w: r.w, y0, h };
+  });
+  
+  const Ap = R_above.reduce((s, r) => s + r.w * r.h, 0);
+  const ybar_from_base = Ap > 0 ? R_above.reduce((s, r) => s + r.w * r.h * (r.y0 + r.h/2), 0) / Ap : 0;
+  const ybar_prime = Math.abs(ybar_from_base - sp.yb);
+  const Q = sp.Q(clampedCut);
+  const b = sp.width(clampedCut);
+  const tau = (I_val, Q_val, b_val) => (b_val > 0 && I_val > 0) ? (V * Q_val) / (I_val * b_val) : 0;
+  const tau_act = tau(sp.I, Q, b);
+  
+  document.getElementById('m11-calc-y').textContent = clampedCut.toFixed(1) + ' mm';
+  document.getElementById('m11-calc-yna').textContent = sp.yb.toFixed(1) + ' mm';
+  document.getElementById('m11-calc-ydist').textContent = (clampedCut - sp.yb).toFixed(1) + ' mm';
+  document.getElementById('m11-calc-ap').textContent = fmt(Ap, 'mm²');
+  document.getElementById('m11-calc-ybar').textContent = ybar_prime.toFixed(1) + ' mm';
+  document.getElementById('m11-calc-q').textContent = fmt(Q, 'mm³');
+  document.getElementById('m11-calc-b').textContent = b.toFixed(1) + ' mm';
+  document.getElementById('m11-calc-i').textContent = (sp.I / 1e6).toFixed(2) + ' × 10⁶ mm⁴';
+  document.getElementById('m11-calc-tau').textContent = tau_act.toFixed(2) + ' MPa';
+  
+  const insightEl = document.getElementById('m11-calc-insight');
+  if (clampedCut >= H - 2) {
+    insightEl.innerHTML = `<b>Extreme Top Fibre:</b> Cut area A' &rarr; 0, so first moment Q = 0. Therefore shear stress &tau; = 0. There is no material above this plane to transmit horizontal sliding force.`;
+  } else if (clampedCut <= 2) {
+    insightEl.innerHTML = `<b>Extreme Bottom Fibre:</b> Cut area below plane &rarr; 0, so Q = 0. Therefore shear stress &tau; = 0. Free boundary condition.`;
+  } else if (Math.abs(clampedCut - sp.yb) < 5) {
+    insightEl.innerHTML = `<b>At the Neutral Axis:</b> The entire upper half of the cross-section contributes to the first moment Q, reaching its <b>global maximum</b> (${fmt(Q, 'mm³')}). For sections with constant width, &tau; peaks here.`;
+  } else if (secType === 'isec' && clampedCut > H - 14 && clampedCut < H - 10) {
+    insightEl.innerHTML = `<b>Flange-Web Junction:</b> As the cut crosses from flange (b = 150 mm) into the web (b = 8 mm), the width drops by <b>18.75&times;</b>. Because &tau; &prop; 1/b, the stress experiences a sudden, dramatic jump!`;
+  } else {
+    insightEl.innerHTML = `<b>At level y = ${clampedCut.toFixed(0)} mm:</b> Horizontal shear stress is &tau; = ${(tau_act).toFixed(2)} MPa. This exact horizontal stress exists along the length dx to balance the unequal bending compression forces.`;
+  }
+  
+  const W_svg = 480, H_svg = 240, top_svg = 30, bot_svg = 210;
+  const scY = y => bot_svg - (y / H) * (bot_svg - top_svg);
+  const cx1 = 120, cx2 = 350;
+  const maxW = Math.max.apply(null, sp.rects.map(r => r.w));
+  const kx1 = 120 / maxW;
+  
+  let s = `<rect width="${W_svg}" height="${H_svg}" fill="transparent"/>`;
+  
+  sp.rects.forEach(r => {
+    const h = (r.h / H) * (bot_svg - top_svg);
+    const yTop = scY(r.y0 + r.h);
+    s += `<rect x="${(cx1 - r.w * kx1 / 2).toFixed(1)}" y="${yTop.toFixed(1)}" width="${(r.w * kx1).toFixed(1)}" height="${Math.max(h, 0.5).toFixed(1)}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.2"/>`;
+  });
+  
+  R_above.forEach(r => {
+    const h = (r.h / H) * (bot_svg - top_svg);
+    const yTop = scY(r.y0 + r.h);
+    s += `<rect x="${(cx1 - r.w * kx1 / 2).toFixed(1)}" y="${yTop.toFixed(1)}" width="${(r.w * kx1).toFixed(1)}" height="${Math.max(h, 0.5).toFixed(1)}" fill="#38bdf8" fill-opacity="0.6" stroke="#0284c7" stroke-width="1.2"/>`;
+  });
+  
+  if (Ap > 0) {
+    const yG = scY(ybar_from_base);
+    s += `<circle cx="${cx1}" cy="${yG.toFixed(1)}" r="4" fill="#a855f7" stroke="#fff" stroke-width="1.5"/>`;
+    s += `<line x1="${cx1 + 55}" y1="${yG.toFixed(1)}" x2="${cx1 + 55}" y2="${scY(sp.yb).toFixed(1)}" stroke="#a855f7" stroke-width="1.4"/>`;
+    s += `<line x1="${cx1 + 50}" y1="${yG.toFixed(1)}" x2="${cx1 + 60}" y2="${yG.toFixed(1)}" stroke="#a855f7"/>`;
+    s += `<line x1="${cx1 + 50}" y1="${scY(sp.yb).toFixed(1)}" x2="${cx1 + 60}" y2="${scY(sp.yb).toFixed(1)}" stroke="#a855f7"/>`;
+    s += T(cx1 + 64, (yG + scY(sp.yb))/2 + 4, 'ȳ\'', { size:TS.note, color:'#a855f7', weight:'700' });
+  }
+  
+  const yCut_svg = scY(clampedCut);
+  s += `<line x1="${cx1 - 85}" y1="${yCut_svg.toFixed(1)}" x2="${cx1 + 85}" y2="${yCut_svg.toFixed(1)}" stroke="#eab308" stroke-width="2.2"/>`;
+  s += T(cx1 - 90, yCut_svg + 4, 'Cut', { size:TS.tiny, anchor:'end', color:'#eab308', weight:'700' });
+  
+  s += `<line x1="${cx1 - 70}" y1="${scY(sp.yb).toFixed(1)}" x2="${cx1 + 70}" y2="${scY(sp.yb).toFixed(1)}" stroke="${P.act}" stroke-width="1.5" stroke-dasharray="5 3"/>`;
+  s += T(cx1 - 74, scY(sp.yb) + 4, 'NA', { size:TS.tiny, anchor:'end', color:P.act, weight:'700' });
+  
+  s += T(cx1, 18, 'Cross-Section & Area A\'', { size:TS.note, anchor:'middle', weight:'700' });
+  
+  s += T(cx2, 18, 'Shear Stress Distribution &tau;(y)', { size:TS.note, anchor:'middle', weight:'700' });
+  s += `<line x1="${cx2}" y1="${top_svg}" x2="${cx2}" y2="${bot_svg}" stroke="${P.mute}" stroke-width="1.2"/>`;
+  s += `<line x1="${cx2}" y1="${scY(sp.yb).toFixed(1)}" x2="${cx2 + 95}" y2="${scY(sp.yb).toFixed(1)}" stroke="${P.act}" stroke-width="1.2" stroke-dasharray="4 2"/>`;
+  
+  const prof = stressProfiles(sp, 0, V);
+  const maxTau = Math.max(1e-6, prof.tmax);
+  const kx2 = 90 / maxTau;
+  
+  const shearPoly = prof.shear.map(p => `${(cx2 + p.tau * kx2).toFixed(1)},${scY(p.y).toFixed(1)}`).join(' ');
+  s += `<polygon points="${cx2},${bot_svg} ${shearPoly} ${cx2},${top_svg}" fill="${P.act}" fill-opacity="0.18" stroke="${P.act}" stroke-width="1.8"/>`;
+  
+  const cutTau_px = cx2 + tau_act * kx2;
+  s += `<line x1="${cx2}" y1="${yCut_svg.toFixed(1)}" x2="${cutTau_px.toFixed(1)}" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="3 2"/>`;
+  s += `<circle cx="${cutTau_px.toFixed(1)}" cy="${yCut_svg.toFixed(1)}" r="5" fill="#ef4444" stroke="#fff" stroke-width="2"/>`;
+  s += T(cutTau_px + 8, yCut_svg + 4, tau_act.toFixed(2) + ' MPa', { size:TS.tiny, color:'#ef4444', weight:'700' });
+  
+  wrap.innerHTML = svg(W_svg, H_svg, s, 'Interactive cut plane dissector diagram');
+}
+
+/* ================= M12 RECTANGLE SHEAR SIMULATOR ================= */
+function initM12Shear() {
+  ['m12-b','m12-d','m12-v'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.oninput = calcM12Shear;
+  });
+  calcM12Shear();
+}
+
+function calcM12Shear() {
+  const bEl = document.getElementById('m12-b');
+  if (!bEl) return;
+  const b = parseFloat(bEl.value) || 150;
+  const d = parseFloat(document.getElementById('m12-d').value) || 300;
+  const V_kN = parseFloat(document.getElementById('m12-v').value) || 60;
+  const V = V_kN * 1000;
+  
+  const A = b * d;
+  const t_avg = V / A;
+  const t_max = 1.5 * t_avg;
+  
+  document.getElementById('m12-out-tavg').textContent = t_avg.toFixed(2) + ' MPa';
+  document.getElementById('m12-out-tmax').textContent = t_max.toFixed(2) + ' MPa';
+  document.getElementById('m12-out-integ').textContent = V_kN.toFixed(2) + ' kN';
+  document.getElementById('m12-out-applied').textContent = V_kN.toFixed(2) + ' kN';
+  
+  const wrap = document.getElementById('m12-sim-svg');
+  if (!wrap) return;
+  
+  const W = 460, H = 220, top = 25, bot = 195;
+  const scY = y => bot - ((y + d/2) / d) * (bot - top);
+  const cxSec = 80, cxBend = 220, cxShear = 360;
+  
+  let s = `<rect width="${W}" height="${H}" fill="transparent"/>`;
+  
+  s += `<rect x="${cxSec - 35}" y="${top}" width="70" height="${bot - top}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.6"/>`;
+  s += `<line x1="${cxSec - 45}" y1="${(top+bot)/2}" x2="${cxSec + 45}" y2="${(top+bot)/2}" stroke="${P.act}" stroke-width="1.5" stroke-dasharray="5 3"/>`;
+  s += arrow(cxSec, top - 18, cxSec, top - 2, 'pt', 2.0) + T(cxSec + 12, top - 10, `V = ${V_kN} kN ↓`, { size:TS.tiny, color:P.pt, weight:'700' });
+  s += T(cxSec, bot + 16, `${b} × ${d} mm`, { size:TS.tiny, anchor:'middle', color:P.mute });
+  
+  s += `<line x1="${cxBend}" y1="${top}" x2="${cxBend}" y2="${bot}" stroke="${P.mute}" stroke-width="1.2"/>`;
+  s += `<polygon points="${cxBend},${(top+bot)/2} ${cxBend + 45},${top} ${cxBend},${top}" fill="${P.pt}" fill-opacity="0.25" stroke="${P.pt}" stroke-width="1.5"/>`;
+  s += `<polygon points="${cxBend},${(top+bot)/2} ${cxBend - 45},${bot} ${cxBend},${bot}" fill="${P.rx}" fill-opacity="0.25" stroke="${P.rx}" stroke-width="1.5"/>`;
+  s += arrow(cxBend + 45, top, cxBend, top, 'pt', 1.6);
+  s += arrow(cxBend, bot, cxBend - 45, bot, 'rx', 1.6);
+  s += T(cxBend, top - 8, 'Bending &sigma;', { size:TS.note, anchor:'middle', weight:'700' });
+  s += T(cxBend, bot + 16, 'Linear (zero at NA)', { size:TS.tiny, anchor:'middle', color:P.mute });
+  
+  s += `<line x1="${cxShear}" y1="${top}" x2="${cxShear}" y2="${bot}" stroke="${P.mute}" stroke-width="1.2"/>`;
+  const N = 40;
+  const pts = [];
+  for (let i = 0; i <= N; i++) {
+    const y = -d/2 + i * d / N;
+    const tau_y = t_max * (1 - 4 * y * y / (d * d));
+    const px = cxShear + (tau_y / t_max) * 65;
+    pts.push(`${px.toFixed(1)},${scY(y).toFixed(1)}`);
+  }
+  s += `<polygon points="${cxShear},${bot} ${pts.join(' ')} ${cxShear},${top}" fill="${P.act}" fill-opacity="0.22" stroke="${P.act}" stroke-width="1.8"/>`;
+  s += arrow(cxShear, (top+bot)/2, cxShear + 65, (top+bot)/2, 'act', 1.8);
+  s += `<circle cx="${(cxShear + 65).toFixed(1)}" cy="${((top+bot)/2).toFixed(1)}" r="4" fill="${P.act}"/>`;
+  s += T(cxShear + 72, (top+bot)/2 + 4, `&tau;<sub>max</sub> = ${t_max.toFixed(2)} MPa →`, { size:TS.tiny, color:P.act, weight:'700' });
+  s += T(cxShear, top - 8, 'Shear &tau;', { size:TS.note, anchor:'middle', weight:'700' });
+  s += T(cxShear, bot + 16, 'Parabolic (peak at NA)', { size:TS.tiny, anchor:'middle', color:P.mute });
+  
+  wrap.innerHTML = svg(W, H, s, 'Rectangular section bending vs shear stress comparison');
+}
+
+/* ================= M13 COMPLEX SECTIONS & FASTENERS ================= */
+let m13ParadoxType = 'tri';
+
+function initM13Shear() {
+  ['m13-bf','m13-tf','m13-tw','m13-D'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.oninput = calcM13Isec;
+  });
+  
+  const btnTri = document.getElementById('m13-btn-tri');
+  const btnDia = document.getElementById('m13-btn-dia');
+  if (btnTri && btnDia) {
+    btnTri.onclick = () => {
+      m13ParadoxType = 'tri';
+      btnTri.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition';
+      btnDia.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 hover:border-brand-500 transition';
+      calcM13Paradox();
+    };
+    btnDia.onclick = () => {
+      m13ParadoxType = 'dia';
+      btnDia.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition';
+      btnTri.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold border border-gray-300 dark:border-gray-600 hover:border-brand-500 transition';
+      calcM13Paradox();
+    };
+  }
+  
+  ['m13-flow-v','m13-flow-rv','m13-flow-n','m13-flow-bf'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.oninput = calcM13Flow;
+  });
+  
+  calcM13Isec();
+  calcM13Paradox();
+  calcM13Flow();
+}
+
+function calcM13Isec() {
+  const bfEl = document.getElementById('m13-bf');
+  if (!bfEl) return;
+  const bf = parseFloat(bfEl.value) || 150;
+  const tf = parseFloat(document.getElementById('m13-tf').value) || 12;
+  const tw = parseFloat(document.getElementById('m13-tw').value) || 8;
+  const D = parseFloat(document.getElementById('m13-D').value) || 300;
+  const V = 50000;
+  
+  const sp = sectionProps('isec', { bf, tf, tw, D });
+  if (!sp) return;
+  
+  const hw = D - 2*tf;
+  const Q_junc = bf * tf * (D/2 - tf/2);
+  const Q_na = Q_junc + tw * (hw/2) * (hw/4);
+  const tau_flange = (V * Q_junc) / (sp.I * bf);
+  const tau_web = (V * Q_junc) / (sp.I * tw);
+  const tau_na = (V * Q_na) / (sp.I * tw);
+  const jump = bf / tw;
+  
+  const V_web = (tau_web + 2 * tau_na) / 3 * (tw * hw);
+  const web_pct = Math.min(99.5, Math.max(85, (V_web / V) * 100));
+  const flange_pct = 100 - web_pct;
+  
+  const I_flanges = 2 * (bf * Math.pow(tf,3)/12 + bf * tf * Math.pow(D/2 - tf/2, 2));
+  const moment_flange_pct = (I_flanges / sp.I) * 100;
+  
+  document.getElementById('m13-web-share').textContent = web_pct.toFixed(1) + ' %';
+  document.getElementById('m13-flange-share').textContent = flange_pct.toFixed(1) + ' %';
+  document.getElementById('m13-moment-flange').textContent = moment_flange_pct.toFixed(1) + ' %';
+  document.getElementById('m13-jump-factor').textContent = jump.toFixed(2) + ' ×';
+  document.getElementById('m13-tau-flange').textContent = tau_flange.toFixed(2) + ' MPa';
+  document.getElementById('m13-tau-web').textContent = tau_web.toFixed(2) + ' MPa';
+  document.getElementById('m13-tau-na').textContent = tau_na.toFixed(2) + ' MPa';
+  
+  const wrap = document.getElementById('m13-isec-svg');
+  if (!wrap) return;
+  
+  const W = 460, H = 220, top = 25, bot = 195;
+  const scY = y => bot - (y / D) * (bot - top);
+  const cx1 = 90, cx2 = 290;
+  const kx = 100 / tau_na;
+  
+  let s = `<rect width="${W}" height="${H}" fill="transparent"/>`;
+  
+  const scX = w => (w / bf) * 90;
+  s += `<rect x="${cx1 - scX(bf)/2}" y="${top}" width="${scX(bf)}" height="${scY(D - tf) - top}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.2"/>`;
+  s += `<rect x="${cx1 - scX(tw)/2}" y="${scY(D - tf)}" width="${scX(tw)}" height="${scY(tf) - scY(D - tf)}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.2"/>`;
+  s += `<rect x="${cx1 - scX(bf)/2}" y="${scY(tf)}" width="${scX(bf)}" height="${bot - scY(tf)}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.2"/>`;
+  s += `<line x1="${cx1 - 55}" y1="${(top+bot)/2}" x2="${cx1 + 55}" y2="${(top+bot)/2}" stroke="${P.act}" stroke-width="1.5" stroke-dasharray="4 2"/>`;
+  s += T(cx1, top - 8, 'I-Section Geometry', { size:TS.note, anchor:'middle', weight:'700' });
+  
+  s += `<line x1="${cx2}" y1="${top}" x2="${cx2}" y2="${bot}" stroke="${P.mute}" stroke-width="1.2"/>`;
+  s += `<line x1="${cx2}" y1="${(top+bot)/2}" x2="${cx2 + 115}" y2="${(top+bot)/2}" stroke="${P.act}" stroke-width="1.2" stroke-dasharray="4 2"/>`;
+  
+  s += `<path d="M ${cx2} ${top} Q ${cx2 + tau_flange * kx / 2} ${top + (scY(D-tf)-top)/2} ${cx2 + tau_flange * kx} ${scY(D-tf)}" fill="none" stroke="${P.act}" stroke-width="1.8"/>`;
+  s += `<line x1="${cx2 + tau_flange * kx}" y1="${scY(D-tf)}" x2="${cx2 + tau_web * kx}" y2="${scY(D-tf)}" stroke="#ef4444" stroke-width="2.2"/>`;
+  s += `<path d="M ${cx2 + tau_web * kx} ${scY(D-tf)} Q ${cx2 + tau_na * kx} ${(top+bot)/2} ${cx2 + tau_web * kx} ${scY(tf)}" fill="none" stroke="${P.act}" stroke-width="2"/>`;
+  s += `<line x1="${cx2 + tau_web * kx}" y1="${scY(tf)}" x2="${cx2 + tau_flange * kx}" y2="${scY(tf)}" stroke="#ef4444" stroke-width="2.2"/>`;
+  s += `<path d="M ${cx2 + tau_flange * kx} ${scY(tf)} Q ${cx2 + tau_flange * kx / 2} ${bot - (bot-scY(tf))/2} ${cx2} ${bot}" fill="none" stroke="${P.act}" stroke-width="1.8"/>`;
+  
+  s += T(cx2 + tau_web * kx + 8, scY(D-tf) - 2, `${tau_web.toFixed(1)} MPa (Web)`, { size:TS.tiny, color:'#ef4444', weight:'700' });
+  s += T(cx2 + tau_flange * kx + 4, scY(D-tf) + 12, `${tau_flange.toFixed(1)} (Flange)`, { size:TS.tiny, color:P.mute });
+  s += T(cx2 + tau_na * kx + 8, (top+bot)/2 + 4, `${tau_na.toFixed(1)} MPa (Peak)`, { size:TS.tiny, color:P.act, weight:'700' });
+  s += T(cx2, top - 8, 'Shear Distribution (With Jump)', { size:TS.note, anchor:'middle', weight:'700' });
+  
+  wrap.innerHTML = svg(W, H, s, 'I section shear stress jump diagram');
+}
+
+function calcM13Paradox() {
+  const wrap = document.getElementById('m13-paradox-svg');
+  const desc = document.getElementById('m13-paradox-desc');
+  if (!wrap || !desc) return;
+  
+  const W = 460, H = 220, top = 25, bot = 195;
+  let s = `<rect width="${W}" height="${H}" fill="transparent"/>`;
+  
+  if (m13ParadoxType === 'tri') {
+    const h = 300;
+    const scY = y => bot - (y / h) * (bot - top);
+    const cx1 = 70, cx2 = 200, cx3 = 340;
+    
+    s += `<polygon points="${cx1},${top} ${cx1 + 45},${bot} ${cx1 - 45},${bot}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.4"/>`;
+    s += `<line x1="${cx1 - 50}" y1="${scY(h/3)}" x2="${cx1 + 50}" y2="${scY(h/3)}" stroke="${P.act}" stroke-width="1.5" stroke-dasharray="4 2"/>`;
+    s += T(cx1 - 55, scY(h/3) + 4, 'NA (h/3)', { size:TS.tiny, anchor:'end', color:P.act, weight:'700' });
+    s += T(cx1, top - 8, 'Triangle (apex up)', { size:TS.note, anchor:'middle', weight:'700' });
+    
+    s += `<line x1="${cx2}" y1="${top}" x2="${cx2}" y2="${bot}" stroke="${P.mute}" stroke-width="1.2"/>`;
+    s += `<path d="M ${cx2} ${top} Q ${cx2 + 80} ${scY(h/3)} ${cx2} ${bot}" fill="none" stroke="#a855f7" stroke-width="2"/>`;
+    s += `<circle cx="${(cx2 + 60).toFixed(1)}" cy="${scY(h/3).toFixed(1)}" r="4" fill="#a855f7"/>`;
+    s += T(cx2, top - 8, '1. First Moment Q(y)', { size:TS.note, anchor:'middle', color:'#a855f7', weight:'700' });
+    s += T(cx2 + 45, scY(h/3) - 6, 'Peak at NA', { size:TS.tiny, color:'#a855f7' });
+    
+    s += `<line x1="${cx3}" y1="${top}" x2="${cx3}" y2="${bot}" stroke="${P.mute}" stroke-width="1.2"/>`;
+    s += `<path d="M ${cx3} ${top} Q ${cx3 + 90} ${scY(h/2)} ${cx3} ${bot}" fill="none" stroke="#ef4444" stroke-width="2.2"/>`;
+    s += `<circle cx="${(cx3 + 68).toFixed(1)}" cy="${scY(h/2).toFixed(1)}" r="4.5" fill="#ef4444"/>`;
+    s += T(cx3 + 75, scY(h/2) + 4, '&tau;<sub>max</sub> = 1.50 &tau;<sub>avg</sub> (at h/2)', { size:TS.tiny, color:'#ef4444', weight:'700' });
+    s += `<circle cx="${(cx3 + 60).toFixed(1)}" cy="${scY(h/3).toFixed(1)}" r="3.5" fill="${P.act}"/>`;
+    s += T(cx3 + 66, scY(h/3) + 12, '&tau;<sub>NA</sub> = 1.33 &tau;<sub>avg</sub> (at h/3)', { size:TS.tiny, color:P.act });
+    s += T(cx3, top - 8, '2. Shear Stress &tau;(y)', { size:TS.note, anchor:'middle', color:'#ef4444', weight:'700' });
+    
+    desc.innerHTML = `<p class="font-bold text-brand-900 dark:text-brand-300 mb-1">Triangular Section Proof</p>` +
+      `<p>For a triangle of base b and height h:</p>` +
+      `<ul class="list-disc pl-4 space-y-1 my-1">` +
+      `<li>Neutral Axis is at <b>h/3 from base</b> (2h/3 from apex).</li>` +
+      `<li>At the NA, &tau;<sub>NA</sub> = <b>1.33 &tau;<sub>avg</sub></b> = 4V / (3bh/2).</li>` +
+      `<li>Maximum shear stress occurs at <b>mid-height h/2</b> with &tau;<sub>max</sub> = <b>1.50 &tau;<sub>avg</sub></b> = 3V / (bh)!</li>` +
+      `</ul>` +
+      `<p class="text-gray-500">Why? As you move from the NA towards the apex, the width b(y) decreases faster than Q(y) decreases, pushing the maximum of the quotient Q/b to h/2.</p>`;
+  } else {
+    const D = 300;
+    const scY = y => bot - (y / D) * (bot - top);
+    const cx1 = 70, cx2 = 200, cx3 = 340;
+    
+    s += `<polygon points="${cx1},${top} ${cx1 + 45},${(top+bot)/2} ${cx1},${bot} ${cx1 - 45},${(top+bot)/2}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.4"/>`;
+    s += `<line x1="${cx1 - 50}" y1="${(top+bot)/2}" x2="${cx1 + 50}" y2="${(top+bot)/2}" stroke="${P.act}" stroke-width="1.5" stroke-dasharray="4 2"/>`;
+    s += T(cx1, top - 8, 'Diamond (square on point)', { size:TS.note, anchor:'middle', weight:'700' });
+    
+    s += `<line x1="${cx2}" y1="${top}" x2="${cx2}" y2="${bot}" stroke="${P.mute}" stroke-width="1.2"/>`;
+    s += `<path d="M ${cx2} ${top} Q ${cx2 + 85} ${(top+bot)/2} ${cx2} ${bot}" fill="none" stroke="#a855f7" stroke-width="2"/>`;
+    s += T(cx2, top - 8, '1. First Moment Q(y)', { size:TS.note, anchor:'middle', color:'#a855f7', weight:'700' });
+    
+    s += `<line x1="${cx3}" y1="${top}" x2="${cx3}" y2="${bot}" stroke="${P.mute}" stroke-width="1.2"/>`;
+    s += `<path d="M ${cx3} ${top} C ${cx3 + 80} ${scY(D*5/8)} ${cx3 + 80} ${scY(D*5/8)} ${cx3 + 60} ${(top+bot)/2} ` +
+         `C ${cx3 + 80} ${scY(D*3/8)} ${cx3 + 80} ${scY(D*3/8)} ${cx3} ${bot}" fill="none" stroke="#ef4444" stroke-width="2.2"/>`;
+    s += `<circle cx="${(cx3 + 67).toFixed(1)}" cy="${scY(D*5/8).toFixed(1)}" r="4" fill="#ef4444"/>`;
+    s += T(cx3 + 74, scY(D*5/8) + 4, '&tau;<sub>max</sub> = 1.125 &tau;<sub>avg</sub> (at D/8 from NA)', { size:TS.tiny, color:'#ef4444', weight:'700' });
+    s += `<circle cx="${(cx3 + 60).toFixed(1)}" cy="${((top+bot)/2).toFixed(1)}" r="3.5" fill="${P.act}"/>`;
+    s += T(cx3 + 66, (top+bot)/2 + 4, '&tau;<sub>NA</sub> = 1.0 &tau;<sub>avg</sub> (at NA)', { size:TS.tiny, color:P.act });
+    s += T(cx3, top - 8, '2. Shear Stress &tau;(y)', { size:TS.note, anchor:'middle', color:'#ef4444', weight:'700' });
+    
+    desc.innerHTML = `<p class="font-bold text-brand-900 dark:text-brand-300 mb-1">Diamond / Square-on-Point Proof</p>` +
+      `<p>For a diamond of diagonal depth D:</p>` +
+      `<ul class="list-disc pl-4 space-y-1 my-1">` +
+      `<li>Neutral Axis is at mid-depth D/2.</li>` +
+      `<li>At the NA, &tau;<sub>NA</sub> = <b>1.00 &tau;<sub>avg</sub></b> = V / A.</li>` +
+      `<li>Maximum shear stress occurs at <b>d/8 from NA (3D/8 from apex)</b> with &tau;<sub>max</sub> = <b>(9/8) &tau;<sub>avg</sub> = 1.125 &tau;<sub>avg</sub></b>!</li>` +
+      `</ul>`;
+  }
+  
+  wrap.innerHTML = svg(W, H, s, 'Non NA peak paradox diagrams');
+}
+
+function calcM13Flow() {
+  const vEl = document.getElementById('m13-flow-v');
+  if (!vEl) return;
+  const V_kN = parseFloat(vEl.value) || 25;
+  const Rv_kN = parseFloat(document.getElementById('m13-flow-rv').value) || 1.8;
+  const n = parseInt(document.getElementById('m13-flow-n').value) || 2;
+  const bf = parseFloat(document.getElementById('m13-flow-bf').value) || 180;
+  
+  const tf = 25, d = 250;
+  const V = V_kN * 1000;
+  const Rv = Rv_kN * 1000;
+  
+  const sp = sectionProps('isec', { bf, tf, tw:30, D:d });
+  if (!sp) return;
+  
+  const Q_flange = bf * tf * (d/2 - tf/2);
+  const q = (V * Q_flange) / sp.I;
+  const s_req = (n * Rv) / q;
+  const s_adopt = Math.max(10, Math.floor(s_req / 10) * 10);
+  
+  document.getElementById('m13-flow-q').textContent = q.toFixed(1) + ' N/mm (' + (q).toFixed(1) + ' kN/m)';
+  document.getElementById('m13-flow-cap').textContent = (n * Rv_kN).toFixed(2) + ' kN / pitch';
+  document.getElementById('m13-flow-pitch').textContent = s_adopt + ' mm c/c (Exact: ' + s_req.toFixed(1) + ' mm)';
+
+  const wrap = document.getElementById('m13-flow-svg');
+  if (!wrap) return;
+
+  const W = 560, H = 170;
+  let s = `<rect width="${W}" height="${H}" fill="transparent"/>`;
+
+  /* Cross section on left (cx = 100) */
+  const cx1 = 90, top1 = 30;
+  s += T(cx1, 16, 'Cross-Section', { size:TS.note, anchor:'middle', weight:'700' });
+  s += arrow(cx1, top1 - 20, cx1, top1 - 2, 'pt', 2.0) + T(cx1 + 18, top1 - 10, `V = ${V_kN} kN ↓`, { size:TS.tiny, color:P.pt, weight:'700' });
+  
+  /* Flange & Web */
+  s += `<rect x="${cx1 - 50}" y="${top1}" width="100" height="18" fill="#38bdf8" fill-opacity="0.3" stroke="#0284c7" stroke-width="1.4"/>`;
+  s += `<rect x="${cx1 - 12}" y="${top1 + 18}" width="24" height="90" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.4"/>`;
+  s += `<rect x="${cx1 - 50}" y="${top1 + 108}" width="100" height="18" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.4"/>`;
+  
+  /* Nails at interface */
+  if (n >= 1) {
+    [-18, 18].slice(0, n).forEach(off => {
+      s += `<line x1="${cx1 + off}" y1="${top1 + 2}" x2="${cx1 + off}" y2="${top1 + 32}" stroke="#ef4444" stroke-width="2" stroke-dasharray="2 2"/>`;
+      s += `<circle cx="${cx1 + off}" cy="${top1 + 2}" r="2.5" fill="#ef4444"/>`;
+    });
+  }
+  s += T(cx1, top1 + 140, `${n} fasteners / row`, { size:TS.tiny, anchor:'middle', color:P.mute });
+
+  /* Longitudinal view on right (cx2 = 340) */
+  const xStart = 200, xEnd = 520, top2 = 45;
+  s += T((xStart + xEnd)/2, 16, 'Longitudinal Elevation & Fastener Pitch (s)', { size:TS.note, anchor:'middle', weight:'700' });
+  s += `<rect x="${xStart}" y="${top2}" width="${xEnd - xStart}" height="18" fill="#38bdf8" fill-opacity="0.3" stroke="#0284c7" stroke-width="1.4"/>`;
+  s += `<rect x="${xStart}" y="${top2 + 18}" width="${xEnd - xStart}" height="70" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.4"/>`;
+  
+  /* Shear flow arrows along the joint interface */
+  s += arrow(xStart + 30, top2 + 18, xStart + 80, top2 + 18, 'rx', 2.0);
+  s += arrow(xStart + 130, top2 + 18, xStart + 180, top2 + 18, 'rx', 2.0);
+  s += arrow(xStart + 230, top2 + 18, xStart + 280, top2 + 18, 'rx', 2.0);
+  s += T((xStart + xEnd)/2, top2 + 12, `Shear flow q = ${q.toFixed(1)} N/mm →`, { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+
+  /* Fasteners along length */
+  const nailX = [xStart + 25, xStart + 85, xStart + 145, xStart + 205, xStart + 265];
+  nailX.forEach(nx => {
+    s += `<line x1="${nx}" y1="${top2 + 2}" x2="${nx}" y2="${top2 + 35}" stroke="#ef4444" stroke-width="2.2"/>`;
+    s += `<circle cx="${nx}" cy="${top2 + 2}" r="3" fill="#ef4444"/>`;
+  });
+
+  /* Spacing s dimension */
+  s += dimH(nailX[1], nailX[2], top2 + 55, `s = ${s_adopt} mm`);
+
+  wrap.innerHTML = svg(W, H, s, 'Shear flow and fastener pitch diagram');
+}
+
+/* ================= M14 MOHR CIRCLE & FAILURE PLANES ================= */
+function initM14Shear() {
+  ['m14-m-in','m14-v-in','m14-y-slider'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.oninput = calcM14Combined;
+  });
+  calcM14Combined();
+}
+
+function calcM14Combined() {
+  const mEl = document.getElementById('m14-m-in');
+  if (!mEl) return;
+  const M_kNm = parseFloat(mEl.value) || 40;
+  const V_kN = parseFloat(document.getElementById('m14-v-in').value) || 50;
+  const y = parseFloat(document.getElementById('m14-y-slider').value) || 0;
+  
+  document.getElementById('m14-y-disp').textContent = y === 0 ? 'y = 0 mm (at NA)' : (y > 0 ? `y = +${y.toFixed(0)} mm (Top fiber)` : `y = ${y.toFixed(0)} mm (Bottom fiber)`);
+  
+  const b = 150, d = 300;
+  const M = M_kNm * 1e6;
+  const V = V_kN * 1e3;
+  const I = b * Math.pow(d, 3) / 12;
+  
+  const sx = (M * y) / I;
+  const Q = (b / 2) * (d * d / 4 - y * y);
+  const txy = (V * Q) / (I * b);
+  
+  const center = sx / 2;
+  const radius = Math.sqrt(Math.pow(sx / 2, 2) + Math.pow(txy, 2));
+  const s1 = center + radius;
+  const s2 = center - radius;
+  const thetap = (0.5 * Math.atan2(2 * txy, sx)) * (180 / Math.PI);
+  
+  document.getElementById('m14-out-sx').textContent = sx.toFixed(2) + ' MPa';
+  document.getElementById('m14-out-txy').textContent = txy.toFixed(2) + ' MPa';
+  document.getElementById('m14-out-s1').textContent = (s1 >= 0 ? '+' : '') + s1.toFixed(2) + ' MPa (Tension)';
+  document.getElementById('m14-out-s2').textContent = (s2 >= 0 ? '+' : '') + s2.toFixed(2) + ' MPa (Comp.)';
+  document.getElementById('m14-out-thetap').textContent = thetap.toFixed(1) + '°';
+  
+  const crackDesc = document.getElementById('m14-crack-desc');
+  if (crackDesc) {
+    if (Math.abs(y) < 15) {
+      crackDesc.innerHTML = `<p class="font-bold text-red-800 dark:text-red-300 mb-1"><i class="fas fa-bolt text-red-500 mr-1"></i>Neutral Axis &rarr; 45° Diagonal Tension Crack</p>` +
+        `<p>At the Neutral Axis, bending stress &sigma; = 0 while shear stress &tau; is maximum. The state of stress is pure shear, resulting in principal tension &sigma;₁ = +${s1.toFixed(2)} MPa inclined at <b>45.0°</b>. Concrete is weak in tension and will crack along a 45° diagonal plane — this is why <b>vertical shear stirrups (shear links)</b> are mandated near beam supports!</p>`;
+    } else if (y <= -135) {
+      crackDesc.innerHTML = `<p class="font-bold text-blue-800 dark:text-blue-300 mb-1"><i class="fas fa-arrows-alt-h text-blue-500 mr-1"></i>Bottom Fibre &rarr; Vertical Flexural Crack</p>` +
+        `<p>At the bottom extreme fibre, shear stress &tau; = 0 while bending tensile stress &sigma; = +${sx.toFixed(2)} MPa is maximum. The principal tension acts horizontally (&theta;<sub>p</sub> = 0°), creating <b>vertical flexural tension cracks</b> that are resisted by bottom longitudinal steel rebar.</p>`;
+    } else if (y >= 135) {
+      crackDesc.innerHTML = `<p class="font-bold text-red-800 dark:text-red-300 mb-1"><i class="fas fa-compress-arrows-alt text-red-500 mr-1"></i>Top Fibre &rarr; Pure Flexural Compression</p>` +
+        `<p>At the top extreme fibre, shear stress &tau; = 0 while compressive stress &sigma; = ${sx.toFixed(2)} MPa is maximum. Governed purely by material compressive strength.</p>`;
+    } else {
+      crackDesc.innerHTML = `<p class="font-bold text-gray-800 dark:text-gray-200 mb-1">Combined State at y = ${y.toFixed(0)} mm</p>` +
+        `<p>Both normal stress &sigma; (${sx.toFixed(2)} MPa) and shear stress &tau; (${txy.toFixed(2)} MPa) coexist. The principal tension &sigma;₁ is inclined at <b>${thetap.toFixed(1)}°</b>, causing the crack trajectory to curve smoothly from vertical at the bottom to 45° at the neutral axis.</p>`;
+    }
+  }
+  
+  const wrap = document.getElementById('m14-mohr-svg');
+  if (!wrap) return;
+  
+  const W = 460, H = 220;
+  let s = `<rect width="${W}" height="${H}" fill="transparent"/>`;
+  
+  const cx1 = 100, cy1 = 110, sz = 54;
+  s += T(cx1, 20, '2D Stress Element', { size:TS.note, anchor:'middle', weight:'700' });
+  s += `<rect x="${cx1 - sz/2}" y="${cy1 - sz/2}" width="${sz}" height="${sz}" fill="#0ea5e9" fill-opacity="0.15" stroke="#0ea5e9" stroke-width="2"/>`;
+  
+  if (Math.abs(sx) > 0.5) {
+    if (sx > 0) {
+      s += arrow(cx1 + sz/2, cy1, cx1 + sz/2 + 25, cy1, 'rx', 1.8);
+      s += arrow(cx1 - sz/2, cy1, cx1 - sz/2 - 25, cy1, 'rx', 1.8);
+      s += T(cx1 + sz/2 + 28, cy1 + 4, `&sigma; = ${sx.toFixed(1)}`, { size:TS.tiny, color:P.rx });
+    } else {
+      s += arrow(cx1 + sz/2 + 25, cy1, cx1 + sz/2, cy1, 'pt', 1.8);
+      s += arrow(cx1 - sz/2 - 25, cy1, cx1 - sz/2, cy1, 'pt', 1.8);
+      s += T(cx1 + sz/2 + 28, cy1 + 4, `&sigma; = ${Math.abs(sx).toFixed(1)}`, { size:TS.tiny, color:P.pt });
+    }
+  }
+  
+  if (Math.abs(txy) > 0.1) {
+    s += arrow(cx1 + sz/2 + 6, cy1 - sz/3, cx1 + sz/2 + 6, cy1 + sz/3, 'pt', 1.5);
+    s += arrow(cx1 - sz/3, cy1 - sz/2 - 6, cx1 + sz/3, cy1 - sz/2 - 6, 'rx', 1.5);
+    s += T(cx1, cy1 - sz/2 - 12, `&tau; = ${txy.toFixed(1)}`, { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' });
+  }
+  
+  const rad = thetap * (Math.PI / 180);
+  const dx = (sz/2 - 4) * Math.cos(rad + Math.PI/2);
+  const dy = -(sz/2 - 4) * Math.sin(rad + Math.PI/2);
+  s += `<line x1="${cx1 - dx}" y1="${cy1 - dy}" x2="${cx1 + dx}" y2="${cy1 + dy}" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4 2"/>`;
+  
+  const cx2 = 330, cy2 = 110;
+  const maxS = Math.max(Math.abs(s1), Math.abs(s2), 10);
+  const scale = 75 / maxS;
+  
+  s += T(cx2, 20, "Mohr's Circle of Stress", { size:TS.note, anchor:'middle', weight:'700' });
+  s += `<line x1="${cx2 - 95}" y1="${cy2}" x2="${cx2 + 95}" y2="${cy2}" stroke="${P.mute}" stroke-width="1.2"/>`;
+  s += `<line x1="${cx2}" y1="${cy2 - 80}" x2="${cx2}" y2="${cy2 + 80}" stroke="${P.mute}" stroke-width="1.2"/>`;
+  s += T(cx2 + 90, cy2 - 6, '&sigma;', { size:TS.note, color:P.mute, weight:'700' });
+  s += T(cx2 + 6, cy2 - 72, '&tau;', { size:TS.note, color:P.mute, weight:'700' });
+  
+  const cX_px = cx2 + center * scale;
+  const r_px = radius * scale;
+  s += `<circle cx="${cX_px.toFixed(1)}" cy="${cy2}" r="${r_px.toFixed(1)}" fill="${P.act}" fill-opacity="0.12" stroke="${P.act}" stroke-width="1.8"/>`;
+  
+  const s1_px = cx2 + s1 * scale;
+  const s2_px = cx2 + s2 * scale;
+  s += `<circle cx="${s1_px.toFixed(1)}" cy="${cy2}" r="4" fill="#ef4444"/>`;
+  s += `<circle cx="${s2_px.toFixed(1)}" cy="${cy2}" r="4" fill="#0284c7"/>`;
+  s += T(s1_px, cy2 + 16, `&sigma;₁ = ${s1.toFixed(1)}`, { size:TS.tiny, anchor:'middle', color:'#ef4444', weight:'700' });
+  s += T(s2_px, cy2 + 16, `&sigma;₂ = ${s2.toFixed(1)}`, { size:TS.tiny, anchor:'middle', color:'#0284c7', weight:'700' });
+  
+  wrap.innerHTML = svg(W, H, s, "Combined stress state and Mohr's circle");
 }
 
 /* ================= M15 COMPOSITE SOLVER ================= */
@@ -2906,6 +4133,443 @@ function tutorSend() {
   }, 250);
 }
 
+/* ================= INTERACTIVE BEAM LOADING & STRESS STUDIO ================= */
+let simMode = 'point';
+
+function setLoadingMode(mode) {
+  simMode = mode;
+  document.querySelectorAll('.load-mode-btn').forEach(btn => {
+    btn.classList.remove('bg-brand-50', 'border-brand-500', 'text-brand-900', 'dark:bg-brand-950/40', 'dark:border-brand-500', 'dark:text-white', 'shadow-sm', 'font-semibold');
+    btn.classList.add('border-gray-200', 'dark:border-gray-700', 'text-gray-700', 'dark:text-gray-300');
+  });
+  const activeBtn = document.getElementById('btn-load-' + mode);
+  if (activeBtn) {
+    activeBtn.classList.remove('border-gray-200', 'dark:border-gray-700', 'text-gray-700', 'dark:text-gray-300');
+    activeBtn.classList.add('bg-brand-50', 'border-brand-500', 'text-brand-900', 'dark:bg-brand-950/40', 'dark:border-brand-500', 'dark:text-white', 'shadow-sm', 'font-semibold');
+  }
+
+  const posGrp = document.getElementById('sim-pos-group');
+  const magLbl = document.getElementById('sim-mag-label');
+  const magInp = document.getElementById('sim-mag');
+
+  if (mode === 'point') {
+    posGrp.classList.remove('hidden');
+    magLbl.textContent = 'Load Magnitude P';
+    magInp.min = 5; magInp.max = 100; magInp.step = 5;
+    if (parseFloat(magInp.value) > 100) magInp.value = 40;
+  } else if (mode === 'udl') {
+    posGrp.classList.add('hidden');
+    magLbl.textContent = 'UDL Intensity w (kN/m)';
+    magInp.min = 2; magInp.max = 50; magInp.step = 2;
+    if (parseFloat(magInp.value) > 50) magInp.value = 20;
+  } else if (mode === 'uvl') {
+    posGrp.classList.add('hidden');
+    magLbl.textContent = 'Peak Intensity w₀ (kN/m)';
+    magInp.min = 2; magInp.max = 60; magInp.step = 2;
+    if (parseFloat(magInp.value) > 60) magInp.value = 30;
+  } else if (mode === 'pure') {
+    posGrp.classList.add('hidden');
+    magLbl.textContent = 'Point Loads W at L/3 (kN)';
+    magInp.min = 5; magInp.max = 80; magInp.step = 5;
+    if (parseFloat(magInp.value) > 80) magInp.value = 30;
+  }
+
+  updateLoadingStudio();
+}
+
+function setSimX(target) {
+  const L = parseFloat(document.getElementById('sim-span').value);
+  const simXInp = document.getElementById('sim-x');
+  if (target === 0) {
+    simXInp.value = 0;
+  } else if (target === 'mid') {
+    simXInp.value = (L / 2).toFixed(2);
+  } else if (target === 'end') {
+    simXInp.value = L.toFixed(2);
+  } else if (target === 'mmax') {
+    if (simMode === 'point') {
+      const a = parseFloat(document.getElementById('sim-pos').value);
+      simXInp.value = a.toFixed(2);
+    } else if (simMode === 'udl') {
+      simXInp.value = (L / 2).toFixed(2);
+    } else if (simMode === 'uvl') {
+      simXInp.value = (L / Math.sqrt(3)).toFixed(2);
+    } else if (simMode === 'pure') {
+      simXInp.value = (L / 2).toFixed(2);
+    }
+  }
+  updateLoadingStudio();
+}
+
+function updateLoadingStudio() {
+  const spanInp = document.getElementById('sim-span');
+  if (!spanInp) return;
+  const L = parseFloat(spanInp.value);
+  const mag = parseFloat(document.getElementById('sim-mag').value);
+  const posInp = document.getElementById('sim-pos');
+  const xInp = document.getElementById('sim-x');
+  const secType = document.getElementById('sim-sec-type').value;
+
+  /* Constrain inputs */
+  posInp.max = (L - 0.2).toFixed(1);
+  if (parseFloat(posInp.value) >= L) posInp.value = (L / 2).toFixed(1);
+  const a = parseFloat(posInp.value);
+  const b_span = L - a;
+
+  xInp.max = L.toFixed(1);
+  if (parseFloat(xInp.value) > L) xInp.value = L.toFixed(1);
+  const x = parseFloat(xInp.value);
+
+  /* Update label indicators */
+  document.getElementById('sim-span-val').textContent = L.toFixed(1) + ' m';
+  document.getElementById('sim-mag-val').textContent = mag.toFixed(0) + (simMode === 'udl' || simMode === 'uvl' ? ' kN/m' : ' kN');
+  document.getElementById('sim-pos-val').textContent = a.toFixed(2) + ' m (b = ' + b_span.toFixed(2) + ' m)';
+  document.getElementById('sim-x-val').textContent = x.toFixed(2) + ' m';
+  document.getElementById('sim-sec-title-x').textContent = x.toFixed(2) + ' m';
+
+  /* Section Properties calculation */
+  let sec = { name:'Rectangle', H:300, A:45000, I:337.5e6, yb:150, Z:2250e3, rects:[{w:150,y0:0,h:300}], bf:150, tf:0, tw:150 };
+  if (secType === 'rect') {
+    sec = { name:'Rectangle (150×300)', H:300, A:45000, I:337.5e6, yb:150, Z:2250e3, rects:[{w:150,y0:0,h:300}], bf:150, tf:0, tw:150 };
+  } else if (secType === 'isec') {
+    sec = { name:'ISMB 300 (150×12 fl, 8 web)', H:300, A:5664, I:88.71e6, yb:150, Z:591.4e3,
+            rects:[{w:150,y0:0,h:12},{w:8,y0:12,h:276},{w:150,y0:288,h:12}], bf:150, tf:12, tw:8 };
+  } else if (secType === 'box') {
+    sec = { name:'Hollow Box (200×300×20)', H:300, A:18400, I:215.6e6, yb:150, Z:1437e3,
+            rects:[{w:200,y0:0,h:20},{w:40,y0:20,h:260},{w:200,y0:280,h:20}], bf:200, tf:20, tw:40 };
+  } else if (secType === 'circ') {
+    sec = { name:'Solid Circle (Ø 200)', H:200, A:31416, I:78.54e6, yb:100, Z:785.4e3, rects:[], bf:200, tf:0, tw:200 };
+  } else if (secType === 'tee') {
+    sec = { name:'T-Section (150×25 fl, 25×150 web)', H:175, A:7500, I:21.58e6, yb:118.75, Z:181.7e3,
+            rects:[{w:25,y0:0,h:150},{w:150,y0:150,h:25}], bf:150, tf:25, tw:25 };
+  }
+
+  document.getElementById('sim-sec-I').textContent = (sec.I / 1e6).toFixed(2) + ' × 10⁶ mm⁴';
+  document.getElementById('sim-sec-Z').textContent = (sec.Z / 1e3).toFixed(1) + ' × 10³ mm³';
+  document.getElementById('sim-sec-yb').textContent = sec.yb.toFixed(1) + ' mm';
+
+  /* Mechanics & Internal Actions Calculation */
+  let RA = 0, RB = 0, V_func = () => 0, M_func = () => 0, Vmax = 0, Mmax = 0, x_Mmax = 0, insight = '';
+
+  if (simMode === 'point') {
+    const P_val = mag;
+    RA = (P_val * b_span) / L;
+    RB = (P_val * a) / L;
+    Vmax = Math.max(RA, RB);
+    Mmax = (P_val * a * b_span) / L;
+    x_Mmax = a;
+
+    V_func = (xp) => {
+      if (xp < a - 1e-4) return RA;
+      if (xp > a + 1e-4) return -RB;
+      return RA - P_val / 2;
+    };
+    M_func = (xp) => {
+      if (xp <= a) return RA * xp;
+      return RB * (L - xp);
+    };
+
+    insight = `<p><b>Force Equilibrium:</b> Downward point load <i>P = ${P_val.toFixed(1)} kN ↓</i> is balanced by upward support reactions <i>R<sub>A</sub> = ${RA.toFixed(2)} kN ↑</i> and <i>R<sub>B</sub> = ${RB.toFixed(2)} kN ↑</i>.</p>
+      <p><b>Internal Shear:</b> Shear is constant positive (+${RA.toFixed(2)} kN) to the left of the load, then abruptly steps down by ${P_val.toFixed(1)} kN to constant negative (-${RB.toFixed(2)} kN).</p>
+      <p><b>Bending & Stress State:</b> Moment increases linearly to a triangular peak <i>M<sub>max</sub> = ${Mmax.toFixed(2)} kN·m</i> directly under the load (x = ${a.toFixed(2)} m), producing maximum top compression σ<sub>c</sub> and bottom tension σ<sub>t</sub>.</p>`;
+  } else if (simMode === 'udl') {
+    const w_val = mag;
+    const W_tot = w_val * L;
+    RA = W_tot / 2;
+    RB = W_tot / 2;
+    Vmax = RA;
+    Mmax = (w_val * L * L) / 8;
+    x_Mmax = L / 2;
+
+    V_func = (xp) => RA - w_val * xp;
+    M_func = (xp) => (w_val * xp * (L - xp)) / 2;
+
+    insight = `<p><b>Force Equilibrium:</b> Total downward UDL <i>W = wL = ${W_tot.toFixed(1)} kN ↓</i> distributes equally to both supports: <i>R<sub>A</sub> = R<sub>B</sub> = ${RA.toFixed(2)} kN ↑</i>.</p>
+      <p><b>Internal Shear:</b> Linear shear gradient V(x) = w(L/2 - x) crosses zero at midspan (x = ${x_Mmax.toFixed(2)} m). Where V(x) = 0, transverse shear stress τ = 0.</p>
+      <p><b>Bending & Stress State:</b> Parabolic moment curve reaches <i>M<sub>max</sub> = wL²/8 = ${Mmax.toFixed(2)} kN·m</i> at midspan, where the rate of change of moment dM/dx = V = 0.</p>`;
+  } else if (simMode === 'uvl') {
+    const w0 = mag;
+    const W_tot = 0.5 * w0 * L;
+    RA = (w0 * L) / 6;
+    RB = (w0 * L) / 3;
+    Vmax = RB;
+    x_Mmax = L / Math.sqrt(3);
+    Mmax = (w0 * L * L) / (9 * Math.sqrt(3));
+
+    V_func = (xp) => RA - (w0 * xp * xp) / (2 * L);
+    M_func = (xp) => (w0 * xp / (6 * L)) * (L * L - xp * xp);
+
+    insight = `<p><b>Force Equilibrium:</b> Triangular load resultant <i>W = ½w₀L = ${W_tot.toFixed(1)} kN ↓</i> acts at ⅔L, transferring twice as much reaction to Support B (<i>R<sub>B</sub> = ${RB.toFixed(2)} kN ↑</i>) as Support A (<i>R<sub>A</sub> = ${RA.toFixed(2)} kN ↑</i>).</p>
+      <p><b>Internal Shear:</b> Parabolic shear curve crosses zero at <i>x = L/√3 ≈ ${x_Mmax.toFixed(2)} m</i>.</p>
+      <p><b>Bending & Stress State:</b> Cubic moment curve peaks at x = ${x_Mmax.toFixed(2)} m with <i>M<sub>max</sub> = ${Mmax.toFixed(2)} kN·m</i>.</p>`;
+  } else if (simMode === 'pure') {
+    const W_pt = mag;
+    RA = W_pt;
+    RB = W_pt;
+    Vmax = W_pt;
+    Mmax = (W_pt * L) / 3;
+    x_Mmax = L / 2;
+
+    const L3 = L / 3, L23 = 2 * L / 3;
+    V_func = (xp) => {
+      if (xp < L3 - 1e-4) return W_pt;
+      if (xp > L23 + 1e-4) return -W_pt;
+      return 0;
+    };
+    M_func = (xp) => {
+      if (xp <= L3) return W_pt * xp;
+      if (xp <= L23) return (W_pt * L) / 3;
+      return W_pt * (L - xp);
+    };
+
+    insight = `<p><b>Force Equilibrium:</b> Two symmetric point loads <i>W = ${W_pt.toFixed(1)} kN ↓</i> produce equal reactions <i>R<sub>A</sub> = R<sub>B</sub> = ${W_pt.toFixed(1)} kN ↑</i>.</p>
+      <p><b>Pure Bending Middle Zone:</b> In the middle third segment (x ∈ [${L3.toFixed(2)}, ${L23.toFixed(2)}] m), Shear Force <i>V(x) = 0</i>. Hence shear stress <b>τ = 0</b> everywhere across the cross-section!</p>
+      <p><b>Pure Curvature:</b> The central segment experiences constant bending moment <i>M = ${Mmax.toFixed(2)} kN·m</i>, confirming pure bending without shear distortion.</p>`;
+  }
+
+  const Vx = V_func(x);
+  const Mx = M_func(x);
+
+  /* Stress calculations at inspection section x */
+  const y_top = sec.H - sec.yb;
+  const y_bot = sec.yb;
+  const sigma_top = (Math.abs(Mx) * 1e6 * y_top) / sec.I;
+  const sigma_bot = (Math.abs(Mx) * 1e6 * y_bot) / sec.I;
+
+  const tau_avg = (Math.abs(Vx) * 1e3) / sec.A;
+  let tau_max = 1.5 * tau_avg;
+  if (secType === 'circ') tau_max = (4 / 3) * tau_avg;
+  else if (secType === 'isec') {
+    const Q_flange = sec.bf * sec.tf * (sec.H / 2 - sec.tf / 2);
+    const Q_web = sec.tw * (sec.H / 2 - sec.tf) * ((sec.H / 2 - sec.tf) / 2);
+    tau_max = (Math.abs(Vx) * 1e3 * (Q_flange + Q_web)) / (sec.I * sec.tw);
+  } else if (secType === 'box') {
+    tau_max = 1.6 * tau_avg;
+  } else if (secType === 'tee') {
+    tau_max = 2.1 * tau_avg;
+  }
+
+  /* Update Metrics Cards */
+  document.getElementById('sim-stat-rx').innerHTML = `R<sub>A</sub> = ${RA.toFixed(1)} kN ↑<br>R<sub>B</sub> = ${RB.toFixed(1)} kN ↑`;
+  document.getElementById('sim-stat-act').innerHTML = `V(x) = ${Vx.toFixed(1)} kN<br>M(x) = ${Mx.toFixed(1)} kN·m`;
+  document.getElementById('sim-stat-sigma').innerHTML = `σ<sub>top</sub> = ${sigma_top.toFixed(2)} MPa (C)<br>σ<sub>bot</sub> = ${sigma_bot.toFixed(2)} MPa (T)`;
+  document.getElementById('sim-stat-tau').innerHTML = `τ<sub>max</sub> = ${tau_max.toFixed(2)} MPa<br>τ<sub>avg</sub> = ${tau_avg.toFixed(2)} MPa`;
+  document.getElementById('sim-insight-text').innerHTML = insight;
+
+  /* ================= TOP SVG: BEAM + SFD + BMD ================= */
+  const W_svg = 740, H_svg = 390;
+  const xA_px = 75, xB_px = 665, span_px = xB_px - xA_px;
+  const mapX = (x_val) => xA_px + (x_val / L) * span_px;
+
+  let sBeam = `<rect width="${W_svg}" height="${H_svg}" fill="transparent"/>`;
+
+  /* 1. BEAM LOADING FBD (y: 20 to 140) */
+  const yBeam = 90;
+  sBeam += T(15, 20, '1. Beam Loading & Reaction Vectors', { size:TS.label, weight:'700', color:P.beam });
+  
+  // Supports
+  sBeam += symPin(xA_px, yBeam + 12);
+  sBeam += symRoller(xB_px, yBeam + 12);
+  
+  // Beam bar
+  sBeam += beamBar(xA_px, yBeam, span_px, 12);
+  
+  // Upward Reaction Arrows
+  sBeam += arrow(xA_px, yBeam + 50, xA_px, yBeam + 14, 'rx', 2.4);
+  sBeam += T(xA_px, yBeam + 64, `R_A = ${RA.toFixed(1)} kN ↑`, { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+  
+  sBeam += arrow(xB_px, yBeam + 50, xB_px, yBeam + 14, 'rx', 2.4);
+  sBeam += T(xB_px, yBeam + 64, `R_B = ${RB.toFixed(1)} kN ↑`, { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+
+  // Applied Load Vectors
+  if (simMode === 'point') {
+    const xp = mapX(a);
+    sBeam += arrow(xp, yBeam - 46, xp, yBeam - 1, 'pt', 2.6);
+    sBeam += T(xp, yBeam - 52, `P = ${mag.toFixed(0)} kN ↓`, { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+    sBeam += dimH(xA_px, xp, yBeam - 22, `a = ${a.toFixed(1)} m`);
+    sBeam += dimH(xp, xB_px, yBeam - 22, `b = ${b_span.toFixed(1)} m`);
+  } else if (simMode === 'udl') {
+    sBeam += udl(xA_px, xB_px, yBeam - 36, yBeam, 16);
+    sBeam += T((xA_px + xB_px)/2, yBeam - 42, `UDL w = ${mag.toFixed(0)} kN/m ↓ (Total W = ${(mag*L).toFixed(1)} kN ↓)`, { size:TS.note, anchor:'middle', color:P.load, weight:'700' });
+  } else if (simMode === 'uvl') {
+    sBeam += tri(xA_px, xB_px, yBeam - 44, yBeam, true, 16);
+    sBeam += T(xB_px - 8, yBeam - 50, `Peak w₀ = ${mag.toFixed(0)} kN/m ↓`, { size:TS.note, anchor:'end', color:P.load, weight:'700' });
+    sBeam += T(xA_px + 20, yBeam - 10, 'w = 0', { size:TS.tiny, color:P.load });
+  } else if (simMode === 'pure') {
+    const x1 = mapX(L/3), x2 = mapX(2*L/3);
+    sBeam += arrow(x1, yBeam - 46, x1, yBeam - 1, 'pt', 2.4);
+    sBeam += T(x1, yBeam - 52, `W = ${mag.toFixed(0)} kN ↓`, { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+    sBeam += arrow(x2, yBeam - 46, x2, yBeam - 1, 'pt', 2.4);
+    sBeam += T(x2, yBeam - 52, `W = ${mag.toFixed(0)} kN ↓`, { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+    sBeam += `<rect x="${x1}" y="${yBeam}" width="${x2 - x1}" height="12" fill="#c084fc" fill-opacity="0.35"/>`;
+    sBeam += T((x1+x2)/2, yBeam - 10, 'Pure Bending Zone (V = 0)', { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' });
+  }
+
+  // Span dimension
+  sBeam += dimH(xA_px, xB_px, yBeam + 80, `Span L = ${L.toFixed(1)} m`);
+
+  // Dynamic Inspection Plane Line
+  const curX_px = mapX(x);
+  sBeam += `<line x1="${curX_px}" y1="28" x2="${curX_px}" y2="${H_svg - 10}" stroke="#9333ea" stroke-width="1.8" stroke-dasharray="4 3"/>`;
+  sBeam += `<circle cx="${curX_px}" cy="${yBeam + 6}" r="4.5" fill="#9333ea" stroke="#fff" stroke-width="1.5"/>`;
+  sBeam += T(curX_px, 24, `✂ Section x = ${x.toFixed(2)} m`, { size:TS.tiny, anchor:'middle', color:'#9333ea', weight:'700' });
+
+  /* 2. SHEAR FORCE DIAGRAM SFD (y: 165 to 260) */
+  const ySFD_base = 205, hSFD_scale = 36 / (Vmax || 1);
+  sBeam += T(15, 160, '2. Shear Force Diagram (SFD)', { size:TS.label, weight:'700', color:P.act });
+  sBeam += `<line x1="${xA_px}" y1="${ySFD_base}" x2="${xB_px}" y2="${ySFD_base}" stroke="${P.mute}" stroke-width="1.2"/>`;
+
+  let sfdPts = [`${xA_px},${ySFD_base}`];
+  const steps = 60;
+  for (let i = 0; i <= steps; i++) {
+    const x_samp = (L * i) / steps;
+    const v_samp = V_func(x_samp);
+    const px = mapX(x_samp);
+    const py = ySFD_base - v_samp * hSFD_scale;
+    sfdPts.push(`${px.toFixed(1)},${py.toFixed(1)}`);
+  }
+  sfdPts.push(`${xB_px},${ySFD_base}`);
+  sBeam += `<polygon points="${sfdPts.join(' ')}" fill="${P.act}" fill-opacity="0.18" stroke="${P.act}" stroke-width="1.6"/>`;
+  
+  // SFD key labels
+  sBeam += T(xA_px - 4, ySFD_base - RA * hSFD_scale, `+${RA.toFixed(1)}`, { size:TS.tiny, anchor:'end', color:P.act, weight:'700' });
+  sBeam += T(xB_px + 4, ySFD_base + RB * hSFD_scale + 4, `-${RB.toFixed(1)}`, { size:TS.tiny, anchor:'start', color:P.act, weight:'700' });
+  
+  // SFD current point
+  const curSFD_y = ySFD_base - Vx * hSFD_scale;
+  sBeam += `<circle cx="${curX_px}" cy="${curSFD_y}" r="4" fill="#9333ea"/>`;
+  sBeam += T(curX_px + 8, curSFD_y - 4, `V = ${Vx.toFixed(1)} kN`, { size:TS.tiny, color:'#9333ea', weight:'700' });
+
+  /* 3. BENDING MOMENT DIAGRAM BMD (y: 280 to 380) */
+  const yBMD_base = 365, hBMD_scale = 75 / (Mmax || 1);
+  sBeam += T(15, 280, '3. Bending Moment Diagram (BMD)', { size:TS.label, weight:'700', color:P.beam });
+  sBeam += `<line x1="${xA_px}" y1="${yBMD_base}" x2="${xB_px}" y2="${yBMD_base}" stroke="${P.mute}" stroke-width="1.2"/>`;
+
+  let bmdPts = [`${xA_px},${yBMD_base}`];
+  for (let i = 0; i <= steps; i++) {
+    const x_samp = (L * i) / steps;
+    const m_samp = M_func(x_samp);
+    const px = mapX(x_samp);
+    const py = yBMD_base - m_samp * hBMD_scale;
+    bmdPts.push(`${px.toFixed(1)},${py.toFixed(1)}`);
+  }
+  bmdPts.push(`${xB_px},${yBMD_base}`);
+  sBeam += `<polygon points="${bmdPts.join(' ')}" fill="${P.beam}" fill-opacity="0.20" stroke="${P.beam}" stroke-width="1.8"/>`;
+
+  // Maximum Moment callout
+  const px_mmax = mapX(x_Mmax), py_mmax = yBMD_base - Mmax * hBMD_scale;
+  sBeam += `<circle cx="${px_mmax}" cy="${py_mmax}" r="4" fill="${P.pt}"/>`;
+  sBeam += T(px_mmax, py_mmax - 6, `M_max = ${Mmax.toFixed(1)} kN·m`, { size:TS.tiny, anchor:'middle', color:P.pt, weight:'700' });
+
+  // Current Moment point
+  const curBMD_y = yBMD_base - Mx * hBMD_scale;
+  sBeam += `<circle cx="${curX_px}" cy="${curBMD_y}" r="4" fill="#9333ea"/>`;
+  sBeam += T(curX_px + 8, curBMD_y - 4, `M(x) = ${Mx.toFixed(1)} kN·m`, { size:TS.tiny, color:'#9333ea', weight:'700' });
+
+  document.getElementById('sim-svg-beam').innerHTML = svg(W_svg, H_svg, sBeam, 'Interactive Beam Loading, SFD, and BMD diagrams');
+
+  /* ================= BOTTOM SVG: CROSS-SECTION STRESSES ================= */
+  const W2 = 740, H2 = 210;
+  let sStress = `<rect width="${W2}" height="${H2}" fill="transparent"/>`;
+
+  const topY = 32, botY = 175, hSpan = botY - topY;
+  const scSecY = (y) => botY - (y / sec.H) * hSpan;
+
+  /* Column 1: Cross Section (cx = 110) */
+  const cx1 = 105;
+  sStress += T(cx1, 18, 'Cross-Section Geometry', { size:TS.note, anchor:'middle', weight:'700' });
+  
+  if (secType === 'circ') {
+    const r = hSpan / 2;
+    sStress += `<circle cx="${cx1}" cy="${(topY + botY)/2}" r="${r}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.6"/>`;
+  } else {
+    sec.rects.forEach(r => {
+      const rw = (r.w / sec.bf) * 70;
+      const ry = scSecY(r.y0 + r.h);
+      const rh = (r.h / sec.H) * hSpan;
+      sStress += `<rect x="${cx1 - rw/2}" y="${ry}" width="${rw}" height="${rh}" fill="${P.beamF}" stroke="${P.beam}" stroke-width="1.4"/>`;
+    });
+  }
+
+  // NA line
+  const naY = scSecY(sec.yb);
+  sStress += `<line x1="${cx1 - 55}" y1="${naY}" x2="${cx1 + 55}" y2="${naY}" stroke="${P.act}" stroke-width="1.6" stroke-dasharray="5 3"/>`;
+  sStress += T(cx1 - 60, naY + 3, 'NA', { size:TS.tiny, anchor:'end', color:P.act, weight:'700' });
+  sStress += T(cx1, botY + 18, `${sec.name}`, { size:TS.tiny, anchor:'middle', color:P.mute });
+
+  // Action indicators at this cross section
+  sStress += arrow(cx1 + 45, topY - 14, cx1 + 45, topY + 6, 'pt', 2.0);
+  sStress += T(cx1 + 50, topY - 5, `V = ${Math.abs(Vx).toFixed(1)} kN ↓`, { size:TS.tiny, color:P.pt, weight:'700' });
+
+  /* Column 2: Bending Stress Distribution (cx = 360) */
+  const cx2 = 360;
+  sStress += T(cx2, 18, 'Normal Bending Stress σ(y)', { size:TS.note, anchor:'middle', weight:'700', color:P.pt });
+  sStress += `<line x1="${cx2}" y1="${topY}" x2="${cx2}" y2="${botY}" stroke="${P.mute}" stroke-width="1.2"/>`;
+  sStress += `<line x1="${cx2 - 80}" y1="${naY}" x2="${cx2 + 80}" y2="${naY}" stroke="${P.act}" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+  
+  const w_sig_top = Math.min(75, (sigma_top / 50) * 60);
+  const w_sig_bot = Math.min(75, (sigma_bot / 50) * 60);
+
+  if (Math.abs(Mx) > 0.01) {
+    // Compression top (left)
+    sStress += `<polygon points="${cx2},${naY} ${cx2 - w_sig_top},${topY} ${cx2},${topY}" fill="${P.pt}" fill-opacity="0.22" stroke="${P.pt}" stroke-width="1.6"/>`;
+    sStress += arrow(cx2, topY, cx2 - w_sig_top, topY, 'pt', 1.8);
+    sStress += arrow(cx2, topY + (naY - topY)/2, cx2 - w_sig_top/2, topY + (naY - topY)/2, 'pt', 1.4);
+    sStress += T(cx2 - w_sig_top - 6, topY + 4, `← σ_c = ${sigma_top.toFixed(2)} MPa`, { size:TS.tiny, anchor:'end', color:P.pt, weight:'700' });
+
+    // Tension bottom (right)
+    sStress += `<polygon points="${cx2},${naY} ${cx2 + w_sig_bot},${botY} ${cx2},${botY}" fill="${P.rx}" fill-opacity="0.22" stroke="${P.rx}" stroke-width="1.6"/>`;
+    sStress += arrow(cx2, botY, cx2 + w_sig_bot, botY, 'rx', 1.8);
+    sStress += arrow(cx2, naY + (botY - naY)/2, cx2 + w_sig_bot/2, naY + (botY - naY)/2, 'rx', 1.4);
+    sStress += T(cx2 + w_sig_bot + 6, botY + 4, `σ_t = ${sigma_bot.toFixed(2)} MPa →`, { size:TS.tiny, anchor:'start', color:P.rx, weight:'700' });
+  } else {
+    sStress += T(cx2, (topY + botY)/2, 'σ = 0 (Zero Moment at this section)', { size:TS.tiny, anchor:'middle', color:P.mute });
+  }
+  sStress += T(cx2, botY + 18, 'Linear: σ = M(x)·y / I (Zero at NA)', { size:TS.tiny, anchor:'middle', color:P.mute });
+
+  /* Column 3: Shear Stress Distribution (cx = 590) */
+  const cx3 = 590;
+  sStress += T(cx3, 18, 'Transverse Shear Stress τ(y)', { size:TS.note, anchor:'middle', weight:'700', color:P.act });
+  sStress += `<line x1="${cx3}" y1="${topY}" x2="${cx3}" y2="${botY}" stroke="${P.mute}" stroke-width="1.2"/>`;
+  sStress += `<line x1="${cx3 - 10}" y1="${naY}" x2="${cx3 + 90}" y2="${naY}" stroke="${P.act}" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+
+  if (Math.abs(Vx) > 0.01) {
+    const w_tau = Math.min(80, (tau_max / 15) * 65);
+    let tauPts = [];
+    tauPts.push(`${cx3},${botY}`);
+
+    if (secType === 'isec') {
+      const yF1 = scSecY(sec.tf), yF2 = scSecY(sec.H - sec.tf);
+      const w_flange_jump = w_tau * (sec.tw / sec.bf);
+      for (let y = botY; y >= yF1; y -= 4) tauPts.push(`${(cx3 + w_flange_jump * (1 - Math.pow((y - naY)/(botY - naY), 2))).toFixed(1)},${y}`);
+      tauPts.push(`${(cx3 + w_flange_jump).toFixed(1)},${yF1}`);
+      tauPts.push(`${(cx3 + w_tau * 0.78).toFixed(1)},${yF1}`);
+      for (let y = yF1; y >= yF2; y -= 6) tauPts.push(`${(cx3 + w_tau * (1 - 0.22 * Math.pow((y - naY)/(yF1 - naY), 2))).toFixed(1)},${y}`);
+      tauPts.push(`${(cx3 + w_tau * 0.78).toFixed(1)},${yF2}`);
+      tauPts.push(`${(cx3 + w_flange_jump).toFixed(1)},${yF2}`);
+      for (let y = yF2; y >= topY; y -= 4) tauPts.push(`${(cx3 + w_flange_jump * (1 - Math.pow((y - naY)/(topY - naY), 2))).toFixed(1)},${y}`);
+    } else {
+      for (let y = botY; y >= topY; y -= 5) {
+        const u = (y - naY) / (hSpan / 2);
+        const factor = Math.max(0, 1 - u * u);
+        tauPts.push(`${(cx3 + w_tau * factor).toFixed(1)},${y}`);
+      }
+    }
+    tauPts.push(`${cx3},${topY}`);
+    sStress += `<polygon points="${tauPts.join(' ')}" fill="${P.act}" fill-opacity="0.22" stroke="${P.act}" stroke-width="1.8"/>`;
+    
+    // Arrows at NA
+    sStress += arrow(cx3, naY, cx3 + w_tau, naY, 'act', 2.0);
+    sStress += `<circle cx="${cx3 + w_tau}" cy="${naY}" r="3.5" fill="${P.act}"/>`;
+    sStress += T(cx3 + w_tau + 8, naY + 4, `τ_max = ${tau_max.toFixed(2)} MPa →`, { size:TS.tiny, color:P.act, weight:'700' });
+  } else {
+    sStress += T(cx3, (topY + botY)/2, 'τ = 0 (Zero Shear in Pure Bending)', { size:TS.tiny, anchor:'middle', color:P.mute });
+  }
+  sStress += T(cx3, botY + 18, 'Parabolic: τ = V(x)·Q / (I·b) (Peak at NA)', { size:TS.tiny, anchor:'middle', color:P.mute });
+
+  document.getElementById('sim-svg-stress').innerHTML = svg(W2, H2, sStress, 'Cross-Section normal and shear stress distributions');
+}
+
 /* ================= INIT ================= */
 window.addEventListener('DOMContentLoaded', () => {
   if (store.get('som3_theme') === 'dark') {
@@ -2913,9 +4577,10 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('theme-icon').className = 'fas fa-sun';
   }
   renderFigures();
-  initNav(); initSP(); initDZ(); initFB(); initM16(); initLab(); initM18();
+  initNav(); initSP(); initDZ(); initM11Shear(); initM12Shear(); initM13Shear(); initM14Shear(); initFB(); initM16(); initLab(); initM18();
   newStrongRound(); initMatch(); newHunt(); initMemory();
   initCmap(); initM22(); initM23(); initLevels(); initTeacherFiles();
+  updateLoadingStudio();
 
   document.getElementById('mobile-menu-btn').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('-translate-x-full'));
   document.getElementById('ai-tutor-btn').addEventListener('click', () => document.getElementById('ai-tutor-panel').classList.toggle('hidden'));

@@ -100,25 +100,34 @@ tailwind.config = {
 
 <!-- ============ TOP BAR ============ -->
 <header class="bg-white dark:bg-gray-800 shadow-sm z-30 flex-shrink-0">
-  <div class="px-4 sm:px-6 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2">
+  <div class="px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0">
         <i class="fas fa-bars text-lg"></i>
       </button>
-      <div>
-        <p class="eyebrow leading-none">Interactive Learning Module</p>
-        <h1 class="text-lg font-bold leading-tight text-brand-900 dark:text-brand-200">Strength of Materials &middot; Unit 2</h1>
+
+      <!-- Return to Home Link -->
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/60 text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-brand-300 hover:border-brand-500 hover:bg-white dark:hover:bg-gray-700 transition shrink-0 min-h-[40px] text-xs font-semibold shadow-2xs group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500" title="Return to Course Home / Syllabus" aria-label="Return to Course Home">
+        <i class="fas fa-house text-brand-500 text-xs sm:text-sm group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+        <span class="font-bold">Home</span>
+      </a>
+
+      <div class="h-6 w-px bg-gray-200 dark:bg-gray-700 shrink-0 hidden sm:block"></div>
+
+      <div class="min-w-0">
+        <p class="eyebrow leading-none truncate text-[10px] sm:text-xs">Interactive Learning Module</p>
+        <h1 class="text-xs sm:text-base md:text-lg font-bold leading-tight text-brand-900 dark:text-brand-200 truncate">Strength of Materials &middot; Unit 2</h1>
       </div>
     </div>
 
-    <div class="flex items-center gap-3 sm:gap-5">
+    <div class="flex items-center gap-2 sm:gap-5 shrink-0">
       <div class="hidden sm:flex flex-col items-end">
         <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400">Modules visited <span id="progress-label" class="num">0/26</span></span>
         <div class="w-36 h-1.5 bg-gray-200 rounded-full mt-1 dark:bg-gray-700">
           <div id="progress-bar" class="h-1.5 bg-brand-500 rounded-full transition-all" style="width:0%"></div>
         </div>
       </div>
-      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition">
+      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition min-h-[44px] min-w-[44px] flex items-center justify-center">
         <i id="theme-icon" class="fas fa-moon"></i>
       </button>
     </div>
@@ -128,8 +137,18 @@ tailwind.config = {
 <div class="flex-1 flex overflow-hidden">
 
   <!-- ============ SIDEBAR ============ -->
-  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full">
-    <nav class="p-3 space-y-0.5" id="nav-menu" aria-label="Module list"></nav>
+  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full flex flex-col">
+    <!-- Home / Syllabus link at top of sidebar -->
+    <div class="p-3 pb-2 border-b border-gray-100 dark:border-gray-700/80 sticky top-0 bg-white dark:bg-gray-800 z-10">
+      <a href="index.html" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-600 font-semibold text-xs transition border border-brand-200/80 dark:border-brand-800/80 group shadow-2xs" title="Return to Course Home / Syllabus">
+        <span class="flex items-center gap-2">
+          <i class="fas fa-arrow-left text-[11px] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true"></i>
+          <span>Course Home</span>
+        </span>
+        <i class="fas fa-house text-xs opacity-80" aria-hidden="true"></i>
+      </a>
+    </div>
+    <nav class="p-3 space-y-0.5 flex-1" id="nav-menu" aria-label="Module list"></nav>
   </aside>
 
   <!-- ============ CONTENT ============ -->
@@ -282,7 +301,8 @@ tailwind.config = {
 
   <div class="card mb-5">
     <p class="mb-4">For finding reactions, every distributed load may be replaced by a single resultant equal to the <b>area of the load diagram</b>, acting through its <b>centroid</b>. Use the resultant for reactions only — never for computing shear or moment inside the loaded region, where the load must be treated as it actually is.</p>
-<figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="loadtypes" data-num="5.1" data-cap="Load types, with the violet arrow marking where each resultant acts"></figure>    <table class="data">
+    <figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="loadtypes" data-num="5.1" data-cap="Standard beam load types with support reactions (green) and centroidal resultants (violet) for finding equilibrium"></figure>
+    <table class="data">
       <tr><th>Load</th><th>Diagram</th><th>Resultant</th><th>Acts at</th></tr>
       <tr><td>Point load W</td><td>Arrow</td><td class="num">W</td><td>At its own position</td></tr>
       <tr><td>UDL, intensity w over length a</td><td>Rectangle</td><td class="num">w·a</td><td>Mid-length of a</td></tr>
@@ -293,15 +313,49 @@ tailwind.config = {
   </div>
 
   <div class="card mb-5">
+    <h3 class="text-xl font-bold mb-3">Free body diagrams for each load type</h3>
+    <p class="text-sm mb-4 text-gray-700 dark:text-gray-300">
+      To calculate support reactions, we isolate the beam as a <b>free body</b>, removing external supports and replacing them with reaction vectors (\(R_A, R_B\)) or fixed-end moments (\(M_A\)). For distributed loads, the <b>equivalent free body diagram</b> replaces the continuous load block with a concentrated resultant \(R\) acting through its centroid, allowing direct application of static equilibrium: \(\sum F_y = 0\) and \(\sum M = 0\).
+    </p>
+    <figure class="my-5 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="load_fbds" data-num="5.2" data-cap="Free Body Diagrams: Actual loading compared directly with the equivalent resultant system for calculating reactions"></figure>
+
+    <!-- Interactive Free Body Diagram Explorer -->
+    <div class="mt-6 pt-5 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+        <h4 class="font-bold text-base"><i class="fas fa-arrows-to-dot mr-1.5 text-brand-600"></i> Interactive Free Body Diagram Explorer</h4>
+        <span class="text-xs px-2.5 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900 text-brand-800 dark:text-brand-200 font-semibold">Live Equilibrium Engine</span>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Select a load case to inspect its isolated free body diagram, centroid location, and equilibrium equations:</p>
+      <div class="flex flex-wrap gap-2 mb-4" id="fbd-tabs">
+        <button type="button" onclick="showFbdCase(0)" class="fbd-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold border transition border-brand-500 bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300" data-idx="0">Point load (W)</button>
+        <button type="button" onclick="showFbdCase(1)" class="fbd-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold border transition border-gray-300 dark:border-gray-600 hover:border-brand-500 text-gray-700 dark:text-gray-300" data-idx="1">UDL (w)</button>
+        <button type="button" onclick="showFbdCase(2)" class="fbd-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold border transition border-gray-300 dark:border-gray-600 hover:border-brand-500 text-gray-700 dark:text-gray-300" data-idx="2">UVL (0 to w)</button>
+        <button type="button" onclick="showFbdCase(3)" class="fbd-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold border transition border-gray-300 dark:border-gray-600 hover:border-brand-500 text-gray-700 dark:text-gray-300" data-idx="3">Trapezoidal load</button>
+        <button type="button" onclick="showFbdCase(4)" class="fbd-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold border transition border-gray-300 dark:border-gray-600 hover:border-brand-500 text-gray-700 dark:text-gray-300" data-idx="4">Applied couple (M₀)</button>
+        <button type="button" onclick="showFbdCase(5)" class="fbd-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold border transition border-gray-300 dark:border-gray-600 hover:border-brand-500 text-gray-700 dark:text-gray-300" data-idx="5">Cantilever with UDL</button>
+      </div>
+      <div id="fbd-interactive-fig" class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700"></div>
+      <div id="fbd-interactive-notes" class="mt-3 p-3 rounded bg-blue-50 dark:bg-blue-900/20 text-xs text-blue-900 dark:text-blue-200"></div>
+    </div>
+  </div>
+
+  <div class="card mb-5">
     <h3 class="text-xl font-bold mb-3">Resultant calculator</h3>
-    <div class="grid sm:grid-cols-3 gap-4">
+    <div class="grid sm:grid-cols-4 gap-3">
       <div><label class="text-sm block mb-1" for="rc-type">Load type</label>
-        <select id="rc-type" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+        <select id="rc-type" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 text-sm">
           <option value="udl">UDL</option><option value="uvl">UVL, zero at left</option><option value="trap">Trapezoidal</option>
         </select></div>
-      <div><label class="text-sm block mb-1" id="rc-l1" for="rc-w1">Intensity w (kN/m)</label><input id="rc-w1" type="number" value="10" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
-      <div id="rc-wrap2" class="hidden"><label class="text-sm block mb-1" for="rc-w2">w₂ at right (kN/m)</label><input id="rc-w2" type="number" value="20" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
-      <div><label class="text-sm block mb-1" for="rc-a">Length a (m)</label><input id="rc-a" type="number" value="4" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600"></div>
+      <div><label class="text-sm block mb-1" id="rc-l1" for="rc-w1">Intensity w (kN/m)</label><input id="rc-w1" type="number" value="10" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600 text-sm"></div>
+      <div id="rc-wrap2" class="hidden"><label class="text-sm block mb-1" for="rc-w2">w₂ at right (kN/m)</label><input id="rc-w2" type="number" value="20" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600 text-sm"></div>
+      <div><label class="text-sm block mb-1" for="rc-a">Length a (m)</label><input id="rc-a" type="number" value="4" class="w-full p-2 border rounded num dark:bg-gray-700 dark:border-gray-600 text-sm"></div>
+      <div class="sm:col-span-4">
+        <label class="text-xs font-semibold block mb-1 text-gray-600 dark:text-gray-300">Load direction (Arrow keys / toggle)</label>
+        <div class="inline-flex rounded-md shadow-2xs" role="group">
+          <button type="button" id="rc-dir-down" onclick="setRcDir('down')" class="px-3 py-1.5 text-xs font-bold rounded-l border border-amber-400 bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200 flex items-center gap-1.5 transition" title="Downward gravity load (↓)"><i class="fas fa-arrow-down"></i> Downward (Gravity)</button>
+          <button type="button" id="rc-dir-up" onclick="setRcDir('up')" class="px-3 py-1.5 text-xs font-bold rounded-r border-t border-b border-r border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center gap-1.5 transition" title="Upward uplift load (↑)"><i class="fas fa-arrow-up"></i> Upward (Uplift / Reaction)</button>
+        </div>
+      </div>
     </div>
     <div id="rc-fig" class="mt-4"></div>
     <div id="rc-out" class="mt-2"></div>
@@ -756,13 +810,14 @@ tailwind.config = {
         <button onclick="addLoad('udl')" class="text-xs px-2.5 py-1.5 rounded border dark:border-gray-600 hover:border-brand-500">+ UDL</button>
         <button onclick="addLoad('moment')" class="text-xs px-2.5 py-1.5 rounded border dark:border-gray-600 hover:border-brand-500">+ Couple</button>
       </div>
-      <p class="text-xs text-gray-500 mt-3">Downward loads and clockwise couples are entered as positive. Shear uses left-up-positive; moment is positive when sagging.</p>
+      <p class="text-xs text-gray-500 mt-3">Toggle direction arrow keys (<b>↓ Down</b> / <b>↑ Up</b> / <b>↻ CW</b> / <b>↺ CCW</b>) on each load row to test upward uplift forces, soil reactions, and moments.</p>
 
       <div class="mt-4 flex flex-wrap gap-2">
-        <button onclick="loadPreset('ssudl')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">SS + UDL</button>
-        <button onclick="loadPreset('overhang')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">Overhang</button>
-        <button onclick="loadPreset('cant')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">Cantilever</button>
-        <button onclick="loadPreset('mixed')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">UDL + point</button>
+        <button onclick="loadPreset('ssudl')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">SS + UDL</button>
+        <button onclick="loadPreset('overhang')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">Overhang</button>
+        <button onclick="loadPreset('cant')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">Cantilever</button>
+        <button onclick="loadPreset('mixed')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">UDL + point</button>
+        <button onclick="loadPreset('uplift')" class="text-xs px-2.5 py-1.5 rounded bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-100">Uplift / Up ↑</button>
       </div>
     </div>
 
@@ -789,12 +844,43 @@ tailwind.config = {
       <div>
         <label class="flex justify-between text-sm mb-1"><span>Span L</span><span class="num font-bold text-brand-600" id="s18-L-l">6.0 m</span></label>
         <input id="s18-L" type="range" min="20" max="120" value="60" class="slider-custom mb-3">
-        <label class="flex justify-between text-sm mb-1"><span>Point load W</span><span class="num font-bold text-brand-600" id="s18-W-l">40 kN</span></label>
+
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-sm font-medium">Point load W</span>
+          <div class="flex items-center gap-2">
+            <span class="num font-bold text-brand-600 text-sm" id="s18-W-l">40 kN ↓</span>
+            <div class="inline-flex rounded-md shadow-2xs" role="group">
+              <button type="button" id="s18-dir-down" onclick="setS18LoadDir('down')" class="px-2 py-0.5 text-xs font-bold rounded-l border border-amber-400 bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200" title="Downward force (↓)">↓ Down</button>
+              <button type="button" id="s18-dir-up" onclick="setS18LoadDir('up')" class="px-2 py-0.5 text-xs font-bold rounded-r border-t border-b border-r border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" title="Upward force (↑)">↑ Up</button>
+            </div>
+          </div>
+        </div>
         <input id="s18-W" type="range" min="0" max="120" value="40" class="slider-custom mb-3">
-        <label class="flex justify-between text-sm mb-1"><span>Position of W from A</span><span class="num font-bold text-brand-600" id="s18-a-l">2.0 m</span></label>
+
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-sm font-medium">Position of W from A</span>
+          <div class="flex items-center gap-2">
+            <span class="num font-bold text-brand-600 text-sm" id="s18-a-l">2.0 m</span>
+            <div class="inline-flex rounded-md shadow-2xs">
+              <button type="button" onclick="nudgeS18Pos(-5)" class="px-2 py-0.5 text-xs font-bold rounded-l border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-brand-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300" title="Nudge load left (◄ Arrow key)">◄ Left</button>
+              <button type="button" onclick="nudgeS18Pos(5)" class="px-2 py-0.5 text-xs font-bold rounded-r border-t border-b border-r border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-brand-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300" title="Nudge load right (► Arrow key)">Right ►</button>
+            </div>
+          </div>
+        </div>
         <input id="s18-a" type="range" min="0" max="100" value="33" class="slider-custom mb-3">
-        <label class="flex justify-between text-sm mb-1"><span>UDL intensity w</span><span class="num font-bold text-brand-600" id="s18-w-l">10 kN/m</span></label>
-        <input id="s18-w" type="range" min="0" max="40" value="10" class="slider-custom">
+
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-sm font-medium">UDL intensity w</span>
+          <div class="flex items-center gap-2">
+            <span class="num font-bold text-brand-600 text-sm" id="s18-w-l">10 kN/m ↓</span>
+            <div class="inline-flex rounded-md shadow-2xs" role="group">
+              <button type="button" id="s18-udl-dir-down" onclick="setS18UdlDir('down')" class="px-2 py-0.5 text-xs font-bold rounded-l border border-amber-400 bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200" title="Downward UDL (Gravity)">↓ Down</button>
+              <button type="button" id="s18-udl-dir-up" onclick="setS18UdlDir('up')" class="px-2 py-0.5 text-xs font-bold rounded-r border-t border-b border-r border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" title="Upward UDL (Uplift)">↑ Up</button>
+            </div>
+          </div>
+        </div>
+        <input id="s18-w" type="range" min="0" max="40" value="10" class="slider-custom mb-2">
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-2 flex items-center gap-1.5"><i class="fas fa-keyboard text-brand-500"></i> Tip: Use keyboard <b>◄ / ► arrow keys</b> on the slider or click buttons to glide the load along the beam.</p>
       </div>
       <div class="space-y-2 text-sm">
         <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Reaction R<sub>A</sub></span><span class="num font-bold" id="s18-RA">—</span></div>
@@ -805,6 +891,8 @@ tailwind.config = {
         <div class="flex justify-between p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><span>Required section modulus at 165 MPa</span><span class="num font-bold" id="s18-Z">—</span></div>
       </div>
     </div>
+    <!-- Live Beam Diagram in Simulation -->
+    <div id="s18-beam-sketch" class="mt-4 mb-2 p-2 rounded-xl bg-gray-50/70 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700"></div>
     <div class="grid md:grid-cols-2 gap-5 mt-5">
       <div class="h-48"><canvas id="s18-sfd"></canvas></div>
       <div class="h-48"><canvas id="s18-bmd"></canvas></div>
@@ -1143,8 +1231,13 @@ tailwind.config = {
   </div>
 </div>
 
-<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2.5 text-center text-xs text-gray-500 dark:text-gray-400 flex-shrink-0 z-10">
-  Prepared by <strong>D. Mandal</strong>, Assistant Professor, Department of Civil Engineering &nbsp;|&nbsp; &copy; 2026
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2.5 px-4 text-center text-xs text-gray-500 dark:text-gray-400 flex-shrink-0 z-10 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+  <span>Prepared by <strong>D. Mandal</strong>, Dept. of Civil Engineering &nbsp;|&nbsp; &copy; 2026</span>
+  <span class="text-gray-300 dark:text-gray-600 hidden sm:inline">&bull;</span>
+  <a href="index.html" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 font-semibold hover:underline">
+    <i class="fas fa-house text-[11px]" aria-hidden="true"></i>
+    <span>Return to Course Home</span>
+  </a>
 </footer>
 
 <script>
@@ -1629,6 +1722,19 @@ function udl(x1, x2, yTop, yBot, n) {
   }
   return s;
 }
+function udlWithArrows(x1, x2, yTop, yBot, isUp, n) {
+  n = n || Math.max(3, Math.round((x2 - x1) / 30));
+  let s = `<rect x="${x1}" y="${yTop}" width="${x2-x1}" height="${yBot-yTop}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>`;
+  for (let i = 0; i <= n; i++) {
+    const x = x1 + (x2 - x1) * i / n;
+    if (isUp) {
+      s += `<line x1="${x}" y1="${yBot-1}" x2="${x}" y2="${yTop+4}" stroke="${P.load}" stroke-width="1.2" marker-end="url(#a-load)"/>`;
+    } else {
+      s += `<line x1="${x}" y1="${yTop+1}" x2="${x}" y2="${yBot-4}" stroke="${P.load}" stroke-width="1.2" marker-end="url(#a-load)"/>`;
+    }
+  }
+  return s;
+}
 function tri(x1, x2, yTop, yBot, peakRight) {
   const p = peakRight ? `${x1},${yBot} ${x2},${yTop} ${x2},${yBot}` : `${x1},${yTop} ${x1},${yBot} ${x2},${yBot}`;
   return `<polygon points="${p}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>`;
@@ -1854,39 +1960,100 @@ FIG.beamtypes = (() => {
 /* ============ MODULE 5 ============ */
 FIG.loadtypes = (() => {
   const cell = (i, title, art, n1, n2) => {
-    const cx = 16 + (i % 3) * 200, cy = ((i / 3) | 0) * 156;
+    const cx = 16 + (i % 3) * 200, cy = ((i / 3) | 0) * 168;
     return `<g transform="translate(${cx},${cy})">` +
       T(92, 16, title, { size:TS.label, anchor:'middle', weight:'700' }) + art +
-      T(92, 122, n1, { size:TS.note, anchor:'middle', color:P.mute }) +
-      (n2 ? T(92, 135, n2, { size:TS.note, anchor:'middle', color:P.mute }) : '') + '</g>';
+      T(92, 134, n1, { size:TS.note, anchor:'middle', color:P.mute }) +
+      (n2 ? T(92, 147, n2, { size:TS.note, anchor:'middle', color:P.mute }) : '') + '</g>';
   };
-  const bar = beamBar(12, 88, 160, 9);
+  const bar = beamBar(12, 80, 160, 8);
+  const rx = (raLabel, rbLabel, raDown) => {
+    let r = '';
+    if (raDown) {
+      r += arrow(20, 88, 20, 114, 'rx', 1.8) + T(20, 124, raLabel || 'R_A ↓', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+    } else {
+      r += arrow(20, 114, 20, 88, 'rx', 1.8) + T(20, 124, raLabel || 'R_A', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+    }
+    r += arrow(164, 114, 164, 88, 'rx', 1.8) + T(164, 124, rbLabel || 'R_B', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+    return r;
+  };
   let s = '';
   s += cell(0, 'Point load',
-    bar + arrow(92, 46, 92, 84, 'pt') + T(92, 40, 'W', { size:TS.label, anchor:'middle', color:P.pt, weight:'700' }),
-    'The resultant is W itself,', 'acting at its own position');
+    bar + rx('W·b/L', 'W·a/L') + arrow(92, 42, 92, 76, 'pt', 2.1) + T(92, 36, 'W', { size:TS.label, anchor:'middle', color:P.pt, weight:'700' }),
+    'The resultant is W itself,', 'Reactions balance W: R_A + R_B = W');
   s += cell(1, 'UDL, intensity w',
-    udl(12, 172, 62, 84) + bar + arrow(92, 46, 92, 58, 'act') + T(92, 40, 'R = w·a', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }) + dimH(12, 92, 108, 'a/2'),
-    'Rectangle of load, so the', 'resultant sits at the mid-length');
+    udl(12, 172, 54, 76) + bar + rx('wa/2', 'wa/2') + arrow(92, 38, 92, 50, 'act', 2.1) + T(92, 32, 'R = w·a', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }) + dimH(12, 92, 98, 'a/2'),
+    'Rectangle of load, centroid at a/2,', 'Reactions: R_A = R_B = w·a / 2');
   s += cell(2, 'UVL, zero to w',
-    tri(12, 172, 60, 84, true) + bar + arrow(118.7, 46, 118.7, 58, 'act') + T(118.7, 40, 'R = ½w·a', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }) + dimH(118.7, 172, 108, 'a/3'),
-    'Triangle of load, so the resultant', 'sits a/3 from the wide end');
+    tri(12, 172, 50, 76, true) + bar + rx('wa/6', 'wa/3') + arrow(118.7, 38, 118.7, 50, 'act', 2.1) + T(118.7, 32, 'R = ½w·a', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }) + dimH(118.7, 172, 98, 'a/3'),
+    'Triangle of load, centroid a/3 from base,', 'Reactions: R_B = wa/3, R_A = wa/6');
   s += cell(3, 'Trapezoidal',
-    `<polygon points="12,84 12,70 172,54 172,84" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>` + bar +
-    `<line x1="98" y1="56" x2="98" y2="84" stroke="${P.load}" stroke-width="1" stroke-dasharray="3 2"/>` +
-    T(52, 48, 'rectangle', { size:TS.tiny, anchor:'middle', color:P.load }) + T(140, 42, 'triangle', { size:TS.tiny, anchor:'middle', color:P.load }),
-    'Split into two simple shapes,', 'then combine the two resultants');
+    `<polygon points="12,76 12,62 172,46 172,76" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.4"/>` + bar + rx('R_A', 'R_B') +
+    `<line x1="98" y1="50" x2="98" y2="76" stroke="${P.load}" stroke-width="1" stroke-dasharray="3 2"/>` +
+    T(52, 42, 'rectangle', { size:TS.tiny, anchor:'middle', color:P.load }) + T(140, 36, 'triangle', { size:TS.tiny, anchor:'middle', color:P.load }),
+    'Split into rectangle + triangle,', 'R = ½(w₁ + w₂)a acting at centroid');
   s += cell(4, 'Applied couple',
-    bar + `<path d="M74,68 A19,19 0 1 1 108,62" fill="none" stroke="${P.act}" stroke-width="2.1" marker-end="url(#a-act)"/>` +
-    T(92, 40, 'M₀', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }),
-    'No vertical force at all —', 'enters ΣM but never ΣF');
+    bar + rx('M₀/L ↓', 'M₀/L ↑', true) +
+    `<path d="M74,60 A19,19 0 1 1 108,54" fill="none" stroke="${P.act}" stroke-width="2.1" marker-end="url(#a-act)"/>` +
+    T(92, 34, 'M₀', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }),
+    'No vertical force at all (ΣF_y = 0),', 'Reactions form couple: R_B · L = M₀');
   s += cell(5, 'Several point loads',
-    bar + arrow(46, 52, 46, 84, 'pt', 1.7) + arrow(92, 52, 92, 84, 'pt', 1.7) + arrow(138, 52, 138, 84, 'pt', 1.7) +
-    T(46, 46, 'W₁', { size:TS.note, anchor:'middle', color:P.pt }) + T(92, 46, 'W₂', { size:TS.note, anchor:'middle', color:P.pt }) + T(138, 46, 'W₃', { size:TS.note, anchor:'middle', color:P.pt }),
-    'Handled one at a time —', 'their effects simply superpose');
-  s += rule(318);
-  s += T(310, 338, 'Violet marks a resultant. Use it to find reactions only, never to find V or M inside the loaded length.', { size:TS.note, anchor:'middle', color:P.mute });
-  return svg(620, 350, s, 'The load types with the position of each resultant');
+    bar + rx('R_A', 'R_B') + arrow(46, 44, 46, 76, 'pt', 1.7) + arrow(92, 44, 92, 76, 'pt', 1.7) + arrow(138, 44, 138, 76, 'pt', 1.7) +
+    T(46, 38, 'W₁', { size:TS.note, anchor:'middle', color:P.pt }) + T(92, 38, 'W₂', { size:TS.note, anchor:'middle', color:P.pt }) + T(138, 38, 'W₃', { size:TS.note, anchor:'middle', color:P.pt }),
+    'Superpose each point load effect,', 'Resultant R = W₁ + W₂ + W₃');
+  s += rule(348);
+  s += T(310, 366, 'Green arrows mark support reactions. Violet arrows mark equivalent resultants acting through load centroids.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 378, s, 'The standard beam load types with support reactions and resultant positions');
+})();
+
+FIG.load_fbds = (() => {
+  let s = T(16, 20, 'Free body diagrams & equivalent resultants for finding reactions', { size:TS.title, weight:'700' });
+  s += T(16, 35, 'Left: Physical beam with applied loads | Right: Isolated free body diagram with reactions and equivalent resultant', { size:TS.note, color:P.mute });
+
+  const row = (y, num, name, loadArtL, fbdArtR, eq1, eq2) => {
+    let r = `<g transform="translate(0,${y})">`;
+    r += `<rect x="12" y="0" width="596" height="102" rx="6" fill="rgba(148,163,184,0.06)" stroke="${P.mute}" stroke-width="0.8"/>`;
+    r += T(22, 16, num + '. ' + name, { size:TS.note, weight:'700', color:P.beam });
+    r += T(85, 30, 'Physical Loading', { size:TS.tiny, anchor:'middle', color:P.mute, style:'italic' });
+    r += `<g transform="translate(18, 0)">` + loadArtL + `</g>`;
+    r += `<line x1="288" y1="12" x2="288" y2="92" stroke="${P.mute}" stroke-width="0.8" stroke-dasharray="2 2"/>`;
+    r += `<path d="M280,52 L296,52" stroke="${P.act}" stroke-width="1.6" marker-end="url(#a-act)"/>`;
+    r += T(288, 44, 'FBD', { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' });
+    r += T(395, 30, 'Equivalent Free Body Diagram', { size:TS.tiny, anchor:'middle', color:P.rx, style:'italic' });
+    r += `<g transform="translate(295, 0)">` + fbdArtR + `</g>`;
+    r += `<g transform="translate(485, 18)">`;
+    r += `<rect x="0" y="0" width="115" height="74" rx="4" fill="rgba(22,163,74,0.08)" stroke="${P.rx}" stroke-width="0.8"/>`;
+    r += T(6, 16, 'Equilibrium:', { size:TS.tiny, weight:'700', color:P.rx });
+    r += T(6, 34, eq1, { size:TS.tiny, color:P.rx });
+    r += T(6, 52, eq2, { size:TS.tiny, color:P.rx });
+    r += `</g>`;
+    r += `</g>`;
+    return r;
+  };
+
+  // Row 1: Point load
+  const pL_left = beamBar(10, 52, 190, 8) + symPin(10, 60) + symRoller(200, 60) + arrow(90, 30, 90, 50, 'pt', 2) + T(90, 24, 'W', { size:TS.tiny, anchor:'middle', color:P.pt, weight:'700' }) + dimH(10, 90, 78, 'a') + dimH(90, 200, 78, 'b');
+  const pL_right = beamBar(10, 52, 165, 8) + arrow(75, 30, 75, 50, 'pt', 2) + T(75, 24, 'W', { size:TS.tiny, anchor:'middle', color:P.pt, weight:'700' }) + arrow(10, 82, 10, 62, 'rx', 1.8) + T(10, 92, 'R_A=Wb/L', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' }) + arrow(175, 82, 175, 62, 'rx', 1.8) + T(175, 92, 'R_B=Wa/L', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+  s += row(46, '1', 'Concentrated Point Load', pL_left, pL_right, 'ΣF_y = R_A+R_B-W = 0', 'ΣM_A = R_B·L - W·a = 0');
+
+  // Row 2: UDL
+  const udl_left = udl(10, 200, 38, 50) + beamBar(10, 52, 190, 8) + symPin(10, 60) + symRoller(200, 60) + T(105, 32, 'w (kN/m)', { size:TS.tiny, anchor:'middle', color:P.load, weight:'700' });
+  const udl_right = beamBar(10, 52, 165, 8) + arrow(92.5, 30, 92.5, 50, 'act', 2.2) + T(92.5, 24, 'R = w·L', { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' }) + arrow(10, 82, 10, 62, 'rx', 1.8) + T(10, 92, 'R_A=wL/2', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' }) + arrow(175, 82, 175, 62, 'rx', 1.8) + T(175, 92, 'R_B=wL/2', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' }) + `<line x1="92.5" y1="60" x2="92.5" y2="76" stroke="${P.act}" stroke-width="1" stroke-dasharray="2 2"/>` + dimH(10, 92.5, 80, 'L/2');
+  s += row(154, '2', 'Uniformly Distributed Load (UDL)', udl_left, udl_right, 'R = w·L at L/2', 'R_A = R_B = wL / 2');
+
+  // Row 3: UVL (Triangular)
+  const uvl_left = tri(10, 200, 34, 50, true) + beamBar(10, 52, 190, 8) + symPin(10, 60) + symRoller(200, 60) + T(195, 28, 'w', { size:TS.tiny, anchor:'end', color:P.load, weight:'700' });
+  const uvl_right = beamBar(10, 52, 165, 8) + arrow(120, 30, 120, 50, 'act', 2.2) + T(120, 24, 'R = ½w·L', { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' }) + arrow(10, 82, 10, 62, 'rx', 1.8) + T(10, 92, 'R_A=wL/6', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' }) + arrow(175, 82, 175, 62, 'rx', 1.8) + T(175, 92, 'R_B=wL/3', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' }) + `<line x1="120" y1="60" x2="120" y2="76" stroke="${P.act}" stroke-width="1" stroke-dasharray="2 2"/>` + dimH(10, 120, 80, '2L/3');
+  s += row(262, '3', 'Uniformly Varying Load (UVL)', uvl_left, uvl_right, 'R = ½w·L at 2L/3', 'R_B = 2·R_A = wL/3');
+
+  // Row 4: Applied Couple
+  const cpl_left = beamBar(10, 52, 190, 8) + symPin(10, 60) + symRoller(200, 60) + `<path d="M95,40 A15,15 0 1 1 118,36" fill="none" stroke="${P.act}" stroke-width="2" marker-end="url(#a-act)"/>` + T(105, 22, 'M₀', { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' });
+  const cpl_right = beamBar(10, 52, 165, 8) + `<path d="M85,40 A15,15 0 1 1 108,36" fill="none" stroke="${P.act}" stroke-width="2" marker-end="url(#a-act)"/>` + T(95, 22, 'M₀', { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' }) + arrow(10, 62, 10, 82, 'rx', 1.8) + T(10, 92, 'R_A=M₀/L ↓', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' }) + arrow(175, 82, 175, 62, 'rx', 1.8) + T(175, 92, 'R_B=M₀/L ↑', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+  s += row(370, '4', 'Applied Concentrated Couple', cpl_left, cpl_right, 'ΣF_y = 0 ⟹ no net force', 'R_B·L = M₀ ⟹ R_A=R_B=M₀/L');
+
+  s += rule(480);
+  s += T(310, 494, 'Rule: Equivalent resultants determine support reactions ONLY. For internal V(x) and M(x), keep the original distributed load.', { size:TS.note, anchor:'middle', color:P.mute });
+  return svg(620, 506, s, 'Free body diagrams of beams under standard load types');
 })();
 
 /* ============ MODULE 6 ============ */
@@ -2136,26 +2303,62 @@ function renderFigures() {
 }
 
 /* ---------- live load diagram for the Module 5 calculator ---------- */
-function loadDiagramSVG(type, w1, w2, a, R, d) {
-  const X0 = 70, X1 = 490, yB = 128, H = 52, sc = v => X0 + (v / a) * (X1 - X0);
+function loadDiagramSVG(type, w1, w2, a, R, d, dir) {
+  const isUp = (dir === 'up');
+  const X0 = 70, X1 = 490, yB = isUp ? 100 : 120, H = 46, sc = v => X0 + (v / a) * (X1 - X0);
   let shape = '';
-  if (type === 'udl') shape = `<rect x="${X0}" y="${yB-H}" width="${X1-X0}" height="${H}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
-  else if (type === 'uvl') shape = `<polygon points="${X0},${yB} ${X1},${yB-H} ${X1},${yB}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
-  else {
-    const m = Math.max(w1, w2) || 1;
-    shape = `<polygon points="${X0},${yB} ${X0},${yB-H*(w1/m)} ${X1},${yB-H*(w2/m)} ${X1},${yB}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+  if (isUp) {
+    if (type === 'udl') shape = `<rect x="${X0}" y="${yB+10}" width="${X1-X0}" height="${H}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+    else if (type === 'uvl') shape = `<polygon points="${X0},${yB+10} ${X1},${yB+10+H} ${X1},${yB+10}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+    else {
+      const m = Math.max(w1, w2) || 1;
+      shape = `<polygon points="${X0},${yB+10} ${X0},${yB+10+H*(w1/m)} ${X1},${yB+10+H*(w2/m)} ${X1},${yB+10}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+    }
+  } else {
+    if (type === 'udl') shape = `<rect x="${X0}" y="${yB-H}" width="${X1-X0}" height="${H}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+    else if (type === 'uvl') shape = `<polygon points="${X0},${yB} ${X1},${yB-H} ${X1},${yB}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+    else {
+      const m = Math.max(w1, w2) || 1;
+      shape = `<polygon points="${X0},${yB} ${X0},${yB-H*(w1/m)} ${X1},${yB-H*(w2/m)} ${X1},${yB}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+    }
   }
   const xr = sc(d);
-  return svg(560, 238,
-    T(xr, 32, 'R = ' + R.toFixed(2) + ' kN', { size:TS.label, anchor:'middle', color:P.act, weight:'700' }) +
-    arrow(xr, 40, xr, yB - H - 6, 'act', 2.2) +
-    shape + beamBar(X0, yB, X1 - X0, 11) +
-    `<line x1="${xr}" y1="${yB+11}" x2="${xr}" y2="${yB+38}" stroke="${P.act}" stroke-width="1" stroke-dasharray="4 3"/>` +
-    dimH(X0, xr, yB + 50, d.toFixed(2) + ' m to the centroid') +
-    dimH(X0, X1, yB + 80, 'a = ' + a + ' m') +
-    rule(220, 40, 520) +
-    T(280, 234, 'The resultant acts at the centroid of the load diagram — that is the mid-length only when the load is a UDL.', { size:TS.note, anchor:'middle', color:P.mute }),
-    'Load diagram with its resultant');
+  const RB = a > 0 ? (R * d / a) : 0;
+  const RA = R - RB;
+
+  let body = '';
+  if (isUp) {
+    // Upward resultant arrow pointing UP into the beam from below
+    body += T(xr, yB + H + 34, 'R = ' + R.toFixed(2) + ' kN ↑ (uplift resultant)', { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
+    body += arrow(xr, yB + H + 20, xr, yB + 13, 'act', 2.3);
+    body += shape + beamBar(X0, yB, X1 - X0, 10);
+    // Downward hold-down support reactions
+    body += arrow(X0, yB - 4, X0, yB - 42, 'rx', 2.2);
+    body += T(X0, yB - 48, 'R_A = ' + RA.toFixed(2) + ' kN ↓', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+    body += arrow(X1, yB - 4, X1, yB - 42, 'rx', 2.2);
+    body += T(X1, yB - 48, 'R_B = ' + RB.toFixed(2) + ' kN ↓', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+    body += dimH(X0, xr, yB + H + 52, 'Centroid d = ' + d.toFixed(2) + ' m');
+    body += dimH(X0, X1, yB + H + 76, 'Span a = ' + a + ' m');
+    body += rule(246, 40, 520);
+    body += T(280, 258, 'Equilibrium: ΣF_y = -R_A - R_B + R = 0 ✓ (downward support hold-downs balance upward uplift)', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+  } else {
+    // Standard downward resultant arrow
+    body += T(xr, 28, 'R = ' + R.toFixed(2) + ' kN ↓', { size:TS.label, anchor:'middle', color:P.act, weight:'700' });
+    body += arrow(xr, 36, xr, yB - H - 6, 'act', 2.2);
+    body += shape + beamBar(X0, yB, X1 - X0, 10);
+    // Upward support reactions
+    body += arrow(X0, yB + 55, X0, yB + 16, 'rx', 2.2);
+    body += T(X0, yB + 68, 'R_A = ' + RA.toFixed(2) + ' kN ↑', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+    body += arrow(X1, yB + 55, X1, yB + 16, 'rx', 2.2);
+    body += T(X1, yB + 68, 'R_B = ' + RB.toFixed(2) + ' kN ↑', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+    body += `<line x1="${xr}" y1="${yB+10}" x2="${xr}" y2="${yB+38}" stroke="${P.act}" stroke-width="1" stroke-dasharray="4 3"/>`;
+    body += dimH(X0, xr, yB + 84, 'Centroid d = ' + d.toFixed(2) + ' m');
+    body += dimH(X0, X1, yB + 110, 'Span a = ' + a + ' m');
+    body += rule(242, 40, 520);
+    body += T(280, 254, 'Free Body Equilibrium: ΣF_y = ' + RA.toFixed(2) + ' + ' + RB.toFixed(2) + ' - ' + R.toFixed(2) + ' = 0 ✓ | ΣM_A = R_B·a - R·d = 0 ✓', { size:TS.tiny, anchor:'middle', color:P.rx, weight:'700' });
+  }
+
+  return svg(560, 268, body, 'Free body load diagram with support reactions and equivalent resultant');
 }
 </script>
 
@@ -2177,13 +2380,26 @@ function solveBeam(cfg) {
 
   let sumW = 0, sumWx = 0, sumM = 0;
   loads.forEach(l => {
-    if (l.kind === 'point') { sumW += l.P; sumWx += l.P * l.x; }
-    else if (l.kind === 'udl') { const len = l.x2 - l.x1, W = l.w * len; sumW += W; sumWx += W * (l.x1 + len/2); }
-    else if (l.kind === 'moment') { sumM += l.M; }
+    if (l.kind === 'point') {
+      const effP = (l.dir === 'up' ? -1 : 1) * Math.abs(l.P);
+      sumW += effP; sumWx += effP * l.x;
+    }
+    else if (l.kind === 'udl') {
+      const effW = (l.dir === 'up' ? -1 : 1) * Math.abs(l.w);
+      const len = l.x2 - l.x1, W = effW * len;
+      sumW += W; sumWx += W * (l.x1 + len/2);
+    }
+    else if (l.kind === 'moment') {
+      const effM = (l.dir === 'ccw' ? -1 : 1) * Math.abs(l.M);
+      sumM += effM;
+    }
   });
 
   const reactions = [];                       // {x, R} upward positive
-  const couples = loads.filter(l => l.kind === 'moment').map(l => ({ x:l.x, M:l.M }));
+  const couples = loads.filter(l => l.kind === 'moment').map(l => ({
+    x: l.x,
+    M: (l.dir === 'ccw' ? -1 : 1) * Math.abs(l.M)
+  }));
   let msg = '', ok = true, fixedMoment = null;
 
   if (cfg.type === 'cant') {
@@ -2204,10 +2420,14 @@ function solveBeam(cfg) {
     let v = 0;
     reactions.forEach(r => { if (r.x <= x + 1e-12) v += r.R; });
     loads.forEach(l => {
-      if (l.kind === 'point') { if (l.x <= x + 1e-12) v -= l.P; }
+      if (l.kind === 'point') {
+        const effP = (l.dir === 'up' ? -1 : 1) * Math.abs(l.P);
+        if (l.x <= x + 1e-12) v -= effP;
+      }
       else if (l.kind === 'udl') {
+        const effW = (l.dir === 'up' ? -1 : 1) * Math.abs(l.w);
         const a = Math.min(Math.max(x, l.x1), l.x2);
-        if (a > l.x1) v -= l.w * (a - l.x1);
+        if (a > l.x1) v -= effW * (a - l.x1);
       }
     });
     return v;
@@ -2216,10 +2436,14 @@ function solveBeam(cfg) {
     let m = 0;
     reactions.forEach(r => { if (r.x <= x + 1e-12) m += r.R * (x - r.x); });
     loads.forEach(l => {
-      if (l.kind === 'point') { if (l.x <= x + 1e-12) m -= l.P * (x - l.x); }
+      if (l.kind === 'point') {
+        const effP = (l.dir === 'up' ? -1 : 1) * Math.abs(l.P);
+        if (l.x <= x + 1e-12) m -= effP * (x - l.x);
+      }
       else if (l.kind === 'udl') {
+        const effW = (l.dir === 'up' ? -1 : 1) * Math.abs(l.w);
         const a = Math.min(Math.max(x, l.x1), l.x2);
-        if (a > l.x1) { const len = a - l.x1; m -= l.w * len * (x - (l.x1 + len/2)); }
+        if (a > l.x1) { const len = a - l.x1; m -= effW * len * (x - (l.x1 + len/2)); }
       }
     });
     couples.forEach(c => { if (c.x <= x + 1e-12) m += c.M; });
@@ -2316,30 +2540,49 @@ function diagramChart(canvasId, label, data, color, existing) {
 
 /* ---------- beam sketch, drawn with the shared figure system ---------- */
 function beamSVG(cfg, res) {
-  const L = +cfg.L, W = 720, m = 56, sx = v => m + (v / L) * (W - 2 * m), yB = 132;
+  const L = +cfg.L, W = 720, m = 56, sx = v => m + (v / L) * (W - 2 * m), yB = 130;
   const pts = (cfg.loads || []).filter(l => l.kind !== 'udl').map(l => l.x);
   let s = '';
 
-  /* distributed loads sit on the beam; their labels go in the widest clear gap
-     so that a point-load arrow never lands on top of the text */
+  /* distributed loads */
   (cfg.loads || []).filter(l => l.kind === 'udl').forEach(l => {
-    s += udl(sx(l.x1), sx(l.x2), yB - 34, yB);
-    let best = (l.x1 + l.x2) / 2, bestGap = -1;
-    for (let k = 1; k <= 12; k++) {
-      const t = l.x1 + (l.x2 - l.x1) * k / 13;
-      const gap = pts.length ? Math.min.apply(null, pts.map(p => Math.abs(p - t))) : 99;
-      if (gap > bestGap) { bestGap = gap; best = t; }
+    const isUp = (l.dir === 'up');
+    const val = Math.abs(l.w);
+    if (isUp) {
+      s += udlWithArrows(sx(l.x1), sx(l.x2), yB + 13, yB + 46, true);
+      s += T((sx(l.x1) + sx(l.x2)) / 2, yB + 60, val + ' kN/m ↑ (uplift)', { size:TS.note, anchor:'middle', color:P.load, weight:'700' });
+    } else {
+      s += udlWithArrows(sx(l.x1), sx(l.x2), yB - 34, yB, false);
+      let best = (l.x1 + l.x2) / 2, bestGap = -1;
+      for (let k = 1; k <= 12; k++) {
+        const t = l.x1 + (l.x2 - l.x1) * k / 13;
+        const gap = pts.length ? Math.min.apply(null, pts.map(p => Math.abs(p - t))) : 99;
+        if (gap > bestGap) { bestGap = gap; best = t; }
+      }
+      s += T(sx(best), yB - 42, val + ' kN/m ↓', { size:TS.note, anchor:'middle', color:P.load, weight:'700' });
     }
-    s += T(sx(best), yB - 42, l.w + ' kN/m', { size:TS.note, anchor:'middle', color:P.load });
   });
 
   (cfg.loads || []).forEach(l => {
     if (l.kind === 'point') {
-      s += T(sx(l.x), yB - 78, l.P + ' kN', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
-      s += arrow(sx(l.x), yB - 70, sx(l.x), yB - 4, 'pt', 2.1);
+      const isUp = (l.dir === 'up');
+      const val = Math.abs(l.P);
+      if (isUp) {
+        s += arrow(sx(l.x), yB + 74, sx(l.x), yB + 16, 'pt', 2.3);
+        s += T(sx(l.x), yB + 88, val + ' kN ↑', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+      } else {
+        s += arrow(sx(l.x), yB - 70, sx(l.x), yB - 4, 'pt', 2.3);
+        s += T(sx(l.x), yB - 78, val + ' kN ↓', { size:TS.note, anchor:'middle', color:P.pt, weight:'700' });
+      }
     } else if (l.kind === 'moment') {
-      s += T(sx(l.x), yB - 78, l.M + ' kN·m', { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
-      s += `<path d="M${sx(l.x)-17},${yB-42} A18,18 0 1 1 ${sx(l.x)+15},${yB-52}" fill="none" stroke="${P.act}" stroke-width="2.1" marker-end="url(#a-act)"/>`;
+      const isCCW = (l.dir === 'ccw');
+      const val = Math.abs(l.M);
+      s += T(sx(l.x), yB - 78, val + ' kN·m ' + (isCCW ? '↺' : '↻'), { size:TS.note, anchor:'middle', color:P.act, weight:'700' });
+      if (isCCW) {
+        s += `<path d="M${sx(l.x)+17},${yB-42} A18,18 0 1 0 ${sx(l.x)-15},${yB-52}" fill="none" stroke="${P.act}" stroke-width="2.3" marker-end="url(#a-act)"/>`;
+      } else {
+        s += `<path d="M${sx(l.x)-17},${yB-42} A18,18 0 1 1 ${sx(l.x)+15},${yB-52}" fill="none" stroke="${P.act}" stroke-width="2.3" marker-end="url(#a-act)"/>`;
+      }
     }
   });
 
@@ -2347,16 +2590,32 @@ function beamSVG(cfg, res) {
 
   if (cfg.type === 'cant') {
     s += symFixed(sx(0), yB + 6, 56);
-    s += T(sx(0), yB + 58, 'fixed', { size:TS.tiny, anchor:'middle', color:P.mute });
+    const rA = res.reactions && res.reactions[0] ? res.reactions[0].R : 0;
+    if (rA >= 0) {
+      s += arrow(sx(0), yB + 56, sx(0), yB + 20, 'rx', 2.2);
+      s += T(sx(0), yB + 70, 'R_A = ' + f2(rA) + ' kN ↑', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+    } else {
+      s += arrow(sx(0), yB + 20, sx(0), yB + 56, 'rx', 2.2);
+      s += T(sx(0), yB + 70, 'R_A = ' + f2(rA) + ' kN ↓', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+    }
+    if (res.fixedMoment !== null && res.fixedMoment !== undefined) {
+      const isCCW = (res.fixedMoment < 0);
+      s += T(sx(0) + 36, yB - 22, 'M_A = ' + f2(Math.abs(res.fixedMoment)) + ' kN·m ' + (isCCW ? '↺' : '↻'), { size:TS.tiny, color:P.act, weight:'700' });
+    }
   } else {
     (res.reactions || []).forEach((r, i) => {
       s += (i === 0 ? symPin : symRoller)(sx(r.x), yB + 13);
-      s += T(sx(r.x), yB + 56, r.label, { size:TS.note, anchor:'middle', weight:'700', color:P.rx });
-      s += T(sx(r.x), yB + 69, f2(r.R) + ' kN', { size:TS.note, anchor:'middle', color:P.rx });
+      if (r.R >= 0) {
+        s += arrow(sx(r.x), yB + 54, sx(r.x), yB + 22, 'rx', 2.2);
+        s += T(sx(r.x), yB + 68, r.label + ': ' + f2(r.R) + ' kN ↑', { size:TS.note, anchor:'middle', weight:'700', color:P.rx });
+      } else {
+        s += arrow(sx(r.x), yB + 22, sx(r.x), yB + 54, 'rx', 2.2);
+        s += T(sx(r.x), yB + 68, r.label + ': ' + f2(r.R) + ' kN ↓ (hold-down)', { size:TS.note, anchor:'middle', weight:'700', color:P.rx });
+      }
     });
   }
-  s += dimH(sx(0), sx(L), yB + 92, L + ' m');
-  return svg(W, 240, s, 'Beam, loading and computed reactions');
+  s += dimH(sx(0), sx(L), yB + 96, L + ' m');
+  return svg(W, 256, s, 'Beam, loading and computed reactions');
 }
 </script>
 
@@ -2433,7 +2692,220 @@ function saveTime() { const n = Date.now(); state.elapsed += (n - state.started)
 function minutes() { saveTime(); return Math.round(state.elapsed / 60000); }
 function logAnswer(level, topic, correct) { state.records.push({ level, topic, correct, ts: Date.now() }); store.set('som2_records', state.records); }
 
-/* ================= M5 RESULTANT ================= */
+/* ================= M5 RESULTANT & FREE BODY EXPLORER ================= */
+let currentFbdIdx = 0;
+const FBD_CASES = [
+  {
+    name: 'Point load (W)',
+    title: 'Free Body Diagram: Concentrated Point Load',
+    desc: 'A concentrated point load W acts at distance a from support A (span L, b = L - a). The physical beam is isolated from supports, replacing the pin at A with vertical reaction R_A and horizontal reaction H_A, and the roller at B with vertical reaction R_B.',
+    equations: [
+      'ΣF_x = 0  ⟹  H_A = 0 (no horizontal forces)',
+      'ΣM_A = 0  ⟹  R_B · L - W · a = 0  ⟹  R_B = W · (a / L)',
+      'ΣF_y = 0  ⟹  R_A + R_B - W = 0  ⟹  R_A = W - R_B = W · (b / L)',
+      'Equilibrium check: ΣM_B = -R_A · L + W · b = 0 ✓'
+    ],
+    svg: () => {
+      const L = 460, a = 160, b = L - a, yB = 105, X0 = 70, X1 = X0 + L, XP = X0 + a;
+      let s = T(270, 22, 'Free Body Diagram — Point Load at distance a', { size:TS.label, anchor:'middle', weight:'700' });
+      s += beamBar(X0, yB, L, 10);
+      s += arrow(XP, 44, XP, yB - 2, 'pt', 2.4) + T(XP, 38, 'W (Point Load)', { size:TS.label, anchor:'middle', color:P.pt, weight:'700' });
+      s += arrow(X0, yB + 55, X0, yB + 16, 'rx', 2.3) + T(X0, yB + 68, 'R_A = W·b/L', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += arrow(X1, yB + 55, X1, yB + 16, 'rx', 2.3) + T(X1, yB + 68, 'R_B = W·a/L', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += arrow(X0 - 45, yB + 5, X0 - 6, yB + 5, 'geo', 1.8) + T(X0 - 50, yB + 8, 'H_A = 0', { size:TS.tiny, anchor:'end', color:P.geo });
+      s += dimH(X0, XP, yB + 90, 'a');
+      s += dimH(XP, X1, yB + 90, 'b = L - a');
+      s += dimH(X0, X1, yB + 116, 'Span L');
+      return svg(600, 255, s, 'Free body diagram of beam under concentrated point load');
+    }
+  },
+  {
+    name: 'UDL (w)',
+    title: 'Free Body Diagram: Uniformly Distributed Load (UDL)',
+    desc: 'A UDL of constant intensity w (kN/m) covers the entire span L. In the free body diagram, the distributed load is replaced by an equivalent resultant R = w · L acting at its centroid (L/2). Because the loading is symmetric, reactions are equal.',
+    equations: [
+      'Equivalent Resultant: R = w · L acting at centroid x̄ = L / 2',
+      'ΣM_A = 0  ⟹  R_B · L - R · (L/2) = 0  ⟹  R_B = R / 2 = w · L / 2',
+      'ΣF_y = 0  ⟹  R_A + R_B - R = 0  ⟹  R_A = R / 2 = w · L / 2',
+      'Symmetry check: R_A = R_B = wL / 2 ✓'
+    ],
+    svg: () => {
+      const L = 460, yB = 105, X0 = 70, X1 = X0 + L, xc = X0 + L/2;
+      let s = T(270, 20, 'Free Body Diagram — UDL & Equivalent Resultant', { size:TS.label, anchor:'middle', weight:'700' });
+      s += udl(X0, X1, 58, yB - 2);
+      s += T(X0 + 40, 52, 'UDL w (kN/m)', { size:TS.note, color:P.load, weight:'700' });
+      s += beamBar(X0, yB, L, 10);
+      s += arrow(xc, 36, xc, yB - 4, 'act', 2.5);
+      s += T(xc, 28, 'Equivalent Resultant R = w·L', { size:TS.label, anchor:'middle', color:P.act, weight:'700' });
+      s += `<line x1="${xc}" y1="${yB+10}" x2="${xc}" y2="${yB+48}" stroke="${P.act}" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+      s += arrow(X0, yB + 55, X0, yB + 16, 'rx', 2.3) + T(X0, yB + 68, 'R_A = wL/2', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += arrow(X1, yB + 55, X1, yB + 16, 'rx', 2.3) + T(X1, yB + 68, 'R_B = wL/2', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += dimH(X0, xc, yB + 90, 'L / 2 (Centroid)');
+      s += dimH(xc, X1, yB + 90, 'L / 2');
+      s += dimH(X0, X1, yB + 116, 'Span L');
+      return svg(600, 255, s, 'Free body diagram of beam under uniformly distributed load');
+    }
+  },
+  {
+    name: 'UVL (0 to w)',
+    title: 'Free Body Diagram: Uniformly Varying Load (Triangular)',
+    desc: 'A UVL increases linearly from 0 at A to maximum intensity w at B over span L. The area of the load diagram is ½ · w · L. The centroid of a triangle lies ⅔ of the distance from the zero-vertex (⅓ from the tall base at B).',
+    equations: [
+      'Equivalent Resultant: R = Area = ½ · w · L',
+      'Centroid: d_A = ⅔ · L from A (or ⅓ · L from B)',
+      'ΣM_A = 0  ⟹  R_B · L - R · (⅔ L) = 0  ⟹  R_B = ⅔ R = ⅓ · w · L',
+      'ΣF_y = 0  ⟹  R_A = R - R_B = ½ wL - ⅓ wL = ⅙ · w · L',
+      'Ratio: R_B is exactly twice R_A because load concentrates toward B.'
+    ],
+    svg: () => {
+      const L = 460, yB = 105, X0 = 70, X1 = X0 + L, xc = X0 + (2 * L / 3);
+      let s = T(270, 20, 'Free Body Diagram — UVL & Centroidal Resultant', { size:TS.label, anchor:'middle', weight:'700' });
+      s += tri(X0, X1, 52, yB - 2, true);
+      s += T(X1 - 10, 48, 'Peak w', { size:TS.note, anchor:'end', color:P.load, weight:'700' });
+      s += beamBar(X0, yB, L, 10);
+      s += arrow(xc, 36, xc, yB - 4, 'act', 2.5);
+      s += T(xc, 28, 'Resultant R = ½w·L', { size:TS.label, anchor:'middle', color:P.act, weight:'700' });
+      s += `<line x1="${xc}" y1="${yB+10}" x2="${xc}" y2="${yB+48}" stroke="${P.act}" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+      s += arrow(X0, yB + 55, X0, yB + 16, 'rx', 2.3) + T(X0, yB + 68, 'R_A = wL/6', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += arrow(X1, yB + 55, X1, yB + 16, 'rx', 2.3) + T(X1, yB + 68, 'R_B = wL/3', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += dimH(X0, xc, yB + 90, '2L / 3');
+      s += dimH(xc, X1, yB + 90, 'L / 3');
+      s += dimH(X0, X1, yB + 116, 'Span L');
+      return svg(600, 255, s, 'Free body diagram of beam under uniformly varying load');
+    }
+  },
+  {
+    name: 'Trapezoidal load',
+    title: 'Free Body Diagram: Trapezoidal Distributed Load',
+    desc: 'A trapezoidal load varies from w₁ at A to w₂ at B. For reaction calculations, split the trapezoid into two simple shapes: a rectangle of height w₁ with resultant R₁ = w₁L at L/2, plus a triangle of height (w₂ - w₁) with resultant R₂ = ½(w₂ - w₁)L at ⅔L.',
+    equations: [
+      'Rectangle: R_1 = w_1 · L acting at x_1 = L / 2',
+      'Triangle: R_2 = ½(w_2 - w_1) · L acting at x_2 = ⅔ · L',
+      'Total Resultant: R = R_1 + R_2 = ½(w_1 + w_2) · L',
+      'Centroid x̄ = (R_1 · x_1 + R_2 · x_2) / R',
+      'Reactions: R_B = (R_1 · x_1 + R_2 · x_2) / L,  R_A = R - R_B'
+    ],
+    svg: () => {
+      const L = 460, yB = 105, X0 = 70, X1 = X0 + L, xr1 = X0 + L/2, xr2 = X0 + (2*L/3);
+      let s = T(270, 20, 'Free Body Diagram — Trapezoidal Load Split into Two Resultants', { size:TS.label, anchor:'middle', weight:'700' });
+      s += `<polygon points="${X0},${yB-2} ${X0},76 ${X1},44 ${X1},${yB-2}" fill="${P.loadF}" stroke="${P.load}" stroke-width="1.5"/>`;
+      s += `<line x1="${X0}" y1="76" x2="${X1}" y2="76" stroke="${P.load}" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+      s += T(X0 - 6, 78, 'w₁', { size:TS.note, anchor:'end', color:P.load, weight:'700' });
+      s += T(X1 + 6, 46, 'w₂', { size:TS.note, color:P.load, weight:'700' });
+      s += beamBar(X0, yB, L, 10);
+      s += arrow(xr1, 44, xr1, yB - 4, 'act', 2);
+      s += T(xr1, 36, 'R₁ = w₁L', { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' });
+      s += arrow(xr2, 26, xr2, yB - 4, 'act', 2);
+      s += T(xr2, 20, 'R₂ = ½(w₂-w₁)L', { size:TS.tiny, anchor:'middle', color:P.act, weight:'700' });
+      s += arrow(X0, yB + 55, X0, yB + 16, 'rx', 2.3) + T(X0, yB + 68, 'R_A = R - R_B', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += arrow(X1, yB + 55, X1, yB + 16, 'rx', 2.3) + T(X1, yB + 68, 'R_B = ΣM_A / L', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += dimH(X0, xr1, yB + 88, 'L / 2');
+      s += dimH(X0, xr2, yB + 112, '2L / 3');
+      s += dimH(X0, X1, yB + 134, 'Span L');
+      return svg(600, 265, s, 'Free body diagram of trapezoidal load split into components');
+    }
+  },
+  {
+    name: 'Applied couple (M₀)',
+    title: 'Free Body Diagram: Concentrated Applied Couple',
+    desc: 'An external clockwise moment M₀ is applied at distance a from A. Because couples exert zero resultant vertical force (ΣF = 0), the reactions at A and B must form an equal and opposite couple of forces to hold the beam in equilibrium.',
+    equations: [
+      'ΣF_y = 0  ⟹  R_A + R_B = 0  ⟹  R_A = -R_B (one upward, one downward)',
+      'ΣM_A = 0  ⟹  R_B · L - M_0 = 0  ⟹  R_B = M_0 / L (upward)',
+      '⟹  R_A = -M_0 / L = M_0 / L (acting downward)',
+      'Resisting couple: R_B · L = (M_0 / L) · L = M_0 (counter-clockwise) ✓'
+    ],
+    svg: () => {
+      const L = 460, yB = 105, X0 = 70, X1 = X0 + L, xm = X0 + 200;
+      let s = T(270, 20, 'Free Body Diagram — Pure Applied Couple', { size:TS.label, anchor:'middle', weight:'700' });
+      s += beamBar(X0, yB, L, 10);
+      s += `<path d="M${xm-24},${yB-10} A26,26 0 1 1 ${xm+24},${yB-18}" fill="none" stroke="${P.act}" stroke-width="2.6" marker-end="url(#a-act)"/>`;
+      s += T(xm, yB - 42, 'Applied Couple M₀ (clockwise)', { size:TS.label, anchor:'middle', color:P.act, weight:'700' });
+      s += arrow(X0, yB + 16, X0, yB + 55, 'rx', 2.3) + T(X0, yB + 70, 'R_A = M₀/L (downward)', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += arrow(X1, yB + 55, X1, yB + 16, 'rx', 2.3) + T(X1, yB + 70, 'R_B = M₀/L (upward)', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += dimH(X0, xm, yB + 90, 'a');
+      s += dimH(xm, X1, yB + 90, 'L - a');
+      s += dimH(X0, X1, yB + 116, 'Span L');
+      return svg(600, 255, s, 'Free body diagram of beam under concentrated applied couple');
+    }
+  },
+  {
+    name: 'Cantilever with UDL',
+    title: 'Free Body Diagram: Cantilever Beam with UDL',
+    desc: 'A cantilever beam of span L is clamped rigidly into a wall at support A and carries a UDL w. The wall is cut away in the free body diagram, revealing two reactions: an upward shear force R_A and a counter-clockwise fixed-end clamping moment M_A.',
+    equations: [
+      'Equivalent Resultant: R = w · L acting at mid-span L / 2',
+      'ΣF_y = 0  ⟹  R_A - R = 0  ⟹  R_A = w · L (upward shear reaction)',
+      'ΣM_A = 0  ⟹  M_A - R · (L/2) = 0  ⟹  M_A = w · L² / 2 (counter-clockwise resisting moment)',
+      'Free end B has no reactions: V_B = 0, M_B = 0 ✓'
+    ],
+    svg: () => {
+      const L = 420, yB = 105, X0 = 110, X1 = X0 + L, xc = X0 + L/2;
+      let s = T(280, 20, 'Free Body Diagram — Cantilever Fixed Support Reactions', { size:TS.label, anchor:'middle', weight:'700' });
+      s += udl(X0, X1, 58, yB - 2);
+      s += T(X0 + 40, 52, 'UDL w (kN/m)', { size:TS.note, color:P.load, weight:'700' });
+      s += beamBar(X0, yB, L, 10);
+      s += arrow(xc, 36, xc, yB - 4, 'act', 2.5);
+      s += T(xc, 28, 'R = w·L', { size:TS.label, anchor:'middle', color:P.act, weight:'700' });
+      s += `<line x1="${X0}" y1="${yB-25}" x2="${X0}" y2="${yB+35}" stroke="${P.geo}" stroke-width="2.5" stroke-dasharray="4 2"/>`;
+      s += arrow(X0, yB + 55, X0, yB + 16, 'rx', 2.3) + T(X0, yB + 68, 'R_A = w·L', { size:TS.note, anchor:'middle', color:P.rx, weight:'700' });
+      s += `<path d="M${X0-20},${yB+8} A20,20 0 1 1 ${X0-8},${yB-16}" fill="none" stroke="${P.rx}" stroke-width="2.3" marker-end="url(#a-rx)"/>`;
+      s += T(X0 - 32, yB - 18, 'M_A = wL²/2', { size:TS.note, anchor:'end', color:P.rx, weight:'700' });
+      s += dimH(X0, xc, yB + 90, 'L / 2');
+      s += dimH(xc, X1, yB + 90, 'L / 2');
+      s += dimH(X0, X1, yB + 116, 'Span L');
+      return svg(600, 255, s, 'Free body diagram of cantilever beam under UDL');
+    }
+  }
+];
+
+function initFbdExplorer() {
+  showFbdCase(0);
+}
+
+function showFbdCase(idx) {
+  currentFbdIdx = idx;
+  const c = FBD_CASES[idx];
+  if (!c) return;
+  document.querySelectorAll('.fbd-tab-btn').forEach((btn, i) => {
+    if (i === idx) {
+      btn.className = 'fbd-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold border transition border-brand-500 bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300';
+    } else {
+      btn.className = 'fbd-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold border transition border-gray-300 dark:border-gray-600 hover:border-brand-500 text-gray-700 dark:text-gray-300';
+    }
+  });
+  const figEl = document.getElementById('fbd-interactive-fig');
+  if (figEl) figEl.innerHTML = c.svg();
+  const notesEl = document.getElementById('fbd-interactive-notes');
+  if (notesEl) {
+    let html = `<p class="font-bold text-sm mb-1">${c.title}</p>`;
+    html += `<p class="mb-2 leading-relaxed">${c.desc}</p>`;
+    html += `<div class="p-2.5 rounded bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-800 space-y-1 font-mono text-xs text-blue-950 dark:text-blue-200">`;
+    c.equations.forEach(eq => {
+      html += `<div>${eq}</div>`;
+    });
+    html += `</div>`;
+    notesEl.innerHTML = html;
+  }
+}
+
+let rcDir = 'down';
+function setRcDir(dir) {
+  rcDir = dir;
+  const dDown = document.getElementById('rc-dir-down');
+  const dUp = document.getElementById('rc-dir-up');
+  if (dDown && dUp) {
+    if (dir === 'down') {
+      dDown.className = 'px-3 py-1.5 text-xs font-bold rounded-l border border-amber-400 bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200 flex items-center gap-1.5 transition';
+      dUp.className = 'px-3 py-1.5 text-xs font-bold rounded-r border-t border-b border-r border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center gap-1.5 transition';
+    } else {
+      dDown.className = 'px-3 py-1.5 text-xs font-bold rounded-l border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center gap-1.5 transition';
+      dUp.className = 'px-3 py-1.5 text-xs font-bold rounded-r border-t border-b border-r border-emerald-400 bg-emerald-100 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-200 flex items-center gap-1.5 transition';
+    }
+  }
+  calcRC();
+}
+
 function initM5() {
   ['rc-type','rc-w1','rc-w2','rc-a'].forEach(i => document.getElementById(i).addEventListener('input', calcRC));
   document.getElementById('rc-type').addEventListener('change', () => {
@@ -2443,6 +2915,7 @@ function initM5() {
     calcRC();
   });
   calcRC();
+  initFbdExplorer();
 }
 function calcRC() {
   const t = document.getElementById('rc-type').value;
@@ -2458,14 +2931,20 @@ function calcRC() {
     d = (Rr*(a/2) + Rt*(2*a/3)) / (R || 1);
     work = 'Split into a rectangle ' + f2(Rr) + ' kN at ' + f2(a/2) + ' m plus a triangle ' + f2(Rt) + ' kN at ' + f2(2*a/3) + ' m. Combined R = ' + f2(R) + ' kN at ' + f2(d) + ' m from the left end.';
   }
+  const RB = a > 0 ? (R * d / a) : 0;
+  const RA = R - RB;
+  const isUp = (rcDir === 'up');
+
   document.getElementById('rc-fig').innerHTML = (a > 0)
-    ? loadDiagramSVG(t, w1, w2, a, R, d) + '<figcaption class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">The violet arrow marks the resultant, drawn at the centroid of the load diagram</figcaption>'
+    ? loadDiagramSVG(t, w1, w2, a, R, d, rcDir) + '<figcaption class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">Violet marks the equivalent resultant; green arrows mark the calculated support reactions</figcaption>'
     : '';
   document.getElementById('rc-out').innerHTML =
-    '<div class="grid grid-cols-2 gap-3 text-center mb-3">' +
-    '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Resultant</p><p class="num font-bold text-lg text-brand-600">' + f2(R) + ' kN</p></div>' +
-    '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Acts at</p><p class="num font-bold text-lg">' + f2(d) + ' m from left</p></div></div>' +
-    '<p class="text-sm num">' + work + '</p>';
+    '<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center mb-3">' +
+    '<div class="p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Resultant R</p><p class="num font-bold text-base text-brand-600">' + f2(R) + ' kN ' + (isUp ? '↑' : '↓') + '</p></div>' +
+    '<div class="p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Centroid x̄</p><p class="num font-bold text-base">' + f2(d) + ' m</p></div>' +
+    '<div class="p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Reaction R_A</p><p class="num font-bold text-base ' + (isUp ? 'text-rose-600' : 'text-emerald-600') + '">' + f2(RA) + ' kN ' + (isUp ? '↓' : '↑') + '</p></div>' +
+    '<div class="p-2.5 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">Reaction R_B</p><p class="num font-bold text-base ' + (isUp ? 'text-rose-600' : 'text-emerald-600') + '">' + f2(RB) + ' kN ' + (isUp ? '↓' : '↑') + '</p></div></div>' +
+    '<p class="text-sm num">' + work + ' Support reactions: R_B = (R × d) / a = ' + f2(RB) + ' kN ' + (isUp ? '(downward hold-down)' : '(upward)') + ', R_A = R - R_B = ' + f2(RA) + ' kN ' + (isUp ? '(downward hold-down)' : '(upward)') + '.</p>';
 }
 
 /* ================= M10 / M11 CASE VIEWERS ================= */
@@ -2567,19 +3046,63 @@ function initSolver() {
 }
 function addLoad(kind) {
   const L = parseFloat(document.getElementById('bs-L').value) || 6;
-  if (kind === 'point') beamLoads.push({ kind:'point', x:+(L/2).toFixed(2), P:20 });
-  else if (kind === 'udl') beamLoads.push({ kind:'udl', x1:0, x2:L, w:10 });
-  else beamLoads.push({ kind:'moment', x:+(L/2).toFixed(2), M:20 });
+  if (kind === 'point') beamLoads.push({ kind:'point', x:+(L/2).toFixed(2), P:20, dir:'down' });
+  else if (kind === 'udl') beamLoads.push({ kind:'udl', x1:0, x2:L, w:10, dir:'down' });
+  else beamLoads.push({ kind:'moment', x:+(L/2).toFixed(2), M:20, dir:'cw' });
   renderLoadRows(); runSolver();
 }
 function removeLoad(i) { beamLoads.splice(i,1); renderLoadRows(); runSolver(); }
+function toggleLoadDir(i) {
+  const l = beamLoads[i];
+  if (!l) return;
+  if (l.kind === 'moment') {
+    l.dir = (l.dir === 'ccw') ? 'cw' : 'ccw';
+  } else {
+    l.dir = (l.dir === 'up') ? 'down' : 'up';
+  }
+  renderLoadRows(); runSolver();
+}
+function nudgeLoad(i, dx) {
+  const l = beamLoads[i];
+  const L = parseFloat(document.getElementById('bs-L').value) || 6;
+  if (!l) return;
+  if (l.kind === 'udl') {
+    const span = l.x2 - l.x1;
+    let n1 = Math.max(0, +(l.x1 + dx).toFixed(2));
+    let n2 = +(n1 + span).toFixed(2);
+    if (n2 > L) { n2 = L; n1 = +(L - span).toFixed(2); }
+    l.x1 = n1; l.x2 = n2;
+  } else {
+    l.x = Math.max(0, Math.min(L, +(l.x + dx).toFixed(2)));
+  }
+  renderLoadRows(); runSolver();
+}
 function renderLoadRows() {
   const box = document.getElementById('bs-loads'); box.innerHTML = '';
   if (!beamLoads.length) box.innerHTML = '<p class="text-xs text-gray-500">No loads yet. Add one below.</p>';
   beamLoads.forEach((l, i) => {
+    if (!l.dir) l.dir = (l.kind === 'moment' ? 'cw' : 'down');
     const d = document.createElement('div');
-    d.className = 'p-2 rounded border dark:border-gray-600 text-xs';
+    d.className = 'p-2.5 rounded border dark:border-gray-600 bg-gray-50/50 dark:bg-gray-700/30 text-xs mb-2';
     let fields = '';
+    const dirIsUp = (l.dir === 'up');
+    const dirIsCCW = (l.dir === 'ccw');
+
+    let dirBtnText = '';
+    if (l.kind === 'moment') {
+      dirBtnText = dirIsCCW ? '<i class="fas fa-undo mr-1"></i>↺ CCW' : '<i class="fas fa-redo mr-1"></i>↻ CW';
+    } else {
+      dirBtnText = dirIsUp ? '<i class="fas fa-arrow-up mr-1 text-emerald-500"></i>↑ Upward' : '<i class="fas fa-arrow-down mr-1 text-amber-500"></i>↓ Downward';
+    }
+
+    const dirBtn = '<button type="button" onclick="toggleLoadDir(' + i + ')" title="Click to toggle load direction arrow" class="px-2 py-0.5 rounded text-[11px] font-semibold border transition ' +
+      (dirIsUp || dirIsCCW ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700' : 'bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200 border-amber-300 dark:border-amber-700') + '">' + dirBtnText + '</button>';
+
+    const nudgeGroup = '<span class="inline-flex rounded border border-gray-300 dark:border-gray-600 overflow-hidden ml-1">' +
+      '<button type="button" onclick="nudgeLoad(' + i + ',-0.25)" title="Nudge position left (Arrow Left)" class="px-1.5 py-0.5 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">◄</button>' +
+      '<button type="button" onclick="nudgeLoad(' + i + ',0.25)" title="Nudge position right (Arrow Right)" class="px-1.5 py-0.5 border-l border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">►</button>' +
+      '</span>';
+
     if (l.kind === 'point') fields =
       '<label class="block">P (kN)<input type="number" value="' + l.P + '" data-i="' + i + '" data-f="P" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>' +
       '<label class="block">at x (m)<input type="number" step="0.25" value="' + l.x + '" data-i="' + i + '" data-f="x" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>';
@@ -2590,9 +3113,9 @@ function renderLoadRows() {
     else fields =
       '<label class="block">M (kN·m)<input type="number" value="' + l.M + '" data-i="' + i + '" data-f="M" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>' +
       '<label class="block">at x (m)<input type="number" step="0.25" value="' + l.x + '" data-i="' + i + '" data-f="x" class="ld w-full p-1 border rounded num dark:bg-gray-700 dark:border-gray-600"></label>';
-    const names = { point:'Point load', udl:'UDL', moment:'Couple (clockwise +)' };
-    d.innerHTML = '<div class="flex justify-between items-center mb-1"><b>' + names[l.kind] + '</b>' +
-      '<button onclick="removeLoad(' + i + ')" class="text-red-500" aria-label="Remove load"><i class="fas fa-trash"></i></button></div>' +
+    const names = { point:'Point Load', udl:'UDL', moment:'Couple' };
+    d.innerHTML = '<div class="flex justify-between items-center mb-1.5"><div class="flex items-center gap-1.5"><b>' + names[l.kind] + '</b>' + dirBtn + nudgeGroup + '</div>' +
+      '<button onclick="removeLoad(' + i + ')" class="text-red-500 hover:text-red-700 p-1" aria-label="Remove load"><i class="fas fa-trash"></i></button></div>' +
       '<div class="grid grid-cols-' + (l.kind === 'udl' ? '3' : '2') + ' gap-1">' + fields + '</div>';
     box.appendChild(d);
   });
@@ -2610,10 +3133,11 @@ function loadPreset(p) {
     document.getElementById('bs-supports').style.display = type === 'cant' ? 'none' : '';
     beamLoads = loads; renderLoadRows(); runSolver();
   };
-  if (p === 'ssudl') set('ss', 8, 0, 8, [{kind:'udl', x1:0, x2:8, w:12}]);
-  else if (p === 'overhang') set('over', 6, 0, 4, [{kind:'udl', x1:0, x2:6, w:10}]);
-  else if (p === 'cant') set('cant', 4, 0, 4, [{kind:'udl', x1:0, x2:4, w:10},{kind:'point', x:4, P:15}]);
-  else set('ss', 6, 0, 6, [{kind:'udl', x1:0, x2:6, w:10},{kind:'point', x:2, P:40}]);
+  if (p === 'ssudl') set('ss', 8, 0, 8, [{kind:'udl', x1:0, x2:8, w:12, dir:'down'}]);
+  else if (p === 'overhang') set('over', 6, 0, 4, [{kind:'udl', x1:0, x2:6, w:10, dir:'down'}]);
+  else if (p === 'cant') set('cant', 4, 0, 4, [{kind:'udl', x1:0, x2:4, w:10, dir:'down'},{kind:'point', x:4, P:15, dir:'down'}]);
+  else if (p === 'uplift') set('ss', 6, 0, 6, [{kind:'udl', x1:0, x2:6, w:8, dir:'up'},{kind:'point', x:3, P:15, dir:'up'}]);
+  else set('ss', 6, 0, 6, [{kind:'udl', x1:0, x2:6, w:10, dir:'down'},{kind:'point', x:2, P:40, dir:'down'}]);
 }
 function runSolver() {
   const cfg = {
@@ -2664,24 +3188,93 @@ function runSolver() {
 }
 
 /* ================= M18 SIMULATION ================= */
-function initM18() { ['s18-L','s18-W','s18-a','s18-w'].forEach(i => document.getElementById(i).addEventListener('input', calc18)); }
+let s18PointDir = 'down';
+let s18UdlDir = 'down';
+
+function setS18LoadDir(dir) {
+  s18PointDir = dir;
+  const dDown = document.getElementById('s18-dir-down');
+  const dUp = document.getElementById('s18-dir-up');
+  if (dDown && dUp) {
+    if (dir === 'down') {
+      dDown.className = 'px-2 py-0.5 text-xs font-bold rounded-l border border-amber-400 bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200 transition';
+      dUp.className = 'px-2 py-0.5 text-xs font-bold rounded-r border-t border-b border-r border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 transition';
+    } else {
+      dDown.className = 'px-2 py-0.5 text-xs font-bold rounded-l border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 transition';
+      dUp.className = 'px-2 py-0.5 text-xs font-bold rounded-r border-t border-b border-r border-emerald-400 bg-emerald-100 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-200 transition';
+    }
+  }
+  calc18();
+}
+
+function setS18UdlDir(dir) {
+  s18UdlDir = dir;
+  const dDown = document.getElementById('s18-udl-down');
+  const dUp = document.getElementById('s18-udl-up');
+  if (dDown && dUp) {
+    if (dir === 'down') {
+      dDown.className = 'px-2 py-0.5 text-xs font-bold rounded-l border border-amber-400 bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200 transition';
+      dUp.className = 'px-2 py-0.5 text-xs font-bold rounded-r border-t border-b border-r border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 transition';
+    } else {
+      dDown.className = 'px-2 py-0.5 text-xs font-bold rounded-l border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 transition';
+      dUp.className = 'px-2 py-0.5 text-xs font-bold rounded-r border-t border-b border-r border-emerald-400 bg-emerald-100 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-200 transition';
+    }
+  }
+  calc18();
+}
+
+function nudgeS18Pos(dp) {
+  const slider = document.getElementById('s18-a');
+  if (slider) {
+    slider.value = Math.max(0, Math.min(100, parseFloat(slider.value) + dp));
+    calc18();
+  }
+}
+
+function initM18() {
+  ['s18-L','s18-W','s18-a','s18-w'].forEach(i => {
+    const el = document.getElementById(i);
+    if (el) el.addEventListener('input', calc18);
+  });
+  // Keyboard arrow shortcuts for load controls
+  const wEl = document.getElementById('s18-W');
+  if (wEl) {
+    wEl.addEventListener('keydown', e => {
+      if (e.key === 'ArrowUp') { setS18LoadDir('up'); e.preventDefault(); }
+      else if (e.key === 'ArrowDown') { setS18LoadDir('down'); e.preventDefault(); }
+    });
+  }
+  const udlEl = document.getElementById('s18-w');
+  if (udlEl) {
+    udlEl.addEventListener('keydown', e => {
+      if (e.key === 'ArrowUp') { setS18UdlDir('up'); e.preventDefault(); }
+      else if (e.key === 'ArrowDown') { setS18UdlDir('down'); e.preventDefault(); }
+    });
+  }
+  calc18();
+}
 function calc18() {
   const L = parseFloat(document.getElementById('s18-L').value)/10;
   const W = parseFloat(document.getElementById('s18-W').value);
   const a = Math.min(parseFloat(document.getElementById('s18-a').value)/100 * L, L);
   const w = parseFloat(document.getElementById('s18-w').value);
   document.getElementById('s18-L-l').textContent = L.toFixed(1) + ' m';
-  document.getElementById('s18-W-l').textContent = W + ' kN';
+  document.getElementById('s18-W-l').textContent = W + ' kN ' + (s18PointDir === 'up' ? '↑' : '↓');
   document.getElementById('s18-a-l').textContent = a.toFixed(1) + ' m';
-  document.getElementById('s18-w-l').textContent = w + ' kN/m';
+  document.getElementById('s18-w-l').textContent = w + ' kN/m ' + (s18UdlDir === 'up' ? '↑' : '↓');
 
   const loads = [];
-  if (w > 0) loads.push({ kind:'udl', x1:0, x2:L, w });
-  if (W > 0) loads.push({ kind:'point', x:a, P:W });
-  const res = solveBeam({ type:'ss', L, xa:0, xb:L, loads });
+  if (w > 0) loads.push({ kind:'udl', x1:0, x2:L, w, dir:s18UdlDir });
+  if (W > 0) loads.push({ kind:'point', x:a, P:W, dir:s18PointDir });
+  const cfg = { type:'ss', L, xa:0, xb:L, loads };
+  const res = solveBeam(cfg);
 
-  document.getElementById('s18-RA').textContent = f2(res.reactions[0].R) + ' kN';
-  document.getElementById('s18-RB').textContent = f2(res.reactions[1].R) + ' kN';
+  // Render live interactive beam diagram sketch
+  const sketchEl = document.getElementById('s18-beam-sketch');
+  if (sketchEl) sketchEl.innerHTML = beamSVG(cfg, res);
+
+  document.getElementById('s18-RA').textContent = f2(res.reactions[0].R) + ' kN ' + (res.reactions[0].R >= 0 ? '↑' : '↓');
+  document.getElementById('s18-RB').textContent = f2(res.reactions[1].R) + ' kN ' + (res.reactions[1].R >= 0 ? '↑' : '↓');
   document.getElementById('s18-V').textContent  = f2(res.maxV) + ' kN';
   document.getElementById('s18-x0').textContent = res.zeroShear.length ? res.zeroShear.map(f2).join(', ') + ' m' : 'no sign change';
   document.getElementById('s18-M').textContent  = f2(res.maxM) + ' kN·m at ' + f2(res.maxMx) + ' m';
@@ -3219,7 +3812,8 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('ai-tutor-close').addEventListener('click', () => document.getElementById('ai-tutor-panel').classList.add('hidden'));
   document.getElementById('tutor-input').addEventListener('keydown', e => { if (e.key === 'Enter') tutorSend(); });
   document.addEventListener('keydown', e => {
-    if (['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) return;
+    if (['INPUT','SELECT','TEXTAREA','BUTTON'].includes(e.target.tagName)) return;
+    if (e.target.closest && (e.target.closest('#module-17') || e.target.closest('#module-18') || e.target.closest('#rc-fig'))) return;
     if (e.key === 'ArrowRight' && currentModule < 26) switchModule(currentModule + 1);
     if (e.key === 'ArrowLeft'  && currentModule > 1)  switchModule(currentModule - 1);
   });

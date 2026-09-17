@@ -1,0 +1,8 @@
+{
+  "name": "Strength of Materials",
+  "description": "Interactive digital textbook for Strength of Materials with virtual laboratories, live solvers, and self-assessment.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

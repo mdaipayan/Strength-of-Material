@@ -100,25 +100,34 @@ tailwind.config = {
 
 <!-- ============ TOP BAR ============ -->
 <header class="bg-white dark:bg-gray-800 shadow-sm z-30 flex-shrink-0">
-  <div class="px-4 sm:px-6 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2">
+  <div class="px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0">
         <i class="fas fa-bars text-lg"></i>
       </button>
-      <div>
-        <p class="eyebrow leading-none">Interactive Learning Module</p>
-        <h1 class="text-lg font-bold leading-tight text-brand-900 dark:text-brand-200">Strength of Materials &middot; Unit 1</h1>
+
+      <!-- Return to Home Link -->
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/60 text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-brand-300 hover:border-brand-500 hover:bg-white dark:hover:bg-gray-700 transition shrink-0 min-h-[40px] text-xs font-semibold shadow-2xs group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500" title="Return to Course Home / Syllabus" aria-label="Return to Course Home">
+        <i class="fas fa-house text-brand-500 text-xs sm:text-sm group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+        <span class="font-bold">Home</span>
+      </a>
+
+      <div class="h-6 w-px bg-gray-200 dark:bg-gray-700 shrink-0 hidden sm:block"></div>
+
+      <div class="min-w-0">
+        <p class="eyebrow leading-none truncate text-[10px] sm:text-xs">Interactive Learning Module</p>
+        <h1 class="text-xs sm:text-base md:text-lg font-bold leading-tight text-brand-900 dark:text-brand-200 truncate">Strength of Materials &middot; Unit 1</h1>
       </div>
     </div>
 
-    <div class="flex items-center gap-3 sm:gap-5">
+    <div class="flex items-center gap-2 sm:gap-5 shrink-0">
       <div class="hidden sm:flex flex-col items-end">
         <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400">Modules visited <span id="progress-label" class="num">0/26</span></span>
         <div class="w-36 h-1.5 bg-gray-200 rounded-full mt-1 dark:bg-gray-700">
           <div id="progress-bar" class="h-1.5 bg-brand-500 rounded-full transition-all" style="width:0%"></div>
         </div>
       </div>
-      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition">
+      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition min-h-[44px] min-w-[44px] flex items-center justify-center">
         <i id="theme-icon" class="fas fa-moon"></i>
       </button>
     </div>
@@ -128,8 +137,18 @@ tailwind.config = {
 <div class="flex-1 flex overflow-hidden">
 
   <!-- ============ SIDEBAR ============ -->
-  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full">
-    <nav class="p-3 space-y-0.5" id="nav-menu" aria-label="Module list"></nav>
+  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full flex flex-col">
+    <!-- Home / Syllabus link at top of sidebar -->
+    <div class="p-3 pb-2 border-b border-gray-100 dark:border-gray-700/80 sticky top-0 bg-white dark:bg-gray-800 z-10">
+      <a href="index.html" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-600 font-semibold text-xs transition border border-brand-200/80 dark:border-brand-800/80 group shadow-2xs" title="Return to Course Home / Syllabus">
+        <span class="flex items-center gap-2">
+          <i class="fas fa-arrow-left text-[11px] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true"></i>
+          <span>Course Home</span>
+        </span>
+        <i class="fas fa-house text-xs opacity-80" aria-hidden="true"></i>
+      </a>
+    </div>
+    <nav class="p-3 space-y-0.5 flex-1" id="nav-menu" aria-label="Module list"></nav>
   </aside>
 
   <!-- ============ CONTENT ============ -->
@@ -222,6 +241,25 @@ tailwind.config = {
       <img src="Photo.jpg" class="rounded w-full h-auto">
     </div>
   </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m3-quiz"></div>
+  </div>
 </div>
 
 <!-- ============ M4 FORCES ============ -->
@@ -272,6 +310,170 @@ tailwind.config = {
       <div class="flex gap-3"><span class="chip bg-brand-100 text-brand-900 h-fit">Impact</span><p>Applied suddenly; the instantaneous stress can be twice the static value.</p></div>
     </div>
 
+    <div class="mt-6 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+        <h4 class="font-bold text-sm text-gray-800 dark:text-gray-200"><i class="fas fa-arrows-to-dot mr-1.5 text-brand-600"></i> Free Body Figures for Structural Load Types</h4>
+        <span class="text-xs px-2.5 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900 text-brand-800 dark:text-brand-200 font-semibold">Force Directionality & Member Equilibrium</span>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Isolated member free body diagrams showing force collinearity, cut-plane actions, and static equilibrium:</p>
+      <div class="overflow-x-auto">
+        <svg viewBox="0 0 760 330" class="w-full min-w-[680px]" aria-label="Free body diagrams for structural load types">
+          <defs>
+            <marker id="u1-pt" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
+            <marker id="u1-pt-rev" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 Z" fill="#dc2626"/></marker>
+            <marker id="u1-rx" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
+            <marker id="u1-act" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7c3aed"/></marker>
+            <marker id="u1-load" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#d97706"/></marker>
+            <marker id="u1-blue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#0284c7"/></marker>
+          </defs>
+
+          <!-- Row 1: Direct stresses and shear -->
+          <!-- Col 1: Axial Tension -->
+          <g transform="translate(10, 0)">
+            <rect x="0" y="0" width="175" height="150" rx="6" fill="rgba(148,163,184,0.06)" stroke="#cbd5e1" stroke-width="0.8"/>
+            <text x="87" y="20" font-size="11" font-weight="700" text-anchor="middle" fill="#0284c7">1. Axial Tension</text>
+            <line x1="15" y1="65" x2="160" y2="65" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+            <rect x="35" y="52" width="105" height="26" rx="3" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
+            <text x="87.5" y="69" font-size="9" text-anchor="middle" fill="#0369a1" font-weight="700">Tension Bar</text>
+            <!-- Pulling arrows -->
+            <line x1="35" y1="65" x2="10" y2="65" stroke="#dc2626" stroke-width="2.2" marker-end="url(#u1-pt)"/>
+            <text x="18" y="56" font-size="10" font-weight="700" fill="#dc2626">P</text>
+            <line x1="140" y1="65" x2="165" y2="65" stroke="#dc2626" stroke-width="2.2" marker-end="url(#u1-pt)"/>
+            <text x="156" y="56" font-size="10" font-weight="700" fill="#dc2626">P</text>
+            <text x="87" y="105" font-size="9.5" text-anchor="middle" fill="#475569">Collinear pulling forces</text>
+            <text x="87" y="122" font-size="9" text-anchor="middle" font-weight="700" fill="#16a34a">σ = +P / A (Uniform)</text>
+            <text x="87" y="137" font-size="8.5" text-anchor="middle" fill="#94a3b8">Elongates member</text>
+          </g>
+
+          <!-- Col 2: Axial Compression -->
+          <g transform="translate(198, 0)">
+            <rect x="0" y="0" width="175" height="150" rx="6" fill="rgba(148,163,184,0.06)" stroke="#cbd5e1" stroke-width="0.8"/>
+            <text x="87" y="20" font-size="11" font-weight="700" text-anchor="middle" fill="#0284c7">2. Axial Compression</text>
+            <line x1="15" y1="65" x2="160" y2="65" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+            <rect x="35" y="52" width="105" height="26" rx="3" fill="#fee2e2" stroke="#dc2626" stroke-width="1.8"/>
+            <text x="87.5" y="69" font-size="9" text-anchor="middle" fill="#b91c1c" font-weight="700">Comp. Strut</text>
+            <!-- Pushing arrows -->
+            <line x1="10" y1="65" x2="33" y2="65" stroke="#dc2626" stroke-width="2.2" marker-end="url(#u1-pt)"/>
+            <text x="18" y="56" font-size="10" font-weight="700" fill="#dc2626">P</text>
+            <line x1="165" y1="65" x2="142" y2="65" stroke="#dc2626" stroke-width="2.2" marker-end="url(#u1-pt)"/>
+            <text x="150" y="56" font-size="10" font-weight="700" fill="#dc2626">P</text>
+            <text x="87" y="105" font-size="9.5" text-anchor="middle" fill="#475569">Collinear pushing forces</text>
+            <text x="87" y="122" font-size="9" text-anchor="middle" font-weight="700" fill="#dc2626">σ = -P / A (Uniform)</text>
+            <text x="87" y="137" font-size="8.5" text-anchor="middle" fill="#94a3b8">Shortens member</text>
+          </g>
+
+          <!-- Col 3: Direct Transverse Shear -->
+          <g transform="translate(386, 0)">
+            <rect x="0" y="0" width="175" height="150" rx="6" fill="rgba(148,163,184,0.06)" stroke="#cbd5e1" stroke-width="0.8"/>
+            <text x="87" y="20" font-size="11" font-weight="700" text-anchor="middle" fill="#0284c7">3. Direct Shear</text>
+            <!-- Shearing blocks -->
+            <rect x="36" y="44" width="48" height="38" rx="2" fill="#f1f5f9" stroke="#64748b" stroke-width="1.6"/>
+            <rect x="88" y="48" width="48" height="38" rx="2" fill="#f1f5f9" stroke="#64748b" stroke-width="1.6"/>
+            <line x1="86" y1="36" x2="86" y2="94" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <!-- Shearing vectors -->
+            <line x1="60" y1="34" x2="60" y2="44" stroke="#16a34a" stroke-width="2.2" marker-end="url(#u1-rx)"/>
+            <text x="50" y="32" font-size="10" font-weight="700" fill="#16a34a">V ↑</text>
+            <line x1="112" y1="98" x2="112" y2="88" stroke="#16a34a" stroke-width="2.2" marker-end="url(#u1-rx)"/>
+            <text x="120" y="104" font-size="10" font-weight="700" fill="#16a34a">V ↓</text>
+            <text x="87" y="105" font-size="9.5" text-anchor="middle" fill="#475569">Opposing sliding action</text>
+            <text x="87" y="122" font-size="9" text-anchor="middle" font-weight="700" fill="#0284c7">τ = V / A_s (Shear)</text>
+            <text x="87" y="137" font-size="8.5" text-anchor="middle" fill="#94a3b8">Acts parallel to cut plane</text>
+          </g>
+
+          <!-- Col 4: Pure Bending Couple -->
+          <g transform="translate(574, 0)">
+            <rect x="0" y="0" width="175" height="150" rx="6" fill="rgba(148,163,184,0.06)" stroke="#cbd5e1" stroke-width="0.8"/>
+            <text x="87" y="20" font-size="11" font-weight="700" text-anchor="middle" fill="#0284c7">4. Bending Moment</text>
+            <rect x="32" y="52" width="110" height="24" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/>
+            <line x1="30" y1="64" x2="144" y2="64" stroke="#d97706" stroke-width="1" stroke-dasharray="3 2"/>
+            <!-- Moment arrows -->
+            <path d="M22,76 A14,14 0 0 1 22,52" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#u1-act)"/>
+            <text x="14" y="66" font-size="10" font-weight="700" fill="#7c3aed">M</text>
+            <path d="M152,52 A14,14 0 0 1 152,76" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#u1-act)"/>
+            <text x="160" y="66" font-size="10" font-weight="700" fill="#7c3aed">M</text>
+            <text x="87" y="105" font-size="9.5" text-anchor="middle" fill="#475569">Flexing couple in plane</text>
+            <text x="87" y="122" font-size="9" text-anchor="middle" font-weight="700" fill="#7c3aed">Top Comp. / Bottom Tens.</text>
+            <text x="87" y="137" font-size="8.5" text-anchor="middle" fill="#94a3b8">Bending stress: σ = M·y / I</text>
+          </g>
+
+          <!-- Row 2: Torsion, Eccentric, Point load, UDL -->
+          <!-- Col 1: Torsion -->
+          <g transform="translate(10, 165)">
+            <rect x="0" y="0" width="175" height="150" rx="6" fill="rgba(148,163,184,0.06)" stroke="#cbd5e1" stroke-width="0.8"/>
+            <text x="87" y="20" font-size="11" font-weight="700" text-anchor="middle" fill="#0284c7">5. Torsion (Twisting)</text>
+            <rect x="35" y="52" width="105" height="26" rx="13" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.8"/>
+            <line x1="20" y1="65" x2="155" y2="65" stroke="#7c3aed" stroke-width="1" stroke-dasharray="3 2"/>
+            <!-- Twisting couple arrows -->
+            <path d="M26,76 A12,12 0 1 1 28,52" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#u1-act)"/>
+            <text x="16" y="66" font-size="10" font-weight="700" fill="#7c3aed">T</text>
+            <path d="M148,52 A12,12 0 1 1 146,76" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#u1-act)"/>
+            <text x="158" y="66" font-size="10" font-weight="700" fill="#7c3aed">T</text>
+            <text x="87" y="105" font-size="9.5" text-anchor="middle" fill="#475569">Twisting torque couple</text>
+            <text x="87" y="122" font-size="9" text-anchor="middle" font-weight="700" fill="#7c3aed">τ = T·r / J (Torsional Shear)</text>
+            <text x="87" y="137" font-size="8.5" text-anchor="middle" fill="#94a3b8">Zero at centre, max at surface</text>
+          </g>
+
+          <!-- Col 2: Eccentric Load -->
+          <g transform="translate(198, 165)">
+            <rect x="0" y="0" width="175" height="150" rx="6" fill="rgba(148,163,184,0.06)" stroke="#cbd5e1" stroke-width="0.8"/>
+            <text x="87" y="20" font-size="11" font-weight="700" text-anchor="middle" fill="#0284c7">6. Eccentric Axial Load</text>
+            <rect x="35" y="48" width="105" height="28" rx="3" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8"/>
+            <!-- Centroid axis -->
+            <line x1="20" y1="62" x2="155" y2="62" stroke="#64748b" stroke-width="1" stroke-dasharray="3 2"/>
+            <!-- Offset load line -->
+            <line x1="140" y1="52" x2="165" y2="52" stroke="#dc2626" stroke-width="2.2" marker-end="url(#u1-pt)"/>
+            <text x="156" y="45" font-size="10" font-weight="700" fill="#dc2626">P</text>
+            <!-- Eccentricity marker -->
+            <line x1="150" y1="52" x2="150" y2="62" stroke="#475569" stroke-width="1"/>
+            <text x="146" y="59" font-size="7.5" text-anchor="end" fill="#475569">e</text>
+            <text x="87" y="105" font-size="9.5" text-anchor="middle" fill="#475569">Offset by eccentricity e</text>
+            <text x="87" y="122" font-size="9" text-anchor="middle" font-weight="700" fill="#dc2626">σ = P/A ± (P·e·y)/I</text>
+            <text x="87" y="137" font-size="8.5" text-anchor="middle" fill="#94a3b8">Axial thrust + Bending moment</text>
+          </g>
+
+          <!-- Col 3: Transverse Beam Load (Point) -->
+          <g transform="translate(386, 165)">
+            <rect x="0" y="0" width="175" height="150" rx="6" fill="rgba(148,163,184,0.06)" stroke="#cbd5e1" stroke-width="0.8"/>
+            <text x="87" y="20" font-size="11" font-weight="700" text-anchor="middle" fill="#0284c7">7. Transverse Point Load</text>
+            <rect x="25" y="60" width="125" height="9" rx="2" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
+            <!-- Applied load W -->
+            <line x1="87.5" y1="36" x2="87.5" y2="58" stroke="#dc2626" stroke-width="2.2" marker-end="url(#u1-pt)"/>
+            <text x="87.5" y="32" font-size="10" font-weight="700" text-anchor="middle" fill="#dc2626">W ↓</text>
+            <!-- Reactions -->
+            <line x1="30" y1="88" x2="30" y2="71" stroke="#16a34a" stroke-width="2" marker-end="url(#u1-rx)"/>
+            <text x="30" y="98" font-size="8" font-weight="700" text-anchor="middle" fill="#16a34a">R_A=W/2</text>
+            <line x1="145" y1="88" x2="145" y2="71" stroke="#16a34a" stroke-width="2" marker-end="url(#u1-rx)"/>
+            <text x="145" y="98" font-size="8" font-weight="700" text-anchor="middle" fill="#16a34a">R_B=W/2</text>
+            <text x="87" y="112" font-size="9.5" text-anchor="middle" fill="#475569">Concentrated force</text>
+            <text x="87" y="126" font-size="9" text-anchor="middle" font-weight="700" fill="#16a34a">ΣF_y = R_A + R_B - W = 0</text>
+            <text x="87" y="139" font-size="8.5" text-anchor="middle" fill="#94a3b8">Produces V(x) step & M(x) apex</text>
+          </g>
+
+          <!-- Col 4: Uniformly Distributed Load (UDL) -->
+          <g transform="translate(574, 165)">
+            <rect x="0" y="0" width="175" height="150" rx="6" fill="rgba(148,163,184,0.06)" stroke="#cbd5e1" stroke-width="0.8"/>
+            <text x="87" y="20" font-size="11" font-weight="700" text-anchor="middle" fill="#0284c7">8. Distributed Load (UDL)</text>
+            <rect x="25" y="60" width="125" height="9" rx="2" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
+            <!-- UDL block -->
+            <rect x="25" y="44" width="125" height="14" fill="rgba(245,158,11,0.2)" stroke="#f59e0b" stroke-width="1.2"/>
+            <text x="87.5" y="40" font-size="9" font-weight="700" text-anchor="middle" fill="#d97706">w (kN/m)</text>
+            <!-- Downward load arrows in UDL -->
+            <line x1="45" y1="45" x2="45" y2="58" stroke="#f59e0b" stroke-width="1.4" marker-end="url(#u1-load)"/>
+            <line x1="87.5" y1="45" x2="87.5" y2="58" stroke="#f59e0b" stroke-width="1.4" marker-end="url(#u1-load)"/>
+            <line x1="130" y1="45" x2="130" y2="58" stroke="#f59e0b" stroke-width="1.4" marker-end="url(#u1-load)"/>
+            <!-- Reactions -->
+            <line x1="30" y1="88" x2="30" y2="71" stroke="#16a34a" stroke-width="2" marker-end="url(#u1-rx)"/>
+            <text x="30" y="98" font-size="8" font-weight="700" text-anchor="middle" fill="#16a34a">R_A=wL/2</text>
+            <line x1="145" y1="88" x2="145" y2="71" stroke="#16a34a" stroke-width="2" marker-end="url(#u1-rx)"/>
+            <text x="145" y="98" font-size="8" font-weight="700" text-anchor="middle" fill="#16a34a">R_B=wL/2</text>
+            <text x="87" y="112" font-size="9.5" text-anchor="middle" fill="#475569">Spread over length L</text>
+            <text x="87" y="126" font-size="9" text-anchor="middle" font-weight="700" fill="#16a34a">Resultant R = w·L at L/2</text>
+            <text x="87" y="139" font-size="8.5" text-anchor="middle" fill="#94a3b8">Produces parabolic M(x)</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
     <h4 class="font-bold mt-6 mb-2">Try it — cut the bar</h4>
     <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">A bar carries 60 kN at the free end. Drag the section to see that the internal force is the same everywhere along a uniform axially loaded bar.</p>
     <input type="range" id="cut-pos" class="slider-custom" min="5" max="95" value="50" aria-label="Section position">
@@ -282,6 +484,25 @@ tailwind.config = {
       <div id="cut-label" class="absolute top-1 text-xs font-bold num text-lab-600" style="left:50%">N = 60 kN (T)</div>
       <div class="absolute right-2 top-1/2 -translate-y-1/2 text-sm font-bold">60 kN &rarr;</div>
     </div>
+  </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m4-quiz"></div>
   </div>
 </div>
 
@@ -339,6 +560,25 @@ tailwind.config = {
     </div>
     <p class="text-sm mt-3 text-gray-600 dark:text-gray-300" id="c5-work"></p>
   </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m5-quiz"></div>
+  </div>
 </div>
 
 <!-- ============ M6 TYPES OF STRESS ============ -->
@@ -375,9 +615,21 @@ tailwind.config = {
     <p class="text-sm mt-4 p-3 rounded bg-lab-50 dark:bg-lab-900/30 border-l-4 border-lab-500">Forgetting the factor of 2 in double shear is the most common bolt-design error in Exam papers. Count the planes on the sketch before you write the formula.</p>
   </div>
 
-  <div class="card">
-    <h3 class="text-xl font-bold mb-2">Identify the stress</h3>
-    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Read the situation and choose the dominant stress type.</p>
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check: Identify the Stress</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Read the structural situation and diagnose the dominant internal stress</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
     <div id="m6-quiz"></div>
     <p class="text-sm mt-3 num" id="m6-score"></p>
   </div>
@@ -437,6 +689,25 @@ tailwind.config = {
       <tr><td>Rubber band, stretched</td><td class="num">3.0</td><td class="num">300 %</td><td>—</td></tr>
     </table>
   </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m7-quiz"></div>
+  </div>
 </div>
 
 <!-- ============ M8 HOOKE ============ -->
@@ -478,6 +749,25 @@ tailwind.config = {
     <p class="mt-3 text-sm num" id="m8-result">Record at least two readings to compute the slope.</p>
     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">The specimen is simulated as mild steel with E = 200 GPa and a proportional limit of 210 MPa. Load it past that point and watch the plot bend away from the line.</p>
   </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m8-quiz"></div>
+  </div>
 </div>
 
 <!-- ============ M9 CURVE MILD STEEL ============ -->
@@ -514,6 +804,25 @@ tailwind.config = {
       <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Percentage elongation</b> \(= \dfrac{L_f - L_o}{L_o}\times 100\). IS 432 requires a minimum of 23 % for Fe250 — this is the ductility check that lets a structure warn before it collapses.</div>
     </div>
   </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m9-quiz"></div>
+  </div>
 </div>
 
 <!-- ============ M10 OTHER MATERIALS ============ -->
@@ -543,6 +852,25 @@ tailwind.config = {
       <tr><td>Fracture surface</td><td>Cup and cone, 45° shear lip</td><td>Flat, normal to the load</td></tr>
       <tr><td>Design philosophy</td><td>Plastic / limit state design possible</td><td>Elastic design with a large factor of safety</td></tr>
     </table>
+  </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m10-quiz"></div>
   </div>
 </div>
 
@@ -597,6 +925,25 @@ tailwind.config = {
     </div>
     <p class="text-sm mt-3 text-gray-600 dark:text-gray-300" id="ec-note"></p>
   </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m11-quiz"></div>
+  </div>
 </div>
 
 <!-- ============ M12 POISSON ============ -->
@@ -645,6 +992,25 @@ tailwind.config = {
   <div class="card">
     <h3 class="text-lg font-bold mb-2">Why μ cannot exceed 0.5</h3>
     <p class="text-sm">From \(\varepsilon_v = \varepsilon(1-2\mu)\): at \(\mu = 0.5\) the volumetric strain is zero, so the material deforms at constant volume — rubber and water behave close to this. If \(\mu\) were greater than 0.5, a bar under <i>tension</i> would have to <i>lose</i> volume, which no ordinary material does. The lower bound for isotropic materials is \(-1\), and a few engineered auxetic foams do have negative μ: stretch them and they get fatter.</p>
+  </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m12-quiz"></div>
   </div>
 </div>
 
@@ -696,6 +1062,25 @@ tailwind.config = {
       <p>δ = εL = 6.25×10⁻⁴ × 500 = <b>0.3125 mm</b></p>
     </div>
     <p class="text-sm mt-3">Note the result: the copper has twice the area but half the modulus, so the two carry exactly the same force. Area and stiffness both matter, and the product \(AE\) is what does the sharing.</p>
+  </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m13-quiz"></div>
   </div>
 </div>
 
@@ -755,6 +1140,25 @@ tailwind.config = {
     <div class="formula-box">$$ \sigma_1 A_1 = \sigma_2 A_2 \qquad\text{and}\qquad \frac{\sigma_1}{E_1} + \frac{\sigma_2}{E_2} = (\alpha_1 - \alpha_2)\,\Delta T $$</div>
     <p class="text-sm mt-3">Take \(\alpha_1 > \alpha_2\). The first equation is equilibrium of the internal pull-and-push pair; the second says the strain difference the two would have had is exactly taken up by the elastic strains. This is the bimetallic strip, and it is why a thermostat bends.</p>
   </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m14-quiz"></div>
+  </div>
 </div>
 
 <!-- ============ M15 FOS ============ -->
@@ -790,6 +1194,25 @@ tailwind.config = {
   <div class="card">
     <h3 class="text-lg font-bold mb-2">Working stress versus limit state</h3>
     <p class="text-sm">The FOS above belongs to <b>working stress design</b>: one factor applied to the material. Modern codes including IS 456 and IS 800 use <b>limit state design</b>, applying a partial safety factor to the material (γ<sub>m</sub>) and separate factors to each load (γ<sub>f</sub>) — for example 1.5 on dead and live load, 1.15 on steel, 1.5 on concrete. The philosophy is the same margin, distributed where the uncertainty actually lies.</p>
+  </div>
+
+  <!-- Section Concept Check -->
+  <div class="card mt-6 border border-brand-200 dark:border-brand-900/60 bg-gradient-to-br from-white via-brand-50/20 to-brand-100/10 dark:from-gray-800 dark:via-gray-800 dark:to-brand-950/20 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center text-xs font-bold shadow-2xs">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h4 class="font-bold text-sm text-gray-900 dark:text-brand-200">Section Concept Check</h4>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">Quick interactive check &middot; test your understanding</p>
+        </div>
+      </div>
+      <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300">
+        +10 XP
+      </span>
+    </div>
+    <div id="m15-quiz"></div>
   </div>
 </div>
 
@@ -1233,8 +1656,13 @@ tailwind.config = {
   </div>
 </div>
 
-<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2.5 text-center text-xs text-gray-500 dark:text-gray-400 flex-shrink-0 z-10">
-  Prepared by <strong>D. Mandal</strong>, Assistant Professor, Department of Civil Engineering &nbsp;|&nbsp; &copy; 2026
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2.5 px-4 text-center text-xs text-gray-500 dark:text-gray-400 flex-shrink-0 z-10 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+  <span>Prepared by <strong>D. Mandal</strong>, Dept. of Civil Engineering &nbsp;|&nbsp; &copy; 2026</span>
+  <span class="text-gray-300 dark:text-gray-600 hidden sm:inline">&bull;</span>
+  <a href="index.html" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 font-semibold hover:underline">
+    <i class="fas fa-house text-[11px]" aria-hidden="true"></i>
+    <span>Return to Course Home</span>
+  </a>
 </footer>
 
 <script>
@@ -1571,6 +1999,214 @@ const TUTOR_KB = [
 </script>
 
 <script>
+/* ================= SECTION CONCEPT CHECK QUIZZES ================= */
+const SECTION_QUIZZES = {
+  'm3-quiz': {
+    topic: 'Why Stress Matters',
+    q: 'Why did the Hyatt Regency walkway collapse in 1981, killing 114 people?',
+    opts: [
+      'The steel used was brittle and below grade standard',
+      'A change from continuous rods to interrupted rods doubled the shear load on the box beam nuts',
+      'The walkway experienced unexpected resonant wind vibrations',
+      'Thermal expansion during summer caused thermal buckling'
+    ],
+    a: 'A change from continuous rods to interrupted rods doubled the shear load on the box beam nuts',
+    why: 'The fabricator changed single continuous hanger rods into two staggered sets. This meant the 4th-floor beam had to support its own floor load PLUS the entire weight of the 2nd-floor walkway transmitted through the nut connection, doubling the internal stress and causing catastrophic punching shear failure.'
+  },
+  'm4-quiz': {
+    topic: 'Internal Forces',
+    q: 'If a uniform prismatic bar carrying an axial tensile force of 60 kN is sliced by a transverse imaginary cutting plane, what internal normal force acts on the cross-section to maintain equilibrium?',
+    opts: [
+      '0 kN — internal forces only exist at the fixed supports',
+      '30 kN — the load divides equally across the two halves',
+      '60 kN — exactly balancing the external load on the free-body segment',
+      '120 kN — due to Newton\'s action-reaction pair on both faces'
+    ],
+    a: '60 kN — exactly balancing the external load on the free-body segment',
+    why: 'By the method of sections, equilibrium of either isolated cut portion (ΣFx = 0) requires the internal resultant normal force N to equal the external tensile load: N = 60 kN.'
+  },
+  'm5-quiz': {
+    topic: 'Stress Formula & Units',
+    q: 'An axial tensile load of 50 kN acts on a bar with a cross-sectional area of 250 mm². What is the direct stress developed in the bar?',
+    opts: [
+      '0.2 MPa',
+      '20 MPa',
+      '200 MPa',
+      '2000 MPa'
+    ],
+    a: '200 MPa',
+    why: 'Using the golden rule of SOM units: P = 50 kN = 50,000 N, and A = 250 mm². Stress σ = P / A = 50,000 / 250 = 200 N/mm² = 200 MPa. No unit conversions needed!'
+  },
+  'm7-quiz': {
+    topic: 'Strain & Deformation',
+    q: 'A steel rod of length L and diameter d elongates by δ under an axial load P. If the diameter is doubled (2d) while load and length remain constant, the new elongation will be:',
+    opts: [
+      '2δ (doubled)',
+      'δ / 2 (halved)',
+      'δ / 4 (reduced to one-fourth)',
+      'δ (unchanged)'
+    ],
+    a: 'δ / 4 (reduced to one-fourth)',
+    why: 'Elongation is given by δ = PL / (AE). Area is proportional to the square of diameter: A = π/4·d². Doubling the diameter quadruples the area (4A), which reduces the elongation to one-fourth: δ_new = δ / 4.'
+  },
+  'm8-quiz': {
+    topic: 'Hooke\'s Law & Modulus',
+    q: 'Compare mild steel (Fe 250, yield stress 250 MPa) with high-strength rebar (Fe 500, yield stress 500 MPa). Which statement about their Young\'s modulus is true?',
+    opts: [
+      'Fe 500 has twice the Young\'s modulus of Fe 250 (E ≈ 400 GPa)',
+      'Fe 250 and Fe 500 have virtually identical Young\'s moduli (E ≈ 200 GPa)',
+      'Fe 500 is stiffer and elongates less under equal sub-yield stress',
+      'Fe 250 has higher stiffness because of its greater ductility'
+    ],
+    a: 'Fe 250 and Fe 500 have virtually identical Young\'s moduli (E ≈ 200 GPa)',
+    why: 'Young\'s modulus E measures elastic STIFFNESS, which depends on iron atomic bonds, not alloying or heat treatment. Both Fe 250 and Fe 500 have E ≈ 200 GPa (2×10⁵ MPa). Fe 500 has double the STRENGTH (yield capacity), but deforms by the exact same amount under identical elastic stresses!'
+  },
+  'm9-quiz': {
+    topic: 'Mild Steel Curve',
+    q: 'During a standard tensile test on a mild steel specimen, at what distinct stage does localized necking initiate?',
+    opts: [
+      'At the Proportional Limit (Point A)',
+      'At the Lower Yield Point (Point C)',
+      'At the Ultimate Tensile Strength / UTS (Point E)',
+      'At the final Breaking Point (Point F)'
+    ],
+    a: 'At the Ultimate Tensile Strength / UTS (Point E)',
+    why: 'Up to the Ultimate Tensile Strength (UTS), deformation along the gauge length is uniform. Beyond the UTS, plastic strain concentrates in a localized region, forming a \'neck\'. Because engineering stress divides by original area, the curve drops until rupture at the cup-and-cone fracture.'
+  },
+  'm10-quiz': {
+    topic: 'Other Materials & Proof Stress',
+    q: 'Why is the 0.2% Proof Stress method specified by IS 1786 for cold-twisted / HYSD reinforcement bars (Fe 415 / Fe 500)?',
+    opts: [
+      'Because cold-worked steel has no distinct yield plateau on its stress-strain curve',
+      'Because cold-worked steel breaks abruptly without any plastic deformation',
+      'Because 0.2% strain is the exact point of fracture in high-strength bars',
+      'Because proof stress represents the ultimate tensile strength of the bar'
+    ],
+    a: 'Because cold-worked steel has no distinct yield plateau on its stress-strain curve',
+    why: 'Cold working eliminates the sharp yield drop seen in mild steel. To define an engineering yield point for design, an offset line parallel to the initial elastic slope is drawn from 0.2% strain (ε = 0.002); its intersection with the curve is the 0.2% proof stress.'
+  },
+  'm11-quiz': {
+    topic: 'Elastic Constants Relations',
+    q: 'For an isotropic elastic material with Young\'s modulus E = 200 GPa and Poisson\'s ratio μ = 0.25, what is its Shear Modulus (Modulus of Rigidity) G?',
+    opts: [
+      '50 GPa',
+      '80 GPa',
+      '100 GPa',
+      '160 GPa'
+    ],
+    a: '80 GPa',
+    why: 'Using the fundamental relation E = 2G(1 + μ): 200 = 2G(1 + 0.25) = 2.5G, therefore G = 200 / 2.5 = 80 GPa.'
+  },
+  'm12-quiz': {
+    topic: 'Poisson\'s Ratio & Volume Change',
+    q: 'Why can Poisson\'s ratio (μ) of an ordinary isotropic elastic material never exceed 0.5 under tensile testing?',
+    opts: [
+      'Because Shear modulus G would become infinite',
+      'Because volumetric strain ε_v = ε(1 − 2μ) would become negative, implying volume loss during axial tension',
+      'Because Young\'s modulus E would become zero',
+      'Because the material would immediately liquefy'
+    ],
+    a: 'Because volumetric strain ε_v = ε(1 − 2μ) would become negative, implying volume loss during axial tension',
+    why: 'Volumetric strain is ε_v = ε(1 − 2μ). If μ = 0.5 (like ideal rubber or water), ε_v = 0 (incompressible deformation). If μ were > 0.5, pulling a bar in tension would cause it to lose volume, which violates thermodynamic stability.'
+  },
+  'm13-quiz': {
+    topic: 'Composite Bars',
+    q: 'A solid steel rod (E_s = 200 GPa) and a copper tube (E_c = 100 GPa) have equal length and are bonded together to form a composite column carrying an axial load. What is the ratio of stress in steel to stress in copper (σ_s / σ_c)?',
+    opts: [
+      '0.5',
+      '1.0 (equal stresses)',
+      '2.0 (stiffer material carries double the stress)',
+      '4.0'
+    ],
+    a: '2.0 (stiffer material carries double the stress)',
+    why: 'By compatibility of bonded deformation, strains are equal: ε_s = ε_c. Therefore σ_s / E_s = σ_c / E_c, which gives σ_s / σ_c = E_s / E_c = 200 / 100 = 2.0 (the modular ratio m = 2).'
+  },
+  'm14-quiz': {
+    topic: 'Temperature Stress',
+    q: 'A steel bar of length L is heated by 50°C while completely free to expand without any external restraint. What thermal stress is developed in the bar?',
+    opts: [
+      'Zero — free expansion produces strain but zero stress',
+      'σ = α·ΔT·E (about 120 MPa tension)',
+      'σ = α·ΔT·E (about 120 MPa compression)',
+      'σ = α·ΔT·L'
+    ],
+    a: 'Zero — free expansion produces strain but zero stress',
+    why: 'Stress is an INTERNAL RESISTING FORCE. If a body expands freely, nothing opposes the deformation, so no internal resisting forces develop (σ = 0). Thermal stress ONLY develops when thermal expansion is partially or fully restrained!'
+  },
+  'm15-quiz': {
+    topic: 'Factor of Safety & Design',
+    q: 'A ductile mild steel tie rod with a yield strength of 250 MPa carries a tensile service load of 100 kN. If the design code requires a Factor of Safety (FOS) of 2.0 based on yield, what is the minimum required cross-sectional area?',
+    opts: [
+      '400 mm²',
+      '500 mm²',
+      '800 mm²',
+      '1000 mm²'
+    ],
+    a: '800 mm²',
+    why: 'Permissible working stress σ_permissible = σ_yield / FOS = 250 / 2.0 = 125 MPa (125 N/mm²). Required area A = P / σ_permissible = 100,000 N / 125 N/mm² = 800 mm².'
+  }
+};
+
+function renderSectionQuiz(containerId, data) {
+  const box = document.getElementById(containerId);
+  if (!box || !data) return;
+  box.innerHTML = '';
+  
+  const qEl = document.createElement('p');
+  qEl.className = 'font-semibold text-sm sm:text-base text-gray-800 dark:text-gray-100 mb-3 leading-snug';
+  qEl.innerHTML = data.q;
+  box.appendChild(qEl);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'grid gap-2 sm:grid-cols-2';
+
+  const fb = document.createElement('div');
+  fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm hidden border';
+
+  data.opts.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'quiz-opt !mb-0 text-xs sm:text-sm font-medium transition-all text-left flex items-start gap-2.5 p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-brand-500 hover:bg-brand-50/50 dark:hover:bg-brand-950/30';
+    btn.innerHTML = `<span class="w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">${String.fromCharCode(65 + idx)}</span><span class="flex-1">${opt}</span>`;
+    
+    btn.onclick = () => {
+      const isCorrect = (opt === data.a);
+      wrap.querySelectorAll('button').forEach(b => b.disabled = true);
+      
+      if (isCorrect) {
+        btn.classList.add('!bg-emerald-50', '!border-emerald-500', '!text-emerald-900', 'dark:!bg-emerald-950/50', 'dark:!text-emerald-200', 'dark:!border-emerald-600');
+        fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 block';
+        fb.innerHTML = `<div class="flex items-center gap-1.5 font-bold mb-1 text-emerald-700 dark:text-emerald-300"><i class="fas fa-circle-check"></i> Excellent! That's correct. (+10 XP)</div><p class="text-gray-700 dark:text-gray-300">${data.why}</p>`;
+      } else {
+        btn.classList.add('!bg-rose-50', '!border-rose-500', '!text-rose-900', 'dark:!bg-rose-950/50', 'dark:!text-rose-200', 'dark:!border-rose-600');
+        // highlight correct answer
+        wrap.querySelectorAll('button').forEach((b, i) => {
+          if (data.opts[i] === data.a) {
+            b.classList.add('!bg-emerald-50', '!border-emerald-500', '!text-emerald-900', 'dark:!bg-emerald-950/50', 'dark:!text-emerald-200');
+          }
+        });
+        fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm border border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 block';
+        fb.innerHTML = `<div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+          <span class="font-bold text-rose-700 dark:text-rose-300 flex items-center gap-1.5"><i class="fas fa-circle-xmark"></i> Not quite right</span>
+          <button type="button" class="text-xs font-bold px-2 py-0.5 rounded bg-white dark:bg-gray-800 text-brand-600 dark:text-brand-400 border border-brand-200 dark:border-brand-800 hover:bg-brand-50" onclick="renderSectionQuiz('${containerId}', SECTION_QUIZZES['${containerId}'])">Try Again</button>
+        </div><p class="text-gray-700 dark:text-gray-300">${data.why}</p>`;
+      }
+      
+      logAnswer('SectionQuiz', data.topic || 'Concept', isCorrect);
+    };
+    wrap.appendChild(btn);
+  });
+
+  box.appendChild(wrap);
+  box.appendChild(fb);
+}
+
+function initSectionQuizzes() {
+  Object.keys(SECTION_QUIZZES).forEach(id => {
+    renderSectionQuiz(id, SECTION_QUIZZES[id]);
+  });
+}
+
 /* ================= NAVIGATION & SHELL ================= */
 let currentModule = 1;
 
@@ -2712,6 +3348,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('theme-icon').className = 'fas fa-sun';
   }
   initNav();
+  initSectionQuizzes();
   initM4(); initM5(); initM6(); initM8(); initM11(); initM12(); initM13();
   initM14(); initM15(); initM16(); initM17(); initM18();
   initMatch(); newMaterialRound(); newHunt(); initMemory();
