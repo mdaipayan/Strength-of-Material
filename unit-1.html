@@ -10,6 +10,31 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- KaTeX: Ultra-fast synchronous LaTeX math typesetting -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="if(typeof renderAllMath==='function')renderAllMath()"></script>
+
+<!-- MathJax: Full AMS-LaTeX mathematical notation & inline delimiter support -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  startup: {
+    ready: () => {
+      MathJax.startup.defaultReady();
+      if (typeof renderAllMath === 'function') renderAllMath();
+    }
+  }
+};
+</script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
@@ -1025,8 +1050,8 @@ tailwind.config = {
       <tr><td>F — Breaking / Rupture point</td><td>Final fracture with a ductile cup-and-cone 45° shear lip appearance</td><td class="num">≈ 330 MPa</td></tr>
     </table>
     <div class="mt-4 grid sm:grid-cols-2 gap-4 text-sm">
-      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Ductility Indicator 1:</b> Percentage elongation \(= \frac{L_f - L_0}{L_0}\times 100\). IS 432 requires a minimum of 23% for Fe250 — this ensures structures give visible sag and warning prior to collapse.</div>
-      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Ductility Indicator 2:</b> Percentage reduction in area \(= \frac{A_0 - A_f}{A_0}\times 100\). Measures true localized plastic flow capacity independent of specimen gauge length.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Ductility Indicator 1:</b> Percentage elongation \(= \left(\frac{L_f - L_0}{L_0}\right) \times 100\%\). IS 432 requires a minimum of 23% for Fe250 — this ensures structures give visible sag and warning prior to collapse.</div>
+      <div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><b>Ductility Indicator 2:</b> Percentage reduction in area \(= \left(\frac{A_0 - A_f}{A_0}\right) \times 100\%\). Measures true localized plastic flow capacity independent of specimen gauge length.</div>
     </div>
   </div>
 

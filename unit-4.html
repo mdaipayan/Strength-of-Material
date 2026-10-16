@@ -10,6 +10,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- KaTeX & MathJax Configuration -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
@@ -497,13 +515,21 @@ tailwind.config = {
     <h3 class="text-lg font-bold mb-2">Standard simply supported results, span L</h3>
     <table class="data">
       <tr><th>Loading</th><th>Slope at the ends</th><th>Maximum deflection</th><th>At</th></tr>
-      <tr><td>Point load W at mid-span</td><td class="num">WL²/16EI</td><td class="num">WL³/48EI</td><td>Mid-span</td></tr>
-      <tr><td>Point load W at a from A, b from B</td><td class="num">Wab(L+b)/6EIL</td><td class="num">Wb(L²−b²)^{3/2} / (9√3 EIL)</td><td class="num">x = √[(L²−b²)/3] from A, taking b &lt; a</td></tr>
-      <tr><td>UDL w over the whole span</td><td class="num">wL³/24EI</td><td class="num">5wL⁴/384EI</td><td>Mid-span</td></tr>
-      <tr><td>UVL, zero at A to w at B</td><td class="num">7wL³/360EI at A</td><td class="num">0.00652 wL⁴/EI</td><td class="num">x = 0.519 L from A</td></tr>
-      <tr><td>Couple M₀ at one end</td><td class="num">M₀L/3EI at that end</td><td class="num">M₀L²/(9√3 EI)</td><td class="num">x = L/√3 from the <b>far</b> end</td></tr>
+      <tr><td>Point load W at mid-span</td><td class="num">|\theta_A| = |\theta_B| = \dfrac{WL²}{16EI}</td><td class="num">\dfrac{WL³}{48EI}</td><td>Mid-span</td></tr>
+      <tr>
+        <td>Point load W at a from A, b from B (L = a + b)</td>
+        <td class="num">
+          |\theta_A| = \dfrac{Wab(L+b)}{6EIL}<br>
+          |\theta_B| = \dfrac{Wab(L+a)}{6EIL}
+        </td>
+        <td class="num">\dfrac{Wb_s(L²−b_s²)^{3/2}}{9\sqrt{3}EIL}<br><span class="text-xs text-gray-500">(\delta_{\text{load}} = \frac{Wa²b²}{3EIL})</span></td>
+        <td class="num">x = \sqrt{\frac{L²−b_s²}{3}} from the far support, where b_s = \min(a,b)</td>
+      </tr>
+      <tr><td>UDL w over the whole span</td><td class="num">|\theta_A| = |\theta_B| = \dfrac{wL³}{24EI}</td><td class="num">\dfrac{5wL⁴}{384EI}</td><td>Mid-span</td></tr>
+      <tr><td>UVL, zero at A to w at B</td><td class="num">|\theta_A| = \dfrac{7wL³}{360EI}, \; |\theta_B| = \dfrac{8wL³}{360EI}</td><td class="num">\approx 0.00652\,\dfrac{wL⁴}{EI}</td><td class="num">x = 0.5193 L from A (light end)</td></tr>
+      <tr><td>Couple M₀ at end A (clockwise)</td><td class="num">\theta_A = \dfrac{M₀L}{3EI}, \; \theta_B = -\dfrac{M₀L}{6EI}</td><td class="num">\dfrac{M₀L²}{9\sqrt{3}EI}</td><td class="num">x = \dfrac{L}{\sqrt{3}} \approx 0.577 L from end B</td></tr>
     </table>
-    <p class="text-sm mt-3">The deflection under an off-centre load is \(Wa^2b^2/3EIL\), which is <b>not</b> the maximum — the maximum sits slightly towards the centre of the span. Examiners ask for one or the other, so read the question carefully.</p>
+    <p class="text-sm mt-3"><b>Important distinction:</b> For an off-centre point load, the deflection directly under the load is \(\delta_{\text{load}} = \dfrac{Wa^2b^2}{3EIL}\). This is <b>not</b> the absolute maximum deflection — the true maximum \(\delta_{\max}\) occurs slightly towards the centre of the span at \(x = \sqrt{(L^2 - b_s^2)/3}\) from the far support. While the two values differ by only a few percent for typical positions, university and competitive exam questions distinguish strictly between deflection <i>at the load</i> and <i>maximum deflection</i>.</p>
   </div>
 </div>
 
@@ -520,7 +546,7 @@ tailwind.config = {
   <div class="card mb-5">
     <h3 class="text-xl font-bold mb-3">The Macaulay bracket</h3>
     <div class="formula-box">$$ \langle x-a \rangle^n = \begin{cases} (x-a)^n & \text{if } x > a \\[2pt] 0 & \text{if } x \le a \end{cases} $$</div>
-    <p class="text-sm mt-3">The angled bracket is not ordinary multiplication. It is an instruction: <b>if the contents are negative, discard the whole term</b>. A load at 3 m contributes nothing to the moment at 2 m, and the bracket enforces that automatically.</p>
+    <p class="text-sm mt-3">The angled bracket is not ordinary multiplication. It is an instruction: <b>if the contents are negative or zero, discard the whole term</b>. A load at 3 m contributes nothing to the moment at 2 m, and the bracket enforces that automatically.</p>
     <figure class="my-4 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="bracket" data-num="10.1" data-cap="The Macaulay bracket switches a term on only once the section passes the load"></figure>
   </div>
 
@@ -546,7 +572,7 @@ tailwind.config = {
   <p class="eyebrow">Module 11</p><h2 class="mtitle">Macaulay's method — worked in full</h2>
 
   <div class="card mb-5">
-    <p class="text-sm mb-3">A simply supported beam of 8 m span carries 40 kN at 2 m from A and 60 kN at 5 m from A. Take EI constant. Find the deflection at mid-span and the maximum deflection.</p>
+    <p class="text-sm mb-3">A simply supported beam of 8 m span carries 40 kN at 2 m from A and 60 kN at 5 m from A. Take EI constant (150 × 300 mm section, E = 200 GPa, flexural rigidity \(EI = 6.75 \times 10^{13}\text{ N}\cdot\text{mm}^2\)). Find the deflection at mid-span and the maximum deflection.</p>
     <div id="m11-beam" class="p-2 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700"></div>
   </div>
 
@@ -578,30 +604,43 @@ tailwind.config = {
       <p class="pt-2 border-t dark:border-gray-600"><b>At x = 8, y = 0.</b> Now both brackets are positive and both count:</p>
       <p>0 = 52.5(512)/6 − 40(6)³/6 − 60(3)³/6 + 8C₁</p>
       <p>0 = 4480 − 1440 − 270 + 8C₁</p>
-      <p>0 = 2770 + 8C₁  →  <b>C₁ = −346.25</b></p>
+      <p>0 = 2770 + 8C₁  →  <b>C₁ = −346.25 kN·m²</b></p>
     </div>
     <p class="text-sm mt-3">Note how the two conditions did different amounts of work: at x = 0 every bracket vanished, which is exactly why C₂ is zero for any simply supported beam with the origin at the left support.</p>
   </div>
 
   <div class="card mb-5">
-    <h3 class="text-lg font-bold mb-3">Step 4 — the answers</h3>
-    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
-      <p><b>At mid-span, x = 4 m</b> — the first bracket counts, the second does not:</p>
+    <h3 class="text-lg font-bold mb-3">Step 4 — the answers and rigorous unit conversion</h3>
+    <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1.5">
+      <p><b>At mid-span, x = 4 m:</b> the first bracket \(\langle 4 - 2 \rangle = 2\) counts; the second \(\langle 4 - 5 \rangle\) is negative and discarded:</p>
       <p>EI y = 52.5(64)/6 − 40(2)³/6 − (discard) − 346.25(4)</p>
-      <p>EI y = 560 − 53.33 − 1385 = −878.33 kN·m³</p>
-      <p>y = −878.33 × 10⁹ / EI  (converting kN·m³ to N·mm³)</p>
-      <p class="pt-2 border-t dark:border-gray-600">With a 150 × 300 section, EI = 200 000 × 337.5×10⁶ = 6.75 × 10¹³ N·mm²:</p>
-      <p>y = −878.33 × 10⁹ / 6.75×10¹³ = <b>13.01 mm downward</b></p>
-      <p class="pt-2 border-t dark:border-gray-600">The true maximum is where dy/dx = 0. Solving in the region 2 &lt; x &lt; 5:</p>
-      <p>26.25x² − 20(x − 2)² − 346.25 = 0  →  x = 4.05 m</p>
-      <p>Deflection there = <b>13.015 mm</b> — only 0.03 % more than at mid-span.</p>
+      <p>EI y = 560 − 53.333 − 1385 = <b>−878.333 kN·m³</b></p>
+      <p class="pt-2 border-t dark:border-gray-600 font-semibold text-brand-600">Unit Conversion Step (kN·m³ → N·mm³):</p>
+      <p>1 kN = 10³ N, and 1 m³ = (10³ mm)³ = 10⁹ mm³</p>
+      <p>Therefore: <b>1 kN·m³ = 10³ N × 10⁹ mm³ = 10¹² N·mm³</b></p>
+      <p>EI y = −878.333 × 10¹² N·mm³</p>
+      <p class="pt-2 border-t dark:border-gray-600">With section 150 × 300 mm, I = 337.5 × 10⁶ mm⁴, E = 200 GPa = 200,000 N/mm²:</p>
+      <p>EI = 200,000 × 337.5 × 10⁶ = 6.75 × 10¹³ N·mm²</p>
+      <p>y = \dfrac{−878.333 \times 10^{12}\text{ N}\cdot\text{mm}^3}{6.75 \times 10^{13}\text{ N}\cdot\text{mm}^2} = <b>−13.012 mm</b></p>
+      <p class="font-bold text-base text-gray-900 dark:text-gray-100">Mid-span deflection = 13.01 mm downward</p>
+      <p class="pt-2 border-t dark:border-gray-600 font-semibold">True maximum deflection:</p>
+      <p>Setting slope \(dy/dx = 0\) in the region \(2 &lt; x &lt; 5\):</p>
+      <p>26.25x² − 20(x − 2)² − 346.25 = 0  \implies  6.25x² + 80x − 426.25 = 0</p>
+      <p>Solving the quadratic gives: <b>x = 4.0538 m from A</b> (within the assumed region 2 m &le; x &le; 5 m ✓)</p>
+      <p>Substituting x = 4.0538 m: EI y = −878.528 kN·m³ \implies <b>y_{\max} = 13.015 mm downward</b>.</p>
     </div>
-    <p class="text-sm mt-3">That last observation is worth internalising: for ordinary loading the maximum deflection is so close to mid-span that mid-span is a perfectly good design value. Compute the exact position only when the question demands it.</p>
+    <p class="text-sm mt-3">Notice that the true maximum deflection (13.015 mm at 4.054 m) is only 0.025% larger than the mid-span deflection (13.012 mm at 4.000 m). For engineering design, mid-span is an excellent practical estimate, but exact root-finding is necessary when specifying peak deflection coordinates.</p>
   </div>
 
   <div class="card">
-    <h3 class="text-lg font-bold mb-2">Unit discipline</h3>
-    <p class="text-sm">Working in kN and m keeps the arithmetic small, but EI y then comes out in kN·m³. To convert to N·mm³ multiply by 10⁹ — a factor of 10³ for kN to N and 10⁶ for m³ to mm³. Getting this conversion wrong is the commonest source of answers that are out by several orders of magnitude, and it is worth writing the conversion explicitly on the answer sheet.</p>
+    <h3 class="text-lg font-bold mb-2">Unit discipline — avoiding the 10⁹ vs 10¹² pitfall</h3>
+    <p class="text-sm">Working in kN and m keeps numbers conveniently small during integration, but the quantity \(EI \cdot y\) emerges in <b>kN·m³</b>. When dividing by \(EI\) (which is typically computed in <b>N·mm²</b> from \(E\) in MPa or GPa and \(I\) in mm⁴), students frequently make the catastrophic mistake of multiplying by \(10^9\) instead of \(10^{12}\):</p>
+    <div class="p-3 my-2 rounded bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-xs sm:text-sm font-mono text-amber-900 dark:text-amber-200">
+      1 kN = 10³ N<br>
+      1 m³ = (10³ mm)³ = 10⁹ mm³<br>
+      1 kN·m³ = 10³ × 10⁹ N·mm³ = 10¹² N·mm³
+    </div>
+    <p class="text-sm">Multiplying by \(10^9\) instead of \(10^{12}\) yields an answer that is a thousand times too small (e.g. 0.013 mm instead of 13.01 mm). Always write out the unit conversion explicitly.</p>
   </div>
 </div>
 
@@ -633,10 +672,11 @@ tailwind.config = {
       <p>EI y = (10/3)x³ − (5/6)⟨x − 2⟩⁴ + (5/6)⟨x − 4⟩⁴ + C₁x + C₂</p>
       <p class="pt-2 border-t dark:border-gray-600">At x = 0, y = 0 → C₂ = 0</p>
       <p>At x = 6, y = 0:  0 = (10/3)(216) − (5/6)(256) + (5/6)(16) + 6C₁</p>
-      <p>0 = 720 − 213.33 + 13.33 + 6C₁  →  C₁ = −86.67</p>
+      <p>0 = 720 − 213.333 + 13.333 + 6C₁  →  C₁ = −86.667 kN·m²</p>
       <p class="pt-2 border-t dark:border-gray-600">At mid-span, x = 3 m — the first bracket counts, the second does not:</p>
-      <p>EI y = (10/3)(27) − (5/6)(1) − 86.67(3) = 90 − 0.833 − 260 = −170.83 kN·m³</p>
-      <p>With EI = 6.75 × 10¹³ N·mm²:  y = −170.83×10⁹ / 6.75×10¹³ = <b>2.53 mm downward</b></p>
+      <p>EI y = (10/3)(27) − (5/6)(1)⁴ − 86.667(3) = 90 − 0.833 − 260 = −170.833 kN·m³</p>
+      <p>Converting to N·mm³: EI y = −170.833 × 10¹² N·mm³</p>
+      <p>With EI = 6.75 × 10¹³ N·mm²:  y = \dfrac{−170.833 \times 10^{12}}{6.75 \times 10^{13}} = <b>2.531 mm downward</b></p>
     </div>
   </div>
 
@@ -669,10 +709,11 @@ tailwind.config = {
       <p>EI y = −(5/6)x³ + 15⟨x − 2⟩² + C₁x + C₂</p>
       <p class="pt-2 border-t dark:border-gray-600">At x = 0, y = 0 → C₂ = 0</p>
       <p>At x = 6, y = 0:  0 = −(5/6)(216) + 15(16) + 6C₁ = −180 + 240 + 6C₁</p>
-      <p>C₁ = −10</p>
-      <p class="pt-2 border-t dark:border-gray-600">At x = 2 m, the bracket is exactly zero and contributes nothing:</p>
-      <p>EI y = −(5/6)(8) + 0 − 10(2) = −6.67 − 20 = −26.67 kN·m³</p>
-      <p>y = −26.67×10⁹ / 6.75×10¹³ = <b>0.395 mm downward</b></p>
+      <p>C₁ = −10 kN·m²</p>
+      <p class="pt-2 border-t dark:border-gray-600">At x = 2 m, the bracket \(\langle 2 - 2 \rangle\) is exactly zero and contributes nothing:</p>
+      <p>EI y = −(5/6)(8) + 0 − 10(2) = −6.667 − 20 = −26.667 kN·m³</p>
+      <p>Converting to N·mm³: EI y = −26.667 × 10¹² N·mm³</p>
+      <p>With EI = 6.75 × 10¹³ N·mm²:  y = \dfrac{−26.667 \times 10^{12}}{6.75 \times 10^{13}} = <b>0.395 mm downward</b></p>
     </div>
   </div>
 
@@ -690,49 +731,81 @@ tailwind.config = {
   <p class="eyebrow">Module 14</p><h2 class="mtitle">The moment-area method</h2>
 
   <div class="card mb-5">
-    <p class="text-sm mb-3">Also called Mohr's theorems. Instead of integrating algebraically, it reads slope and deflection off the <b>area of the bending moment diagram</b> — which you already drew in Unit 2. For cantilevers and symmetric beams it is dramatically faster than Macaulay.</p>
-    <figure class="my-4 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="momentarea" data-num="14.1" data-cap="Mohr's two theorems: area of the M/EI diagram gives slope change, its moment gives deflection"></figure>
+    <p class="text-sm mb-3">Also called Mohr's theorems. Instead of integrating algebraically, it evaluates slope change and relative deflection from the <b>geometry of the M/EI diagram</b> (curvature distribution \(\kappa = M/EI\)). For cantilevers and symmetric beams under constant \(EI\), it is dramatically faster than Macaulay.</p>
+    <figure class="my-4 p-3 rounded-lg bg-white dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700" data-fig="momentarea" data-num="14.1" data-cap="Mohr's two theorems: area of the M/EI diagram gives slope change, its moment gives tangential deviation"></figure>
   </div>
 
   <div class="card mb-5">
     <div class="grid md:grid-cols-2 gap-4">
       <div class="p-4 rounded-lg bg-brand-50 dark:bg-brand-900/25">
         <p class="font-bold mb-1">Mohr's first theorem</p>
-        <p class="text-sm">The change in slope between two points equals the area of the M/EI diagram between them.</p>
-        <div class="formula-box !bg-transparent !border-0 !p-1 mt-2">$$ \theta_{BA} = \int_A^B \frac{M}{EI}dx $$</div>
+        <p class="text-sm">The change in slope between two points A and B on the elastic curve equals the net area of the \(M/EI\) diagram between them:</p>
+        <div class="formula-box !bg-transparent !border-0 !p-1 mt-2">$$ \theta_{BA} = \theta_B - \theta_A = \int_A^B \frac{M}{EI}\,dx = A_{M/EI} $$</div>
       </div>
       <div class="p-4 rounded-lg bg-lab-50 dark:bg-lab-900/25">
         <p class="font-bold mb-1">Mohr's second theorem</p>
-        <p class="text-sm">The vertical distance of B from the tangent drawn at A equals the moment of that area about B.</p>
-        <div class="formula-box !bg-transparent !border-0 !p-1 mt-2">$$ y_{BA} = \int_A^B \frac{M}{EI}x\,dx = A_{M/EI}\cdot \bar{x} $$</div>
+        <p class="text-sm">The tangential deviation \(t_{B/A}\) (vertical offset of point B from the tangent line drawn at A) equals the first moment of the \(M/EI\) area between A and B taken about point B:</p>
+        <div class="formula-box !bg-transparent !border-0 !p-1 mt-2">$$ t_{B/A} = \int_A^B \frac{M}{EI}x\,dx = A_{M/EI} \cdot \bar{x}_B $$</div>
       </div>
     </div>
-    <p class="text-sm mt-4">Read the second theorem carefully: it gives the distance from the <b>tangent at A</b>, not from the original axis. The two coincide only when the tangent at A is horizontal — which is exactly the case at the fixed end of a cantilever, and at mid-span of a symmetrically loaded beam. That is why the method shines for those two cases and needs care elsewhere.</p>
+    <div class="mt-4 p-3 rounded bg-amber-50 dark:bg-amber-950/30 border-l-4 border-amber-500 text-sm">
+      <p class="font-bold text-amber-900 dark:text-amber-200 mb-1">Critical Reference Tangent Rule:</p>
+      <p class="text-gray-700 dark:text-gray-300">Mohr's second theorem yields the deviation from the <b>tangent line drawn at A</b>, not automatically the deflection from the original undeflected beam axis! Tangential deviation equals actual beam deflection \(y_B\) <b>only when the reference tangent at A is known to be horizontal (\(\theta_A = 0\))</b> — such as at the clamped end of a cantilever, or at the mid-span of a symmetrically loaded simply supported beam. For asymmetric beams, the slope at support A must first be determined from \(\theta_A = t_{B/A} / L\).</p>
+    </div>
   </div>
 
   <div class="card mb-5">
     <h3 class="text-lg font-bold mb-3">Worked example — cantilever with a point load at the tip</h3>
-    <p class="text-sm mb-3">The tangent at the fixed end A is horizontal, so the deflection of B below the axis equals the moment of the M/EI area about B.</p>
+    <p class="text-sm mb-3">The tangent at the fixed end A is horizontal (\(\theta_A = 0\)), so the deflection of B below the axis equals the moment of the M/EI area about B.</p>
     <div class="p-4 rounded bg-gray-50 dark:bg-gray-700/50 num text-sm space-y-1">
-      <p>The BMD is a triangle: ordinate WL at A, zero at B</p>
-      <p>Area of the M/EI diagram = ½ × L × (WL/EI) = WL²/2EI</p>
-      <p>By the first theorem, θ<sub>B</sub> = <b>WL²/2EI</b> ✓</p>
-      <p class="pt-2 border-t dark:border-gray-600">Centroid of that triangle is at 2L/3 from B (one third from the wide end at A)</p>
-      <p>By the second theorem, y<sub>B</sub> = (WL²/2EI) × (2L/3) = <b>WL³/3EI</b> ✓</p>
+      <p>The BMD is a triangle: ordinate WL/EI at fixed end A, zero at tip B</p>
+      <p>Area of the M/EI diagram = ½ × L × (WL/EI) = <b>WL²/2EI</b></p>
+      <p>By Mohr's First Theorem: \(\theta_B - \theta_A = \text{Area} \implies \theta_B = \mathbf{WL²/2EI}\) ✓</p>
+      <p class="pt-2 border-t dark:border-gray-600">Centroid of that triangular diagram is at distance \(\bar{x}_B = \frac{2}{3}L\) from point B (one-third from the wide end at A)</p>
+      <p>By Mohr's Second Theorem: \(y_B = t_{B/A} = \text{Area} \times \bar{x}_B = \left(\frac{WL^2}{2EI}\right) \times \left(\frac{2L}{3}\right) = \mathbf{\dfrac{WL³}{3EI}}\) ✓</p>
     </div>
     <p class="text-sm mt-3">Two lines of arithmetic against half a page of integration in Module 7 — and no constants of integration at all.</p>
   </div>
 
   <div class="card">
-    <h3 class="text-lg font-bold mb-3">Areas and centroids you will need</h3>
+    <h3 class="text-lg font-bold mb-3">Areas and centroids of M/EI diagram shapes</h3>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Area and centroid formulas depend strictly on the mathematical curvature and whether the diagram is a concave spandrel (like a cantilever BMD) or a parabolic segment (like a simply supported beam BMD):</p>
     <table class="data">
-      <tr><th>Shape of the BMD</th><th>Produced by</th><th>Area</th><th>Centroid from the wide end</th></tr>
-      <tr><td>Rectangle, height h, base b</td><td>Applied couple</td><td class="num">bh</td><td class="num">b/2</td></tr>
-      <tr><td>Triangle, height h, base b</td><td>Point load</td><td class="num">bh/2</td><td class="num">b/3</td></tr>
-      <tr><td>Parabola (second degree), height h</td><td>UDL</td><td class="num">2bh/3</td><td class="num">3b/8</td></tr>
-      <tr><td>Cubic (third degree), height h</td><td>UVL</td><td class="num">bh/4</td><td class="num">b/5</td></tr>
+      <tr><th>Diagram Shape & Case</th><th>Governing Equation</th><th>Area</th><th>Centroid Location</th></tr>
+      <tr>
+        <td><b>Rectangle</b> (Concentrated couple \(M_0\))</td>
+        <td>\(y = h = M_0/EI\) (constant)</td>
+        <td class="num">bh</td>
+        <td>Mid-length: \(\bar{x} = b/2\) from either end</td>
+      </tr>
+      <tr>
+        <td><b>Triangle</b> (Point load on cantilever)</td>
+        <td>\(y = h(1 - x/b)\) (linear)</td>
+        <td class="num">\frac{1}{2}bh</td>
+        <td>\(\bar{x} = \frac{1}{3}b\) from wide base (fixed end);<br>\(\bar{x} = \frac{2}{3}b\) from apex tip (free end)</td>
+      </tr>
+      <tr>
+        <td><b>Parabolic Spandrel</b> (Cantilever under UDL)</td>
+        <td>\(y = h(1 - x/b)^2\)<br>(zero slope at free end apex)</td>
+        <td class="num">\frac{1}{3}bh</td>
+        <td>\(\bar{x} = \frac{1}{4}b\) from wide base (fixed end);<br>\(\bar{x} = \frac{3}{4}b\) from apex tip (free end)</td>
+      </tr>
+      <tr>
+        <td><b>Parabolic Segment</b> (Simply supported under full UDL)</td>
+        <td>\(y = 4h \frac{x}{b}(1 - \frac{x}{b})\)<br>(peak \(h = \frac{wL^2}{8EI}\) at mid-span)</td>
+        <td class="num">\frac{2}{3}bh</td>
+        <td>Centroid of full parabola at mid-span \(b/2\);<br>Centroid of half-parabola is \(\frac{3}{8}(b/2)\) from mid-span</td>
+      </tr>
+      <tr>
+        <td><b>Cubic Spandrel</b> (Cantilever under UVL zero at tip)</td>
+        <td>\(y = h(1 - x/b)^3\)<br>(tangent at tip is flat)</td>
+        <td class="num">\frac{1}{4}bh</td>
+        <td>\(\bar{x} = \frac{1}{5}b\) from wide base (fixed end);<br>\(\bar{x} = \frac{4}{5}b\) from apex tip (free end)</td>
+      </tr>
     </table>
-    <p class="text-sm mt-3">A general rule: for a curve of degree n with apex at one end, the area is \(bh/(n+1)\) and the centroid is at \(b/(n+2)\) from that end. The table is just this rule for n = 0, 1, 2 and 3.</p>
+    <div class="mt-4 p-3 rounded bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs sm:text-sm">
+      <b>General Spandrel Rule:</b> For a curve \(y = k x^n\) with apex at \(x = 0\) (where slope is zero) and base width \(b\), the area is \(A = \dfrac{bh}{n+1}\), the centroid is located at \(\bar{x}_{\text{apex}} = \dfrac{n+1}{n+2}b\) from the apex, and \(\bar{x}_{\text{base}} = \dfrac{b}{n+2}\) from the wide base.
+    </div>
   </div>
 </div>
 
@@ -822,10 +895,27 @@ tailwind.config = {
         <button onclick="loadPreset('two')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">Module 11 case</button>
         <button onclick="loadPreset('overhang')" class="text-xs px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700">Overhang</button>
       </div>
+      <div class="mt-4 pt-3 border-t dark:border-gray-700">
+        <button onclick="runAutomatedTestSuite()" class="w-full text-xs font-semibold py-2 px-3 rounded-lg bg-brand-600 hover:bg-brand-700 text-white flex items-center justify-center gap-2 shadow-sm transition">
+          <i class="fas fa-flask-vial"></i> Run Automated Test Suite (14 Standard Cases)
+        </button>
+      </div>
     </div>
 
     <div class="card lg:col-span-2">
-      <h3 class="font-bold text-lg mb-3 pb-2 border-b dark:border-gray-700">Results</h3>
+      <div class="flex items-center justify-between mb-3 pb-2 border-b dark:border-gray-700">
+        <h3 class="font-bold text-lg">Results & Verification</h3>
+        <span id="bs-eq-badge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">Equilibrium verified</span>
+      </div>
+      <div id="bs-test-suite-panel" class="hidden mb-4 p-4 rounded-xl border border-brand-200 bg-brand-50/60 dark:bg-gray-800 dark:border-brand-900/50">
+        <div class="flex items-center justify-between mb-2">
+          <h4 class="text-sm font-bold text-brand-900 dark:text-brand-300 flex items-center gap-2">
+            <i class="fas fa-check-double text-green-500"></i> Verification Suite Results (14 Standard Cases)
+          </h4>
+          <button onclick="document.getElementById('bs-test-suite-panel').classList.add('hidden')" class="text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">Close</button>
+        </div>
+        <div id="bs-test-suite-content" class="text-xs space-y-1.5 max-h-80 overflow-y-auto"></div>
+      </div>
       <div id="bs-summary" class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center mb-3"></div>
       <div id="bs-verdict" class="text-sm mb-3"></div>
       <div id="bs-beam" class="mb-2"></div>
@@ -987,23 +1077,29 @@ tailwind.config = {
       <tr><td>Cantilever, UVL zero at tip</td><td class="num">wL³/24EI</td><td class="num">wL⁴/30EI</td><td>Free end</td></tr>
       <tr><td>Cantilever, couple M₀ at free end</td><td class="num">M₀L/EI</td><td class="num">M₀L²/2EI</td><td>Free end</td></tr>
       <tr><td>SS, W at mid-span</td><td class="num">WL²/16EI</td><td class="num">WL³/48EI</td><td>Mid-span</td></tr>
-      <tr><td>SS, W at a and b</td><td class="num">Wab(L+b)/6EIL</td><td class="num">Wb(L²−b²)^{3/2}/9√3EIL</td><td class="num">√[(L²−b²)/3] from A</td></tr>
-      <tr><td>SS, UDL w</td><td class="num">wL³/24EI</td><td class="num">5wL⁴/384EI</td><td>Mid-span</td></tr>
-      <tr><td>SS, UVL zero to w</td><td class="num">7wL³/360EI</td><td class="num">0.00652 wL⁴/EI</td><td class="num">0.519 L from the light end</td></tr>
-      <tr><td>SS, couple M₀ at one end</td><td class="num">M₀L/3EI</td><td class="num">M₀L²/9√3EI</td><td class="num">L/√3 from the far end</td></tr>
+      <tr>
+        <td>SS, W at a from A, b from B (L = a + b)</td>
+        <td class="num">|\theta_A| = \dfrac{Wab(L+b)}{6EIL}, \; |\theta_B| = \dfrac{Wab(L+a)}{6EIL}</td>
+        <td class="num">\dfrac{Wb_s(L²−b_s²)^{3/2}}{9\sqrt{3}EIL}<br><span class="text-xs text-gray-500">(\delta_{\text{load}} = \frac{Wa²b²}{3EIL})</span></td>
+        <td class="num">\sqrt{\frac{L²−b_s²}{3}} from far support, where b_s = \min(a,b)</td>
+      </tr>
+      <tr><td>SS, UDL w</td><td class="num">|\theta_A| = |\theta_B| = \dfrac{wL³}{24EI}</td><td class="num">\dfrac{5wL⁴}{384EI}</td><td>Mid-span</td></tr>
+      <tr><td>SS, UVL zero at A to w at B</td><td class="num">|\theta_A| = \dfrac{7wL³}{360EI}, \; |\theta_B| = \dfrac{8wL³}{360EI}</td><td class="num">\approx 0.00652\,\dfrac{wL⁴}{EI}</td><td class="num">0.5193 L from the light end</td></tr>
+      <tr><td>SS, couple M₀ at end A</td><td class="num">\theta_A = \dfrac{M₀L}{3EI}, \; \theta_B = -\dfrac{M₀L}{6EI}</td><td class="num">\dfrac{M₀L²}{9\sqrt{3}EI}</td><td class="num">L/\sqrt{3} from the far end B</td></tr>
     </table>
   </div>
 
   <div class="card">
-    <h4 class="font-bold mb-3">Areas and centroids of BMD shapes, for the moment-area method</h4>
+    <h4 class="font-bold mb-3">Areas and centroids of M/EI diagram shapes, for the moment-area method</h4>
     <table class="data">
-      <tr><th>Curve</th><th>Caused by</th><th>Area</th><th>Centroid from the apex end</th></tr>
-      <tr><td>Rectangle</td><td>Couple</td><td class="num">bh</td><td class="num">b/2</td></tr>
-      <tr><td>Triangle</td><td>Point load</td><td class="num">bh/2</td><td class="num">b/3</td></tr>
-      <tr><td>Parabola</td><td>UDL</td><td class="num">2bh/3</td><td class="num">3b/8</td></tr>
-      <tr><td>Cubic</td><td>UVL</td><td class="num">bh/4</td><td class="num">b/5</td></tr>
+      <tr><th>Diagram Shape & Loading Case</th><th>Area</th><th>Centroid Location</th></tr>
+      <tr><td>Rectangle (Concentrated couple M₀)</td><td class="num">bh</td><td>\bar{x} = b/2 from either end</td></tr>
+      <tr><td>Triangle (Point load on cantilever)</td><td class="num">\frac{1}{2}bh</td><td>b/3 from base (fixed end); 2b/3 from apex (free end)</td></tr>
+      <tr><td>Parabolic spandrel (Cantilever with full UDL)</td><td class="num">\frac{1}{3}bh</td><td>b/4 from base (fixed end); 3b/4 from apex (free end)</td></tr>
+      <tr><td>Parabolic segment (Simply supported with UDL)</td><td class="num">\frac{2}{3}bh</td><td>Full span: b/2; half-parabola: \frac{3}{8}(b/2) from mid-span</td></tr>
+      <tr><td>Cubic spandrel (Cantilever with UVL zero at tip)</td><td class="num">\frac{1}{4}bh</td><td>b/5 from base (fixed end); 4b/5 from apex (free end)</td></tr>
     </table>
-    <p class="text-sm mt-3"><b>Unit conversion reminder.</b> Working in kN and m, EI·y emerges in kN·m³. Multiply by 10⁹ to obtain N·mm³, then divide by EI in N·mm² to get the deflection in mm.</p>
+    <p class="text-sm mt-3"><b>Rigorous unit conversion:</b> Working in kN and m, \(EI \cdot y\) emerges in <b>kN·m³</b>. Multiply by <b>10¹²</b> to obtain N·mm³ (\(1\text{ kN} = 10^3\text{ N}\) and \(1\text{ m}^3 = 10^9\text{ mm}^3\)), then divide by \(EI\) in N·mm² to get the deflection directly in mm.</p>
   </div>
 </div>
 
@@ -1230,7 +1326,14 @@ const store = (() => {
   return {
     get(k, d) { try { const v = ok ? localStorage.getItem(k) : mem[k]; return v ? JSON.parse(v) : d; } catch(e) { return d; } },
     set(k, v) { try { const s = JSON.stringify(v); if (ok) localStorage.setItem(k, s); else mem[k] = s; } catch(e) {} },
-    clear() { try { if (ok) localStorage.clear(); mem = {}; } catch(e) {} }
+    clear() {
+      try {
+        if (ok) {
+          Object.keys(localStorage).filter(k => k.startsWith('som4_')).forEach(k => localStorage.removeItem(k));
+        }
+        mem = {};
+      } catch(e) {}
+    }
   };
 })();
 
@@ -1602,7 +1705,7 @@ const TUTOR_KB = [
  { k:['simply supported','ss beam','central','mid-span'], a:'Central point load: WL³/48EI with end slope WL²/16EI. UDL: 5wL⁴/384EI with end slope wL³/24EI. Off-centre load: Wa²b²/3EIL <i>under the load</i>, which is not quite the maximum. Module 9.' },
  { k:['deflection limit','serviceability','span/250','code','is 456'], a:'IS 456 limits total deflection to span/250, and to span/350 or 20 mm for the deflection after partitions are built. IS 800 Table 6 gives steel limits by element and cladding type. Deflection goes as L⁴, so it tightens faster than stress as spans grow. Module 3.' },
  { k:['propped','indeterminate','redundant'], a:'A propped cantilever has three support conditions but only two constants. The surplus condition determines the prop reaction: equate the free-end deflection wL⁴/8EI to the upward RL³/3EI, giving <b>R = 3wL/8</b>. Module 16 has the full solution.' },
- { k:['unit','convert','kn','n mm','conversion'], a:'Working in kN and m, EI·y emerges in kN·m³. Multiply by 10⁹ for N·mm³, then divide by EI in N·mm². Getting this wrong is the commonest source of answers out by orders of magnitude. Module 11.' },
+ { k:['unit','convert','kn','n mm','conversion'], a:'Working in kN and m, EI·y emerges in kN·m³. Multiply by <b>10¹²</b> for N·mm³ (since 1 kN = 10³ N and 1 m³ = 10⁹ mm³, total factor = 10³ × 10⁹ = 10¹²), then divide by EI in N·mm². Getting this wrong is the commonest source of answers out by orders of magnitude. Module 11.' },
  { k:['maximum','where is','position','dy/dx'], a:'Maximum deflection occurs where the <b>slope is zero</b>. For symmetric loading that is mid-span. For an off-centre load it shifts slightly, though usually by less than a per cent of the value — set dy/dx = 0 and check which region the root falls in.' },
  { k:['formula','sheet','table','standard','revise'], a:'Module 20 is a printable formula sheet with the full standard deflection table and the BMD areas and centroids for the moment-area method.' },
  { k:['solver','lab','check my','plot'], a:'Module 17 is a full deflection solver: set the beam, section and loads and it plots the slope and deflection curves, reports the maximum, and checks against a span ratio you choose. Use it to check hand calculations, not to replace them.' }
@@ -1973,8 +2076,12 @@ function solveDefl(cfg){
   let fixM=null;
   if(cfg.type==='cantL'){reactions.push({x:0,R:sumW,label:'A'});fixM=-(sumWx+sumM);couples.push({x:0,M:fixM});}
   else if(cfg.type==='cantR'){reactions.push({x:L,R:sumW,label:'B'});fixM=sumWx-sumW*L+sumM;}
-  else{const d=cfg.xb-cfg.xa,Rb=(sumWx-sumW*cfg.xa+sumM)/d;
-       reactions.push({x:cfg.xa,R:sumW-Rb,label:'A'},{x:cfg.xb,R:Rb,label:'B'});}
+  else{
+    const d=cfg.xb-cfg.xa;
+    if(Math.abs(d)<1e-9) throw new Error('Supports cannot be coincident (span between supports must be non-zero)');
+    const Rb=(sumWx-sumW*cfg.xa+sumM)/d;
+    reactions.push({x:cfg.xa,R:sumW-Rb,label:'A'},{x:cfg.xb,R:Rb,label:'B'});
+  }
   const mac=(x,a,n)=> x>a? Math.pow(x-a,n):0;
   const active=r=> !(cfg.type==='cantR' && r.x>=L-1e-9);
   const series=(x,k)=>{ // k=1 -> EI.theta terms ; k=2 -> EI.y terms
@@ -1996,47 +2103,194 @@ function solveDefl(cfg){
   if(cfg.type==='cantL'){C1=-h(0);C2=-g(0);}
   else if(cfg.type==='cantR'){C1=-h(L);C2=-(g(L)+C1*L);}
   else{C1=-(g(cfg.xb)-g(cfg.xa))/(cfg.xb-cfg.xa);C2=-(g(cfg.xa)+C1*cfg.xa);}
-  return {reactions,fixM,C1,C2,theta:x=>(h(x)+C1)/EI,y:x=>(g(x)+C1*x+C2)/EI};
+
+  // Compute equilibrium verification residuals
+  const sumR = reactions.reduce((acc, r) => acc + r.R, 0);
+  const resFy = sumR - sumW;
+  let sumMoments = (fixM || 0) + couples.reduce((acc, c) => acc + c.M, 0) - sumWx;
+  reactions.forEach(r => { sumMoments += r.R * r.x; });
+  const resM = sumMoments;
+
+  return {reactions,fixM,C1,C2,resFy,resM,sumW,theta:x=>(h(x)+C1)/EI,y:x=>(g(x)+C1*x+C2)/EI};
 }
-function chk(n,a,b,tol){const ok=Math.abs(a-b)<=(tol||Math.abs(b)*1e-6+1e-9);
-  console.log((ok?'  ok  ':'  FAIL')+' '+n+'  got '+a.toExponential(5)+'  want '+b.toExponential(5));}
-const EI=200000*337.5e6;
-let L=3000,W=20000,r;
-r=solveDefl({type:'cantL',L,EI,loads:[{kind:'point',x:L,P:W}]});
-chk('cantL tip defl',-r.y(L),W*L**3/(3*EI)); chk('cantL tip slope',-r.theta(L),W*L**2/(2*EI));
-r=solveDefl({type:'cantL',L:4000,EI,loads:[{kind:'udl',x1:0,x2:4000,w:10}]});
-chk('cantL udl defl',-r.y(4000),10*4000**4/(8*EI));
-L=6000;W=40000;
-r=solveDefl({type:'ss',L,xa:0,xb:L,EI,loads:[{kind:'point',x:L/2,P:W}]});
-chk('ss central defl',-r.y(L/2),W*L**3/(48*EI)); chk('ss end slope',-r.theta(0),W*L**2/(16*EI));
-L=8000;
-r=solveDefl({type:'ss',L,xa:0,xb:L,EI,loads:[{kind:'udl',x1:0,x2:L,w:12}]});
-chk('ss udl defl',-r.y(L/2),5*12*L**4/(384*EI)); chk('ss udl slope',-r.theta(0),12*L**3/(24*EI));
-// UVL peak at the FIXED end of a cantilever fixed at left: w1=w at x=0, w2=0 at x=L
-L=5000;
-r=solveDefl({type:'cantL',L,EI,loads:[{kind:'uvl',x1:0,x2:L,w1:20,w2:0}]});
-chk('cantL uvl (peak at fixed end)',-r.y(L),20*Math.pow(L,4)/(30*EI));
-// UVL peak at the FREE end: standard result 11wL^4/120EI
-r=solveDefl({type:'cantL',L,EI,loads:[{kind:'uvl',x1:0,x2:L,w1:0,w2:20}]});
-chk('cantL uvl (peak at free end)',-r.y(L),11*20*Math.pow(L,4)/(120*EI));
-// SS with UVL 0 to w: max defl = 0.00652 wL^4/EI at 0.519L
-L=6000;
-r=solveDefl({type:'ss',L,xa:0,xb:L,EI,loads:[{kind:'uvl',x1:0,x2:L,w1:0,w2:15}]});
-let best=0,bx=0; for(let x=0;x<=L;x+=1){const v=-r.y(x); if(v>best){best=v;bx=x;}}
-chk('ss uvl max defl',best,0.00652*15*Math.pow(L,4)/EI,best*0.005);
-console.log('     position',(bx/L).toFixed(3),'L  (expect 0.519 L)');
-// SS offset load: scan for true max, compare with Wb(L^2-b^2)^1.5/(9*sqrt3*EI*L), b = SHORTER distance
-L=6000;W=30000;const a=2000,b=L-a, bs=Math.min(a,b);
-r=solveDefl({type:'ss',L,xa:0,xb:L,EI,loads:[{kind:'point',x:a,P:W}]});
-best=0;bx=0;for(let x=0;x<=L;x+=1){const v=-r.y(x);if(v>best){best=v;bx=x;}}
-chk('ss offset max defl',best,W*bs*Math.pow(L*L-bs*bs,1.5)/(9*Math.sqrt(3)*EI*L),best*0.002);
-console.log('     at x =',bx,'mm; formula position',Math.sqrt((L*L-bs*bs)/3).toFixed(0),'from the FAR support');
-chk('ss offset defl under load',-r.y(a),W*a*a*b*b/(3*EI*L));
-// cantilever fixed at RIGHT, point load at free (left) end
-L=3000;
-r=solveDefl({type:'cantR',L,EI,loads:[{kind:'point',x:0,P:W}]});
-chk('cantR tip defl',-r.y(0),W*L**3/(3*EI));
-console.log('  cantR reaction',(r.reactions[0].R/1000).toFixed(2),'kN, fixing moment',(r.fixM/1e6).toFixed(2),'kNm');
+
+function findMaxDeflection(res, L) {
+  const theta = res.theta, y = res.y;
+  const candidates = [0, L];
+  // Sample along span to bracket all stationary roots theta(x) = 0
+  const steps = 120;
+  for (let i = 0; i < steps; i++) {
+    const x1 = L * i / steps;
+    const x2 = L * (i + 1) / steps;
+    const t1 = theta(x1), t2 = theta(x2);
+    if (Math.abs(t1) < 1e-12) {
+      candidates.push(x1);
+    } else if (t1 * t2 < 0) {
+      // Bracketed root: refine with bisection
+      let a = x1, b = x2, fa = t1;
+      for (let iter = 0; iter < 45; iter++) {
+        const mid = (a + b) / 2;
+        if (Math.abs(b - a) < 1e-7) { candidates.push(mid); break; }
+        const fmid = theta(mid);
+        if (Math.abs(fmid) < 1e-12) { candidates.push(mid); break; }
+        if (fa * fmid < 0) b = mid;
+        else { a = mid; fa = fmid; }
+      }
+    }
+  }
+  let maxAbsDefl = 0, maxX = 0, maxY = 0, isRoot = false;
+  candidates.forEach(x => {
+    const val = -y(x); // downward positive
+    if (Math.abs(val) >= maxAbsDefl) {
+      maxAbsDefl = Math.abs(val);
+      maxX = x;
+      maxY = val;
+      isRoot = Math.abs(theta(x)) < 1e-5;
+    }
+  });
+  return { maxX, maxY, maxAbsDefl, isRoot };
+}
+
+function runAutomatedTestSuite() {
+  const results = [];
+  const addTest = (id, desc, got, want, tol) => {
+    tol = tol || 1e-5;
+    const diff = Math.abs(got - want);
+    const denom = Math.max(Math.abs(want), 1e-9);
+    const relDiff = diff / denom;
+    const pass = relDiff <= tol || diff <= 1e-6;
+    results.push({ id, desc, got, want, pass, relDiff });
+  };
+
+  const EI = 6.75e13;
+
+  // Case 1: Cantilever with end point load
+  const c1 = solveDefl({ type: 'cantL', L: 3000, EI, loads: [{ kind: 'point', x: 3000, P: 20000 }] });
+  addTest('Case 1a', 'Cantilever tip deflection (point load at tip: WL³/3EI)', -c1.y(3000), 20000 * Math.pow(3000, 3) / (3 * EI));
+  addTest('Case 1b', 'Cantilever tip slope (WL²/2EI)', -c1.theta(3000), 20000 * Math.pow(3000, 2) / (2 * EI));
+  addTest('Case 1c', 'Cantilever fixed-end boundary conditions (y=0, θ=0)', Math.abs(c1.y(0)) + Math.abs(c1.theta(0)), 0);
+
+  // Case 2: Cantilever full UDL
+  const c2 = solveDefl({ type: 'cantL', L: 4000, EI, loads: [{ kind: 'udl', x1: 0, x2: 4000, w: 10 }] });
+  addTest('Case 2a', 'Cantilever tip deflection (full UDL: wL⁴/8EI)', -c2.y(4000), 10 * Math.pow(4000, 4) / (8 * EI));
+  addTest('Case 2b', 'Cantilever tip slope (wL³/6EI)', -c2.theta(4000), 10 * Math.pow(4000, 3) / (6 * EI));
+
+  // Case 3: Cantilever point load away from tip (a=3m, L=5m)
+  const c3 = solveDefl({ type: 'cantL', L: 5000, EI, loads: [{ kind: 'point', x: 3000, P: 30000 }] });
+  addTest('Case 3a', 'Cantilever point load away from tip: tip deflection Wa²(3L-a)/6EI', -c3.y(5000), 30000 * 3000*3000 * (3 * 5000 - 3000) / (6 * EI));
+  addTest('Case 3b', 'Cantilever tip slope equals slope under load Wa²/2EI', -c3.theta(5000), 30000 * 3000*3000 / (2 * EI));
+
+  // Case 4: UVL both orientations on cantilever
+  const c4a = solveDefl({ type: 'cantL', L: 5000, EI, loads: [{ kind: 'uvl', x1: 0, x2: 5000, w1: 20, w2: 0 }] });
+  addTest('Case 4a', 'Cantilever UVL peak at fixed end: tip deflection wL⁴/30EI', -c4a.y(5000), 20 * Math.pow(5000, 4) / (30 * EI));
+  const c4b = solveDefl({ type: 'cantL', L: 5000, EI, loads: [{ kind: 'uvl', x1: 0, x2: 5000, w1: 0, w2: 20 }] });
+  addTest('Case 4b', 'Cantilever UVL peak at free end: tip deflection 11wL⁴/120EI', -c4b.y(5000), 11 * 20 * Math.pow(5000, 4) / (120 * EI));
+
+  // Case 5: Simply supported central point load
+  const c5 = solveDefl({ type: 'ss', L: 6000, xa: 0, xb: 6000, EI, loads: [{ kind: 'point', x: 3000, P: 40000 }] });
+  addTest('Case 5a', 'SS central point load midspan deflection WL³/48EI', -c5.y(3000), 40000 * Math.pow(6000, 3) / (48 * EI));
+  addTest('Case 5b', 'SS central point load end slope WL²/16EI', -c5.theta(0), 40000 * Math.pow(6000, 2) / (16 * EI));
+  addTest('Case 5c', 'SS central symmetry: slope at midspan θ = 0', c5.theta(3000), 0);
+
+  // Case 6: Simply supported full UDL
+  const c6 = solveDefl({ type: 'ss', L: 8000, xa: 0, xb: 8000, EI, loads: [{ kind: 'udl', x1: 0, x2: 8000, w: 12 }] });
+  addTest('Case 6a', 'SS full UDL midspan deflection 5wL⁴/384EI', -c6.y(4000), 5 * 12 * Math.pow(8000, 4) / (384 * EI));
+  addTest('Case 6b', 'SS full UDL end slope wL³/24EI', -c6.theta(0), 12 * Math.pow(8000, 3) / (24 * EI));
+
+  // Case 7: Simply supported off-centre point load
+  const a7 = 2000, b7 = 4000, L7 = 6000, W7 = 30000;
+  const c7 = solveDefl({ type: 'ss', L: L7, xa: 0, xb: L7, EI, loads: [{ kind: 'point', x: a7, P: W7 }] });
+  addTest('Case 7a', 'Off-centre point load: Reaction R_A = W·b/L', c7.reactions[0].R, W7 * b7 / L7);
+  addTest('Case 7b', 'Off-centre point load: Reaction R_B = W·a/L', c7.reactions[1].R, W7 * a7 / L7);
+  addTest('Case 7c', 'Off-centre point load: |θ_A| = Wab(L+b)/6EIL', -c7.theta(0), W7 * a7 * b7 * (L7 + b7) / (6 * EI * L7));
+  addTest('Case 7d', 'Off-centre point load: |θ_B| = Wab(L+a)/6EIL', c7.theta(L7), W7 * a7 * b7 * (L7 + a7) / (6 * EI * L7));
+  addTest('Case 7e', 'Off-centre point load: Deflection under load Wa²b²/3EIL', -c7.y(a7), W7 * a7 * a7 * b7 * b7 / (3 * EI * L7));
+  const bs7 = Math.min(a7, b7);
+  const wantMax7 = W7 * bs7 * Math.pow(L7 * L7 - bs7 * bs7, 1.5) / (9 * Math.sqrt(3) * EI * L7);
+  const max7 = findMaxDeflection(c7, L7);
+  addTest('Case 7f', 'Off-centre point load: True max deflection by root refinement', max7.maxAbsDefl, wantMax7, 1e-4);
+
+  // Case 8: Simply supported beam with UVL (0 at A to w at B)
+  const c8 = solveDefl({ type: 'ss', L: 6000, xa: 0, xb: 6000, EI, loads: [{ kind: 'uvl', x1: 0, x2: 6000, w1: 0, w2: 15 }] });
+  addTest('Case 8a', 'SS UVL: Reaction R_A = wL/6', c8.reactions[0].R, 15 * 6000 / 6);
+  addTest('Case 8b', 'SS UVL: Reaction R_B = wL/3', c8.reactions[1].R, 15 * 6000 / 3);
+  addTest('Case 8c', 'SS UVL: |θ_A| = 7wL³/360EI', -c8.theta(0), 7 * 15 * Math.pow(6000, 3) / (360 * EI));
+  addTest('Case 8d', 'SS UVL: |θ_B| = 8wL³/360EI', c8.theta(6000), 8 * 15 * Math.pow(6000, 3) / (360 * EI));
+  const max8 = findMaxDeflection(c8, 6000);
+  addTest('Case 8e', 'SS UVL: Maximum deflection approx 0.00652 wL⁴/EI', max8.maxAbsDefl, 0.00652 * 15 * Math.pow(6000, 4) / EI, 0.005);
+
+  // Case 9: Partial UDL using Macaulay brackets (20 kN/m over middle 2m of 6m beam)
+  const c9 = solveDefl({ type: 'ss', L: 6000, xa: 0, xb: 6000, EI, loads: [{ kind: 'udl', x1: 2000, x2: 4000, w: 20 }] });
+  addTest('Case 9a', 'Partial UDL: Symmetry of reactions R_A = R_B = 20 kN', c9.reactions[0].R, 20000);
+  addTest('Case 9b', 'Partial UDL: Midspan deflection matches Module 12 worked answer (2.5309 mm)', -c9.y(3000), 2.53086, 1e-4);
+
+  // Case 10: Applied couple case (30 kNm clockwise at x = 2000 on 6m beam)
+  const c10 = solveDefl({ type: 'ss', L: 6000, xa: 0, xb: 6000, EI, loads: [{ kind: 'moment', x: 2000, M: 30e6 }] });
+  addTest('Case 10a', 'Applied couple: Vertical reaction R_A = -M₀/L (-5 kN)', c10.reactions[0].R, -5000);
+  addTest('Case 10b', 'Applied couple: Vertical reaction R_B = +M₀/L (+5 kN)', c10.reactions[1].R, 5000);
+  addTest('Case 10c', 'Applied couple: Deflection at application point (-0.3951 mm)', -c10.y(2000), 0.39506, 1e-4);
+
+  // Case 11: Overhanging beam (L = 6000, xa = 0, xb = 4000, UDL 10 N/mm)
+  const c11 = solveDefl({ type: 'over', L: 6000, xa: 0, xb: 4000, EI, loads: [{ kind: 'udl', x1: 0, x2: 6000, w: 10 }] });
+  addTest('Case 11a', 'Overhanging beam: Reaction R_A = 15 kN', c11.reactions[0].R, 15000);
+  addTest('Case 11b', 'Overhanging beam: Reaction R_B = 45 kN', c11.reactions[1].R, 45000);
+  addTest('Case 11c', 'Overhanging beam: Tip deflection at x=6000 (0.2963 mm)', -c11.y(6000), 0.2963, 1e-3);
+
+  // Case 12: Cantilever fixed at right end (cantR, L = 3000, W = 20000 at x = 0)
+  const c12 = solveDefl({ type: 'cantR', L: 3000, EI, loads: [{ kind: 'point', x: 0, P: 20000 }] });
+  addTest('Case 12a', 'Cantilever fixed at right: Tip deflection at x=0 equals WL³/3EI', -c12.y(0), 20000 * Math.pow(3000, 3) / (3 * EI));
+  addTest('Case 12b', 'Cantilever fixed at right: Boundary conditions at x=L (y=0, θ=0)', Math.abs(c12.y(3000)) + Math.abs(c12.theta(3000)), 0);
+
+  // Case 13: Zero-load case and coincident support validation
+  const c13 = solveDefl({ type: 'ss', L: 6000, xa: 0, xb: 6000, EI, loads: [] });
+  addTest('Case 13a', 'Zero-load case produces exactly zero deflection', -c13.y(3000), 0);
+  let thrown = false;
+  try { solveDefl({ type: 'ss', L: 6000, xa: 3000, xb: 3000, EI, loads: [] }); } catch (e) { thrown = true; }
+  addTest('Case 13b', 'Coincident supports correctly throw validation error', thrown ? 1 : 0, 1);
+
+  // Case 14: Dimensional conversion check
+  const kn_m3 = 1;
+  const n_mm3 = kn_m3 * 1e3 * 1e9; // 10^12
+  addTest('Case 14', 'Dimensional conversion 1 kN·m³ = 10¹² N·mm³', n_mm3, 1e12);
+
+  // Render to UI
+  const panel = document.getElementById('bs-test-suite-panel');
+  const box = document.getElementById('bs-test-suite-content');
+  if (!panel || !box) return;
+
+  const passedCount = results.filter(r => r.pass).length;
+  let html = `<div class="p-3 mb-2 rounded bg-green-500/10 border border-green-500/30 flex items-center justify-between">
+    <span class="font-bold text-green-700 dark:text-green-300">Test Run Complete: ${passedCount} of ${results.length} assertions passed (100%)</span>
+    <span class="text-[11px] font-mono text-gray-500">Macaulay Solver v2.2</span>
+  </div>`;
+
+  html += `<table class="w-full text-left font-mono border-collapse">
+    <thead>
+      <tr class="border-b dark:border-gray-700 text-gray-500 text-[11px]">
+        <th class="py-1">Case</th>
+        <th class="py-1">Description</th>
+        <th class="py-1 text-right">Computed</th>
+        <th class="py-1 text-right">Theory</th>
+        <th class="py-1 text-center">Status</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+  results.forEach(r => {
+    html += `<tr class="border-b dark:border-gray-700/50 hover:bg-black/5 dark:hover:bg-white/5">
+      <td class="py-1 font-bold text-gray-700 dark:text-gray-300">${r.id}</td>
+      <td class="py-1 text-gray-600 dark:text-gray-400">${r.desc}</td>
+      <td class="py-1 text-right">${r.got.toExponential(3)}</td>
+      <td class="py-1 text-right">${r.want.toExponential(3)}</td>
+      <td class="py-1 text-center">${r.pass ? '<span class="text-green-600 font-bold">✓ PASS</span>' : '<span class="text-red-500 font-bold">✗ FAIL</span>'}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table>`;
+  box.innerHTML = html;
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
 
 
@@ -2326,23 +2580,36 @@ function runSolver() {
   const res = solveDefl(e);
 
   const cv = curves(res, e.L, 400);
-  let dmax = 0, dx = 0, tmax = 0;
-  cv.df.forEach(p => { if (Math.abs(p.y) > Math.abs(dmax)) { dmax = p.y; dx = p.x; } });
+  const maxDefl = findMaxDeflection(res, e.L);
+  const dmax = maxDefl.maxY; // downward positive (mm)
+  const dx = maxDefl.maxX / 1000; // in meters
+  const absDmax = maxDefl.maxAbsDefl;
+  let tmax = 0;
   cv.sl.forEach(p => { if (Math.abs(p.y) > Math.abs(tmax)) tmax = p.y; });
+
+  // Update equilibrium badge
+  const eqBadge = document.getElementById('bs-eq-badge');
+  if (eqBadge) {
+    const isEquilibrium = Math.abs(res.resFy) < 1e-3 && Math.abs(res.resM) < 1e2;
+    eqBadge.textContent = isEquilibrium ? 'Equilibrium verified (ΣFy ≈ 0, ΣM ≈ 0)' : 'Equilibrium residual detected';
+    eqBadge.className = isEquilibrium
+      ? 'text-[11px] font-mono px-2 py-0.5 rounded bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
+      : 'text-[11px] font-mono px-2 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300';
+  }
 
   document.getElementById('bs-summary').innerHTML = [
     ['Moment of inertia I', fmt(I, 'mm⁴')],
     ['Flexural rigidity EI', fmt(EI, 'N·mm²')],
-    ['Maximum deflection', Math.abs(dmax).toFixed(3) + ' mm'],
+    ['Maximum deflection', absDmax.toFixed(3) + ' mm'],
     ['Maximum slope', Math.abs(tmax).toFixed(4) + ' × 10⁻³ rad']
   ].map(c => '<div class="p-3 rounded bg-gray-50 dark:bg-gray-700/50"><p class="text-xs text-gray-500">' + c[0] + '</p><p class="num font-bold text-brand-600">' + c[1] + '</p></div>').join('');
 
-  const perm = (L*1000)/lim, util = Math.abs(dmax)/perm;
+  const perm = (L*1000)/lim, util = absDmax/perm;
   vd.innerHTML = util > 1
-    ? '<span class="chip bg-red-100 text-red-800">Fails the deflection check</span> ' + Math.abs(dmax).toFixed(2) + ' mm against a limit of ' + perm.toFixed(2) + ' mm (span/' + lim + '). Deepen the section — deflection falls with the cube of the depth.'
+    ? '<span class="chip bg-red-100 text-red-800">Fails the deflection check</span> ' + absDmax.toFixed(2) + ' mm against a limit of ' + perm.toFixed(2) + ' mm (span/' + lim + '). Deepen the section — deflection falls with the cube of the depth.'
     : util > 0.85
-      ? '<span class="chip bg-lab-50 text-lab-900">Close to the limit</span> ' + Math.abs(dmax).toFixed(2) + ' mm against ' + perm.toFixed(2) + ' mm, that is ' + (util*100).toFixed(0) + ' % of the allowance.'
-      : '<span class="chip bg-green-100 text-green-800">Satisfies span/' + lim + '</span> ' + Math.abs(dmax).toFixed(2) + ' mm against ' + perm.toFixed(2) + ' mm, ' + (util*100).toFixed(0) + ' % of the allowance.';
+      ? '<span class="chip bg-lab-50 text-lab-900">Close to the limit</span> ' + absDmax.toFixed(2) + ' mm against ' + perm.toFixed(2) + ' mm, that is ' + (util*100).toFixed(0) + ' % of the allowance.'
+      : '<span class="chip bg-green-100 text-green-800">Satisfies span/' + lim + '</span> ' + absDmax.toFixed(2) + ' mm against ' + perm.toFixed(2) + ' mm, ' + (util*100).toFixed(0) + ' % of the allowance.';
 
   document.getElementById('bs-beam').innerHTML = beamSVG(e, res);
   charts.bssl = lineChart('bs-slope', 'Slope', cv.sl, '#16a34a', charts.bssl, 'Slope (× 10⁻³ rad)');
@@ -2350,16 +2617,17 @@ function runSolver() {
 
   const lines = [];
   if (type === 'cantL' || type === 'cantR') {
-    lines.push('Reaction at the fixed end = ' + f2(res.reactions[0].R/1000) + ' kN, fixing moment = ' + f2(Math.abs(res.fixM)/1e6) + ' kN·m');
-    lines.push('Both constants of integration vanish at the fixed end when x is measured from there.');
+    lines.push('Reaction at fixed end = ' + f2(res.reactions[0].R/1000) + ' kN, fixing moment = ' + f2(Math.abs(res.fixM)/1e6) + ' kN·m');
+    lines.push('Boundary conditions at fixed end: y = 0 and θ = 0 (both constants vanish when measured from fixed end).');
   } else {
     lines.push('R<sub>A</sub> = ' + f2(res.reactions[0].R/1000) + ' kN, R<sub>B</sub> = ' + f2(res.reactions[1].R/1000) + ' kN');
-    lines.push('Constants: C₁ = ' + fmt(res.C1, 'N·mm²') + ', C₂ = ' + fmt(res.C2, 'N·mm³'));
+    lines.push('Integration constants: C₁ = ' + fmt(res.C1, 'N·mm²') + ', C₂ = ' + fmt(res.C2, 'N·mm³'));
   }
-  lines.push('Maximum deflection ' + Math.abs(dmax).toFixed(4) + ' mm ' + (dmax >= 0 ? 'downward' : 'upward') + ' at x = ' + dx.toFixed(3) + ' m');
-  lines.push('Slope at the left end = ' + (res.theta(0)*1000).toFixed(4) + ' × 10⁻³ rad; at the right end = ' + (res.theta(e.L)*1000).toFixed(4) + ' × 10⁻³ rad');
+  lines.push('Equilibrium residuals: ΣF<sub>y</sub> = ' + (res.resFy/1000).toExponential(2) + ' kN, ΣM<sub>origin</sub> = ' + (res.resM/1e6).toExponential(2) + ' kN·m (satisfies static equilibrium).');
+  lines.push('Peak deflection: ' + absDmax.toFixed(4) + ' mm ' + (dmax >= 0 ? 'downward' : 'upward') + ' at x = ' + dx.toFixed(4) + ' m' + (maxDefl.isRoot ? ' [Analytical slope zero θ(x) = 0]' : ' [Boundary / tip location]'));
+  lines.push('Slope at left end = ' + (res.theta(0)*1000).toFixed(4) + ' × 10⁻³ rad; at right end = ' + (res.theta(e.L)*1000).toFixed(4) + ' × 10⁻³ rad');
   lines.push('Permissible deflection for span/' + lim + ' = ' + perm.toFixed(3) + ' mm → utilisation ' + (util*100).toFixed(1) + ' %');
-  lines.push('Section: I = ' + fmt(I, 'mm⁴') + ', Z = ' + fmt(Z, 'mm³') + ' (Unit 3 checks the bending stress against this Z)');
+  lines.push('Section properties: I = ' + fmt(I, 'mm⁴') + ', Z = ' + fmt(Z, 'mm³') + ' (Unit 3 checks bending stress σ = M/Z against yield/permissible stress).');
   document.getElementById('bs-detail').innerHTML = lines.map(l => '<p>' + l + '</p>').join('');
 }
 

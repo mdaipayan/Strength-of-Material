@@ -1,0 +1,3060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strength of Materials — Unit 5: Torsion of Circular Sections | D. Mandal</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- KaTeX: Ultra-fast synchronous LaTeX math typesetting -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="if(typeof renderAllMath==='function')renderAllMath()"></script>
+
+<!-- MathJax: Full AMS-LaTeX mathematical notation & inline delimiter support -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  startup: {
+    ready: () => {
+      MathJax.startup.defaultReady();
+      if (typeof renderAllMath === 'function') renderAllMath();
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Bitter', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace']
+      },
+      colors: {
+        brand: { 50:'#f0f9ff', 100:'#e0f2fe', 200:'#bae6fd', 500:'#0ea5e9', 600:'#0284c7', 700:'#0369a1', 900:'#0c4a6e' },
+        torsion: { 50:'#fdf4ff', 100:'#fae8ff', 200:'#f5d0fe', 500:'#d946ef', 600:'#c026d3', 700:'#a21caf', 900:'#701a75' },
+        amber: { 50:'#fffbeb', 100:'#fef3c7', 500:'#f59e0b', 600:'#d97706', 700:'#b45309' }
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  body { transition: background-color .3s, color .3s; }
+  .module-content { display: none; }
+  .module-content.active { display: block; animation: fadeIn .35s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+
+  h1,h2,h3,h4 { font-family: 'Bitter', Georgia, serif; }
+  .num { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+  .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+  .slider-custom { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 5px; background: #e2e8f0; outline: none; }
+  .dark .slider-custom { background: #334155; }
+  .slider-custom::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #0ea5e9; cursor: pointer; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+  .slider-custom::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #0ea5e9; cursor: pointer; border: 2px solid #fff; }
+
+  :focus-visible { outline: 3px solid #0ea5e9; outline-offset: 2px; border-radius: 4px; }
+
+  .card { background:#fff; border-radius:.75rem; box-shadow:0 1px 3px rgba(0,0,0,.08); padding:1.5rem 1.75rem; border:1px solid #e5e7eb; }
+  .dark .card { background:#1f2937; border-color:#374151; }
+  .eyebrow { font-family:'Inter',sans-serif; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#0284c7; }
+  .dark .eyebrow { color:#38bdf8; }
+  .mtitle { font-size:1.85rem; line-height:1.2; font-weight:800; margin:.15rem 0 1.25rem; }
+
+  .formula-box { background:#f0f9ff; border:1px solid #bae6fd; border-radius:.6rem; padding:1.1rem; text-align:center; overflow-x:auto; }
+  .dark .formula-box { background:rgba(12,74,110,.35); border-color:#0369a1; }
+
+  .note-box { background:#fffbeb; border-left:4px solid #f59e0b; padding:1rem 1.25rem; border-radius:0 .5rem .5rem 0; }
+  .dark .note-box { background:rgba(120,53,15,.25); border-color:#d97706; }
+
+  .success-box { background:#f0fdf4; border-left:4px solid #22c55e; padding:1rem 1.25rem; border-radius:0 .5rem .5rem 0; }
+  .dark .success-box { background:rgba(20,83,45,.25); border-color:#16a34a; }
+
+  table.data { width:100%; border-collapse:collapse; font-size:.9rem; }
+  table.data th, table.data td { border:1px solid #e5e7eb; padding:.55rem .75rem; text-align:left; }
+  .dark table.data th, .dark table.data td { border-color:#374151; }
+  table.data th { background:#f8fafc; font-weight:600; }
+  .dark table.data th { background:#111827; }
+
+  .quiz-opt { display:block; width:100%; text-align:left; padding:.7rem 1rem; border:1px solid #d1d5db; border-radius:.5rem; margin-bottom:.5rem; transition:all .15s; background:#fff; }
+  .dark .quiz-opt { background:#111827; border-color:#374151; }
+  .quiz-opt:hover:not(:disabled) { border-color:#0ea5e9; background:#f0f9ff; }
+  .dark .quiz-opt:hover:not(:disabled) { background:rgba(12,74,110,.4); }
+  .quiz-opt.correct { background:#dcfce7 !important; border-color:#16a34a !important; color:#14532d; }
+  .quiz-opt.wrong { background:#fee2e2 !important; border-color:#dc2626 !important; color:#7f1d1d; }
+
+  .chip { display:inline-block; font-size:.7rem; font-weight:600; padding:.15rem .55rem; border-radius:999px; }
+
+  .flip-card { perspective: 1000px; height: 130px; cursor: pointer; }
+  .flip-card-inner { position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d; }
+  .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+  .flip-card-front, .flip-card-back { position:absolute; inset:0; backface-visibility:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:.6rem; padding:.75rem; text-align:center; }
+  .flip-card-back { transform: rotateY(180deg); }
+
+  @media print {
+    aside, header, footer, .no-print { display:none !important; }
+    main { overflow:visible !important; padding:0 !important; }
+    .module-content { display:none !important; }
+    .module-content.active { display:block !important; }
+    body { background:#fff !important; color:#000 !important; height:auto !important; overflow:visible !important; }
+  }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 h-screen flex flex-col font-sans overflow-hidden">
+
+<!-- ============ TOP BAR ============ -->
+<header class="bg-white dark:bg-gray-800 shadow-sm z-30 flex-shrink-0">
+  <div class="px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+      <button id="mobile-menu-btn" aria-label="Toggle module list" class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-300 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0">
+        <i class="fas fa-bars text-lg"></i>
+      </button>
+
+      <!-- Return to Home Link -->
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/60 text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-brand-300 hover:border-brand-500 hover:bg-white dark:hover:bg-gray-700 transition shrink-0 min-h-[40px] text-xs font-semibold shadow-2xs group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500" title="Return to Course Home / Syllabus" aria-label="Return to Course Home">
+        <i class="fas fa-house text-brand-500 text-xs sm:text-sm group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+        <span class="font-bold">Home</span>
+      </a>
+
+      <div class="h-6 w-px bg-gray-200 dark:bg-gray-700 shrink-0 hidden sm:block"></div>
+
+      <div class="min-w-0">
+        <p class="eyebrow leading-none truncate text-[10px] sm:text-xs">Interactive Digital Textbook &middot; Unit 5</p>
+        <h1 class="text-xs sm:text-base md:text-lg font-bold leading-tight text-brand-900 dark:text-brand-200 truncate">Strength of Materials &middot; Torsion of Circular Sections</h1>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 sm:gap-5 shrink-0">
+      <div class="hidden sm:flex flex-col items-end">
+        <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400">Modules visited <span id="progress-label" class="num">0/26</span></span>
+        <div class="w-36 h-1.5 bg-gray-200 rounded-full mt-1 dark:bg-gray-700">
+          <div id="progress-bar" class="h-1.5 bg-brand-500 rounded-full transition-all" style="width:0%"></div>
+        </div>
+      </div>
+      <button onclick="toggleTheme()" aria-label="Switch light or dark theme" class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-full transition min-h-[44px] min-w-[44px] flex items-center justify-center">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="flex-1 flex overflow-hidden">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex-shrink-0 transition-transform transform -translate-x-full md:translate-x-0 absolute md:relative z-20 h-full flex flex-col">
+    <!-- Home / Syllabus link at top of sidebar -->
+    <div class="p-3 pb-2 border-b border-gray-100 dark:border-gray-700/80 sticky top-0 bg-white dark:bg-gray-800 z-10">
+      <a href="index.html" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-600 font-semibold text-xs transition border border-brand-200/80 dark:border-brand-800/80 group shadow-2xs" title="Return to Course Home / Syllabus">
+        <span class="flex items-center gap-2">
+          <i class="fas fa-arrow-left text-[11px] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true"></i>
+          <span>Course Home</span>
+        </span>
+        <i class="fas fa-house text-xs opacity-80" aria-hidden="true"></i>
+      </a>
+    </div>
+    <nav class="p-3 space-y-0.5 flex-1" id="nav-menu" aria-label="Module list"></nav>
+  </aside>
+
+  <!-- ============ CONTENT CONTAINER ============ -->
+  <main class="flex-1 overflow-y-auto p-4 sm:p-7 lg:p-9 bg-gray-50 dark:bg-gray-900 scroll-smooth" id="main-content">
+
+<!-- ============ M1: COVER PAGE ============ -->
+<div id="module-1" class="module-content active max-w-4xl mx-auto space-y-6">
+  <div class="card border-t-4 border-brand-500 text-center py-10 px-6 sm:px-10">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-100 dark:bg-brand-900/60 text-brand-600 dark:text-brand-300 mb-4 shadow-sm">
+      <i class="fas fa-rotate text-3xl"></i>
+    </div>
+    <p class="eyebrow mb-1">Unit 5 &middot; Comprehensive Learning Module</p>
+    <h1 class="text-3xl sm:text-4xl font-extrabold mb-3 text-gray-900 dark:text-white">Torsion of Circular Sections</h1>
+    <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+      Solid and hollow shafts, torsional shear stress distribution, polar moment of inertia, angle of twist, power transmission, shaft economy, composite assemblies, and combined bending and torsion.
+    </p>
+
+    <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700 flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+      <div><i class="fas fa-user-graduate text-brand-500 mr-1.5"></i>Instructor: <span class="font-semibold text-gray-800 dark:text-gray-200">D. Mandal</span></div>
+      <div><i class="fas fa-building-columns text-brand-500 mr-1.5"></i>Civil &amp; Mechanical Engineering</div>
+      <div><i class="fas fa-book-open text-brand-500 mr-1.5"></i>26 Interactive Modules</div>
+      <div><i class="fas fa-flask text-brand-500 mr-1.5"></i>Virtual Torsion Lab &amp; Solver</div>
+    </div>
+
+    <div class="mt-8 flex justify-center gap-3">
+      <button onclick="switchModule(2)" class="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm shadow-md transition flex items-center gap-2">
+        <span>Start Learning</span>
+        <i class="fas fa-arrow-right text-xs"></i>
+      </button>
+      <button onclick="switchModule(17)" class="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 hover:border-brand-500 font-semibold text-sm transition flex items-center gap-2">
+        <i class="fas fa-sliders text-brand-500"></i>
+        <span>Jump to Torsion Lab</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div class="card p-5">
+      <div class="flex items-center gap-3 mb-2.5 text-brand-600 dark:text-brand-400">
+        <i class="fas fa-atom text-xl"></i>
+        <h2 class="font-bold text-base">Pure Torsion Theory</h2>
+      </div>
+      <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+        Derivation from geometric strain compatibility, Hooke's law in shear, and internal resisting torque equilibrium.
+      </p>
+    </div>
+    <div class="card p-5">
+      <div class="flex items-center gap-3 mb-2.5 text-brand-600 dark:text-brand-400">
+        <i class="fas fa-bolt text-xl"></i>
+        <h2 class="font-bold text-base">Power Transmission</h2>
+      </div>
+      <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+        Rotational dynamics, speed, mean vs peak torque factor, and dual strength vs stiffness design limits.
+      </p>
+    </div>
+    <div class="card p-5">
+      <div class="flex items-center gap-3 mb-2.5 text-brand-600 dark:text-brand-400">
+        <i class="fas fa-compress-arrows-alt text-xl"></i>
+        <h2 class="font-bold text-base">Combined Loading</h2>
+      </div>
+      <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+        Equivalent twisting ($T_e$) and bending ($M_e$) moments for power shafts with gears, pulleys, and flywheels.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M2: LEARNING OUTCOMES ============ -->
+<div id="module-2" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Pedagogy &amp; Alignment</p>
+    <h2 class="mtitle">Course Outcomes &amp; Bloom's Taxonomy</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+      This unit develops complete competency in analyzing and sizing structural elements subjected to twisting couples. Upon completion, students demonstrate mastery mapped against ABET / NBA criteria:
+    </p>
+
+    <div class="space-y-3.5">
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-start gap-4">
+        <span class="px-2.5 py-1 rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 font-mono text-xs font-bold">CO1</span>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm">Formulate the Pure Torsion Equation</h3>
+            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-300">Understand / Derive</span>
+          </div>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">State assumptions, derive $\frac{T}{J} = \frac{\tau}{r} = \frac{G\theta}{L}$ from first principles, and explain why circular sections do not warp.</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-start gap-4">
+        <span class="px-2.5 py-1 rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 font-mono text-xs font-bold">CO2</span>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm">Determine Stress &amp; Polar Section Modulus</h3>
+            <span class="chip bg-green-100 text-green-800 dark:bg-green-900/60 dark:text-green-300">Apply / Calculate</span>
+          </div>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Compute polar moment of inertia $J$ and polar modulus $Z_p$ for solid and hollow sections, and map radial shear stress distributions.</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-start gap-4">
+        <span class="px-2.5 py-1 rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 font-mono text-xs font-bold">CO3</span>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm">Design Shafts for Power Transmission</h3>
+            <span class="chip bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-300">Analyze / Design</span>
+          </div>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Size rotating power shafts subject to speed, power, peak torque allowance, permissible shear stress, and allowable angle of twist.</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-start gap-4">
+        <span class="px-2.5 py-1 rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 font-mono text-xs font-bold">CO4</span>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm">Evaluate Solid vs. Hollow Shaft Economy</h3>
+            <span class="chip bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300">Evaluate</span>
+          </div>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Prove material weight savings (25% to 50%) and quantify efficiency advantages of hollow shafts in automotive and marine applications.</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-start gap-4">
+        <span class="px-2.5 py-1 rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 font-mono text-xs font-bold">CO5</span>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm">Solve Series, Parallel &amp; Indeterminate Shafts</h3>
+            <span class="chip bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-300">Analyze</span>
+          </div>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Apply torque equilibrium and angular twist compatibility to stepped shafts, composite concentric tubes, and fixed-fixed redundant assemblies.</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-start gap-4">
+        <span class="px-2.5 py-1 rounded bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300 font-mono text-xs font-bold">CO6</span>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm">Analyze Combined Bending &amp; Torsion</h3>
+            <span class="chip bg-indigo-100 text-indigo-800 dark:bg-indigo-900/60 dark:text-indigo-300">Synthesize / Design</span>
+          </div>
+          <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Formulate equivalent twisting moment $T_e = \sqrt{M^2+T^2}$ and equivalent bending moment $M_e = \frac{1}{2}(M+\sqrt{M^2+T^2})$ using Tresca and Rankine criteria.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M3: PHYSICAL MEANING OF TORSION ============ -->
+<div id="module-3" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Mechanics Fundamentals</p>
+    <h2 class="mtitle">Physical Meaning of Torsion &amp; Torque</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+      A member is said to be in <strong>torsion</strong> when it is subjected to moments (or couples) that act about its longitudinal centroidal axis. These twisting couples are known as <strong>torques</strong> or <strong>twisting moments</strong> ($T$).
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900">
+        <h4 class="font-bold text-blue-900 dark:text-blue-300 text-sm mb-2"><i class="fas fa-arrows-split-up-and-left mr-2"></i>Bending vs. Torsion</h4>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1.5 list-disc list-inside">
+          <li><strong>Bending Moment ($M$):</strong> Vector parallel to the cross-section plane. Produces longitudinal tension on one side and compression on the other.</li>
+          <li><strong>Twisting Moment ($T$):</strong> Vector perpendicular to the cross-section plane (along member axis). Causes adjacent cross-sections to rotate relative to each other.</li>
+        </ul>
+      </div>
+
+      <div class="p-4 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900">
+        <h4 class="font-bold text-amber-900 dark:text-amber-300 text-sm mb-2"><i class="fas fa-hand mr-2"></i>Right-Hand Screw Rule</h4>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+          Curl the fingers of your right hand along the rotational direction of the torque; your extended thumb points along the double-arrow vector. A torque vector pointing outwards from a cut section is considered <strong>positive</strong>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Interactive SVG illustration of torsion -->
+    <div class="bg-gray-100 dark:bg-gray-800/80 p-5 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+      <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Deformation Under Pure Torsion</h4>
+      <svg viewBox="0 0 700 220" class="w-full max-w-xl mx-auto h-auto">
+        <!-- Shaft body -->
+        <defs>
+          <linearGradient id="shaftGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#94a3b8" />
+            <stop offset="50%" stop-color="#cbd5e1" />
+            <stop offset="100%" stop-color="#64748b" />
+          </linearGradient>
+        </defs>
+        <!-- Fixed end support -->
+        <rect x="50" y="30" width="20" height="160" fill="#334155" rx="3" />
+        <line x1="40" y1="30" x2="50" y2="40" stroke="#64748b" stroke-width="2" />
+        <line x1="40" y1="60" x2="50" y2="70" stroke="#64748b" stroke-width="2" />
+        <line x1="40" y1="90" x2="50" y2="100" stroke="#64748b" stroke-width="2" />
+        <line x1="40" y1="120" x2="50" y2="130" stroke="#64748b" stroke-width="2" />
+        <line x1="40" y1="150" x2="50" y2="160" stroke="#64748b" stroke-width="2" />
+        <line x1="40" y1="180" x2="50" y2="190" stroke="#64748b" stroke-width="2" />
+
+        <!-- Cylinder -->
+        <path d="M 70,50 L 520,50 A 25,60 0 0,1 520,170 L 70,170 Z" fill="url(#shaftGrad)" opacity="0.85" />
+        <!-- Left ellipse -->
+        <ellipse cx="70" cy="110" rx="15" ry="60" fill="#475569" />
+        <!-- Right ellipse -->
+        <ellipse cx="520" cy="110" rx="25" ry="60" fill="#94a3b8" stroke="#334155" stroke-width="2" />
+
+        <!-- Centerline axis -->
+        <line x1="70" y1="110" x2="580" y2="110" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="6,4" />
+        <text x="590" y="114" fill="#0ea5e9" font-size="11" font-weight="bold">Axis of rotation</text>
+
+        <!-- Undeformed straight generator line AB -->
+        <line x1="70" y1="50" x2="520" y2="50" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4" />
+        <text x="65" y="42" fill="#475569" font-size="12" font-weight="bold">A</text>
+        <text x="520" y="42" fill="#64748b" font-size="12">B (undeformed)</text>
+
+        <!-- Twisted helical line AB' -->
+        <path d="M 70,50 Q 300,65 533,78" fill="none" stroke="#dc2626" stroke-width="3" />
+        <circle cx="533" cy="78" r="4" fill="#dc2626" />
+        <text x="545" y="82" fill="#dc2626" font-size="12" font-weight="bold">B' (twisted)</text>
+
+        <!-- Angle of twist theta arc on end face -->
+        <line x1="520" y1="110" x2="520" y2="50" stroke="#475569" stroke-width="1.5" />
+        <line x1="520" y1="110" x2="533" y2="78" stroke="#dc2626" stroke-width="2" />
+        <path d="M 520,75 A 35,35 0 0,1 528,88" fill="none" stroke="#7c3aed" stroke-width="2" />
+        <text x="532" y="65" fill="#7c3aed" font-size="12" font-weight="bold">&theta;</text>
+
+        <!-- Torque arrow -->
+        <path d="M 550,150 A 40,40 0 1,0 550,70" fill="none" stroke="#0284c7" stroke-width="3.5" marker-end="url(#arrow)" />
+        <polygon points="545,64 560,72 546,80" fill="#0284c7" />
+        <text x="580" y="70" fill="#0284c7" font-size="14" font-weight="bold">Torque T</text>
+
+        <!-- Shear strain gamma label -->
+        <text x="290" y="42" fill="#dc2626" font-size="12" font-weight="bold">Shear strain &gamma; = R&theta; / L</text>
+        <line x1="70" y1="190" x2="520" y2="190" stroke="#475569" stroke-width="1" />
+        <line x1="70" y1="185" x2="70" y2="195" stroke="#475569" stroke-width="1" />
+        <line x1="520" y1="185" x2="520" y2="195" stroke="#475569" stroke-width="1" />
+        <text x="280" y="205" fill="#475569" font-size="12" font-weight="bold">Length L</text>
+      </svg>
+      <p class="text-xs text-gray-500 mt-2">
+        A straight longitudinal surface fiber $AB$ deforms into a helix $AB'$ under twisting torque $T$. Cross-sections rotate about the axis by angle $\theta$.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M4: ASSUMPTIONS IN PURE TORSION ============ -->
+<div id="module-4" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Coulomb's Theory</p>
+    <h2 class="mtitle">Assumptions in the Theory of Pure Torsion</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      The classical elementary theory of torsion for circular shafts is attributed to <strong>Charles-Augustin de Coulomb (1784)</strong>. It is based upon the following rigorous mechanical assumptions:
+    </p>
+
+    <div class="space-y-4 text-sm">
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div class="flex items-center gap-2 font-bold text-brand-700 dark:text-brand-300 mb-1">
+          <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/60 flex items-center justify-center text-xs">1</span>
+          Material is Homogeneous, Isotropic &amp; Linear-Elastic
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 ml-8">
+          The material has identical elastic properties in all directions and obeys Hooke's Law in shear ($\tau = G\gamma$). Stresses remain strictly below the proportional limit in shear.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div class="flex items-center gap-2 font-bold text-brand-700 dark:text-brand-300 mb-1">
+          <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/60 flex items-center justify-center text-xs">2</span>
+          Plane Cross-Sections Remain Plane and Perpendicular to the Axis (No Warping)
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 ml-8">
+          A transverse section of the circular shaft remains plane and circular after twisting. There is <strong>no warping</strong> (out-of-plane axial displacement). This is <em>strictly true only for circular sections</em> due to complete axisymmetry! Non-circular cross-sections (square, rectangular, I-beams) warp significantly and violate this assumption.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div class="flex items-center gap-2 font-bold text-brand-700 dark:text-brand-300 mb-1">
+          <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/60 flex items-center justify-center text-xs">3</span>
+          Radial Lines Remain Straight
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 ml-8">
+          Any straight radial line drawn from the center of the circular cross-section to the boundary remains straight and simply rotates through an angle $\theta$ relative to the opposite end.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div class="flex items-center gap-2 font-bold text-brand-700 dark:text-brand-300 mb-1">
+          <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/60 flex items-center justify-center text-xs">4</span>
+          Axial Spacing Remains Constant
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 ml-8">
+          Cross-sections do not move axially toward or away from one another. The length of the shaft $L$ remains completely unchanged ($\epsilon_x = 0$).
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div class="flex items-center gap-2 font-bold text-brand-700 dark:text-brand-300 mb-1">
+          <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/60 flex items-center justify-center text-xs">5</span>
+          Uniform Angle of Twist Along Length
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 ml-8">
+          The rate of twist $\frac{d\theta}{dx} = \frac{\theta}{L}$ is uniform and constant across the entire prismatic span of the shaft.
+        </p>
+      </div>
+    </div>
+
+    <div class="note-box text-xs mt-4">
+      <strong>Crucial Exam Insight:</strong> Why can't we use Coulomb's formula for a rectangular bar? Because a rectangular cross-section warps into a saddle shape under torsion. The corners carry zero shear stress, and the maximum shear stress occurs at the middle of the longer sides (Saint-Venant's theory of torsion).
+    </div>
+  </div>
+</div>
+
+<!-- ============ M5: DERIVATION OF TORSION FORMULA ============ -->
+<div id="module-5" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Mathematical Derivation</p>
+    <h2 class="mtitle">Derivation of the Fundamental Torsion Formula</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      The relationship connecting applied torque $T$, polar moment of inertia $J$, shear stress $\tau$, radius $r$, modulus of rigidity $G$, angle of twist $\theta$, and length $L$ is derived in three transparent stages:
+    </p>
+
+    <!-- Stage 1 -->
+    <div class="border-l-2 border-brand-500 pl-4 mb-6">
+      <h3 class="text-base font-bold text-gray-900 dark:text-white">Stage 1: Geometric Kinematics &amp; Shear Strain</h3>
+      <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 mb-2 leading-relaxed">
+        Consider a circular shaft of radius $R$ and length $L$ subjected to torque $T$. An element on the surface at distance $L$ from the fixed end rotates through angle $\theta$. The arc length traversed by point $B$ to $B'$ is:
+      </p>
+      <div class="formula-box text-sm">
+        $$\text{Arc length } BB' = R \cdot \theta$$
+      </div>
+      <p class="text-xs text-gray-600 dark:text-gray-300 mt-2 mb-2 leading-relaxed">
+        By definition, shear strain $\gamma$ is the change in the initial right angle between generator $AB$ and the end face:
+      </p>
+      <div class="formula-box text-sm">
+        $$\gamma_{surface} = \tan \angle BAB' \approx \frac{BB'}{L} = \frac{R\theta}{L}$$
+        $$\text{At any arbitrary radial distance } r: \quad \gamma(r) = \frac{r\theta}{L}$$
+      </div>
+      <p class="text-xs font-semibold text-brand-600 dark:text-brand-400 mt-1">
+        Key deduction: Shear strain varies linearly with radius from zero at the center to maximum at the surface!
+      </p>
+    </div>
+
+    <!-- Stage 2 -->
+    <div class="border-l-2 border-brand-500 pl-4 mb-6">
+      <h3 class="text-base font-bold text-gray-900 dark:text-white">Stage 2: Constitutive Stress-Strain Relation</h3>
+      <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 mb-2 leading-relaxed">
+        Applying Hooke's Law in pure shear, where $G$ is the Modulus of Rigidity (Shear Modulus):
+      </p>
+      <div class="formula-box text-sm">
+        $$\tau(r) = G \cdot \gamma(r) = G \left(\frac{r\theta}{L}\right)$$
+        $$\implies \frac{\tau(r)}{r} = \frac{G\theta}{L}$$
+      </div>
+      <p class="text-xs text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">
+        Since $G$, $\theta$, and $L$ are constant for any given section:
+      </p>
+      <div class="formula-box text-sm">
+        $$\frac{\tau(r)}{r} = \frac{\tau_{max}}{R} = \text{constant}$$
+      </div>
+    </div>
+
+    <!-- Stage 3 -->
+    <div class="border-l-2 border-brand-500 pl-4 mb-6">
+      <h3 class="text-base font-bold text-gray-900 dark:text-white">Stage 3: Static Equilibrium with Internal Resisting Torque</h3>
+      <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 mb-2 leading-relaxed">
+        Consider an elemental concentric ring of radius $r$ and thickness $dr$. Elemental area $dA = 2\pi r \, dr$.
+      </p>
+      <div class="formula-box text-sm">
+        $$\text{Elemental shear force } dF = \tau(r) \, dA = \left(\frac{\tau_{max}}{R} r\right) dA$$
+        $$\text{Elemental resisting torque } dT = dF \cdot r = \left(\frac{\tau_{max}}{R} r^2\right) dA$$
+        $$\text{Total torque } T = \int dT = \frac{\tau_{max}}{R} \int r^2 dA$$
+      </div>
+      <p class="text-xs text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">
+        By definition, the integral $\int r^2 dA$ represents the <strong>Polar Moment of Inertia ($J$)</strong> of the cross-section about the polar axis:
+      </p>
+      <div class="formula-box text-sm">
+        $$T = \frac{\tau_{max}}{R} \cdot J \implies \frac{T}{J} = \frac{\tau_{max}}{R} = \frac{\tau}{r}$$
+      </div>
+    </div>
+
+    <!-- Master Box -->
+    <div class="p-5 rounded-2xl bg-gradient-to-r from-brand-500 to-sky-600 text-white text-center shadow-lg">
+      <p class="text-xs uppercase tracking-widest font-semibold opacity-90">The Universal Torsion Equation</p>
+      <div class="text-2xl sm:text-3xl font-extrabold my-2 font-mono">
+        $$\frac{T}{J} = \frac{\tau}{r} = \frac{G\theta}{L}$$
+      </div>
+      <p class="text-xs opacity-90">
+        Analogy with Pure Bending: $\dfrac{M}{I} = \dfrac{\sigma}{y} = \dfrac{E}{R}$
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M6: POLAR MOMENT OF INERTIA & POLAR MODULUS ============ -->
+<div id="module-6" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Section Properties</p>
+    <h2 class="mtitle">Polar Moment of Inertia ($J$) &amp; Polar Section Modulus ($Z_p$)</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      By the Perpendicular Axis Theorem, for any plane area $J = I_{zz} = I_{xx} + I_{yy}$. For circular sections where $I_{xx} = I_{yy} = \frac{\pi D^4}{64}$:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+      <!-- Solid Shaft -->
+      <div class="p-5 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50/40 dark:bg-blue-950/20">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-xs"><i class="fas fa-circle"></i></span>
+          <h3 class="font-bold text-base text-gray-900 dark:text-white">Solid Circular Shaft</h3>
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 mb-3">
+          Integrating elemental rings $dA = 2\pi r dr$ from $r=0$ to $R = D/2$:
+        </p>
+        <div class="formula-box text-xs py-2 mb-3">
+          $$J = \int_0^{D/2} 2\pi r^3 dr = \frac{\pi D^4}{32}$$
+        </div>
+        <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Polar Section Modulus ($Z_p = J/R$):</p>
+        <div class="formula-box text-xs py-2 bg-white dark:bg-gray-800">
+          $$Z_p = \frac{\frac{\pi D^4}{32}}{\frac{D}{2}} = \frac{\pi D^3}{16} \approx 0.1963 D^3$$
+        </div>
+        <p class="text-xs text-gray-500 mt-2">Torque capacity: $T = \tau_{perm} \cdot Z_p = \frac{\pi}{16} \tau_{perm} D^3$</p>
+      </div>
+
+      <!-- Hollow Shaft -->
+      <div class="p-5 rounded-xl border border-purple-200 dark:border-purple-900 bg-purple-50/40 dark:bg-purple-950/20">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-xs"><i class="far fa-circle"></i></span>
+          <h3 class="font-bold text-base text-gray-900 dark:text-white">Hollow Circular Shaft</h3>
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 mb-3">
+          Outer diameter $D$, inner diameter $d$, and ratio $k = d/D$:
+        </p>
+        <div class="formula-box text-xs py-2 mb-3">
+          $$J = \frac{\pi (D^4 - d^4)}{32} = \frac{\pi D^4 (1 - k^4)}{32}$$
+        </div>
+        <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Polar Section Modulus ($Z_p = J / R_{outer}$):</p>
+        <div class="formula-box text-xs py-2 bg-white dark:bg-gray-800">
+          $$Z_p = \frac{\pi (D^4 - d^4)}{16 D} = \frac{\pi D^3 (1 - k^4)}{16}$$
+        </div>
+        <p class="text-xs text-gray-500 mt-2">Note: Divide by $D/2$ (the outer radius where maximum stress occurs), NOT $(D-d)/2$!</p>
+      </div>
+    </div>
+
+    <div class="card bg-gray-50 dark:bg-gray-800/60 p-4">
+      <h4 class="font-bold text-sm mb-2 text-gray-800 dark:text-gray-200"><i class="fas fa-table-cells mr-2 text-brand-500"></i>Summary Comparison Table: Solid vs. Hollow Shaft</h4>
+      <div class="overflow-x-auto">
+        <table class="data text-xs w-full">
+          <thead>
+            <tr>
+              <th class="text-left py-2.5 px-3">Property</th>
+              <th class="text-center py-2.5 px-3">Solid Shaft ($D$)</th>
+              <th class="text-center py-2.5 px-3">Hollow Shaft ($D, d$)</th>
+              <th class="text-left py-2.5 px-3">Ratio ($k = d/D = 0.6$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="font-semibold py-2.5 px-3">Area ($A$)</td>
+              <td class="text-center py-2.5 px-3 font-mono">$$\frac{\pi}{4} D^2$$</td>
+              <td class="text-center py-2.5 px-3 font-mono">$$\frac{\pi}{4} D^2 (1 - k^2)$$</td>
+              <td class="py-2.5 px-3"><span class="inline-block px-2 py-0.5 rounded font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300">64%</span> of solid area</td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="font-semibold py-2.5 px-3">Polar Inertia ($J$)</td>
+              <td class="text-center py-2.5 px-3 font-mono">$$\frac{\pi D^4}{32}$$</td>
+              <td class="text-center py-2.5 px-3 font-mono">$$\frac{\pi D^4}{32} (1 - k^4)$$</td>
+              <td class="py-2.5 px-3"><span class="inline-block px-2 py-0.5 rounded font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">87.04%</span> of solid $J$</td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="font-semibold py-2.5 px-3">Polar Modulus ($Z_p$)</td>
+              <td class="text-center py-2.5 px-3 font-mono">$$\frac{\pi D^3}{16}$$</td>
+              <td class="text-center py-2.5 px-3 font-mono">$$\frac{\pi D^3}{16} (1 - k^4)$$</td>
+              <td class="py-2.5 px-3"><span class="inline-block px-2 py-0.5 rounded font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">87.04%</span> of solid $Z_p$</td>
+            </tr>
+            <tr>
+              <td class="font-semibold py-2.5 px-3">Torsional Strength</td>
+              <td class="text-center py-2.5 px-3 font-semibold text-gray-700 dark:text-gray-300">100%</td>
+              <td class="text-center py-2.5 px-3 font-mono">$$(1 - k^4) \times 100\%$$</td>
+              <td class="py-2.5 px-3">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 font-bold border border-amber-300 dark:border-amber-700/50">
+                  <i class="fas fa-bolt text-amber-600 dark:text-amber-400"></i> Retains 87% strength with 36% less weight!
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M7: SHEAR STRESS DISTRIBUTION ============ -->
+<div id="module-7" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Stress Analysis</p>
+    <h2 class="mtitle">Shear Stress Distribution &amp; Helical Failure Planes</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      From the torsion formula $\tau(r) = \frac{\tau_{max}}{R} r$, shear stress varies linearly with the distance from the shaft center. It is strictly zero at the neutral axis (shaft center) and reaches peak magnitude $\tau_{max}$ at the outer perimeter.
+    </p>
+
+    <!-- Side by side visual diagram and explanation -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+      <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-xl text-center border border-gray-200 dark:border-gray-700">
+        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Cross-Sectional Stress Profile</h4>
+        <svg viewBox="0 0 320 260" class="w-full max-w-xs mx-auto">
+          <!-- Outer circle -->
+          <circle cx="120" cy="130" r="90" fill="#f1f5f9" stroke="#334155" stroke-width="2.5" class="dark:fill-gray-900 dark:stroke-gray-400" />
+          <!-- Inner circle (dashed) -->
+          <circle cx="120" cy="130" r="45" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3" class="dark:fill-gray-800 dark:stroke-gray-600" />
+          <circle cx="120" cy="130" r="3" fill="#0284c7" />
+
+          <!-- Centerline -->
+          <line x1="120" y1="20" x2="120" y2="240" stroke="#cbd5e1" stroke-dasharray="3,3" />
+          <line x1="10" y1="130" x2="230" y2="130" stroke="#cbd5e1" stroke-dasharray="3,3" />
+
+          <!-- Stress Distribution Triangle on Right -->
+          <line x1="250" y1="40" x2="250" y2="220" stroke="#475569" stroke-width="2" />
+          <!-- Linear shear variation lines -->
+          <polygon points="250,130 310,40 250,40" fill="rgba(14,165,233,0.25)" stroke="#0ea5e9" stroke-width="1.5" />
+          <polygon points="250,130 310,220 250,220" fill="rgba(14,165,233,0.25)" stroke="#0ea5e9" stroke-width="1.5" />
+
+          <!-- Arrows -->
+          <line x1="250" y1="60" x2="295" y2="60" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#arr)" />
+          <line x1="250" y1="90" x2="275" y2="90" stroke="#0ea5e9" stroke-width="1.5" />
+          <line x1="250" y1="170" x2="275" y2="170" stroke="#0ea5e9" stroke-width="1.5" />
+          <line x1="250" y1="200" x2="295" y2="200" stroke="#0ea5e9" stroke-width="1.5" />
+
+          <text x="315" y="45" fill="#0284c7" font-size="11" font-weight="bold">&tau;max</text>
+          <text x="315" y="225" fill="#0284c7" font-size="11" font-weight="bold">&tau;max</text>
+          <text x="255" y="134" fill="#64748b" font-size="10">&tau; = 0</text>
+
+          <text x="270" y="86" fill="#7c3aed" font-size="10" font-weight="bold">&tau;min (hollow)</text>
+          <line x1="250" y1="85" x2="280" y2="85" stroke="#7c3aed" stroke-width="1.5" />
+        </svg>
+        <p class="text-[11px] text-gray-500 mt-1">Shear stress variation: Zero at center to $\tau_{max}$ at boundary.</p>
+      </div>
+
+      <div class="space-y-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+        <div class="p-3.5 rounded-lg bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800">
+          <h4 class="font-bold text-brand-900 dark:text-brand-300 text-sm mb-1">State of Pure Shear &amp; Principal Stresses</h4>
+          <p>
+            An infinitesimal element cut at the shaft surface experiences pure shear stresses $\tau$. By transformation of plane stress:
+            $$\sigma_{1} = +\tau \quad (\text{tensile}) \quad \text{at } \theta = +45^\circ$$
+            $$\sigma_{2} = -\tau \quad (\text{compressive}) \quad \text{at } \theta = -45^\circ$$
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900">
+          <h4 class="font-bold text-rose-900 dark:text-rose-300 text-sm mb-1">Ductile vs. Brittle Failure Modes in Torsion</h4>
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>Ductile materials (Mild Steel, Aluminum):</strong> Weakest in shear. Failure occurs on a transverse plane perpendicular to the axis ($90^\circ$ flat shear fracture).</li>
+            <li><strong>Brittle materials (Chalk, Cast Iron, Concrete):</strong> Much weaker in tension than in shear. Failure occurs along a <strong>$45^\circ$ helical surface</strong> perpendicular to the maximum principal tensile stress $\sigma_1$.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M8: ANGLE OF TWIST & TORSIONAL RIGIDITY ============ -->
+<div id="module-8" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Deformation &amp; Stiffness</p>
+    <h2 class="mtitle">Angle of Twist ($\theta$) &amp; Torsional Rigidity ($GJ$)</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      From the torsion equation $\frac{T}{J} = \frac{G\theta}{L}$, the total angle of twist over length $L$ is:
+    </p>
+
+    <div class="p-5 rounded-xl bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 text-center mb-6">
+      <div class="text-xl sm:text-2xl font-bold font-mono text-brand-700 dark:text-brand-300 mb-2">
+        $$\theta = \frac{T L}{G J} \quad \text{(in radians)}$$
+      </div>
+      <p class="text-xs text-rose-600 dark:text-rose-400 font-semibold">
+        Warning: $\theta$ from the equation is strictly in <strong>radians</strong>! To convert to degrees: $\theta^\circ = \theta \times \frac{180}{\pi}$.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1"><i class="fas fa-shield mr-2 text-brand-500"></i>Torsional Rigidity</h4>
+        <div class="formula-box text-xs py-2 my-2 font-mono">$$GJ$$</div>
+        <p class="text-xs text-gray-600 dark:text-gray-400">
+          Product of shear modulus $G$ and polar inertia $J$. Represents torque required to produce unit angle of twist per unit length ($\text{N}\cdot\text{mm}^2$).
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1"><i class="fas fa-cubes mr-2 text-brand-500"></i>Torsional Stiffness ($k_t$)</h4>
+        <div class="formula-box text-xs py-2 my-2 font-mono">$$k_t = \frac{T}{\theta} = \frac{GJ}{L}$$</div>
+        <p class="text-xs text-gray-600 dark:text-gray-400">
+          Torque required to produce unit rotation of the shaft end ($\text{N}\cdot\text{m/rad}$ or $\text{N}\cdot\text{m/deg}$).
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1"><i class="fas fa-compress mr-2 text-brand-500"></i>Torsional Flexibility ($f_t$)</h4>
+        <div class="formula-box text-xs py-2 my-2 font-mono">$$f_t = \frac{1}{k_t} = \frac{L}{GJ}$$</div>
+        <p class="text-xs text-gray-600 dark:text-gray-400">
+          Angle of twist produced per unit applied torque ($\text{rad/N}\cdot\text{m}$).
+        </p>
+      </div>
+    </div>
+
+    <!-- Dual Design Criteria -->
+    <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900">
+      <h3 class="font-bold text-amber-900 dark:text-amber-300 text-sm mb-2"><i class="fas fa-scale-balanced mr-2"></i>Dual Design Criteria for Power Transmission Shafts</h3>
+      <p class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+        In real mechanical engineering, a shaft must satisfy two independent design conditions:
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-amber-200/60 dark:border-amber-800/60">
+          <strong class="text-gray-900 dark:text-white">1. Strength Criterion:</strong>
+          <p class="mt-1 text-gray-600 dark:text-gray-400">$\tau_{max} \le [\tau]_{allow} \implies D \ge \left(\frac{16 T}{\pi [\tau]}\right)^{1/3}$</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-amber-200/60 dark:border-amber-800/60">
+          <strong class="text-gray-900 dark:text-white">2. Rigidity / Stiffness Criterion:</strong>
+          <p class="mt-1 text-gray-600 dark:text-gray-400">$\theta \le [\theta]_{allow} \implies D \ge \left(\frac{32 T L}{\pi G [\theta]_{rad}}\right)^{1/4}$</p>
+        </div>
+      </div>
+      <p class="text-xs font-bold text-amber-800 dark:text-amber-300 mt-3 text-center">
+        The design diameter must be the LARGER of the two values: $D = \max(D_{strength}, D_{rigidity})$.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M9: POWER TRANSMISSION BY SHAFTS ============ -->
+<div id="module-9" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Rotational Dynamics</p>
+    <h2 class="mtitle">Power Transmission by Rotating Shafts</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      Shafts are widely utilized to transmit mechanical power in steam/gas turbines, electric motors, automobile transmissions, and machine tools.
+    </p>
+
+    <div class="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 space-y-3 mb-6">
+      <h3 class="font-bold text-sm text-gray-900 dark:text-white">Derivation of Power Relationship</h3>
+      <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+        Let a shaft rotate at $N$ revolutions per minute (RPM) under constant twisting moment $T$ ($\text{N}\cdot\text{m}$).
+      </p>
+      <div class="formula-box text-sm font-mono">
+        $$\text{Angular velocity } \omega = \frac{2\pi N}{60} \quad \text{(rad/s)}$$
+        $$\text{Work done per second (Power } P\text{)} = T \cdot \omega = \frac{2\pi N T}{60} \quad \text{Watts (W)}$$
+        $$\text{In Kilowatts: } P = \frac{2\pi N T}{60 \times 1000} \text{ kW} \implies T = \frac{60,000 \cdot P}{2\pi N} \quad \text{N}\cdot\text{m}$$
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900">
+        <h4 class="font-bold text-rose-900 dark:text-rose-300 text-sm mb-1"><i class="fas fa-triangle-exclamation mr-2"></i>Peak Torque vs. Mean Torque</h4>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-2">
+          Engines and machinery experience fluctuations. Peak torque $T_{max}$ exceeds mean torque $T_{mean}$:
+        </p>
+        <div class="formula-box text-xs py-1.5 font-mono mb-2 bg-white dark:bg-gray-900">
+          $$T_{max} = k \times T_{mean}$$
+        </div>
+        <p class="text-xs text-rose-800 dark:text-rose-300 font-semibold">
+          Always design the shaft for $T_{max}$! Sizing for $T_{mean}$ leads to premature fatigue failure.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900">
+        <h4 class="font-bold text-blue-900 dark:text-blue-300 text-sm mb-1"><i class="fas fa-calculator mr-2"></i>Quick Sizing Shortcut</h4>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-2">
+          For a solid shaft with allowable shear stress $\tau_{allow}$:
+        </p>
+        <div class="formula-box text-xs py-1.5 font-mono mb-2 bg-white dark:bg-gray-900">
+          $$D = \sqrt[3]{\frac{16 T_{max}}{\pi \tau_{allow}}}$$
+        </div>
+        <p class="text-xs text-blue-800 dark:text-blue-300">
+          Ensure units match: If $T$ is in $\text{N}\cdot\text{mm}$ and $\tau$ is in $\text{MPa}$ ($\text{N/mm}^2$), $D$ is in $\text{mm}$.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M10: SOLID VS HOLLOW SHAFT ECONOMY ============ -->
+<div id="module-10" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Engineering Optimization</p>
+    <h2 class="mtitle">Comparison of Solid vs. Hollow Shafts</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      Why are aerospace drive shafts and marine propeller shafts almost universally hollow? Let's prove their superior efficiency mathematically across three classical engineering scenarios:
+    </p>
+
+    <!-- Case A -->
+    <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 mb-4">
+      <h3 class="font-bold text-sm text-brand-700 dark:text-brand-300 mb-2">Scenario 1: Same Strength ($T$ and $\tau_{max}$ are identical)</h3>
+      <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-2">
+        Let solid shaft diameter be $D_s$. For a hollow shaft with outer diameter $D_h$ and inner diameter $d_h = k D_h$:
+      </p>
+      <div class="formula-box text-xs font-mono py-2 mb-2">
+        $$T = \frac{\pi}{16} \tau D_s^3 = \frac{\pi}{16} \tau D_h^3 (1 - k^4) \implies D_h = \frac{D_s}{(1 - k^4)^{1/3}}$$
+        $$\text{Weight Ratio: } \frac{W_h}{W_s} = \frac{A_h}{A_s} = \frac{D_h^2(1 - k^2)}{D_s^2} = \frac{1 - k^2}{(1 - k^4)^{2/3}}$$
+      </div>
+      <div class="success-box text-xs">
+        <strong>Material Saving Demonstration:</strong> If diameter ratio $k = 0.6$:
+        $$\frac{W_h}{W_s} = \frac{1 - 0.6^2}{(1 - 0.6^4)^{2/3}} = \frac{0.64}{(0.8704)^{2/3}} = \frac{0.64}{0.9118} = 0.702 \implies \mathbf{29.8\% \text{ weight saved!}}$$
+        If $k = 0.8$, weight saving reaches $\mathbf{44.6\%}$!
+      </div>
+    </div>
+
+    <!-- Case B -->
+    <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 mb-4">
+      <h3 class="font-bold text-sm text-brand-700 dark:text-brand-300 mb-2">Scenario 2: Same Weight (Cross-sectional areas are identical)</h3>
+      <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-2">
+        Since areas are equal, $D_s^2 = D_h^2(1 - k^2) \implies D_h = \frac{D_s}{\sqrt{1 - k^2}}$. Comparing torque capacities:
+      </p>
+      <div class="formula-box text-xs font-mono py-2 mb-2">
+        $$\frac{T_h}{T_s} = \frac{Z_{ph}}{Z_{ps}} = \frac{D_h^3(1 - k^4)}{D_s^3} = \frac{1 - k^4}{(1 - k^2)^{3/2}} = \frac{1 + k^2}{\sqrt{1 - k^2}}$$
+      </div>
+      <p class="text-xs text-gray-600 dark:text-gray-300">
+        For $k = 0.6$: $\frac{T_h}{T_s} = \frac{1 + 0.36}{\sqrt{1 - 0.36}} = \frac{1.36}{0.8} = \mathbf{1.70}$. The hollow shaft is <strong>70% stronger</strong> for the exact same amount of metal!
+      </p>
+    </div>
+
+    <!-- Why physically -->
+    <div class="p-4 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-900 text-xs text-gray-700 dark:text-gray-300">
+      <strong class="text-purple-900 dark:text-purple-300 font-bold block mb-1">Physical Intuition:</strong>
+      Material near the center of a solid shaft experiences near-zero stress ($\tau \approx 0$) and has a tiny moment arm, contributing almost nothing to resisting torque. A hollow shaft moves that same mass to outer radii where both shear stress and moment arm are maximized!
+    </div>
+  </div>
+</div>
+
+<!-- ============ M11: SHAFTS IN SERIES & STEPPED SHAFTS ============ -->
+<div id="module-11" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Structural Assemblies</p>
+    <h2 class="mtitle">Shafts in Series &amp; Stepped Shafts</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      When two or more shaft segments of different diameters or materials are connected end-to-end to transmit torque from one end to another, they are said to be in <strong>series</strong>.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2"><i class="fas fa-link mr-2 text-brand-500"></i>Equilibrium Condition</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+          The internal torque transmitted across every transverse section along the length is identical:
+        </p>
+        <div class="formula-box text-xs font-mono my-2">
+          $$T_1 = T_2 = \dots = T_n = T$$
+        </div>
+        <p class="text-xs text-rose-600 dark:text-rose-400 font-semibold mt-1">
+          Maximum shear stress always occurs in the segment with the SMALLEST diameter!
+          $$\tau_{max} = \frac{16 T}{\pi D_{min}^3}$$
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2"><i class="fas fa-arrows-spin mr-2 text-brand-500"></i>Kinematic Compatibility</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+          The total angle of twist across the ends is the algebraic sum of the individual twists of each segment:
+        </p>
+        <div class="formula-box text-xs font-mono my-2">
+          $$\theta_{total} = \sum_{i=1}^n \theta_i = \sum_{i=1}^n \frac{T L_i}{G_i J_i}$$
+        </div>
+        <p class="text-xs text-gray-500 mt-1">
+          Analogous to springs in series: Compliance is additive ($1/k_{eq} = 1/k_1 + 1/k_2$).
+        </p>
+      </div>
+    </div>
+
+    <!-- Stepped shaft diagram -->
+    <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-xl text-center border border-gray-200 dark:border-gray-700">
+      <svg viewBox="0 0 600 150" class="w-full max-w-lg mx-auto">
+        <!-- Segment 1 -->
+        <rect x="50" y="30" width="220" height="90" fill="#94a3b8" stroke="#334155" stroke-width="2" rx="3" />
+        <!-- Segment 2 -->
+        <rect x="270" y="52" width="250" height="46" fill="#cbd5e1" stroke="#334155" stroke-width="2" rx="3" />
+        <!-- Labels -->
+        <text x="140" y="80" fill="#1e293b" font-weight="bold" font-size="12">Section 1: D₁, L₁, G₁</text>
+        <text x="370" y="80" fill="#1e293b" font-weight="bold" font-size="12">Section 2: D₂, L₂, G₂</text>
+        <!-- Torque arrows -->
+        <path d="M 30,55 A 25,25 0 1,0 30,105" fill="none" stroke="#0ea5e9" stroke-width="3" />
+        <polygon points="30,50 40,62 25,62" fill="#0ea5e9" />
+        <text x="15" y="45" fill="#0ea5e9" font-weight="bold" font-size="12">T</text>
+
+        <path d="M 540,55 A 25,25 0 1,1 540,105" fill="none" stroke="#0ea5e9" stroke-width="3" />
+        <polygon points="540,110 530,98 545,98" fill="#0ea5e9" />
+        <text x="545" y="125" fill="#0ea5e9" font-weight="bold" font-size="12">T</text>
+      </svg>
+      <p class="text-xs text-gray-500 mt-2">Stepped shaft in series: $T$ is common; $\theta = \frac{T L_1}{G_1 J_1} + \frac{T L_2}{G_2 J_2}$.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M12: SHAFTS IN PARALLEL & COMPOSITE SHAFTS ============ -->
+<div id="module-12" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Parallel Assemblies</p>
+    <h2 class="mtitle">Shafts in Parallel &amp; Concentric Composite Shafts</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      Shafts are in <strong>parallel</strong> when they are coupled such that the angle of twist is identical for all components, while the total applied torque is shared among them.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2"><i class="fas fa-arrows-left-right mr-2 text-brand-500"></i>Kinematic Compatibility</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+          Both components twist through the exact same angle:
+        </p>
+        <div class="formula-box text-xs font-mono my-2">
+          $$\theta_1 = \theta_2 = \theta \implies \frac{T_1 L_1}{G_1 J_1} = \frac{T_2 L_2}{G_2 J_2}$$
+        </div>
+        <p class="text-xs text-gray-500 mt-1">If lengths are equal ($L_1 = L_2$): $\frac{T_1}{T_2} = \frac{G_1 J_1}{G_2 J_2}$ (torque shares proportional to torsional rigidity!).</p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2"><i class="fas fa-scale-unbalanced mr-2 text-brand-500"></i>Torque Equilibrium</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+          Total externally applied torque equals sum of resisting torques:
+        </p>
+        <div class="formula-box text-xs font-mono my-2">
+          $$T = T_1 + T_2$$
+          $$T_1 = T \left[\frac{G_1 J_1}{G_1 J_1 + G_2 J_2}\right], \quad T_2 = T \left[\frac{G_2 J_2}{G_1 J_1 + G_2 J_2}\right]$$
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900 text-xs">
+      <strong class="text-blue-900 dark:text-blue-300 font-bold block mb-1">Concentric Composite Shaft (e.g. Steel Core inside Brass Sleeve):</strong>
+      <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+        Because the two materials are rigidly bonded at the interface ($r = R_{core}$), there is no slip. The shear strain at the interface is identical: $\gamma = R_{core} \theta / L$. However, the shear stresses differ because shear moduli differ: $\tau_{steel} / G_{steel} = \tau_{brass} / G_{brass}$.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M13: STATICALLY INDETERMINATE TORSION ============ -->
+<div id="module-13" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Advanced Equilibrium</p>
+    <h2 class="mtitle">Statically Indeterminate Torsion Problems</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      When a shaft is rigidly fixed at both ends $A$ and $B$, and subjected to an intermediate twisting moment $T_C$ at point $C$, static equilibrium alone cannot determine the fixing reactions $T_A$ and $T_B$.
+    </p>
+
+    <div class="space-y-4">
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2">Step 1: Equation of Static Equilibrium</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-1">
+          Sum of torques about the longitudinal axis must vanish:
+        </p>
+        <div class="formula-box text-xs font-mono py-2">
+          $$T_A + T_B = T_C \quad \text{--- (Equation 1)}$$
+        </div>
+        <p class="text-xs text-gray-500">1 equation with 2 unknown reactions $\implies$ Degree of static indeterminacy = 1.</p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2">Step 2: Compatibility of Deformation</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-1">
+          Because both ends $A$ and $B$ are fixed to rigid walls, the total angle of twist between $A$ and $B$ is zero:
+        </p>
+        <div class="formula-box text-xs font-mono py-2">
+          $$\theta_{AB} = \theta_{AC} + \theta_{CB} = 0 \implies \frac{T_A L_1}{G_1 J_1} - \frac{T_B L_2}{G_2 J_2} = 0 \quad \text{--- (Equation 2)}$$
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900">
+        <h3 class="font-bold text-green-900 dark:text-green-300 text-sm mb-2">Step 3: Closed-Form Reaction Formulas</h3>
+        <div class="formula-box text-xs font-mono py-2 bg-white dark:bg-gray-900">
+          $$T_A = T_C \cdot \frac{L_2 / (G_2 J_2)}{\frac{L_1}{G_1 J_1} + \frac{L_2}{G_2 J_2}}, \quad T_B = T_C \cdot \frac{L_1 / (G_1 J_1)}{\frac{L_1}{G_1 J_1} + \frac{L_2}{G_2 J_2}}$$
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 mt-2">
+          For a uniform shaft ($G_1 J_1 = G_2 J_2$): $T_A = T_C \frac{L_2}{L}$ and $T_B = T_C \frac{L_1}{L}$. The reaction at each end is inversely proportional to its distance from the load!
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M14: STRAIN ENERGY & SPRINGS ============ -->
+<div id="module-14" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Energy Principles</p>
+    <h2 class="mtitle">Strain Energy in Torsion &amp; Helical Springs</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      When torque gradually increases from zero to $T$, producing angle of twist $\theta$, work done by external couple equals the elastic strain energy stored in the shaft:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2"><i class="fas fa-battery-half mr-2 text-brand-500"></i>Strain Energy in Pure Torsion</h3>
+        <div class="formula-box text-xs font-mono py-2 mb-2">
+          $$U = \frac{1}{2} T \theta = \frac{T^2 L}{2GJ} = \frac{GJ \theta^2}{2L}$$
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 mb-2">
+          In terms of maximum surface shear stress $\tau$:
+        </p>
+        <div class="formula-box text-xs font-mono py-2 bg-white dark:bg-gray-900">
+          $$\text{Solid Shaft: } U = \frac{\tau^2}{4G} \times \text{Volume}$$
+          $$\text{Hollow Shaft: } U = \frac{\tau^2}{4G} \left[\frac{D^2 + d^2}{D^2}\right] \times \text{Volume}$$
+        </div>
+        <p class="text-xs text-brand-600 dark:text-brand-400 font-semibold mt-1">
+          Torsional Modulus of Resilience = $\frac{\tau_{yield}^2}{4G}$ (half of direct shear strain energy density!).
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2"><i class="fas fa-ring mr-2 text-brand-500"></i>Closely-Coiled Helical Springs</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 mb-2 leading-relaxed">
+          An axial force $W$ applied to a closely-coiled spring of wire diameter $d$, mean coil radius $R$, and $n$ turns subjects the wire to pure torsion of magnitude $T = W \times R$:
+        </p>
+        <div class="formula-box text-xs font-mono py-2 mb-2 bg-white dark:bg-gray-900">
+          $$\text{Shear Stress: } \tau = \frac{16 W R}{\pi d^3}$$
+          $$\text{Axial Deflection: } \delta = \frac{64 W R^3 n}{G d^4}$$
+          $$\text{Spring Stiffness: } k = \frac{W}{\delta} = \frac{G d^4}{64 R^3 n}$$
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M15: COMBINED BENDING & TORSION ============ -->
+<div id="module-15" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Multiaxial Stresses</p>
+    <h2 class="mtitle">Combined Bending and Torsion in Power Shafts</h2>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      Real transmission shafts carry pulleys, gears, belts, and sprockets, subjecting the shaft simultaneously to bending moment $M$ and twisting moment $T$.
+    </p>
+
+    <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 mb-5">
+      <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2">State of Stress at the Critical Outer Fiber</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+        <div class="formula-box py-2">
+          $$\sigma_b = \frac{32 M}{\pi D^3} \quad \text{(Bending Normal Stress)}$$
+        </div>
+        <div class="formula-box py-2">
+          $$\tau = \frac{16 T}{\pi D^3} \quad \text{(Torsional Shear Stress)}$$
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+      <!-- Guest's Theory / Tresca -->
+      <div class="p-5 rounded-xl border border-purple-200 dark:border-purple-900 bg-purple-50/40 dark:bg-purple-950/20">
+        <h3 class="font-bold text-purple-900 dark:text-purple-300 text-sm mb-2"><i class="fas fa-scissors mr-2"></i>Guest's (Maximum Shear Stress) Theory</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 mb-2 leading-relaxed">
+          Standard design theory for ductile materials (mild steel, alloy steels):
+        </p>
+        <div class="formula-box text-xs font-mono py-2 mb-2 bg-white dark:bg-gray-900">
+          $$\tau_{max} = \sqrt{\left(\frac{\sigma_b}{2}\right)^2 + \tau^2} = \frac{16}{\pi D^3} \sqrt{M^2 + T^2}$$
+        </div>
+        <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Equivalent Twisting Moment ($T_e$):</p>
+        <div class="formula-box text-xs font-mono py-2 bg-purple-100 dark:bg-purple-900/60 font-bold">
+          $$T_e = \sqrt{M^2 + T^2} \implies D = \sqrt[3]{\frac{16 T_e}{\pi [\tau]}}$$
+        </div>
+      </div>
+
+      <!-- Rankine's Theory -->
+      <div class="p-5 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50/40 dark:bg-blue-950/20">
+        <h3 class="font-bold text-blue-900 dark:text-blue-300 text-sm mb-2"><i class="fas fa-cube mr-2"></i>Rankine's (Maximum Principal Stress) Theory</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300 mb-2 leading-relaxed">
+          Design theory for brittle materials (cast iron):
+        </p>
+        <div class="formula-box text-xs font-mono py-2 mb-2 bg-white dark:bg-gray-900">
+          $$\sigma_1 = \frac{\sigma_b}{2} + \sqrt{\left(\frac{\sigma_b}{2}\right)^2 + \tau^2} = \frac{16}{\pi D^3} \left[M + \sqrt{M^2 + T^2}\right]$$
+        </div>
+        <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Equivalent Bending Moment ($M_e$):</p>
+        <div class="formula-box text-xs font-mono py-2 bg-blue-100 dark:bg-blue-900/60 font-bold">
+          $$M_e = \frac{1}{2}\left[M + \sqrt{M^2 + T^2}\right] \implies D = \sqrt[3]{\frac{32 M_e}{\pi [\sigma]}}$$
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M16: SOLVED NUMERICALS ============ -->
+<div id="module-16" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Comprehensive Practice</p>
+    <h2 class="mtitle">Solved Engineering Numericals (12 Problems)</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
+      Fully worked numerical problems across all difficulty levels, complete with unit conversions, intermediate checks, and engineering commentary.
+    </p>
+
+    <!-- Filter chips -->
+    <div class="flex flex-wrap gap-2 mb-6" id="num-filter-btns">
+      <button onclick="filterNumericals('all')" class="num-btn px-3 py-1 rounded-full text-xs font-semibold bg-brand-600 text-white">All (12)</button>
+      <button onclick="filterNumericals('Easy')" class="num-btn px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">Foundation (4)</button>
+      <button onclick="filterNumericals('Medium')" class="num-btn px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">Standard (4)</button>
+      <button onclick="filterNumericals('Hard')" class="num-btn px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">University / Advanced (4)</button>
+    </div>
+
+    <div class="space-y-4" id="numericals-container"></div>
+  </div>
+</div>
+
+<!-- ============ M17: TORSION LAB & SOLVER ============ -->
+<div id="module-17" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card border-t-4 border-torsion-500">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <div>
+        <p class="eyebrow text-torsion-600 dark:text-torsion-400">Virtual Simulation Laboratory</p>
+        <h2 class="mtitle mb-0">Interactive Torsion Solver &amp; Visualizer</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <select id="lab-preset" onchange="loadLabPreset(this.value)" class="text-xs px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 font-medium">
+          <option value="custom">Preset: Select a Case...</option>
+          <option value="marine">Marine Propeller Shaft (Hollow)</option>
+          <option value="auto">Automotive Propeller Shaft</option>
+          <option value="spindle">CNC Machine Tool Spindle</option>
+          <option value="turbine">Wind Turbine Main Shaft (Combined M &amp; T)</option>
+        </select>
+        <button onclick="runLabSolver()" class="px-3.5 py-1.5 rounded-lg bg-torsion-600 hover:bg-torsion-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+          <i class="fas fa-play text-[10px]"></i>
+          <span>Solve</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Inputs Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-xs mb-5">
+      <div>
+        <label class="font-bold text-gray-700 dark:text-gray-300 block mb-1">Shaft Cross-Section</label>
+        <select id="lab-type" onchange="toggleLabHollowUI(); runLabSolver();" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+          <option value="solid">Solid Circular Shaft</option>
+          <option value="hollow">Hollow Circular Shaft</option>
+        </select>
+      </div>
+      <div>
+        <label class="font-bold text-gray-700 dark:text-gray-300 block mb-1">Outer Diameter $D$ (mm)</label>
+        <input type="number" id="lab-D" value="100" min="10" max="1000" step="5" oninput="runLabSolver()" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+      </div>
+      <div id="lab-d-wrap" class="opacity-50 pointer-events-none">
+        <label class="font-bold text-gray-700 dark:text-gray-300 block mb-1">Inner Diameter $d$ (mm)</label>
+        <input type="number" id="lab-d" value="60" min="5" max="950" step="5" oninput="runLabSolver()" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+      </div>
+      <div>
+        <label class="font-bold text-gray-700 dark:text-gray-300 block mb-1">Length $L$ (mm)</label>
+        <input type="number" id="lab-L" value="2500" min="100" max="20000" step="100" oninput="runLabSolver()" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+      </div>
+      <div>
+        <label class="font-bold text-gray-700 dark:text-gray-300 block mb-1">Applied Torque $T$ ($\text{kN}\cdot\text{m}$)</label>
+        <input type="number" id="lab-T" value="12" step="0.5" oninput="runLabSolver()" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+      </div>
+      <div>
+        <label class="font-bold text-gray-700 dark:text-gray-300 block mb-1">Bending Moment $M$ ($\text{kN}\cdot\text{m}$)</label>
+        <input type="number" id="lab-M" value="8" step="0.5" oninput="runLabSolver()" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+      </div>
+      <div>
+        <label class="font-bold text-gray-700 dark:text-gray-300 block mb-1">Speed $N$ (RPM)</label>
+        <input type="number" id="lab-N" value="1500" min="10" max="10000" step="50" oninput="runLabSolver()" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+      </div>
+      <div>
+        <label class="font-bold text-gray-700 dark:text-gray-300 block mb-1">Shear Modulus $G$ (GPa)</label>
+        <input type="number" id="lab-G" value="80" min="10" max="250" step="1" oninput="runLabSolver()" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+      </div>
+    </div>
+
+    <!-- Live Graphical Displays -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+      <!-- Cross section & radial stress graph -->
+      <div class="p-4 rounded-xl bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-center">
+        <h4 class="text-xs font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">Radial Shear Stress Profile ($\tau$ vs $r$)</h4>
+        <div class="h-56 relative">
+          <canvas id="chart-stress-profile"></canvas>
+        </div>
+      </div>
+
+      <!-- 3D Perspective Twisted Wireframe -->
+      <div class="p-4 rounded-xl bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-center">
+        <h4 class="text-xs font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">Deformed Torsion Wireframe</h4>
+        <svg id="lab-wireframe" viewBox="0 0 360 220" class="w-full max-w-sm mx-auto h-56"></svg>
+      </div>
+    </div>
+
+    <!-- Output Dashboard Table -->
+    <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden text-xs">
+      <div class="bg-gray-100 dark:bg-gray-800 px-4 py-2.5 font-bold flex items-center justify-between">
+        <span>Computed Engineering Performance Metrics</span>
+        <span class="text-[11px] text-brand-600 dark:text-brand-400 font-mono">Real-time Closed Form</span>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 p-4 bg-white dark:bg-gray-900" id="lab-output-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M18: INTERACTIVE SIMULATIONS ============ -->
+<div id="module-18" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Visual Mechanics Exploration</p>
+    <h2 class="mtitle">Interactive Parametric Simulations</h2>
+
+    <!-- Sim 1: Diameter Ratio vs Weight & Strength -->
+    <div class="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 mb-6">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white">Sim 1: Hollow Shaft Optimization ($k = d/D$ Slider)</h3>
+        <span id="sim-k-val" class="font-mono text-xs font-bold text-brand-600">k = 0.60</span>
+      </div>
+      <input type="range" id="sim-k-slider" min="0.1" max="0.9" step="0.02" value="0.6" oninput="updateSimK()" class="slider-custom mb-3">
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center text-xs">
+        <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/40">
+          <span class="text-gray-500 block">Weight Saved vs Solid</span>
+          <span id="sim-w-saved" class="text-lg font-bold text-blue-600">29.8%</span>
+        </div>
+        <div class="p-3 rounded-lg bg-green-50 dark:bg-green-950/40">
+          <span class="text-gray-500 block">Strength Retained (Same Outer D)</span>
+          <span id="sim-str-retained" class="text-lg font-bold text-green-600">87.0%</span>
+        </div>
+        <div class="p-3 rounded-lg bg-purple-50 dark:bg-purple-950/40">
+          <span class="text-gray-500 block">Strength Advantage (Same Mass)</span>
+          <span id="sim-str-gain" class="text-lg font-bold text-purple-600">+70.0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sim 2: Speed vs Torque at Constant Power -->
+    <div class="p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+      <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2">Sim 2: Speed vs. Torque Hyperbola (Constant Power $P = 100\text{ kW}$)</h3>
+      <p class="text-xs text-gray-500 mb-4">
+        As rotational speed $N$ increases, required torque $T = 60,000 P / (2\pi N)$ drops dramatically, allowing much smaller and lighter drive shafts.
+      </p>
+      <div class="h-60">
+        <canvas id="chart-power-hyperbola"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M19: LEARNING GAMES ============ -->
+<div id="module-19" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Gamified Reinforcement</p>
+    <h2 class="mtitle">Interactive Torsion Practice Games</h2>
+
+    <!-- Tabs for games -->
+    <div class="flex gap-2 border-b border-gray-200 dark:border-gray-700 mb-6">
+      <button onclick="switchGameTab('flash')" id="tab-btn-flash" class="px-4 py-2 border-b-2 border-brand-500 font-bold text-xs text-brand-600">Flashcards</button>
+      <button onclick="switchGameTab('speed')" id="tab-btn-speed" class="px-4 py-2 border-b-2 border-transparent font-medium text-xs text-gray-500 hover:text-gray-700">Speed Challenge</button>
+      <button onclick="switchGameTab('match')" id="tab-btn-match" class="px-4 py-2 border-b-2 border-transparent font-medium text-xs text-gray-500 hover:text-gray-700">Formula Matcher</button>
+    </div>
+
+    <!-- Tab 1: Flashcards -->
+    <div id="game-tab-flash" class="space-y-4">
+      <p class="text-xs text-gray-500">Click any card to flip and reveal the definition / formula:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5" id="flashcards-grid"></div>
+    </div>
+
+    <!-- Tab 2: Speed Challenge -->
+    <div id="game-tab-speed" class="hidden space-y-4">
+      <div class="p-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-center">
+        <div id="speed-intro">
+          <i class="fas fa-stopwatch text-4xl text-amber-500 mb-2"></i>
+          <h3 class="font-bold text-base mb-1">60-Second Torsion Speed Blitz</h3>
+          <p class="text-xs text-gray-500 mb-4">Answer as many rapid-fire engineering questions as you can before the timer runs out!</p>
+          <button onclick="startSpeedBlitz()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition shadow-md">
+            Start Challenge
+          </button>
+        </div>
+        <div id="speed-arena" class="hidden">
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-sm font-bold text-rose-500"><i class="fas fa-clock mr-1"></i><span id="speed-timer">60</span>s</span>
+            <span class="font-mono text-sm font-bold text-brand-600">Score: <span id="speed-score">0</span></span>
+          </div>
+          <p id="speed-q-text" class="text-sm font-bold text-gray-800 dark:text-gray-100 mb-4"></p>
+          <div id="speed-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg mx-auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Formula Matcher -->
+    <div id="game-tab-match" class="hidden space-y-4">
+      <p class="text-xs text-gray-500">Click a term on the left, then click its corresponding formula on the right:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="matcher-arena"></div>
+      <div id="matcher-msg" class="text-center font-bold text-xs min-h-[20px]"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M20: FORMULA SHEET ============ -->
+<div id="module-20" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="eyebrow">Quick Revision &amp; Exam Ready</p>
+        <h2 class="mtitle mb-0">Master Torsion Formula Sheet</h2>
+      </div>
+      <button onclick="window.print()" class="px-3.5 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 hover:border-brand-500 text-xs font-semibold flex items-center gap-1.5 transition no-print">
+        <i class="fas fa-print"></i>
+        <span>Print Sheet</span>
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="data text-xs">
+        <thead>
+          <tr>
+            <th class="w-1/4">Quantity / Concept</th>
+            <th class="w-1/2">Mathematical Formula</th>
+            <th class="w-1/4">SI Units / Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="font-bold">Fundamental Torsion Eq.</td>
+            <td class="font-mono">$$\frac{T}{J} = \frac{\tau}{r} = \frac{G\theta}{L}$$</td>
+            <td>Coulomb circular theory</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Solid Shaft Polar Inertia</td>
+            <td class="font-mono">$$J = \frac{\pi D^4}{32}$$</td>
+            <td>$\text{mm}^4$ or $\text{m}^4$</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Solid Shaft Polar Modulus</td>
+            <td class="font-mono">$$Z_p = \frac{\pi D^3}{16} \approx 0.1963 D^3$$</td>
+            <td>$\text{mm}^3$ or $\text{m}^3$</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Hollow Shaft Polar Inertia</td>
+            <td class="font-mono">$$J = \frac{\pi(D^4 - d^4)}{32}$$</td>
+            <td>$k = d/D$</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Hollow Shaft Polar Modulus</td>
+            <td class="font-mono">$$Z_p = \frac{\pi(D^4 - d^4)}{16 D}$$</td>
+            <td>Divide by outer radius $D/2$</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Angle of Twist</td>
+            <td class="font-mono">$$\theta = \frac{TL}{GJ} \quad (\times \frac{180}{\pi} \text{ for degrees})$$</td>
+            <td>radians</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Torsional Stiffness ($k_t$)</td>
+            <td class="font-mono">$$k_t = \frac{T}{\theta} = \frac{GJ}{L}$$</td>
+            <td>$\text{N}\cdot\text{m/rad}$</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Power Transmitted ($P$)</td>
+            <td class="font-mono">$$P = \frac{2\pi NT}{60} \text{ W} = \frac{2\pi NT}{60,000} \text{ kW}$$</td>
+            <td>$N$ in RPM, $T$ in $\text{N}\cdot\text{m}$</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Shafts in Series</td>
+            <td class="font-mono">$$T_1=T_2=T, \quad \theta = \sum \frac{TL_i}{G_i J_i}$$</td>
+            <td>Smallest diameter governs $\tau_{max}$</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Shafts in Parallel</td>
+            <td class="font-mono">$$\theta_1=\theta_2, \quad T = T_1 + T_2 = \theta\left(\frac{G_1 J_1}{L_1} + \frac{G_2 J_2}{L_2}\right)$$</td>
+            <td>Equal twist compatibility</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Strain Energy (Solid)</td>
+            <td class="font-mono">$$U = \frac{T^2 L}{2GJ} = \frac{\tau^2}{4G} \times \text{Volume}$$</td>
+            <td>Joules ($\text{N}\cdot\text{m}$)</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Equivalent Twisting Moment</td>
+            <td class="font-mono">$$T_e = \sqrt{M^2 + T^2} = \frac{\pi}{16} \tau_{max} D^3$$</td>
+            <td>Guest / Tresca (Ductile)</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Equivalent Bending Moment</td>
+            <td class="font-mono">$$M_e = \frac{1}{2}\left[M + \sqrt{M^2 + T^2}\right] = \frac{\pi}{32} \sigma_1 D^3$$</td>
+            <td>Rankine (Brittle)</td>
+          </tr>
+          <tr>
+            <td class="font-bold">Helical Spring Deflection</td>
+            <td class="font-mono">$$\delta = \frac{64 W R^3 n}{G d^4}, \quad \tau = \frac{16 W R}{\pi d^3}$$</td>
+            <td>Wire $d$, Mean coil $R$, Turns $n$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M21: CONCEPT MAP ============ -->
+<div id="module-21" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Knowledge Architecture</p>
+    <h2 class="mtitle">Interactive Concept Dependency Graph</h2>
+    <p class="text-xs text-gray-500 mb-4">
+      Hover or click any node to explore how fundamental torsion principles interconnect with real-world engineering design:
+    </p>
+
+    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
+      <svg viewBox="0 0 700 380" class="w-full max-w-2xl mx-auto" id="concept-map-svg">
+        <!-- Connecting Lines -->
+        <line x1="350" y1="50" x2="180" y2="130" stroke="#94a3b8" stroke-width="2" />
+        <line x1="350" y1="50" x2="520" y2="130" stroke="#94a3b8" stroke-width="2" />
+        <line x1="180" y1="130" x2="100" y2="230" stroke="#94a3b8" stroke-width="2" />
+        <line x1="180" y1="130" x2="260" y2="230" stroke="#94a3b8" stroke-width="2" />
+        <line x1="520" y1="130" x2="440" y2="230" stroke="#94a3b8" stroke-width="2" />
+        <line x1="520" y1="130" x2="600" y2="230" stroke="#94a3b8" stroke-width="2" />
+        <line x1="260" y1="230" x2="350" y2="330" stroke="#94a3b8" stroke-width="2" />
+        <line x1="440" y1="230" x2="350" y2="330" stroke="#94a3b8" stroke-width="2" />
+
+        <!-- Nodes -->
+        <g class="cursor-pointer" onclick="alert('Torque T: Twisting couple acting about longitudinal axis.')">
+          <circle cx="350" cy="50" r="34" fill="#0284c7" />
+          <text x="350" y="54" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">Applied Torque T</text>
+        </g>
+
+        <g class="cursor-pointer" onclick="alert('Kinematics: Radial lines remain straight, shear strain gamma = r*theta/L')">
+          <rect x="110" y="110" width="140" height="40" rx="8" fill="#0ea5e9" />
+          <text x="180" y="134" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">Shear Strain &gamma;(r)</text>
+        </g>
+
+        <g class="cursor-pointer" onclick="alert('Polar Inertia: J = integral(r^2 dA) = pi*D^4/32')">
+          <rect x="450" y="110" width="140" height="40" rx="8" fill="#0ea5e9" />
+          <text x="520" y="134" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">Polar Inertia (J)</text>
+        </g>
+
+        <g class="cursor-pointer" onclick="alert('Shear Stress: tau = T*r/J = G*theta*r/L')">
+          <rect x="30" y="210" width="140" height="40" rx="8" fill="#8b5cf6" />
+          <text x="100" y="234" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">Shear Stress &tau;</text>
+        </g>
+
+        <g class="cursor-pointer" onclick="alert('Twist theta = TL/GJ (radians)')">
+          <rect x="190" y="210" width="140" height="40" rx="8" fill="#8b5cf6" />
+          <text x="260" y="234" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">Twist &theta; = TL/GJ</text>
+        </g>
+
+        <g class="cursor-pointer" onclick="alert('Power P = 2*pi*N*T/60 (Watts)')">
+          <rect x="370" y="210" width="140" height="40" rx="8" fill="#10b981" />
+          <text x="440" y="234" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">Power P = T&omega;</text>
+        </g>
+
+        <g class="cursor-pointer" onclick="alert('Hollow shaft economy: saves 30-45% weight')">
+          <rect x="530" y="210" width="140" height="40" rx="8" fill="#f59e0b" />
+          <text x="600" y="234" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">Hollow Economy</text>
+        </g>
+
+        <g class="cursor-pointer" onclick="alert('Combined loading: Te = sqrt(M^2+T^2), Me = 0.5*(M + sqrt(M^2+T^2))')">
+          <rect x="260" y="310" width="180" height="42" rx="8" fill="#ec4899" />
+          <text x="350" y="336" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">Combined Bending + Torsion</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M22: COMMON MISTAKES & TRAPS ============ -->
+<div id="module-22" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Exam Pitfalls</p>
+    <h2 class="mtitle">12 Critical Student Misconceptions &amp; Traps</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
+      Analysis of recurring errors in undergraduate semester examinations, with direct contrast between incorrect assumptions and correct mechanical formulations.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="pitfalls-container"></div>
+  </div>
+</div>
+
+<!-- ============ M23: UNIVERSITY EXAM QUESTIONS ============ -->
+<div id="module-23" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Examination Archive</p>
+    <h2 class="mtitle">University Exam Question Bank &amp; Rubrics</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
+      Categorized examination questions from past university papers (2-mark definitions, 5-mark derivations, and 10/14-mark numerical design problems) with expandable step-by-step model solutions.
+    </p>
+
+    <div class="space-y-4" id="university-q-container"></div>
+  </div>
+</div>
+
+<!-- ============ M24: SELF EVALUATION & QUIZ ============ -->
+<div id="module-24" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+      <div>
+        <p class="eyebrow">Formative Assessment</p>
+        <h2 class="mtitle mb-0">Self-Evaluation &amp; Graded Mastery Quiz</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-semibold text-gray-500">Filter Level:</span>
+        <select id="quiz-filter-lvl" onchange="renderQuiz(this.value)" class="text-xs px-2.5 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 font-medium">
+          <option value="all">All Levels (25 Questions)</option>
+          <option value="L1">L1: Remember &amp; State (5)</option>
+          <option value="L2">L2: Understand &amp; Derive (5)</option>
+          <option value="L3">L3: Calculate &amp; Apply (5)</option>
+          <option value="L4">L4: Analyze Assemblies (5)</option>
+          <option value="L5">L5: Design &amp; Synthesize (5)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="space-y-6" id="quiz-container"></div>
+  </div>
+</div>
+
+<!-- ============ M25: STUDENT DASHBOARD ============ -->
+<div id="module-25" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="eyebrow">Learner Analytics</p>
+        <h2 class="mtitle mb-0">Student Progress &amp; Mastery Dashboard</h2>
+      </div>
+      <button onclick="exportStudentCSV()" class="px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+        <i class="fas fa-file-csv"></i>
+        <span>Export CSV</span>
+      </button>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+      <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800 text-center border border-gray-200 dark:border-gray-700">
+        <span class="text-xs text-gray-500 block mb-1">Modules Completed</span>
+        <span id="dash-visited-count" class="text-2xl font-bold font-mono text-brand-600">0/26</span>
+      </div>
+      <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800 text-center border border-gray-200 dark:border-gray-700">
+        <span class="text-xs text-gray-500 block mb-1">Study Time</span>
+        <span id="dash-study-time" class="text-2xl font-bold font-mono text-gray-800 dark:text-gray-100">0 min</span>
+      </div>
+      <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800 text-center border border-gray-200 dark:border-gray-700">
+        <span class="text-xs text-gray-500 block mb-1">Quiz Accuracy</span>
+        <span id="dash-accuracy" class="text-2xl font-bold font-mono text-green-600">--%</span>
+      </div>
+      <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800 text-center border border-gray-200 dark:border-gray-700">
+        <span class="text-xs text-gray-500 block mb-1">Questions Attempted</span>
+        <span id="dash-attempts" class="text-2xl font-bold font-mono text-purple-600">0</span>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mb-6">
+      <h3 class="font-bold text-xs text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-2">Topic Mastery Breakdown</h3>
+      <div class="h-60">
+        <canvas id="chart-student-mastery"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ M26: TEACHER DASHBOARD ============ -->
+<div id="module-26" class="module-content max-w-4xl mx-auto space-y-6">
+  <div class="card">
+    <p class="eyebrow">Instructor Portal</p>
+    <h2 class="mtitle">Teacher Assessment &amp; Batch Analytics</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
+      Upload student CSV exports to aggregate class-wide diagnostic performance across Bloom's levels and isolate cohort concept weaknesses.
+    </p>
+
+    <div class="p-6 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 text-center mb-6">
+      <i class="fas fa-cloud-arrow-up text-3xl text-brand-500 mb-2"></i>
+      <h3 class="font-bold text-sm mb-1">Drop Student CSV File Here</h3>
+      <p class="text-xs text-gray-500 mb-3">Upload `.csv` progress records collected from individual student devices.</p>
+      <input type="file" id="teacher-csv-input" accept=".csv" onchange="handleTeacherCSVUpload(event)" class="text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+    </div>
+
+    <div id="teacher-report-box" class="hidden space-y-4">
+      <div class="p-4 rounded-xl bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900 flex items-center justify-between">
+        <span class="font-bold text-xs text-green-800 dark:text-green-300" id="teacher-batch-summary">Records Loaded Successfully</span>
+      </div>
+      <div class="h-60">
+        <canvas id="chart-teacher-cohort"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </main>
+</div>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+/* ============================================================
+   State & Local Storage Management
+   ============================================================ */
+const store = {
+  get: (k, def) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+
+const TOPICS = [
+  'Coulomb Assumptions',
+  'Torsion Derivation',
+  'Polar Modulus & J',
+  'Shear Stress Distribution',
+  'Angle of Twist',
+  'Power Transmission',
+  'Solid vs Hollow Economy',
+  'Stepped & Series Shafts',
+  'Composite & Parallel Shafts',
+  'Indeterminate Torsion',
+  'Strain Energy & Springs',
+  'Combined Bending & Torsion'
+];
+
+const state = {
+  visited: new Set(store.get('som5_visited', [1])),
+  records: store.get('som5_records', []),
+  started: Date.now(),
+  elapsed: store.get('som5_elapsed', 0)
+};
+
+const modules = [
+  { id:1,  title:'Cover page' },
+  { id:2,  title:'Learning outcomes' },
+  { id:3,  title:'Physical meaning of torsion' },
+  { id:4,  title:'Assumptions in pure torsion' },
+  { id:5,  title:'Torsion formula derivation' },
+  { id:6,  title:'Polar inertia & modulus' },
+  { id:7,  title:'Shear stress distribution' },
+  { id:8,  title:'Angle of twist & rigidity' },
+  { id:9,  title:'Power transmission by shafts' },
+  { id:10, title:'Solid vs hollow economy' },
+  { id:11, title:'Shafts in series & stepped' },
+  { id:12, title:'Shafts in parallel & composite' },
+  { id:13, title:'Indeterminate torsion' },
+  { id:14, title:'Strain energy & springs' },
+  { id:15, title:'Combined bending & torsion' },
+  { id:16, title:'Solved numericals (12)' },
+  { id:17, title:'Torsion lab & solver' },
+  { id:18, title:'Interactive simulations' },
+  { id:19, title:'Learning games' },
+  { id:20, title:'Master formula sheet' },
+  { id:21, title:'Concept dependency graph' },
+  { id:22, title:'12 Common pitfalls' },
+  { id:23, title:'University questions' },
+  { id:24, title:'Self evaluation quiz' },
+  { id:25, title:'Student dashboard' },
+  { id:26, title:'Teacher dashboard' }
+];
+
+/* ============================================================
+   Navigation & Shell
+   ============================================================ */
+let currentModule = 1;
+const charts = {};
+
+function initNav() {
+  const nav = document.getElementById('nav-menu');
+  nav.innerHTML = '';
+  modules.forEach(m => {
+    const b = document.createElement('button');
+    b.id = 'nav-btn-' + m.id;
+    b.className = 'w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium transition-colors flex items-center gap-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700';
+    b.onclick = () => switchModule(m.id);
+    b.innerHTML = `<span class="num text-[11px] text-gray-400 w-5 shrink-0">${m.id}</span><span class="flex-1">${m.title}</span><i class="fas fa-circle-check text-[10px] text-green-500 opacity-0" id="tick-${m.id}"></i>`;
+    nav.appendChild(b);
+  });
+  refreshTicks();
+}
+
+function refreshTicks() {
+  modules.forEach(m => {
+    const t = document.getElementById('tick-' + m.id);
+    if (t) t.style.opacity = state.visited.has(m.id) ? '1' : '0';
+  });
+  const n = state.visited.size;
+  document.getElementById('progress-bar').style.width = (n / modules.length * 100) + '%';
+  document.getElementById('progress-label').textContent = n + '/26';
+}
+
+function renderAllMath(target) {
+  const el = target || document.getElementById('module-' + currentModule) || document.body;
+  if (!el) return;
+
+  // 1. Instant KaTeX auto-render if available
+  if (window.renderMathInElement) {
+    try {
+      renderMathInElement(el, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        throwOnError: false,
+        ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      });
+      return;
+    } catch (e) {
+      console.debug('KaTeX error:', e);
+    }
+  }
+
+  // 2. MathJax fallback / companion
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise([el]).catch(err => console.debug('MathJax error:', err));
+  }
+}
+
+function switchModule(id) {
+  document.querySelectorAll('#nav-menu button').forEach(b => {
+    b.classList.remove('bg-brand-50','text-brand-900','dark:bg-gray-700','dark:text-white');
+    b.classList.add('text-gray-600','dark:text-gray-400');
+  });
+  const a = document.getElementById('nav-btn-' + id);
+  if (a) {
+    a.classList.remove('text-gray-600','dark:text-gray-400');
+    a.classList.add('bg-brand-50','text-brand-900','dark:bg-gray-700','dark:text-white');
+  }
+
+  document.querySelectorAll('.module-content').forEach(m => m.classList.remove('active'));
+  const target = document.getElementById('module-' + id);
+  if (target) target.classList.add('active');
+
+  currentModule = id;
+  state.visited.add(id);
+  store.set('som5_visited', [...state.visited]);
+  refreshTicks();
+  saveTime();
+
+  if (target) {
+    renderAllMath(target);
+  }
+
+  if (id === 17) runLabSolver();
+  if (id === 18) initSim18();
+  if (id === 25) buildStudentDashboard();
+
+  if (window.innerWidth < 768) {
+    document.getElementById('sidebar').classList.add('-translate-x-full');
+  }
+  document.getElementById('main-content').scrollTop = 0;
+}
+
+function toggleTheme() {
+  const dark = document.documentElement.classList.toggle('dark');
+  store.set('som5_theme', dark ? 'dark' : 'light');
+  document.getElementById('theme-icon').className = dark ? 'fas fa-sun' : 'fas fa-moon';
+  Object.values(charts).forEach(c => { if (c) { applyChartTheme(c); c.update(); } });
+}
+
+function applyChartTheme(c) {
+  const dark = document.documentElement.classList.contains('dark');
+  const grid = dark ? 'rgba(148,163,184,.18)' : 'rgba(100,116,139,.15)';
+  const tick = dark ? '#cbd5e1' : '#475569';
+  Object.values(c.options.scales || {}).forEach(s => {
+    if (s.grid) s.grid.color = grid;
+    if (s.ticks) s.ticks.color = tick;
+    if (s.title) s.title.color = tick;
+  });
+  if (c.options.plugins && c.options.plugins.legend) c.options.plugins.legend.labels = { color: tick };
+}
+
+function saveTime() {
+  const n = Date.now();
+  state.elapsed += (n - state.started);
+  state.started = n;
+  store.set('som5_elapsed', state.elapsed);
+}
+
+function logAnswer(level, topic, correct) {
+  state.records.push({ level, topic, correct, ts: Date.now() });
+  store.set('som5_records', state.records);
+}
+
+/* ============================================================
+   M16: Solved Numerical Problems Data & Renderer
+   ============================================================ */
+const NUMERICALS = [
+  {
+    id: 1,
+    level: 'Easy',
+    topic: 'Torsion Derivation',
+    title: 'Solid Shaft Diameter for Permissible Shear Stress',
+    q: 'Determine the diameter of a solid steel shaft to transmit a torque of 15 kN·m. The allowable shear stress in the material is limited to 60 MPa.',
+    steps: [
+      { text: 'Convert applied torque to N·mm: $T = 15\\text{ kN}\\cdot\\text{m} = 15 \\times 10^6\\text{ N}\\cdot\\text{mm}$' },
+      { text: 'From pure torsion formula: $\\tau_{max} = \\frac{16 T}{\\pi D^3} \\le 60\\text{ MPa}$' },
+      { text: '$D^3 = \\frac{16 \\times 15 \\times 10^6}{\\pi \\times 60} = \\frac{240 \\times 10^6}{188.495} = 1,273,240\\text{ mm}^3$' },
+      { text: '$D = \\sqrt[3]{1,273,240} = 108.38\\text{ mm} \\to \\text{Adopt standard } D = 110\\text{ mm}$' }
+    ],
+    ans: 'D = 108.4 mm (Standard 110 mm)'
+  },
+  {
+    id: 2,
+    level: 'Easy',
+    topic: 'Angle of Twist',
+    title: 'Angle of Twist in a Solid Shaft',
+    q: 'A solid circular shaft 100 mm in diameter and 3 m long is subjected to a torque of 10 kN·m. Taking G = 80 GPa, calculate the angle of twist in radians and degrees.',
+    steps: [
+      { text: '$D = 100\\text{ mm}, L = 3000\\text{ mm}, T = 10 \\times 10^6\\text{ N}\\cdot\\text{mm}, G = 80,000\\text{ MPa}$' },
+      { text: 'Polar moment of inertia: $J = \\frac{\\pi D^4}{32} = \\frac{\\pi \\times 100^4}{32} = 9.8175 \\times 10^6\\text{ mm}^4$' },
+      { text: 'Angle of twist $\\theta = \\frac{TL}{GJ} = \\frac{10 \\times 10^6 \\times 3000}{80,000 \\times 9.8175 \\times 10^6} = 0.03820\\text{ radians}$' },
+      { text: 'Convert to degrees: $\\theta = 0.03820 \\times \\frac{180}{\\pi} = 2.189^\\circ = 2^\\circ 11\'$' }
+    ],
+    ans: 'θ = 0.0382 rad = 2.19°'
+  },
+  {
+    id: 3,
+    level: 'Easy',
+    topic: 'Polar Modulus & J',
+    title: 'Hollow Shaft Polar Modulus & Maximum Stress',
+    q: 'A hollow shaft has an external diameter of 160 mm and an internal diameter of 100 mm. It transmits a torque of 25 kN·m. Find the maximum and minimum shear stresses.',
+    steps: [
+      { text: '$D = 160\\text{ mm}, d = 100\\text{ mm}, k = 100/160 = 0.625$' },
+      { text: '$J = \\frac{\\pi(D^4 - d^4)}{32} = \\frac{\\pi(160^4 - 100^4)}{32} = 54.52 \\times 10^6\\text{ mm}^4$' },
+      { text: 'Polar modulus $Z_p = \\frac{J}{D/2} = \\frac{54.52 \\times 10^6}{80} = 681.5 \\times 10^3\\text{ mm}^3$' },
+      { text: '$\\tau_{max} = \\frac{T}{Z_p} = \\frac{25 \\times 10^6}{681.5 \\times 10^3} = 36.68\\text{ MPa}$' },
+      { text: 'Minimum shear stress (at inner surface): $\\tau_{min} = \\tau_{max} \\times \\frac{d}{D} = 36.68 \\times 0.625 = 22.93\\text{ MPa}$' }
+    ],
+    ans: 'τ_max = 36.68 MPa, τ_min = 22.93 MPa'
+  },
+  {
+    id: 4,
+    level: 'Easy',
+    topic: 'Power Transmission',
+    title: 'Power Transmitted by a Rotating Shaft',
+    q: 'A 60 mm diameter solid shaft rotates at 200 RPM. If the maximum shear stress must not exceed 75 MPa, what maximum power can the shaft transmit?',
+    steps: [
+      { text: 'Torque capacity: $T = \\frac{\\pi}{16} \\tau D^3 = \\frac{\\pi}{16} \\times 75 \\times 60^3 = 3,180,862\\text{ N}\\cdot\\text{mm} = 3.181\\text{ kN}\\cdot\\text{m}$' },
+      { text: 'Angular velocity $\\omega = \\frac{2\\pi N}{60} = \\frac{2\\pi \\times 200}{60} = 20.944\\text{ rad/s}$' },
+      { text: 'Power $P = T \\omega = 3.181 \\times 10^3 \\times 20.944 = 66,620\\text{ W} = 66.62\\text{ kW}$' }
+    ],
+    ans: 'P = 66.62 kW'
+  },
+  {
+    id: 5,
+    level: 'Medium',
+    topic: 'Power Transmission',
+    title: 'Power Shaft Design with Peak Torque Factor',
+    q: 'A solid circular shaft is required to transmit 250 kW at 120 RPM. The maximum torque exceeds the mean torque by 30%. Find the required diameter if allowable shear stress is 65 MPa and maximum angle of twist is 1° per 3 m length. Take G = 82 GPa.',
+    steps: [
+      { text: 'Mean torque: $T_{mean} = \\frac{60,000 \\times P}{2\\pi N} = \\frac{60,000 \\times 250}{2\\pi \\times 120} = 19,894\\text{ N}\\cdot\\text{m}$' },
+      { text: 'Maximum torque $T_{max} = 1.30 \\times 19,894 = 25,862\\text{ N}\\cdot\\text{m} = 25.862 \\times 10^6\\text{ N}\\cdot\\text{mm}$' },
+      { text: '1) By Strength Criterion: $D \\ge \\sqrt[3]{\\frac{16 T_{max}}{\\pi \\tau_{allow}}} = \\sqrt[3]{\\frac{16 \\times 25.862 \\times 10^6}{\\pi \\times 65}} = 126.55\\text{ mm}$' },
+      { text: '2) By Rigidity Criterion: $\\theta = 1^\\circ = \\frac{\\pi}{180} = 0.01745\\text{ rad}$ over $L = 3000\\text{ mm}$' },
+      { text: '$J \\ge \\frac{T_{max} L}{G \\theta} = \\frac{25.862 \\times 10^6 \\times 3000}{82,000 \\times 0.01745} = 54.21 \\times 10^6\\text{ mm}^4$' },
+      { text: '$D = \\sqrt[4]{\\frac{32 J}{\\pi}} = \\sqrt[4]{\\frac{32 \\times 54.21 \\times 10^6}{\\pi}} = 153.25\\text{ mm}$' },
+      { text: 'Governing diameter: $\\max(126.55, 153.25) = 153.25\\text{ mm} \\to \\text{Adopt } D = 155\\text{ mm}$' }
+    ],
+    ans: 'D = 153.25 mm (Stiffness governs, adopt 155 mm)'
+  },
+  {
+    id: 6,
+    level: 'Medium',
+    topic: 'Solid vs Hollow Economy',
+    title: 'Hollow Shaft Replacement & Material Saving',
+    q: 'A solid shaft of 120 mm diameter is to be replaced by a hollow shaft with internal diameter 0.6 times the external diameter, capable of transmitting the same torque at the same maximum shear stress. Determine the percentage saving in weight.',
+    steps: [
+      { text: 'Equal strength: $\\tau_{max}$ and $T$ are equal $\\implies Z_{ps} = Z_{ph}$' },
+      { text: '$\\frac{\\pi}{16} D_s^3 = \\frac{\\pi}{16} D_h^3 (1 - k^4)$ with $k = 0.6$' },
+      { text: '$D_h^3 = \\frac{D_s^3}{1 - 0.6^4} = \\frac{120^3}{1 - 0.1296} = \\frac{1,728,000}{0.8704} = 1,985,294\\text{ mm}^3$' },
+      { text: '$D_h = 125.68\\text{ mm}, \\quad d_h = 0.6 \\times 125.68 = 75.41\\text{ mm}$' },
+      { text: 'Weight ratio $\\frac{W_h}{W_s} = \\frac{A_h}{A_s} = \\frac{D_h^2(1 - k^2)}{D_s^2} = \\frac{125.68^2 \\times (1 - 0.36)}{120^2} = \\frac{15795.5 \\times 0.64}{14400} = 0.702$' },
+      { text: 'Percentage weight saving $= (1 - 0.702) \\times 100\\% = 29.8\\%$' }
+    ],
+    ans: 'D_h = 125.7 mm, d_h = 75.4 mm; Weight saved = 29.8%'
+  },
+  {
+    id: 7,
+    level: 'Medium',
+    topic: 'Stepped & Series Shafts',
+    title: 'Stepped Shaft in Series with Two Diameters',
+    q: 'A stepped steel shaft consists of a 50 mm diameter section 1.2 m long joined to a 75 mm diameter section 1.8 m long. It transmits a torque of 1.2 kN·m. Find the maximum shear stress in each section and the total angle of twist. Take G = 80 GPa.',
+    steps: [
+      { text: 'Since in series, torque is constant: $T = 1.2 \\times 10^6\\text{ N}\\cdot\\text{mm}$' },
+      { text: 'Section 1 (50 mm): $\\tau_1 = \\frac{16 T}{\\pi D_1^3} = \\frac{16 \\times 1.2 \\times 10^6}{\\pi \\times 50^3} = 48.89\\text{ MPa}$' },
+      { text: 'Section 2 (75 mm): $\\tau_2 = \\frac{16 T}{\\pi D_2^3} = \\frac{16 \\times 1.2 \\times 10^6}{\\pi \\times 75^3} = 14.49\\text{ MPa}$' },
+      { text: '$J_1 = \\frac{\\pi \\times 50^4}{32} = 613,592\\text{ mm}^4, \\quad J_2 = \\frac{\\pi \\times 75^4}{32} = 3,106,310\\text{ mm}^4$' },
+      { text: '$\\theta_1 = \\frac{T L_1}{G J_1} = \\frac{1.2 \\times 10^6 \\times 1200}{80,000 \\times 613,592} = 0.02933\\text{ rad}$' },
+      { text: '$\\theta_2 = \\frac{T L_2}{G J_2} = \\frac{1.2 \\times 10^6 \\times 1800}{80,000 \\times 3,106,310} = 0.00869\\text{ rad}$' },
+      { text: '$\\theta_{total} = \\theta_1 + \\theta_2 = 0.03802\\text{ rad} = 2.179^\\circ$' }
+    ],
+    ans: 'τ₁ = 48.89 MPa, τ₂ = 14.49 MPa, θ = 2.18°'
+  },
+  {
+    id: 8,
+    level: 'Medium',
+    topic: 'Composite & Parallel Shafts',
+    title: 'Concentric Composite Shaft (Steel Core + Brass Sleeve)',
+    q: 'A composite shaft consists of a 40 mm diameter steel core firmly bonded inside an external brass casing of 60 mm outer diameter. The shaft is 1.5 m long and transmits 2 kN·m torque. Calculate torque carried by each material and maximum stress in each. Take G_s = 80 GPa, G_b = 40 GPa.',
+    steps: [
+      { text: 'Compatibility: $\\theta_s = \\theta_b \\implies \\frac{T_s}{G_s J_s} = \\frac{T_b}{G_b J_b} \\implies \\frac{T_s}{T_b} = \\frac{G_s J_s}{G_b J_b}$' },
+      { text: '$J_s = \\frac{\\pi \\times 40^4}{32} = 251,327\\text{ mm}^4, \\quad G_s J_s = 80,000 \\times 251,327 = 20.106 \\times 10^9\\text{ N}\\cdot\\text{mm}^2$' },
+      { text: '$J_b = \\frac{\\pi(60^4 - 40^4)}{32} = 1,021,018\\text{ mm}^4, \\quad G_b J_b = 40,000 \\times 1,021,018 = 40.841 \\times 10^9\\text{ N}\\cdot\\text{mm}^2$' },
+      { text: 'Total torsional rigidity: $GJ_{total} = (20.106 + 40.841) \\times 10^9 = 60.947 \\times 10^9\\text{ N}\\cdot\\text{mm}^2$' },
+      { text: '$T_s = 2000 \\times \\frac{20.106}{60.947} = 659.8\\text{ N}\\cdot\\text{m}, \\quad T_b = 2000 - 659.8 = 1340.2\\text{ N}\\cdot\\text{m}$' },
+      { text: '$\\tau_{s,max} = \\frac{T_s (40/2)}{J_s} = \\frac{659.8 \\times 10^3 \\times 20}{251,327} = 52.5\\text{ MPa}$' },
+      { text: '$\\tau_{b,max} = \\frac{T_b (60/2)}{J_b} = \\frac{1340.2 \\times 10^3 \\times 30}{1,021,018} = 39.38\\text{ MPa}$' }
+    ],
+    ans: 'T_s = 659.8 N·m (τ_s = 52.5 MPa), T_b = 1340.2 N·m (τ_b = 39.4 MPa)'
+  },
+  {
+    id: 9,
+    level: 'Hard',
+    topic: 'Indeterminate Torsion',
+    title: 'Shaft Fixed at Both Ends with Point Torque',
+    q: 'A uniform circular shaft 4 m long is rigidly clamped at both ends A and B. A torque of 6 kN·m is applied at point C, located 1.5 m from A. Find the fixing torques at A and B, the maximum shear stress if diameter is 80 mm, and the angle of rotation at point C. Take G = 80 GPa.',
+    steps: [
+      { text: 'Equilibrium: $T_A + T_B = 6\\text{ kN}\\cdot\\text{m} = 6000\\text{ N}\\cdot\\text{m}$' },
+      { text: 'Compatibility: $\\theta_{AC} = \\theta_{CB} \\implies \\frac{T_A L_{AC}}{GJ} = \\frac{T_B L_{CB}}{GJ} \\implies T_A \\times 1.5 = T_B \\times 2.5$' },
+      { text: '$T_A = 6000 \\times \\frac{2.5}{4.0} = 3750\\text{ N}\\cdot\\text{m}, \\quad T_B = 6000 \\times \\frac{1.5}{4.0} = 2250\\text{ N}\\cdot\\text{m}$' },
+      { text: 'Maximum torque occurs in segment AC ($T_A = 3.75 \\times 10^6\\text{ N}\\cdot\\text{mm}$)' },
+      { text: '$\\tau_{max} = \\frac{16 T_A}{\\pi D^3} = \\frac{16 \\times 3.75 \\times 10^6}{\\pi \\times 80^3} = 37.30\\text{ MPa}$' },
+      { text: '$J = \\frac{\\pi \\times 80^4}{32} = 4.0212 \\times 10^6\\text{ mm}^4$' },
+      { text: '$\\theta_C = \\frac{T_A L_{AC}}{GJ} = \\frac{3.75 \\times 10^6 \\times 1500}{80,000 \\times 4.0212 \\times 10^6} = 0.01749\\text{ rad} = 1.002^\\circ$' }
+    ],
+    ans: 'T_A = 3.75 kN·m, T_B = 2.25 kN·m, τ_max = 37.3 MPa, θ_C = 1.00°'
+  },
+  {
+    id: 10,
+    level: 'Hard',
+    topic: 'Combined Bending & Torsion',
+    title: 'Drive Shaft under Combined Bending & Torsion',
+    q: 'A solid circular shaft 100 mm in diameter is subjected to a bending moment of 6 kN·m and a twisting moment of 8 kN·m. Determine: (a) Maximum principal stress, (b) Maximum shear stress, (c) Equivalent twisting moment, (d) Equivalent bending moment.',
+    steps: [
+      { text: '$M = 6 \\times 10^6\\text{ N}\\cdot\\text{mm}, T = 8 \\times 10^6\\text{ N}\\cdot\\text{mm}, D = 100\\text{ mm}$' },
+      { text: 'Bending stress: $\\sigma_b = \\frac{32 M}{\\pi D^3} = \\frac{32 \\times 6 \\times 10^6}{\\pi \\times 100^3} = 61.12\\text{ MPa}$' },
+      { text: 'Torsional shear stress: $\\tau = \\frac{16 T}{\\pi D^3} = \\frac{16 \\times 8 \\times 10^6}{\\pi \\times 100^3} = 40.74\\text{ MPa}$' },
+      { text: '(c) Equivalent Twisting Moment: $T_e = \\sqrt{M^2 + T^2} = \\sqrt{6^2 + 8^2} = 10\\text{ kN}\\cdot\\text{m}$' },
+      { text: '(b) Maximum shear stress: $\\tau_{max} = \\frac{16 T_e}{\\pi D^3} = \\frac{16 \\times 10 \\times 10^6}{\\pi \\times 100^3} = 50.93\\text{ MPa}$' },
+      { text: '(d) Equivalent Bending Moment: $M_e = \\frac{1}{2}(M + \\sqrt{M^2+T^2}) = \\frac{1}{2}(6 + 10) = 8\\text{ kN}\\cdot\\text{m}$' },
+      { text: '(a) Maximum principal stress: $\\sigma_1 = \\frac{32 M_e}{\\pi D^3} = \\frac{32 \\times 8 \\times 10^6}{\\pi \\times 100^3} = 81.49\\text{ MPa}$' }
+    ],
+    ans: 'T_e = 10 kN·m (τ_max = 50.93 MPa), M_e = 8 kN·m (σ₁ = 81.49 MPa)'
+  },
+  {
+    id: 11,
+    level: 'Hard',
+    topic: 'Strain Energy & Springs',
+    title: 'Closely-Coiled Helical Spring Sizing',
+    q: 'A closely-coiled helical spring is made of 12 mm diameter steel wire and has 14 coils of 100 mm mean coil diameter. Calculate the axial deflection and maximum shear stress under an axial tensile load of 800 N. Also calculate the spring stiffness. Take G = 80 GPa.',
+    steps: [
+      { text: '$W = 800\\text{ N}, d = 12\\text{ mm}, D_{coil} = 100\\text{ mm} \\implies R = 50\\text{ mm}, n = 14, G = 80,000\\text{ MPa}$' },
+      { text: 'Torque on wire: $T = W \\times R = 800 \\times 50 = 40,000\\text{ N}\\cdot\\text{mm}$' },
+      { text: 'Maximum shear stress: $\\tau = \\frac{16 W R}{\\pi d^3} = \\frac{16 \\times 40,000}{\\pi \\times 12^3} = 117.89\\text{ MPa}$' },
+      { text: 'Axial deflection: $\\delta = \\frac{64 W R^3 n}{G d^4} = \\frac{64 \\times 800 \\times 50^3 \\times 14}{80,000 \\times 12^4} = \\frac{8.96 \\times 10^7}{1.65888 \\times 10^9} \\times 1000 = 54.01\\text{ mm}$' },
+      { text: 'Spring stiffness: $k = \\frac{W}{\\delta} = \\frac{800}{54.01} = 14.81\\text{ N/mm}$' }
+    ],
+    ans: 'δ = 54.01 mm, τ = 117.89 MPa, k = 14.81 N/mm'
+  },
+  {
+    id: 12,
+    level: 'Hard',
+    topic: 'Combined Bending & Torsion',
+    title: 'Complete Transmission Shaft Design under Combined Pulley Loads',
+    q: 'A transmission shaft 1.5 m long supported at its ends carries a pulley of 500 mm diameter at mid-span. The belt tensions are 3 kN and 1 kN vertically downward. The shaft transmits 15 kW at 300 RPM. Determine the required shaft diameter if allowable shear stress is 55 MPa and allowable tensile stress is 90 MPa.',
+    steps: [
+      { text: 'Belt forces: $T_1 = 3000\\text{ N}, T_2 = 1000\\text{ N}$. Total vertical downward load on beam: $W = 3000 + 1000 = 4000\\text{ N} = 4\\text{ kN}$' },
+      { text: 'Torque transmitted: $T = (T_1 - T_2) \\times R_{pulley} = (3000 - 1000) \\times 0.25 = 500\\text{ N}\\cdot\\text{m} = 0.5\\text{ kN}\\cdot\\text{m}$' },
+      { text: 'Check torque from power: $P = 15\\text{ kW}, N = 300\\text{ RPM} \\implies T = \\frac{60000 \\times 15}{2\\pi \\times 300} = 477.46\\text{ N}\\cdot\\text{m} \\approx 0.5\\text{ kN}\\cdot\\text{m}$ (Consistent)' },
+      { text: 'Bending moment at midspan: $M = \\frac{W L}{4} = \\frac{4000 \\times 1500}{4} = 1.5 \\times 10^6\\text{ N}\\cdot\\text{mm} = 1.5\\text{ kN}\\cdot\\text{m}$' },
+      { text: 'Equivalent twisting moment: $T_e = \\sqrt{M^2 + T^2} = \\sqrt{1.5^2 + 0.5^2} = 1.581\\text{ kN}\\cdot\\text{m} = 1.581 \\times 10^6\\text{ N}\\cdot\\text{mm}$' },
+      { text: 'Diameter by Shear Theory: $D_1 = \\sqrt[3]{\\frac{16 \\times 1.581 \\times 10^6}{\\pi \\times 55}} = 52.71\\text{ mm}$' },
+      { text: 'Equivalent bending moment: $M_e = \\frac{1}{2}(M + \\sqrt{M^2+T^2}) = \\frac{1}{2}(1.5 + 1.581) = 1.5405\\text{ kN}\\cdot\\text{m}$' },
+      { text: 'Diameter by Tensile Theory: $D_2 = \\sqrt[3]{\\frac{32 \\times 1.5405 \\times 10^6}{\\pi \\times 90}} = 55.85\\text{ mm}$' },
+      { text: 'Adopt larger diameter: $D = 55.85\\text{ mm} \\to \\text{Standard } D = 60\\text{ mm}$' }
+    ],
+    ans: 'D = 55.85 mm (Adopt standard 60 mm)'
+  }
+];
+
+function renderNumericals(filter = 'all') {
+  const container = document.getElementById('numericals-container');
+  if (!container) return;
+  const list = filter === 'all' ? NUMERICALS : NUMERICALS.filter(n => n.level === filter);
+  
+  container.innerHTML = list.map(n => `
+    <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 transition">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded text-[11px] font-bold ${
+            n.level === 'Easy' ? 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300' :
+            n.level === 'Medium' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' :
+            'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300'
+          }">${n.level}</span>
+          <span class="text-xs font-semibold text-gray-500">${n.topic}</span>
+        </div>
+        <span class="text-xs font-mono font-bold text-gray-400">#${n.id}</span>
+      </div>
+      <h3 class="font-bold text-sm text-gray-900 dark:text-white mb-2">${n.title}</h3>
+      <p class="text-xs text-gray-700 dark:text-gray-300 mb-3 leading-relaxed">${n.q}</p>
+      
+      <button onclick="toggleSolution(${n.id})" class="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1">
+        <i class="fas fa-chevron-right text-[10px]" id="sol-icon-${n.id}"></i>
+        <span>Show Complete Step-by-Step Solution</span>
+      </button>
+
+      <div id="sol-box-${n.id}" class="hidden mt-3 pt-3 border-t border-gray-100 dark:border-gray-700/60 space-y-2 text-xs">
+        ${n.steps.map(s => `<div class="p-2 rounded bg-gray-50 dark:bg-gray-900/60 text-gray-700 dark:text-gray-300 font-mono">${s.text}</div>`).join('')}
+        <div class="p-2.5 rounded bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 font-bold text-brand-900 dark:text-brand-300">
+          Result: ${n.ans}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  renderAllMath(container);
+}
+
+function filterNumericals(lvl) {
+  document.querySelectorAll('#num-filter-btns button').forEach(b => {
+    b.className = 'num-btn px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300';
+  });
+  event.target.className = 'num-btn px-3 py-1 rounded-full text-xs font-semibold bg-brand-600 text-white';
+  renderNumericals(lvl);
+}
+
+function toggleSolution(id) {
+  const box = document.getElementById('sol-box-' + id);
+  const icon = document.getElementById('sol-icon-' + id);
+  if (!box) return;
+  const isHidden = box.classList.contains('hidden');
+  box.classList.toggle('hidden');
+  icon.className = isHidden ? 'fas fa-chevron-down text-[10px]' : 'fas fa-chevron-right text-[10px]';
+  if (isHidden) {
+    renderAllMath(box);
+  }
+}
+
+/* ============================================================
+   M17: Virtual Torsion Laboratory & Solver Engine
+   ============================================================ */
+function toggleLabHollowUI() {
+  const isHollow = document.getElementById('lab-type').value === 'hollow';
+  const wrap = document.getElementById('lab-d-wrap');
+  if (isHollow) {
+    wrap.classList.remove('opacity-50', 'pointer-events-none');
+  } else {
+    wrap.classList.add('opacity-50', 'pointer-events-none');
+  }
+}
+
+function loadLabPreset(preset) {
+  if (preset === 'marine') {
+    document.getElementById('lab-type').value = 'hollow';
+    document.getElementById('lab-D').value = 400;
+    document.getElementById('lab-d').value = 240;
+    document.getElementById('lab-L').value = 8000;
+    document.getElementById('lab-T').value = 180;
+    document.getElementById('lab-M').value = 45;
+    document.getElementById('lab-N').value = 120;
+    document.getElementById('lab-G').value = 82;
+  } else if (preset === 'auto') {
+    document.getElementById('lab-type').value = 'hollow';
+    document.getElementById('lab-D').value = 75;
+    document.getElementById('lab-d').value = 65;
+    document.getElementById('lab-L').value = 1400;
+    document.getElementById('lab-T').value = 1.8;
+    document.getElementById('lab-M').value = 0.4;
+    document.getElementById('lab-N').value = 3500;
+    document.getElementById('lab-G').value = 80;
+  } else if (preset === 'spindle') {
+    document.getElementById('lab-type').value = 'solid';
+    document.getElementById('lab-D').value = 80;
+    document.getElementById('lab-L').value = 600;
+    document.getElementById('lab-T').value = 0.8;
+    document.getElementById('lab-M').value = 0.5;
+    document.getElementById('lab-N').value = 6000;
+    document.getElementById('lab-G').value = 80;
+  } else if (preset === 'turbine') {
+    document.getElementById('lab-type').value = 'hollow';
+    document.getElementById('lab-D').value = 600;
+    document.getElementById('lab-d').value = 350;
+    document.getElementById('lab-L').value = 3500;
+    document.getElementById('lab-T').value = 500;
+    document.getElementById('lab-M').value = 320;
+    document.getElementById('lab-N').value = 18;
+    document.getElementById('lab-G').value = 80;
+  }
+  toggleLabHollowUI();
+  runLabSolver();
+}
+
+function runLabSolver() {
+  const type = document.getElementById('lab-type').value;
+  const D = parseFloat(document.getElementById('lab-D').value) || 100;
+  let d = parseFloat(document.getElementById('lab-d').value) || 0;
+  if (type === 'solid' || d >= D) d = 0;
+  const L = parseFloat(document.getElementById('lab-L').value) || 2000;
+  const T_kNm = parseFloat(document.getElementById('lab-T').value) || 0;
+  const M_kNm = parseFloat(document.getElementById('lab-M').value) || 0;
+  const N = parseFloat(document.getElementById('lab-N').value) || 1000;
+  const G_GPa = parseFloat(document.getElementById('lab-G').value) || 80;
+
+  const T_Nmm = T_kNm * 1e6;
+  const M_Nmm = M_kNm * 1e6;
+  const G_MPa = G_GPa * 1e3;
+
+  // Geometric properties
+  let J, Zp, A;
+  if (type === 'solid') {
+    J = (Math.PI * Math.pow(D, 4)) / 32;
+    Zp = (Math.PI * Math.pow(D, 3)) / 16;
+    A = (Math.PI * Math.pow(D, 2)) / 4;
+  } else {
+    J = (Math.PI * (Math.pow(D, 4) - Math.pow(d, 4))) / 32;
+    Zp = (Math.PI * (Math.pow(D, 4) - Math.pow(d, 4))) / (16 * D);
+    A = (Math.PI * (Math.pow(D, 2) - Math.pow(d, 2))) / 4;
+  }
+
+  // Torsion Stresses
+  const tau_max = T_Nmm / Zp;
+  const tau_min = type === 'hollow' ? (tau_max * (d / D)) : 0;
+
+  // Angle of twist
+  const theta_rad = (T_Nmm * L) / (G_MPa * J);
+  const theta_deg = theta_rad * (180 / Math.PI);
+
+  // Stiffness
+  const kt_Nm_rad = (G_MPa * 1e6 * J * 1e-12) / (L * 1e-3);
+  const kt_kNm_deg = (kt_Nm_rad * (Math.PI / 180)) / 1000;
+
+  // Power
+  const omega = (2 * Math.PI * N) / 60;
+  const power_kW = (T_kNm * 1000 * omega) / 1000;
+
+  // Strain Energy
+  const U_J = 0.5 * (T_kNm * 1000) * theta_rad;
+
+  // Combined Bending & Torsion
+  const Te_kNm = Math.sqrt(Math.pow(M_kNm, 2) + Math.pow(T_kNm, 2));
+  const Me_kNm = 0.5 * (M_kNm + Te_kNm);
+  const sigma_b = (32 * M_Nmm) / (Math.PI * Math.pow(D, 3));
+  const tau_comb_max = (16 * (Te_kNm * 1e6)) / (Math.PI * Math.pow(D, 3));
+  const sigma_1 = (32 * (Me_kNm * 1e6)) / (Math.PI * Math.pow(D, 3));
+
+  // Render Grid
+  const grid = document.getElementById('lab-output-grid');
+  grid.innerHTML = `
+    <div class="p-2.5 rounded bg-gray-50 dark:bg-gray-800">
+      <span class="text-gray-500 block text-[10px]">Max Shear Stress ($\tau_{max}$)</span>
+      <span class="text-sm font-bold font-mono text-brand-600">${tau_max.toFixed(2)} MPa</span>
+    </div>
+    <div class="p-2.5 rounded bg-gray-50 dark:bg-gray-800">
+      <span class="text-gray-500 block text-[10px]">Min Shear Stress ($\tau_{min}$)</span>
+      <span class="text-sm font-bold font-mono text-brand-600">${type === 'hollow' ? tau_min.toFixed(2) + ' MPa' : '0.00 MPa (center)'}</span>
+    </div>
+    <div class="p-2.5 rounded bg-gray-50 dark:bg-gray-800">
+      <span class="text-gray-500 block text-[10px]">Angle of Twist ($\theta$)</span>
+      <span class="text-sm font-bold font-mono text-purple-600">${theta_deg.toFixed(3)}° <span class="text-[10px] text-gray-400">(${theta_rad.toFixed(4)} rad)</span></span>
+    </div>
+    <div class="p-2.5 rounded bg-gray-50 dark:bg-gray-800">
+      <span class="text-gray-500 block text-[10px]">Torsional Rigidity ($GJ$)</span>
+      <span class="text-sm font-bold font-mono text-gray-700 dark:text-gray-300">${(G_MPa * J * 1e-6).toExponential(3)} N·m²</span>
+    </div>
+    <div class="p-2.5 rounded bg-gray-50 dark:bg-gray-800">
+      <span class="text-gray-500 block text-[10px]">Polar Inertia ($J$)</span>
+      <span class="text-sm font-bold font-mono text-gray-700 dark:text-gray-300">${(J / 1e6).toFixed(3)} × 10⁶ mm⁴</span>
+    </div>
+    <div class="p-2.5 rounded bg-gray-50 dark:bg-gray-800">
+      <span class="text-gray-500 block text-[10px]">Polar Modulus ($Z_p$)</span>
+      <span class="text-sm font-bold font-mono text-gray-700 dark:text-gray-300">${(Zp / 1e3).toFixed(1)} × 10³ mm³</span>
+    </div>
+    <div class="p-2.5 rounded bg-gray-50 dark:bg-gray-800">
+      <span class="text-gray-500 block text-[10px]">Power Transmitted ($P$)</span>
+      <span class="text-sm font-bold font-mono text-green-600">${power_kW.toFixed(1)} kW</span>
+    </div>
+    <div class="p-2.5 rounded bg-gray-50 dark:bg-gray-800">
+      <span class="text-gray-500 block text-[10px]">Strain Energy ($U$)</span>
+      <span class="text-sm font-bold font-mono text-amber-600">${U_J.toFixed(2)} Joules</span>
+    </div>
+    <div class="p-2.5 rounded bg-blue-50 dark:bg-blue-950/40">
+      <span class="text-gray-500 block text-[10px]">Eq. Twisting Moment ($T_e$)</span>
+      <span class="text-sm font-bold font-mono text-blue-600">${Te_kNm.toFixed(2)} kN·m</span>
+    </div>
+    <div class="p-2.5 rounded bg-blue-50 dark:bg-blue-950/40">
+      <span class="text-gray-500 block text-[10px]">Combined Max Shear</span>
+      <span class="text-sm font-bold font-mono text-blue-600">${tau_comb_max.toFixed(2)} MPa</span>
+    </div>
+    <div class="p-2.5 rounded bg-purple-50 dark:bg-purple-950/40">
+      <span class="text-gray-500 block text-[10px]">Eq. Bending Moment ($M_e$)</span>
+      <span class="text-sm font-bold font-mono text-purple-600">${Me_kNm.toFixed(2)} kN·m</span>
+    </div>
+    <div class="p-2.5 rounded bg-purple-50 dark:bg-purple-950/40">
+      <span class="text-gray-500 block text-[10px]">Max Principal Stress ($\sigma_1$)</span>
+      <span class="text-sm font-bold font-mono text-purple-600">${sigma_1.toFixed(2)} MPa</span>
+    </div>
+  `;
+
+  // Update Stress Profile Chart
+  updateStressProfileChart(D, d, tau_max, type === 'hollow');
+  // Update Wireframe
+  drawLabWireframe(D, L, theta_deg, type === 'hollow');
+}
+
+function updateStressProfileChart(D, d, tau_max, isHollow) {
+  const ctx = document.getElementById('chart-stress-profile');
+  if (!ctx) return;
+
+  const labels = [];
+  const data = [];
+  const R = D / 2;
+  const r_in = isHollow ? (d / 2) : 0;
+  const steps = 20;
+
+  for (let i = -steps; i <= steps; i++) {
+    const r = (i / steps) * R;
+    labels.push(r.toFixed(1));
+    if (isHollow && Math.abs(r) < r_in) {
+      data.push(null); // hollow core carries no stress
+    } else {
+      data.push((Math.abs(r) / R) * tau_max);
+    }
+  }
+
+  if (charts.stressProfile) {
+    charts.stressProfile.data.labels = labels;
+    charts.stressProfile.data.datasets[0].data = data;
+    charts.stressProfile.update();
+  } else {
+    charts.stressProfile = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Shear Stress τ (MPa)',
+          data,
+          borderColor: '#0ea5e9',
+          backgroundColor: 'rgba(14,165,233,0.15)',
+          fill: true,
+          tension: 0.1,
+          pointRadius: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { title: { display: true, text: 'Radius r (mm)' } },
+          y: { title: { display: true, text: 'Shear Stress (MPa)' }, min: 0 }
+        }
+      }
+    });
+    applyChartTheme(charts.stressProfile);
+  }
+}
+
+function drawLabWireframe(D, L, theta_deg, isHollow) {
+  const svg = document.getElementById('lab-wireframe');
+  if (!svg) return;
+
+  const twistRad = (theta_deg * Math.PI) / 180;
+  const twistScale = Math.min(twistRad * 20, Math.PI / 3); // exaggerated visually
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="wfGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#94a3b8" />
+        <stop offset="50%" stop-color="#e2e8f0" />
+        <stop offset="100%" stop-color="#64748b" />
+      </linearGradient>
+    </defs>
+    <!-- Fixed left wall -->
+    <rect x="25" y="30" width="15" height="150" fill="#334155" rx="2" />
+    <line x1="15" y1="35" x2="25" y2="45" stroke="#64748b" stroke-width="2" />
+    <line x1="15" y1="75" x2="25" y2="85" stroke="#64748b" stroke-width="2" />
+    <line x1="15" y1="115" x2="25" y2="125" stroke="#64748b" stroke-width="2" />
+    <line x1="15" y1="155" x2="25" y2="165" stroke="#64748b" stroke-width="2" />
+
+    <!-- Shaft body -->
+    <path d="M 40,45 L 290,45 A 15,55 0 0,1 290,155 L 40,155 Z" fill="url(#wfGrad)" opacity="0.8" />
+    <!-- Left face -->
+    <ellipse cx="40" cy="100" rx="10" ry="55" fill="#475569" />
+    <!-- Right face -->
+    <ellipse cx="290" cy="100" rx="18" ry="55" fill="#cbd5e1" stroke="#334155" stroke-width="2" />
+    ${isHollow ? '<ellipse cx="290" cy="100" rx="10" ry="32" fill="#64748b" stroke="#334155" stroke-width="1.5" />' : ''}
+
+    <!-- Generator Lines -->
+    <!-- Undeformed axis line -->
+    <line x1="40" y1="45" x2="290" y2="45" stroke="#64748b" stroke-dasharray="4,4" stroke-width="1.5" />
+    <!-- Twisted Helix -->
+    <path d="M 40,45 Q 165,${45 + Math.sin(twistScale)*35} 290,${45 + Math.sin(twistScale)*60}" fill="none" stroke="#d946ef" stroke-width="3" />
+
+    <text x="312" y="105" fill="#d946ef" font-size="11" font-weight="bold">&theta; = ${theta_deg.toFixed(2)}°</text>
+  `;
+}
+
+/* ============================================================
+   M18: Simulations
+   ============================================================ */
+function updateSimK() {
+  const k = parseFloat(document.getElementById('sim-k-slider').value);
+  document.getElementById('sim-k-val').textContent = `k = ${k.toFixed(2)}`;
+
+  // Weight saved for same outer D: (1 - k^2)
+  // Weight saved for same strength: 1 - [(1 - k^2) / (1 - k^4)^(2/3)]
+  const w_ratio_strength = (1 - Math.pow(k, 2)) / Math.pow(1 - Math.pow(k, 4), 2 / 3);
+  const w_saved_pct = (1 - w_ratio_strength) * 100;
+  const str_retained_pct = (1 - Math.pow(k, 4)) * 100;
+  const str_gain_pct = ((1 + Math.pow(k, 2)) / Math.sqrt(1 - Math.pow(k, 2)) - 1) * 100;
+
+  document.getElementById('sim-w-saved').textContent = `${w_saved_pct.toFixed(1)}%`;
+  document.getElementById('sim-str-retained').textContent = `${str_retained_pct.toFixed(1)}%`;
+  document.getElementById('sim-str-gain').textContent = `+${str_gain_pct.toFixed(1)}%`;
+}
+
+function initSim18() {
+  updateSimK();
+  const ctx = document.getElementById('chart-power-hyperbola');
+  if (!ctx || charts.powerHyperbola) return;
+
+  const P_kW = 100;
+  const speeds = [100, 200, 400, 600, 800, 1000, 1500, 2000, 3000, 4000, 5000];
+  const torques = speeds.map(N => (60000 * P_kW) / (2 * Math.PI * N));
+
+  charts.powerHyperbola = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: speeds.map(s => s + ' RPM'),
+      datasets: [{
+        label: 'Torque T (N·m)',
+        data: torques,
+        borderColor: '#f59e0b',
+        backgroundColor: 'rgba(245,158,11,0.15)',
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: true } },
+      scales: {
+        x: { title: { display: true, text: 'Shaft Speed (RPM)' } },
+        y: { title: { display: true, text: 'Required Torque (N·m)' } }
+      }
+    }
+  });
+  applyChartTheme(charts.powerHyperbola);
+}
+
+/* ============================================================
+   M19: Learning Games
+   ============================================================ */
+const FLASHCARDS = [
+  { q: 'Fundamental Torsion Equation', a: 'T / J = τ / r = Gθ / L' },
+  { q: 'Polar Moment of Inertia (Solid)', a: 'J = π D⁴ / 32' },
+  { q: 'Polar Section Modulus (Solid)', a: 'Z_p = π D³ / 16' },
+  { q: 'Polar Section Modulus (Hollow)', a: 'Z_p = π(D⁴ - d⁴) / (16 D)' },
+  { q: 'Angle of Twist Formula', a: 'θ = T L / (G J)  [radians]' },
+  { q: 'Torsional Stiffness (k_t)', a: 'k_t = T / θ = G J / L' },
+  { q: 'Power Transmission Formula', a: 'P = 2π N T / 60  [Watts]' },
+  { q: 'Shafts in Series Condition', a: 'T is constant; Twist θ is additive' },
+  { q: 'Shafts in Parallel Condition', a: 'θ is identical; Torque T is shared' },
+  { q: 'Strain Energy in Torsion', a: 'U = (1/2) T θ = (τ² / 4G) × Vol' },
+  { q: 'Equivalent Twisting Moment', a: 'T_e = √(M² + T²)' },
+  { q: 'Equivalent Bending Moment', a: 'M_e = (1/2)[M + √(M² + T²)]' }
+];
+
+function initFlashcards() {
+  const grid = document.getElementById('flashcards-grid');
+  if (!grid) return;
+  grid.innerHTML = FLASHCARDS.map((f, i) => `
+    <div class="flip-card card p-0 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-card-front bg-gray-50 dark:bg-gray-800">
+          <span class="text-[10px] font-bold text-brand-600 uppercase mb-1">Concept #${i+1}</span>
+          <p class="font-bold text-xs text-gray-800 dark:text-gray-100">${f.q}</p>
+          <span class="text-[10px] text-gray-400 mt-2"><i class="fas fa-rotate mr-1"></i>Click to reveal</span>
+        </div>
+        <div class="flip-card-back bg-brand-500 text-white font-mono font-bold text-xs p-3">
+          ${f.a}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function switchGameTab(tab) {
+  document.getElementById('tab-btn-flash').className = tab === 'flash' ? 'px-4 py-2 border-b-2 border-brand-500 font-bold text-xs text-brand-600' : 'px-4 py-2 border-b-2 border-transparent font-medium text-xs text-gray-500 hover:text-gray-700';
+  document.getElementById('tab-btn-speed').className = tab === 'speed' ? 'px-4 py-2 border-b-2 border-brand-500 font-bold text-xs text-brand-600' : 'px-4 py-2 border-b-2 border-transparent font-medium text-xs text-gray-500 hover:text-gray-700';
+  document.getElementById('tab-btn-match').className = tab === 'match' ? 'px-4 py-2 border-b-2 border-brand-500 font-bold text-xs text-brand-600' : 'px-4 py-2 border-b-2 border-transparent font-medium text-xs text-gray-500 hover:text-gray-700';
+
+  document.getElementById('game-tab-flash').classList.toggle('hidden', tab !== 'flash');
+  document.getElementById('game-tab-speed').classList.toggle('hidden', tab !== 'speed');
+  document.getElementById('game-tab-match').classList.toggle('hidden', tab !== 'match');
+
+  if (tab === 'match') initMatcher();
+}
+
+/* Speed Blitz */
+const SPEED_QUESTIONS = [
+  { q: 'At the center of a circular shaft in pure torsion, shear stress is:', opts: ['Maximum', 'Zero', 'Half maximum', 'Infinite'], ans: 1 },
+  { q: 'For a solid shaft, polar section modulus Z_p is:', opts: ['πD³/32', 'πD³/16', 'πD⁴/32', 'πD²/8'], ans: 1 },
+  { q: 'Brittle materials under torsion fail along a plane inclined at:', opts: ['90° to axis', '45° to axis', '0° to axis', '60° to axis'], ans: 1 },
+  { q: 'When two shafts of equal length are in parallel, their shared property is:', opts: ['Torque', 'Angle of twist', 'Shear stress', 'Diameter'], ans: 1 },
+  { q: 'Angle of twist θ = TL / (GJ) gives result in:', opts: ['Degrees', 'Radians', 'Grads', 'Revolutions'], ans: 1 },
+  { q: 'Equivalent twisting moment T_e is given by:', opts: ['M + T', '√(M² + T²)', '0.5(M + T)', 'M² + T²'], ans: 1 },
+  { q: 'For power P and speed N (RPM), mean torque T is:', opts: ['60,000 P / (2πN)', '2πNT / 60', 'P × N / 60', '60 P / N'], ans: 0 }
+];
+
+let speedIdx = 0, speedScore = 0, speedTimer = null, speedSec = 60;
+
+function startSpeedBlitz() {
+  document.getElementById('speed-intro').classList.add('hidden');
+  document.getElementById('speed-arena').classList.remove('hidden');
+  speedIdx = 0;
+  speedScore = 0;
+  speedSec = 60;
+  document.getElementById('speed-score').textContent = '0';
+  document.getElementById('speed-timer').textContent = '60';
+
+  clearInterval(speedTimer);
+  speedTimer = setInterval(() => {
+    speedSec--;
+    document.getElementById('speed-timer').textContent = speedSec;
+    if (speedSec <= 0) {
+      clearInterval(speedTimer);
+      alert(`Challenge Complete! Your final score is: ${speedScore} points.`);
+      document.getElementById('speed-intro').classList.remove('hidden');
+      document.getElementById('speed-arena').classList.add('hidden');
+    }
+  }, 1000);
+
+  nextSpeedQuestion();
+}
+
+function nextSpeedQuestion() {
+  if (speedIdx >= SPEED_QUESTIONS.length) speedIdx = 0;
+  const q = SPEED_QUESTIONS[speedIdx];
+  document.getElementById('speed-q-text').textContent = q.q;
+  const optsBox = document.getElementById('speed-options');
+  optsBox.innerHTML = q.opts.map((opt, i) => `
+    <button onclick="checkSpeedAnswer(${i})" class="quiz-opt text-xs font-semibold py-2">
+      ${opt}
+    </button>
+  `).join('');
+}
+
+function checkSpeedAnswer(idx) {
+  const q = SPEED_QUESTIONS[speedIdx];
+  if (idx === q.ans) {
+    speedScore += 10;
+    document.getElementById('speed-score').textContent = speedScore;
+  }
+  speedIdx++;
+  nextSpeedQuestion();
+}
+
+/* Matcher */
+const MATCH_PAIRS = [
+  { term: 'Solid Polar Modulus', form: 'π D³ / 16' },
+  { term: 'Angle of Twist', form: 'T L / (G J)' },
+  { term: 'Power Transmission', form: '2π N T / 60' },
+  { term: 'Equivalent Torque', form: '√(M² + T²)' }
+];
+let selectedTerm = null;
+
+function initMatcher() {
+  const arena = document.getElementById('matcher-arena');
+  if (!arena) return;
+
+  const left = MATCH_PAIRS.map((p, i) => `
+    <button id="match-term-${i}" onclick="selectMatchTerm(${i})" class="w-full text-left p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 font-bold text-xs hover:border-brand-500">
+      ${p.term}
+    </button>
+  `).join('');
+
+  const shuffled = [...MATCH_PAIRS].sort(() => Math.random() - 0.5);
+  const right = shuffled.map((p, i) => `
+    <button id="match-form-${i}" onclick="selectMatchForm('${p.form}', ${i})" class="w-full text-left p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 font-mono text-xs hover:border-brand-500">
+      ${p.form}
+    </button>
+  `).join('');
+
+  arena.innerHTML = `<div class="space-y-2">${left}</div><div class="space-y-2">${right}</div>`;
+}
+
+function selectMatchTerm(i) {
+  selectedTerm = MATCH_PAIRS[i];
+  document.querySelectorAll('[id^="match-term-"]').forEach(b => b.classList.remove('bg-brand-50', 'border-brand-500'));
+  document.getElementById('match-term-' + i).classList.add('bg-brand-50', 'border-brand-500');
+}
+
+function selectMatchForm(form, i) {
+  const msg = document.getElementById('matcher-msg');
+  if (!selectedTerm) {
+    msg.textContent = 'Please select a concept from the left column first!';
+    msg.className = 'text-center font-bold text-xs text-amber-500';
+    return;
+  }
+  if (selectedTerm.form === form) {
+    msg.textContent = '✓ Correct Match!';
+    msg.className = 'text-center font-bold text-xs text-green-600';
+    document.getElementById('match-form-' + i).classList.add('bg-green-100', 'border-green-500');
+  } else {
+    msg.textContent = '✗ Incorrect match. Try again!';
+    msg.className = 'text-center font-bold text-xs text-red-500';
+  }
+}
+
+/* ============================================================
+   M22: 12 Common Pitfalls Data
+   ============================================================ */
+const PITFALLS = [
+  {
+    num: 1,
+    title: 'Using Degrees Directly in the Twist Formula',
+    wrong: 'θ = TL / GJ = 2.5° (plugging 2.5 directly into formula)',
+    right: 'The formula yields θ strictly in RADIANS. Must convert: θ_rad = θ_deg × π / 180.',
+    note: 'Forgetting this factor of 57.3 causes numerical errors exceeding 3,000%!'
+  },
+  {
+    num: 2,
+    title: 'Hollow Shaft Polar Inertia Formulation',
+    wrong: 'J = π (D - d)⁴ / 32',
+    right: 'J = π (D⁴ - d⁴) / 32',
+    note: 'Subtract the fourth powers, do NOT subtract diameters before taking fourth power!'
+  },
+  {
+    num: 3,
+    title: 'Confusing Polar Modulus with Bending Section Modulus',
+    wrong: 'Using Z = π D³ / 32 for torsion calculations',
+    right: 'Polar modulus Z_p = J / R = π D³ / 16 (exactly TWICE the bending modulus Z!).',
+    note: 'Z = π D³ / 32 is for bending moment M; Z_p = π D³ / 16 is for twisting moment T.'
+  },
+  {
+    num: 4,
+    title: 'Designing Power Shafts for Mean Torque instead of Peak Torque',
+    wrong: 'Sizing shaft for T_mean directly from P = 2πNT / 60',
+    right: 'Design shaft for peak torque T_max = k × T_mean (where k is typically 1.25 to 1.5).',
+    note: 'Fluctuating loads and motor start-up surges will overstress shafts sized only for mean torque.'
+  },
+  {
+    num: 5,
+    title: 'Misidentifying Shafts in Series vs. Parallel',
+    wrong: 'Assuming concentric tubes have different angles of twist',
+    right: 'Concentric bonded tubes share equal twist (parallel). Stepped ends share equal torque (series).',
+    note: 'Series: T is common, θ adds up. Parallel: θ is common, T is shared.'
+  },
+  {
+    num: 6,
+    title: 'Unit Mismatches in SI Engineering Calculations',
+    wrong: 'Mixing Torque in kN·m with stress in MPa (N/mm²) and diameter in mm',
+    right: 'Convert 1 kN·m = 10⁶ N·mm. Then stress = N/mm² = MPa, giving diameter in mm directly.',
+    note: '1 kN = 10³ N and 1 m = 10³ mm $\\implies$ 1 kN·m = 10⁶ N·mm.'
+  },
+  {
+    num: 7,
+    title: 'Calculating Hollow Shaft Stress at the Inner Diameter',
+    wrong: 'Checking safety factor using τ_min at inner radius',
+    right: 'Maximum shear stress occurs strictly at the OUTER perimeter (r = D/2).',
+    note: 'Divide J by (D/2), NEVER by (d/2) or (D - d)/2!'
+  },
+  {
+    num: 8,
+    title: 'Confusing Equivalent Torque with Equivalent Bending Moment',
+    wrong: 'Using T_e = 0.5 [M + √(M² + T²)]',
+    right: 'Equivalent Torque T_e = √(M² + T²); Equivalent Moment M_e = 0.5 [M + √(M² + T²)].',
+    note: 'T_e governs maximum shear stress (Tresca); M_e governs maximum tensile stress (Rankine).'
+  },
+  {
+    num: 9,
+    title: 'Using Young\'s Modulus (E) in Torsion',
+    wrong: 'Calculating θ = TL / EJ',
+    right: 'Torsion produces shear strain, so Modulus of Rigidity (G) MUST be used: θ = TL / GJ.',
+    note: 'For steel: E ≈ 200 GPa, but G ≈ 80 GPa ($G = \\frac{E}{2(1+\\nu)}$).'
+  },
+  {
+    num: 10,
+    title: 'Misunderstanding Helical Fracture in Brittle Materials',
+    wrong: 'Assuming cast iron shafts fail on a transverse flat shear plane',
+    right: 'Brittle materials are weak in tension; they fail along a 45° helix under maximum principal tension σ₁.',
+    note: 'Twist a piece of blackboard chalk in your fingers — it always fractures cleanly at 45°!'
+  },
+  {
+    num: 11,
+    title: 'Ignoring Torsional Stiffness in Long Shafts',
+    wrong: 'Checking only strength criterion τ ≤ [τ]',
+    right: 'Long shafts often satisfy strength but fail serviceability due to excessive angular twist.',
+    note: 'Always compute both D_strength and D_rigidity, adopting the larger value.'
+  },
+  {
+    num: 12,
+    title: 'Neglecting Keyway and Fillet Stress Concentrations',
+    wrong: 'Assuming uniform stress across keyseats and abrupt shaft diameter steps',
+    right: 'Keyways reduce torsional strength by ~25%; stepped shafts require generous fillet radii.',
+    note: 'Use standard stress concentration factors $K_t$ from Peterson\'s charts in design.'
+  }
+];
+
+function renderPitfalls() {
+  const container = document.getElementById('pitfalls-container');
+  if (!container) return;
+  container.innerHTML = PITFALLS.map(p => `
+    <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300 flex items-center justify-center text-xs font-bold font-mono">
+          ${p.num}
+        </span>
+        <h3 class="font-bold text-xs text-gray-900 dark:text-white">${p.title}</h3>
+      </div>
+      <div class="p-2.5 rounded bg-rose-50/70 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/60 text-xs mb-2">
+        <strong class="text-rose-800 dark:text-rose-300 block mb-0.5"><i class="fas fa-times-circle mr-1"></i>Common Mistake:</strong>
+        <span class="text-gray-700 dark:text-gray-300 font-mono">${p.wrong}</span>
+      </div>
+      <div class="p-2.5 rounded bg-green-50/70 dark:bg-green-950/20 border border-green-200 dark:border-green-900/60 text-xs mb-2">
+        <strong class="text-green-800 dark:text-green-300 block mb-0.5"><i class="fas fa-check-circle mr-1"></i>Correct Mechanics:</strong>
+        <span class="text-gray-700 dark:text-gray-300">${p.right}</span>
+      </div>
+      <p class="text-[11px] text-gray-500 italic">${p.note}</p>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   M23: University Exam Questions Data
+   ============================================================ */
+const UNIVERSITY_QUESTIONS = [
+  {
+    id: 1,
+    marks: '2 Marks',
+    type: 'Definition',
+    q: 'State the assumptions made in the theory of pure torsion of circular shafts.',
+    sol: '1. Material is homogeneous, isotropic and obeys Hooke\'s law in shear.<br>2. Plane transverse cross-sections remain plane and circular after twisting (no warping).<br>3. Radial lines remain straight.<br>4. Length between sections remains constant.<br>5. Twist is uniform along the length.'
+  },
+  {
+    id: 2,
+    marks: '2 Marks',
+    type: 'Concept',
+    q: 'Define polar section modulus and state its value for a solid shaft of diameter D.',
+    sol: 'Polar section modulus $Z_p$ is defined as the ratio of the polar moment of inertia $J$ to the distance from the polar axis to the outermost fiber ($R = D/2$). For a solid shaft: $$Z_p = \\frac{J}{D/2} = \\frac{\\pi D^4 / 32}{D/2} = \\frac{\\pi D^3}{16} \\approx 0.1963 D^3$$'
+  },
+  {
+    id: 3,
+    marks: '5 Marks',
+    type: 'Derivation',
+    q: 'Derive the pure torsion relation: T / J = τ / r = Gθ / L.',
+    sol: '<b>Step 1:</b> Geometric compatibility shows shear strain on surface $\\gamma = R\\theta / L$, and at radius $r$, $\\gamma(r) = r\\theta / L$.<br><b>Step 2:</b> By Hooke\'s law in shear, $\\tau(r) = G \\gamma(r) = G(r\\theta / L) \\implies \\tau/r = G\\theta/L$.<br><b>Step 3:</b> Internal torque equilibrium: $T = \\int \\tau r dA = \\frac{\\tau_{max}}{R} \\int r^2 dA = \\frac{\\tau_{max}}{R} J \\implies T/J = \\tau/r$. Combining gives $\\frac{T}{J} = \\frac{\\tau}{r} = \\frac{G\\theta}{L}$.'
+  },
+  {
+    id: 4,
+    marks: '5 Marks',
+    type: 'Derivation',
+    q: 'Prove that a hollow shaft with internal diameter 0.6 times external diameter saves approximately 30% material compared to a solid shaft of the same torsional strength.',
+    sol: 'For equal strength, $Z_{ps} = Z_{ph} \\implies \\frac{\\pi}{16} D_s^3 = \\frac{\\pi}{16} D_h^3(1 - k^4)$ with $k = 0.6$.<br>$D_h^3 = D_s^3 / (1 - 0.6^4) = D_s^3 / 0.8704 \\implies D_h = 1.047 D_s$.<br>Weight ratio: $\\frac{W_h}{W_s} = \\frac{D_h^2(1 - k^2)}{D_s^2} = (1.047)^2 \\times (1 - 0.36) = 1.097 \\times 0.64 = 0.702$.<br>Material saved $= 1 - 0.702 = 0.298 = 29.8\\% \\approx 30\\%$.'
+  },
+  {
+    id: 5,
+    marks: '10 Marks',
+    type: 'Numerical Design',
+    q: 'A solid shaft transmitting 150 kW at 180 RPM is to be replaced by a hollow shaft with internal diameter 0.7 times external diameter. Permissible shear stress is 60 MPa and permissible angle of twist is 1° in 2.5 m length. Take G = 80 GPa. Determine: (a) Diameter of solid shaft, (b) Diameters of hollow shaft, (c) Percentage weight saving.',
+    sol: '<b>1. Mean Torque:</b> $T = \\frac{60000 \\times 150}{2\\pi \\times 180} = 7957.7\\text{ N}\\cdot\\text{m} = 7.958 \\times 10^6\\text{ N}\\cdot\\text{mm}$.<br><b>2. Solid Shaft:</b><br>&bull; By strength: $D_s = \\sqrt[3]{\\frac{16 \\times 7.958 \\times 10^6}{\\pi \\times 60}} = 87.75\\text{ mm}$.<br>&bull; By rigidity: $\\theta = \\frac{\\pi}{180} = 0.01745\\text{ rad}$. $J_s \\ge \\frac{TL}{G\\theta} = \\frac{7.958 \\times 10^6 \\times 2500}{80000 \\times 0.01745} = 14.265 \\times 10^6\\text{ mm}^4 \\implies D_s = 109.8\\text{ mm}$.<br>Stiffness governs: $D_s = 110\\text{ mm}$.<br><b>3. Hollow Shaft ($k = 0.7$):</b><br>&bull; $J_h = \\frac{\\pi D_h^4 (1 - 0.7^4)}{32} = 14.265 \\times 10^6 \\implies D_h^4(0.7599) = 1.453 \\times 10^8 \\implies D_h = 117.5\\text{ mm}, d_h = 82.25\\text{ mm}$.<br><b>4. Weight Saving:</b> $\\frac{W_h}{W_s} = \\frac{117.5^2 (1 - 0.49)}{110^2} = \\frac{13806 \\times 0.51}{12100} = 0.582 \\implies \\mathbf{41.8\\%\\text{ saving}}$.'
+  },
+  {
+    id: 6,
+    marks: '14 Marks',
+    type: 'Combined Loading',
+    q: 'A solid circular transmission shaft is subjected to a bending moment of 4 kN·m and a twisting moment of 6 kN·m. The allowable tensile stress is 100 MPa and allowable shear stress is 60 MPa. Determine the required shaft diameter based on: (a) Guest\'s Maximum Shear Stress Theory, (b) Rankine\'s Maximum Principal Stress Theory. Which theory governs?',
+    sol: '<b>Given:</b> $M = 4 \\times 10^6\\text{ N}\\cdot\\text{mm}, T = 6 \\times 10^6\\text{ N}\\cdot\\text{mm}, [\\sigma] = 100\\text{ MPa}, [\\tau] = 60\\text{ MPa}$.<br><b>Part (a) Guest\'s Theory:</b><br>Equivalent twisting moment $T_e = \\sqrt{M^2 + T^2} = \\sqrt{4^2 + 6^2} = 7.211\\text{ kN}\\cdot\\text{m} = 7.211 \\times 10^6\\text{ N}\\cdot\\text{mm}$.<br>$D_1 = \\sqrt[3]{\\frac{16 T_e}{\\pi [\\tau]}} = \\sqrt[3]{\\frac{16 \\times 7.211 \\times 10^6}{\\pi \\times 60}} = \\sqrt[3]{612,194} = 84.91\\text{ mm}$.<br><b>Part (b) Rankine\'s Theory:</b><br>Equivalent bending moment $M_e = \\frac{1}{2}(M + \\sqrt{M^2 + T^2}) = \\frac{1}{2}(4 + 7.211) = 5.6055\\text{ kN}\\cdot\\text{m} = 5.6055 \\times 10^6\\text{ N}\\cdot\\text{mm}$.<br>$D_2 = \\sqrt[3]{\\frac{32 M_e}{\\pi [\\sigma]}} = \\sqrt[3]{\\frac{32 \\times 5.6055 \\times 10^6}{\\pi \\times 100}} = \\sqrt[3]{570,950} = 82.96\\text{ mm}$.<br><b>Governing Decision:</b> Guest\'s Maximum Shear Stress Theory governs ($D_1 > D_2$). Adopt standard $D = 85\\text{ mm}$ (or $90\\text{ mm}$).'
+  }
+];
+
+function renderUniversityQuestions() {
+  const container = document.getElementById('university-q-container');
+  if (!container) return;
+  container.innerHTML = UNIVERSITY_QUESTIONS.map(q => `
+    <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-brand-100 text-brand-800 dark:bg-brand-950 dark:text-brand-300">${q.marks}</span>
+          <span class="text-xs font-semibold text-gray-500">${q.type}</span>
+        </div>
+        <span class="text-xs font-mono font-bold text-gray-400">Exam Q${q.id}</span>
+      </div>
+      <p class="font-bold text-xs text-gray-800 dark:text-gray-100 mb-3">${q.q}</p>
+      
+      <button onclick="toggleExamSolution(${q.id})" class="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1">
+        <i class="fas fa-chevron-right text-[10px]" id="exam-icon-${q.id}"></i>
+        <span>Show Official Model Answer &amp; Marking Rubric</span>
+      </button>
+
+      <div id="exam-sol-${q.id}" class="hidden mt-3 pt-3 border-t border-gray-100 dark:border-gray-700/60 text-xs leading-relaxed text-gray-700 dark:text-gray-300">
+        ${q.sol}
+      </div>
+    </div>
+  `).join('');
+
+  renderAllMath(container);
+}
+
+function toggleExamSolution(id) {
+  const box = document.getElementById('exam-sol-' + id);
+  const icon = document.getElementById('exam-icon-' + id);
+  if (!box) return;
+  const isHidden = box.classList.contains('hidden');
+  box.classList.toggle('hidden');
+  icon.className = isHidden ? 'fas fa-chevron-down text-[10px]' : 'fas fa-chevron-right text-[10px]';
+  if (isHidden) {
+    renderAllMath(box);
+  }
+}
+
+/* ============================================================
+   M24: Graded Self-Evaluation Quiz (25 Questions L1 to L5)
+   ============================================================ */
+const QUIZ_QUESTIONS = [
+  // L1
+  { id:1, lvl:'L1', topic:'Coulomb Assumptions', q:'Which assumption is valid STRICTLY for circular cross-sections in torsion?', opts:['Plane sections remain plane (no warping)','Material is homogeneous','Hooke\'s law holds','Stresses are below elastic limit'], ans:0, hint:'Non-circular sections warp into saddle shapes.' },
+  { id:2, lvl:'L1', topic:'Torsion Derivation', q:'In the fundamental torsion formula T/J = τ/r = Gθ/L, the variable J represents:', opts:['Second moment of area about horizontal axis','Polar moment of inertia','Polar section modulus','Torsional rigidity'], ans:1, hint:'J = integral(r^2 dA).' },
+  { id:3, lvl:'L1', topic:'Polar Modulus & J', q:'The polar section modulus Z_p for a solid circular shaft of diameter D is:', opts:['πD³/32','πD³/16','πD⁴/32','πD⁴/64'], ans:1, hint:'Divide polar inertia πD⁴/32 by outer radius D/2.' },
+  { id:4, lvl:'L1', topic:'Angle of Twist', q:'The angle of twist calculated from θ = TL / (GJ) is expressed in:', opts:['Degrees','Radians','Grads','Revolutions'], ans:1, hint:'Analytical derivation uses arc length / radius.' },
+  { id:5, lvl:'L1', topic:'Power Transmission', q:'1 kilowatt is equal to:', opts:['100 W','1,000 W','10,000 W','746 W'], ans:1, hint:'Standard SI prefix kilo = 10^3.' },
+
+  // L2
+  { id:6, lvl:'L2', topic:'Shear Stress Distribution', q:'How does shear stress vary across the radius of a circular shaft in pure torsion?', opts:['Uniformly constant','Parabolically with maximum at center','Linearly from zero at center to maximum at surface','Inversely proportional to radius'], ans:2, hint:'τ = (τ_max / R) * r.' },
+  { id:7, lvl:'L2', topic:'Solid vs Hollow Economy', q:'Why is a hollow shaft stronger in torsion than a solid shaft of the same cross-sectional area?', opts:['Material near center carries maximum stress','Material is placed farther from neutral axis where moment arm and stress are highest','Hollow shafts have higher shear modulus','Hollow shafts have lower density'], ans:1, hint:'Center material in a solid shaft is grossly underutilized.' },
+  { id:8, lvl:'L2', topic:'Stepped & Series Shafts', q:'For two shaft segments connected in series transmitting torque T:', opts:['Torque is shared equally','Angle of twist is identical','Torque is common across both segments','Stresses in both segments are identical'], ans:2, hint:'Static equilibrium across any cut section requires same internal torque.' },
+  { id:9, lvl:'L2', topic:'Composite & Parallel Shafts', q:'Two shafts connected in parallel must satisfy the kinematic compatibility condition that:', opts:['Torques in both are equal','Angle of twist is identical','Shear stresses are equal','Cross-sectional areas are equal'], ans:1, hint:'Both ends rotate together through the same angular displacement.' },
+  { id:10, lvl:'L2', topic:'Shear Stress Distribution', q:'Under pure torsion, brittle materials like cast iron fail along a surface inclined at:', opts:['90° to the axis (shear fracture)','45° helix (tensile fracture)','0° (longitudinal splitting)','Parallel to diameter'], ans:1, hint:'Principal tensile stress σ₁ acts on planes inclined at 45°.' },
+
+  // L3
+  { id:11, lvl:'L3', topic:'Polar Modulus & J', q:'Calculate the polar section modulus of a 50 mm diameter solid shaft.', opts:['24,544 mm³','12,272 mm³','49,087 mm³','6,136 mm³'], ans:0, hint:'Z_p = π * 50³ / 16 ≈ 0.19635 * 125,000.' },
+  { id:12, lvl:'L3', topic:'Power Transmission', q:'A motor transmits 31.4 kW at 300 RPM. What is the mean torque transmitted?', opts:['500 N·m','1,000 N·m','1,500 N·m','2,000 N·m'], ans:1, hint:'T = 60,000 * 31.4 / (2 * π * 300) = 1884000 / 1884.95 ≈ 1000 N·m.' },
+  { id:13, lvl:'L3', topic:'Angle of Twist', q:'A 2 m long solid shaft has G = 80 GPa and J = 10⁶ mm⁴. What torque produces a twist of 0.01 radians?', opts:['400 N·m','800 N·m','1,200 N·m','200 N·m'], ans:0, hint:'T = G * J * θ / L = 80,000 * 10⁶ * 0.01 / 2000 = 400,000 N·mm = 400 N·m.' },
+  { id:14, lvl:'L3', topic:'Torsion Derivation', q:'If a solid shaft diameter is DOUBLED while transmitting the same torque, maximum shear stress becomes:', opts:['Half','One-fourth','One-eighth','One-sixteenth'], ans:2, hint:'τ varies inversely with D³: (1/2)³ = 1/8.' },
+  { id:15, lvl:'L3', topic:'Strain Energy & Springs', q:'The strain energy stored in a solid circular shaft of volume V under peak shear stress τ is:', opts:['(τ² / 2G) × V','(τ² / 4G) × V','(τ² / 8G) × V','(τ² / G) × V'], ans:1, hint:'Integrate (1/2) * (τ_r² / G) * dV across radius.' },
+
+  // L4
+  { id:16, lvl:'L4', topic:'Indeterminate Torsion', q:'A uniform shaft of length L is fixed at ends A and B. A torque T is applied at L/3 from end A. The reaction torque at A is:', opts:['T/3','2T/3','T/2','3T/4'], ans:1, hint:'Reaction is inversely proportional to distance: T_A = T * (2L/3) / L = 2T/3.' },
+  { id:17, lvl:'L4', topic:'Composite & Parallel Shafts', q:'In a concentric composite shaft (steel core inside brass tube), the ratio of shear stress in steel to brass at the interface is:', opts:['G_s / G_b','G_b / G_s','1.0','(G_s / G_b)²'], ans:0, hint:'Shear strain γ is common at interface; τ = G * γ.' },
+  { id:18, lvl:'L4', topic:'Combined Bending & Torsion', q:'A shaft carries bending moment M = 3 kN·m and twisting moment T = 4 kN·m. The equivalent twisting moment T_e is:', opts:['7 kN·m','5 kN·m','3.5 kN·m','25 kN·m'], ans:1, hint:'T_e = √(3² + 4²) = 5 kN·m.' },
+  { id:19, lvl:'L4', topic:'Combined Bending & Torsion', q:'For the same shaft with M = 3 kN·m and T = 4 kN·m, the equivalent bending moment M_e is:', opts:['5 kN·m','4 kN·m','7 kN·m','3.5 kN·m'], ans:1, hint:'M_e = 0.5 * (M + T_e) = 0.5 * (3 + 5) = 4 kN·m.' },
+  { id:20, lvl:'L4', topic:'Stepped & Series Shafts', q:'A stepped shaft has two sections of diameter 40 mm and 80 mm. The ratio of maximum shear stress in the smaller to larger section is:', opts:['2','4','8','16'], ans:2, hint:'τ₁ / τ₂ = (D₂ / D₁)³ = (80/40)³ = 2³ = 8.' },
+
+  // L5
+  { id:21, lvl:'L5', topic:'Solid vs Hollow Economy', q:'For the same external diameter D and same shear stress, a hollow shaft with d = 0.5D transmits what fraction of solid shaft torque?', opts:['50%','75%','93.75%','87.5%'], ans:2, hint:'1 - k⁴ = 1 - 0.5⁴ = 1 - 0.0625 = 0.9375 = 93.75%.' },
+  { id:22, lvl:'L5', topic:'Power Transmission', q:'When designing a power shaft governed by both strength (τ ≤ 60 MPa) and rigidity (θ ≤ 1° in 2 m), the designer must:', opts:['Take the average of the two calculated diameters','Take the smaller diameter for economy','Take the larger diameter to satisfy both safety criteria','Discard rigidity since strength guarantees safety'], ans:2, hint:'Both conditions must be met simultaneously; hence max(D_str, D_rig).' },
+  { id:23, lvl:'L5', topic:'Combined Bending & Torsion', q:'Which failure theory is recommended by ASME for ductile steel power transmission shafts?', opts:['Rankine (Maximum Principal Stress)','Guest / Tresca (Maximum Shear Stress)','Saint-Venant (Maximum Strain)','Beltrami (Total Strain Energy)'], ans:1, hint:'Ductile materials yield under shear slip.' },
+  { id:24, lvl:'L5', topic:'Strain Energy & Springs', q:'If wire diameter d of a closely-coiled helical spring is halved, its axial deflection under the same load becomes:', opts:['2 times','4 times','8 times','16 times'], ans:3, hint:'δ is inversely proportional to d⁴: (1/0.5)⁴ = 2⁴ = 16.' },
+  { id:25, lvl:'L5', topic:'Solid vs Hollow Economy', q:'Replacing a solid shaft with a hollow shaft having k = 0.8 of identical torsional strength yields a weight saving of approx:', opts:['15%','25%','45%','60%'], ans:2, hint:'w_ratio = (1 - 0.64) / (1 - 0.4096)^(2/3) ≈ 0.36 / 0.704 ≈ 0.51 → ~45-49% saved.' }
+];
+
+function renderQuiz(filterLvl = 'all') {
+  const container = document.getElementById('quiz-container');
+  if (!container) return;
+
+  const list = filterLvl === 'all' ? QUIZ_QUESTIONS : QUIZ_QUESTIONS.filter(q => q.lvl === filterLvl);
+
+  container.innerHTML = list.map((q, idx) => `
+    <div class="card p-5 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800" id="quiz-card-${q.id}">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded text-[11px] font-bold ${
+            q.lvl === 'L1' ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' :
+            q.lvl === 'L2' ? 'bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300' :
+            q.lvl === 'L3' ? 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300' :
+            q.lvl === 'L4' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' :
+            'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300'
+          }">${q.lvl}</span>
+          <span class="text-xs font-semibold text-gray-500">${q.topic}</span>
+        </div>
+        <span class="text-xs font-mono font-bold text-gray-400">Q${idx + 1}</span>
+      </div>
+
+      <p class="font-bold text-sm text-gray-800 dark:text-gray-100 mb-3">${q.q}</p>
+
+      <div class="space-y-2 mb-3">
+        ${q.opts.map((opt, i) => `
+          <button onclick="submitQuizAnswer(${q.id}, ${i})" id="opt-btn-${q.id}-${i}" class="quiz-opt text-xs">
+            <span class="font-bold text-gray-400 mr-2">${String.fromCharCode(65 + i)}.</span>
+            <span>${opt}</span>
+          </button>
+        `).join('')}
+      </div>
+
+      <div class="flex items-center justify-between text-xs pt-2 border-t border-gray-100 dark:border-gray-700/60">
+        <button onclick="toggleQuizHint(${q.id})" class="text-brand-600 dark:text-brand-400 font-semibold hover:underline flex items-center gap-1">
+          <i class="fas fa-lightbulb text-amber-500"></i>
+          <span>Hint</span>
+        </button>
+        <span id="quiz-status-${q.id}" class="font-bold text-gray-400">Not Attempted</span>
+      </div>
+
+      <div id="quiz-hint-${q.id}" class="hidden mt-2 p-2.5 rounded bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 text-xs text-amber-900 dark:text-amber-300">
+        <strong>Hint:</strong> ${q.hint}
+      </div>
+    </div>
+  `).join('');
+}
+
+function submitQuizAnswer(qId, optIdx) {
+  const q = QUIZ_QUESTIONS.find(item => item.id === qId);
+  if (!q) return;
+
+  const isCorrect = optIdx === q.ans;
+  logAnswer(q.lvl, q.topic, isCorrect);
+
+  for (let i = 0; i < q.opts.length; i++) {
+    const btn = document.getElementById(`opt-btn-${qId}-${i}`);
+    if (btn) {
+      btn.disabled = true;
+      if (i === q.ans) btn.classList.add('correct');
+      else if (i === optIdx && !isCorrect) btn.classList.add('wrong');
+    }
+  }
+
+  const status = document.getElementById(`quiz-status-${qId}`);
+  if (status) {
+    status.innerHTML = isCorrect ? '<span class="text-green-600 font-bold"><i class="fas fa-check mr-1"></i>Correct</span>' : '<span class="text-rose-500 font-bold"><i class="fas fa-times mr-1"></i>Incorrect</span>';
+  }
+}
+
+function toggleQuizHint(qId) {
+  const box = document.getElementById('quiz-hint-' + qId);
+  if (box) box.classList.toggle('hidden');
+}
+
+/* ============================================================
+   M25: Student Progress Dashboard
+   ============================================================ */
+function buildStudentDashboard() {
+  const visitedCount = state.visited.size;
+  document.getElementById('dash-visited-count').textContent = `${visitedCount}/26`;
+  document.getElementById('dash-study-time').textContent = `${Math.round(state.elapsed / 60000)} min`;
+
+  const total = state.records.length;
+  const correct = state.records.filter(r => r.correct).length;
+  const acc = total ? Math.round((correct / total) * 100) : 0;
+  document.getElementById('dash-accuracy').textContent = total ? `${acc}%` : '--%';
+  document.getElementById('dash-attempts').textContent = total;
+
+  const ctx = document.getElementById('chart-student-mastery');
+  if (!ctx) return;
+
+  const topicScores = TOPICS.map(t => {
+    const recs = state.records.filter(r => r.topic === t);
+    if (!recs.length) return 0;
+    return Math.round((recs.filter(r => r.correct).length / recs.length) * 100);
+  });
+
+  if (charts.studentMastery) {
+    charts.studentMastery.data.datasets[0].data = topicScores;
+    charts.studentMastery.update();
+  } else {
+    charts.studentMastery = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: TOPICS.map(t => t.length > 15 ? t.slice(0, 15) + '...' : t),
+        datasets: [{
+          label: 'Mastery (%)',
+          data: topicScores,
+          backgroundColor: '#0ea5e9',
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { min: 0, max: 100, title: { display: true, text: 'Accuracy (%)' } }
+        }
+      }
+    });
+    applyChartTheme(charts.studentMastery);
+  }
+}
+
+function exportStudentCSV() {
+  let csv = 'Timestamp,Level,Topic,Correct\n';
+  state.records.forEach(r => {
+    csv += `${new Date(r.ts).toISOString()},${r.level},"${r.topic}",${r.correct}\n`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `SOM_Unit5_Progress_${Date.now()}.csv`;
+  a.click();
+}
+
+/* ============================================================
+   M26: Teacher Analytics Portal
+   ============================================================ */
+function handleTeacherCSVUpload(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    const text = e.target.result;
+    const lines = text.split('\n').filter(l => l.trim().length > 0);
+    const headers = lines[0].split(',');
+    const records = [];
+    for (let i = 1; i < lines.length; i++) {
+      const parts = lines[i].split(',');
+      if (parts.length >= 4) {
+        records.push({
+          level: parts[1],
+          topic: parts[2].replace(/"/g, ''),
+          correct: parts[3].trim() === 'true'
+        });
+      }
+    }
+    renderTeacherReport(records);
+  };
+  reader.readAsText(file);
+}
+
+function renderTeacherReport(records) {
+  document.getElementById('teacher-report-box').classList.remove('hidden');
+  const count = records.length;
+  const passed = records.filter(r => r.correct).length;
+  const acc = count ? Math.round((passed / count) * 100) : 0;
+  document.getElementById('teacher-batch-summary').textContent = `Loaded ${count} student responses &middot; Cohort Accuracy: ${acc}%`;
+
+  const ctx = document.getElementById('chart-teacher-cohort');
+  if (!ctx) return;
+
+  const lvlAcc = ['L1', 'L2', 'L3', 'L4', 'L5'].map(lvl => {
+    const r = records.filter(item => item.level === lvl);
+    return r.length ? Math.round((r.filter(x => x.correct).length / r.length) * 100) : 0;
+  });
+
+  if (charts.teacherCohort) {
+    charts.teacherCohort.data.datasets[0].data = lvlAcc;
+    charts.teacherCohort.update();
+  } else {
+    charts.teacherCohort = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['L1: Remember', 'L2: Understand', 'L3: Apply', 'L4: Analyze', 'L5: Evaluate/Design'],
+        datasets: [{
+          label: 'Cohort Average Accuracy (%)',
+          data: lvlAcc,
+          backgroundColor: '#8b5cf6',
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { min: 0, max: 100, title: { display: true, text: 'Accuracy (%)' } }
+        }
+      }
+    });
+    applyChartTheme(charts.teacherCohort);
+  }
+}
+
+/* ============================================================
+   Initialization
+   ============================================================ */
+window.addEventListener('DOMContentLoaded', () => {
+  initNav();
+  renderNumericals('all');
+  renderPitfalls();
+  renderUniversityQuestions();
+  renderQuiz('all');
+  initFlashcards();
+
+  // Mobile sidebar toggle
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const sidebar = document.getElementById('sidebar');
+  if (mobileBtn && sidebar) {
+    mobileBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+    });
+  }
+
+  // Restore theme
+  const savedTheme = store.get('som5_theme', 'light');
+  if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+    document.getElementById('theme-icon').className = 'fas fa-sun';
+  }
+
+  // Heartbeat time saver
+  setInterval(saveTime, 10000);
+
+  // Switch to Module 1
+  switchModule(1);
+
+  // Trigger math typesetting
+  setTimeout(() => renderAllMath(), 150);
+});
+
+window.addEventListener('load', () => {
+  renderAllMath();
+});
+</script>
+</body>
+</html>
